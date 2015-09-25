@@ -6,8 +6,15 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.DirectionEnum;
+import com.mygdx.game.MarioStateEnum;
 
 public class Mario {
+
+	private static final int ACCELERATION_MAX = 5;
+
+	private static final float DECELERATION_COEF = 0.4f;
+
+	private static final float ACCELERATION_COEF = 0.2f;
 
 	private DirectionEnum direction;
 	
@@ -17,6 +24,10 @@ public class Mario {
 	
 	private Animation marioRunLeftAnimation;
 	
+	private Animation marioSlideRightAnimation;
+	
+	private Animation marioSlideLeftAnimation;
+		
 	private float marioStateTime;
 	
 	private Vector2 acceleration;
@@ -24,6 +35,10 @@ public class Mario {
 	private Vector2 position;
 	
 	private Vector2 oldPosition;
+		
+	private MarioStateEnum state;
+	
+	private MarioStateEnum previousState;
 		
 	public Mario() {
 		
@@ -47,9 +62,27 @@ public class Mario {
 		marioRunLeftFrames[2] = tmp[0][7];		
 		marioRunLeftAnimation = new Animation(0.05f, marioRunLeftFrames);
 		
+		TextureRegion[] marioSlideRightFrames = new TextureRegion[1];
+		marioSlideRightFrames[0] = tmp[0][9];
+		marioSlideRightAnimation = new Animation(1, marioSlideRightFrames);
+		
+		TextureRegion[] marioSlideLeftFrames = new TextureRegion[1];
+		marioSlideLeftFrames[0] = tmp[0][4];
+		marioSlideLeftAnimation = new Animation(1, marioSlideLeftFrames);
+		
 		marioStateTime = 0f;
 		
 		direction = DirectionEnum.RIGHT;
+		state = MarioStateEnum.NO_MOVE;
+		previousState = MarioStateEnum.NO_MOVE;
+	}
+
+	public Animation getMarioSlideRightAnimation() {
+		return marioSlideRightAnimation;
+	}
+
+	public void setMarioSlideRightAnimation(Animation marioSlideRightAnimation) {
+		this.marioSlideRightAnimation = marioSlideRightAnimation;
 	}
 
 	public Texture getMarioSpriteSheet() {
@@ -117,14 +150,14 @@ public class Mario {
 	}
 
 	public void accelerate() {
-		if (this.acceleration.x<5) {
-			this.acceleration.x = this.acceleration.x + 0.1f;
+		if (this.acceleration.x<ACCELERATION_MAX) {
+			this.acceleration.x = this.acceleration.x + ACCELERATION_COEF;
 		}
 	}
 	
 	public void decelerate() {
 		if (this.acceleration.x>0) {
-			this.acceleration.x = this.acceleration.x - 0.3f; 
+			this.acceleration.x = this.acceleration.x - DECELERATION_COEF; 
 		}
 		if (this.acceleration.x<0) {
 			this.acceleration.x = 0;
@@ -133,6 +166,31 @@ public class Mario {
 
 	public void storeOldPosition() {
 		oldPosition.set(position);
+		previousState = state;
+	}
+	
+	public MarioStateEnum getState() {
+		return state;
+	}
+
+	public void setState(MarioStateEnum state) {
+		this.state = state;
+	}
+	
+	public Animation getMarioSlideLeftAnimation() {
+		return marioSlideLeftAnimation;
+	}
+
+	public void setMarioSlideLeftAnimation(Animation marioSlideLeftAnimation) {
+		this.marioSlideLeftAnimation = marioSlideLeftAnimation;
+	}
+
+	public MarioStateEnum getPreviousState() {
+		return previousState;
+	}
+
+	public void setPreviousState(MarioStateEnum previousState) {
+		this.previousState = previousState;
 	}
 	
 }
