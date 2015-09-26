@@ -91,6 +91,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 440);
 			font.draw(spriteBatch, "direction="+mario.getDirection().toString(), 10, 420);
 			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 400);
+			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460); 
 			spriteBatch.end();
 		}
 	}
