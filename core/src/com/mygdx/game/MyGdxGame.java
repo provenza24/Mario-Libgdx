@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.enums.DirectionEnum;
+import com.mygdx.game.enums.MarioStateEnum;
 import com.mygdx.game.mario.Mario;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -105,6 +107,11 @@ public class MyGdxGame extends ApplicationAdapter {
 			cameraOffset = cameraOffset + move;				
 			}
 		}	
+		if (mario.getPosition().x<camera.position.x-8) {
+			mario.getPosition().x = mario.getOldPosition().x;
+			mario.getAcceleration().x = 0;
+			cameraOffset = cameraOffset - move;	
+		}
 		camera.update();
 	}
 
