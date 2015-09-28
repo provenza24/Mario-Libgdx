@@ -1,4 +1,4 @@
-package com.mygdx.game.enums;
+package com.mygdx.game.mario.enums;
 
 public enum MarioStateEnum {
 

@@ -5,34 +5,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.mygdx.game.enums.DirectionEnum;
-import com.mygdx.game.enums.MarioStateEnum;
-import com.mygdx.game.mario.Mario;
+import com.mygdx.game.mario.enums.DirectionEnum;
+import com.mygdx.game.mario.enums.MarioStateEnum;
+import com.mygdx.game.mario.sprite.Mario;
+import com.mygdx.game.mario.tilemap.MarioTileMap;
 
 public class MyGdxGame extends ApplicationAdapter {
 
 	private boolean debugMode = false;
 	
-	private TiledMap map;
+	private MarioTileMap tileMap;
 
 	private OrthogonalTiledMapRenderer renderer;
 
 	private OrthographicCamera camera;
 
 	private Batch batch;
-	
-	private Animation currentAnimation; 
-	
-	private TextureRegion currentFrame;	
-	
+			
 	private Mario mario;
 	
 	private float cameraOffset = 0;
@@ -40,10 +35,14 @@ public class MyGdxGame extends ApplicationAdapter {
 	private BitmapFont font;
 	
 	private SpriteBatch spriteBatch;
-	 
+	
+	ShapeRenderer shapeRenderer;
+			
 	@Override
 	public void create() {
 	
+		shapeRenderer = new ShapeRenderer();
+		
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
         font.setColor(0.5f,0.4f,0,1);        
@@ -51,8 +50,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		mario = new Mario();
 		
 		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
-		map = new TmxMapLoader().load("level_1_1.tmx");
-		renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
+		tileMap = new MarioTileMap("level_1_1.tmx");		
+		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
 		// create an orthographic camera, shows us 30x20 units of the world
 		camera = new OrthographicCamera();
@@ -67,38 +66,68 @@ public class MyGdxGame extends ApplicationAdapter {
 						
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		
 		mario.setMarioStateTime(mario.getMarioStateTime() + Gdx.graphics.getDeltaTime());/**mario.getAcceleration().x/4.5f);*/
 				
+		// Listen to keyboard actions, move mario in consequence
 		handleInput();		
 		
-		moveCamera();
-									
-		renderer.setView(camera);
+		// Collisions
+		// Mario <-> Tilemap collision
+		collideMarioWithTilemap();
 		
+		// Move camera
+		moveCamera();
+										
+		// Draw the scene :
+		// 1 - Render tilemap
+		renderer.setView(camera);		
 		renderer.render();									
 		
+		// 2 - Render Mario
 		renderMario();       
 		
-		renderDebugMode();		
+		// 3 - Render debug mode (press F1 to display/hide debug)
+		renderDebugMode();
 		
 	}
 	
+	private void collideMarioWithTilemap() {
+		tileMap.collideWith(mario);
+		float move = mario.getX() - mario.getOldPosition().x;
+		if (move>0 && mario.getMapCollisionEvent().isCollidingRight()) {			
+			// Mario is colliding on his right
+			mario.setX((int) mario.getX());
+		}
+		
+	}
+
 	private void renderDebugMode() {
 		if (debugMode) {
 			spriteBatch.begin();
-			font.draw(spriteBatch, "mario.position="+mario.getPosition(), 10,460);
+			font.draw(spriteBatch, "mario.position="+mario.getX()+","+mario.getY(), 10,460);
 			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 440);
 			font.draw(spriteBatch, "direction="+mario.getDirection().toString(), 10, 420);
 			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 400);
 			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460); 
+			font.draw(spriteBatch, "tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight()+", left=" +mario.getMapCollisionEvent().isCollidingLeft() 
+					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 380);
 			spriteBatch.end();
+			
+			batch = renderer.getBatch();
+	        batch.begin();  
+	        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
+	        shapeRenderer.begin(ShapeType.Line);
+	        shapeRenderer.setColor(0,1,0,0.5f);
+	        shapeRenderer.rect(mario.getX(), mario.getY(),1,1);
+	        shapeRenderer.end();
+	        batch.end();
 		}
 	}
 
 	private void moveCamera() {
 		
-		float move = mario.getPosition().x - mario.getOldPosition().x;
+		float move = mario.getX() - mario.getOldPosition().x;
 		if (cameraOffset<8) {
 			cameraOffset = cameraOffset + move;									
 		} else {
@@ -108,8 +137,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			cameraOffset = cameraOffset + move;				
 			}
 		}	
-		if (mario.getPosition().x<camera.position.x-8) {
-			mario.getPosition().x = mario.getOldPosition().x;
+		if (mario.getX()<camera.position.x-8) {
+			mario.setX(mario.getOldPosition().x);
 			mario.getAcceleration().x = 0;
 			cameraOffset = cameraOffset - move;	
 		}
@@ -118,10 +147,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void renderMario() {		       
         batch = renderer.getBatch();
-        batch.begin();                
-        batch.draw(currentFrame, mario.getPosition().x, mario.getPosition().y, 1, 1);        
-        batch.end();
-		
+        batch.begin();                                       
+        batch.draw(mario.getCurrentFrame(), mario.getX(), mario.getY(), 1, 1);        
+        batch.end();		                
 	}
 
 	private float handleInput() {
@@ -172,19 +200,20 @@ public class MyGdxGame extends ApplicationAdapter {
 				mario.setDirection(DirectionEnum.LEFT);
 			} 
 			mario.setState(MarioStateEnum.NO_MOVE);			 					
-			currentAnimation = mario.getDirection()==DirectionEnum.RIGHT ? mario.getMarioRunRightAnimation() : mario.getMarioRunLeftAnimation();
-			currentFrame = currentAnimation.getKeyFrame(0, false);
+			mario.setCurrentAnimation(mario.getDirection()==DirectionEnum.RIGHT ? mario.getMarioRunRightAnimation() : mario.getMarioRunLeftAnimation());
+			mario.setCurrentFrame(mario.getCurrentAnimation().getKeyFrame(0, false));
 		} else {
 			move = mario.getDirection()==DirectionEnum.LEFT ? -move : move;
-			mario.getPosition().x = mario.getPosition().x + move;
-			currentAnimation = mario.getState()==MarioStateEnum.RUNNING_LEFT ? mario.getMarioRunLeftAnimation() :
+			mario.setX(mario.getX() + move);
+			mario.setCurrentAnimation(mario.getState()==MarioStateEnum.RUNNING_LEFT ? mario.getMarioRunLeftAnimation() :
 				 mario.getState()==MarioStateEnum.RUNNING_RIGHT ? mario.getMarioRunRightAnimation() :
 					 mario.getState()==MarioStateEnum.SLIDING_LEFT ? mario.getMarioSlideLeftAnimation() :
 						 mario.getState()==MarioStateEnum.SLIDING_RIGHT ? mario.getMarioSlideRightAnimation() :
-							 mario.getDirection()==DirectionEnum.RIGHT ? mario.getMarioRunRightAnimation() : mario.getMarioRunLeftAnimation();			
-			currentFrame = currentAnimation.getKeyFrame(mario.getMarioStateTime(), true);
+							 mario.getDirection()==DirectionEnum.RIGHT ? mario.getMarioRunRightAnimation() : mario.getMarioRunLeftAnimation());			
+			mario.setCurrentFrame(mario.getCurrentAnimation().getKeyFrame(mario.getMarioStateTime(), true));
 		}										
 		
 		return move;				
 	}
+	
 }

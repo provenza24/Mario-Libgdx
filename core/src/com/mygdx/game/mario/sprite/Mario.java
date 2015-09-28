@@ -1,14 +1,16 @@
-package com.mygdx.game.mario;
+package com.mygdx.game.mario.sprite;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.enums.DirectionEnum;
-import com.mygdx.game.enums.MarioStateEnum;
+import com.mygdx.game.mario.CollisionEvent;
+import com.mygdx.game.mario.enums.DirectionEnum;
+import com.mygdx.game.mario.enums.MarioStateEnum;
 
-public class Mario {
+public class Mario extends Sprite {
 
 	private static final int ACCELERATION_MAX = 5;
 
@@ -31,20 +33,27 @@ public class Mario {
 	private float marioStateTime;
 	
 	private Vector2 acceleration;
-	
-	private Vector2 position;
-	
+			
 	private Vector2 oldPosition;
 		
 	private MarioStateEnum state;
 	
 	private MarioStateEnum previousState;
-		
+	
+	private Animation currentAnimation; 
+	
+	private TextureRegion currentFrame;	
+	
+	private CollisionEvent mapCollisionEvent;
+				
 	public Mario() {
-		
-		oldPosition = new Vector2(0,1);
-		position = new Vector2(0,1);
+							
+		setSize(32, 32);
+		setPosition(0, 1);
 		acceleration = new Vector2();
+		oldPosition = new Vector2(0,1);
+		
+		mapCollisionEvent = new CollisionEvent();
 		
 		marioSpriteSheet = new Texture(Gdx.files.internal("mario.gif"));
 
@@ -109,14 +118,6 @@ public class Mario {
 		this.marioStateTime = marioStateTime;
 	}
 
-	public Vector2 getPosition() {
-		return position;
-	}
-
-	public void setPosition(Vector2 position) {
-		this.position = position;
-	}
-
 	public Animation getMarioRunLeftAnimation() {
 		return marioRunLeftAnimation;
 	}
@@ -163,9 +164,17 @@ public class Mario {
 			this.acceleration.x = 0;
 		}
 	}
+	
+	public void reinitMapCollisionEvent() {
+		mapCollisionEvent.setCollidingBottom(false);
+		mapCollisionEvent.setCollidingLeft(false);
+		mapCollisionEvent.setCollidingRight(false);
+		mapCollisionEvent.setCollidingTop(false);
+	}
 
 	public void storeOldPosition() {
-		oldPosition.set(position);
+		oldPosition.x = getX();
+		oldPosition.y = getY();
 		previousState = state;
 	}
 	
@@ -191,6 +200,30 @@ public class Mario {
 
 	public void setPreviousState(MarioStateEnum previousState) {
 		this.previousState = previousState;
+	}
+
+	public Animation getCurrentAnimation() {
+		return currentAnimation;
+	}
+
+	public void setCurrentAnimation(Animation currentAnimation) {
+		this.currentAnimation = currentAnimation;
+	}
+
+	public TextureRegion getCurrentFrame() {
+		return currentFrame;
+	}
+
+	public void setCurrentFrame(TextureRegion currentFrame) {
+		this.currentFrame = currentFrame;
+	}
+	
+	public CollisionEvent getMapCollisionEvent() {
+		return mapCollisionEvent;
+	}
+
+	public void setMapCollisionEvent(CollisionEvent mapCollisionEvent) {
+		this.mapCollisionEvent = mapCollisionEvent;
 	}
 	
 }
