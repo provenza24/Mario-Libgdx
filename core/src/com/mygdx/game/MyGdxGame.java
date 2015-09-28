@@ -72,9 +72,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		// Listen to keyboard actions, move mario in consequence
 		handleInput();		
 		
-		// Collisions
+		// Collisions				
 		// Mario <-> Tilemap collision
 		collideMarioWithTilemap();
+		
+		/*mario.applyGravity();
+		mario.setY(mario.getY()-mario.getAcceleration().y);*/
 		
 		// Move camera
 		moveCamera();
@@ -94,10 +97,20 @@ public class MyGdxGame extends ApplicationAdapter {
 	
 	private void collideMarioWithTilemap() {
 		tileMap.collideWith(mario);
-		float move = mario.getX() - mario.getOldPosition().x;
-		if (move>0 && mario.getMapCollisionEvent().isCollidingRight()) {			
+		float xMove = mario.getX() - mario.getOldPosition().x;
+		float yMove = mario.getY() - mario.getOldPosition().y;
+		if (xMove>0 && mario.getMapCollisionEvent().isCollidingRight()) {			
 			// Mario is colliding on his right
 			mario.setX((int) mario.getX());
+		} else if (xMove<0 && mario.getMapCollisionEvent().isCollidingLeft()) {			
+			// Mario is colliding on his right
+			mario.setX((int) mario.getX()+1);
+		} 
+		if (yMove<0) {
+			if (mario.getMapCollisionEvent().isCollidingBottom()) {				
+				mario.setY(mario.getOldPosition().y);
+				mario.getAcceleration().y = 0;
+			}
 		}
 		
 	}
@@ -158,6 +171,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			debugMode = !debugMode;
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
+			mario.setX(mario.getX()+2);
 		}
 		
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {

@@ -17,6 +17,8 @@ public class Mario extends Sprite {
 	private static final float DECELERATION_COEF = 0.4f;
 
 	private static final float ACCELERATION_COEF = 0.2f;
+	
+	private static final float GRAVITY_COEF = 0.01f;
 
 	private DirectionEnum direction;
 	
@@ -49,9 +51,9 @@ public class Mario extends Sprite {
 	public Mario() {
 							
 		setSize(32, 32);
-		setPosition(0, 1);
+		setPosition(0, 6);
 		acceleration = new Vector2();
-		oldPosition = new Vector2(0,1);
+		oldPosition = new Vector2(0,6);
 		
 		mapCollisionEvent = new CollisionEvent();
 		
@@ -163,6 +165,10 @@ public class Mario extends Sprite {
 		if (this.acceleration.x<0) {
 			this.acceleration.x = 0;
 		}
+	}
+	
+	public void applyGravity() {
+		this.acceleration.y = this.acceleration.y + GRAVITY_COEF; 
 	}
 	
 	public void reinitMapCollisionEvent() {

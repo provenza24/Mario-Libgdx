@@ -40,16 +40,16 @@ public class MarioTileMap {
 		mario.getMapCollisionEvent().setCollidingLeft(isCollision);
 		
 		isCollision = isCollisioningTileAt((int)leftTopCorner.x, (int)leftTopCorner.y);
-		mario.getMapCollisionEvent().setCollidingTop(isCollision);
-		mario.getMapCollisionEvent().setCollidingLeft(isCollision);
+		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() || isCollision);
+		mario.getMapCollisionEvent().setCollidingLeft(mario.getMapCollisionEvent().isCollidingLeft() || isCollision);
 		
 		isCollision = isCollisioningTileAt((int)rightBottomCorner.x, (int)rightBottomCorner.y);
-		mario.getMapCollisionEvent().setCollidingBottom(isCollision);
-		mario.getMapCollisionEvent().setCollidingRight(isCollision);
+		mario.getMapCollisionEvent().setCollidingBottom(mario.getMapCollisionEvent().isCollidingBottom() || isCollision);
+		mario.getMapCollisionEvent().setCollidingRight(mario.getMapCollisionEvent().isCollidingRight() || isCollision);
 					
 		isCollision = isCollisioningTileAt((int)rightTopCorner.x, (int)rightTopCorner.y);
-		mario.getMapCollisionEvent().setCollidingTop(isCollision);
-		mario.getMapCollisionEvent().setCollidingRight(isCollision);		
+		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() || isCollision);
+		mario.getMapCollisionEvent().setCollidingRight(mario.getMapCollisionEvent().isCollidingRight() ||isCollision);		
 							
 	}
 
