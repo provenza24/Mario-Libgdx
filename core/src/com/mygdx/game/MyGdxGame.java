@@ -37,6 +37,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	private SpriteBatch spriteBatch;
 	
 	ShapeRenderer shapeRenderer;
+	
+	int jumptimer;
 			
 	@Override
 	public void create() {
@@ -74,11 +76,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		// Collisions				
 		// Mario <-> Tilemap collision
-		collideMarioWithTilemap();
+		mario.collideMarioWithTilemap(tileMap);
 		
-		/*mario.applyGravity();
-		mario.setY(mario.getY()-mario.getAcceleration().y);*/
-		
+		mario.updateAnimation();
+						
 		// Move camera
 		moveCamera();
 										
@@ -95,36 +96,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 	}
 	
-	private void collideMarioWithTilemap() {
-		tileMap.collideWith(mario);
-		float xMove = mario.getX() - mario.getOldPosition().x;
-		float yMove = mario.getY() - mario.getOldPosition().y;
-		if (xMove>0 && mario.getMapCollisionEvent().isCollidingRight()) {			
-			// Mario is colliding on his right
-			mario.setX((int) mario.getX());
-		} else if (xMove<0 && mario.getMapCollisionEvent().isCollidingLeft()) {			
-			// Mario is colliding on his right
-			mario.setX((int) mario.getX()+1);
-		} 
-		if (yMove<0) {
-			if (mario.getMapCollisionEvent().isCollidingBottom()) {				
-				mario.setY(mario.getOldPosition().y);
-				mario.getAcceleration().y = 0;
-			}
-		}
-		
-	}
-
 	private void renderDebugMode() {
 		if (debugMode) {
 			spriteBatch.begin();
 			font.draw(spriteBatch, "mario.position="+mario.getX()+","+mario.getY(), 10,460);
-			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 440);
-			font.draw(spriteBatch, "direction="+mario.getDirection().toString(), 10, 420);
-			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 400);
+			font.draw(spriteBatch, "mario.acceleration="+mario.getAcceleration().x+","+mario.getAcceleration().y, 10,440);
+			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 420);			
+			font.draw(spriteBatch, "direction="+mario.getDirection().toString(), 10, 400);
+			font.draw(spriteBatch, "isOnFloor="+mario.isOnFloor(), 10, 380);
+			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 360);
 			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460); 
 			font.draw(spriteBatch, "tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight()+", left=" +mario.getMapCollisionEvent().isCollidingLeft() 
-					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 380);
+					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 340);
 			spriteBatch.end();
 			
 			batch = renderer.getBatch();
@@ -175,7 +158,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
 			mario.setX(mario.getX()+2);
 		}
-		
+		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
+			mario.getAcceleration().y = 0;
+			mario.setY(mario.getY()+5);
+		}
+				
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			if (mario.getDirection()==DirectionEnum.LEFT) {
 				// Sliding
@@ -207,28 +194,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		} else {
 			mario.decelerate();
 		}
-		
+				
+		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor()) {   
+			//player is on the ground, so he is allowed to start a jump
+			mario.setState(MarioStateEnum.JUMPING);
+			mario.getAcceleration().y = 0.3f;							
+		} 
+					
 		float move = Gdx.graphics.getDeltaTime() * mario.getAcceleration().x;
-		if (move==0) {		
-			if (mario.getState()==MarioStateEnum.SLIDING_LEFT) {
-				mario.setDirection(DirectionEnum.RIGHT);
-			} else if (mario.getState()==MarioStateEnum.SLIDING_RIGHT) {
-				mario.setDirection(DirectionEnum.LEFT);
-			} 
-			mario.setState(MarioStateEnum.NO_MOVE);			 					
-			mario.setCurrentAnimation(mario.getDirection()==DirectionEnum.RIGHT ? mario.getMarioRunRightAnimation() : mario.getMarioRunLeftAnimation());
-			mario.setCurrentFrame(mario.getCurrentAnimation().getKeyFrame(0, false));
-		} else {
-			move = mario.getDirection()==DirectionEnum.LEFT ? -move : move;
-			mario.setX(mario.getX() + move);
-			mario.setCurrentAnimation(mario.getState()==MarioStateEnum.RUNNING_LEFT ? mario.getMarioRunLeftAnimation() :
-				 mario.getState()==MarioStateEnum.RUNNING_RIGHT ? mario.getMarioRunRightAnimation() :
-					 mario.getState()==MarioStateEnum.SLIDING_LEFT ? mario.getMarioSlideLeftAnimation() :
-						 mario.getState()==MarioStateEnum.SLIDING_RIGHT ? mario.getMarioSlideRightAnimation() :
-							 mario.getDirection()==DirectionEnum.RIGHT ? mario.getMarioRunRightAnimation() : mario.getMarioRunLeftAnimation());			
-			mario.setCurrentFrame(mario.getCurrentAnimation().getKeyFrame(mario.getMarioStateTime(), true));
-		}										
-		
+		move = mario.getDirection()==DirectionEnum.LEFT ? -move : move;
+		mario.setX(mario.getX() + move);
+				
 		return move;				
 	}
 	

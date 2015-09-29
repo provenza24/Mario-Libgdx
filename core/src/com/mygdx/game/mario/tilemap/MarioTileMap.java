@@ -26,31 +26,50 @@ public class MarioTileMap {
 		return false;
 	}
 	
-	public void collideWith(Mario mario) {
+	public void checkHorizontalMapCollision(Mario mario) {
 		
-		mario.reinitMapCollisionEvent();
+		mario.reinitHorizontalMapCollisionEvent();
 		
 		Vector2 leftBottomCorner = new Vector2(mario.getX(), mario.getY());
 		Vector2 leftTopCorner = new Vector2(mario.getX(), mario.getY() + 1);
 		Vector2 rightBottomCorner = new Vector2(mario.getX()+1, mario.getY());
 		Vector2 rightTopCorner = new Vector2(mario.getX()+1, mario.getY() + 1);
 				
-		boolean isCollision = isCollisioningTileAt((int)leftBottomCorner.x, (int)leftBottomCorner.y);
-		mario.getMapCollisionEvent().setCollidingBottom(isCollision);
+		boolean isCollision = isCollisioningTileAt((int)leftBottomCorner.x, (int)leftBottomCorner.y);		
 		mario.getMapCollisionEvent().setCollidingLeft(isCollision);
 		
-		isCollision = isCollisioningTileAt((int)leftTopCorner.x, (int)leftTopCorner.y);
-		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() || isCollision);
+		isCollision = isCollisioningTileAt((int)leftTopCorner.x, (int)leftTopCorner.y);		
 		mario.getMapCollisionEvent().setCollidingLeft(mario.getMapCollisionEvent().isCollidingLeft() || isCollision);
 		
-		isCollision = isCollisioningTileAt((int)rightBottomCorner.x, (int)rightBottomCorner.y);
-		mario.getMapCollisionEvent().setCollidingBottom(mario.getMapCollisionEvent().isCollidingBottom() || isCollision);
+		isCollision = isCollisioningTileAt((int)rightBottomCorner.x, (int)rightBottomCorner.y);		
 		mario.getMapCollisionEvent().setCollidingRight(mario.getMapCollisionEvent().isCollidingRight() || isCollision);
 					
-		isCollision = isCollisioningTileAt((int)rightTopCorner.x, (int)rightTopCorner.y);
-		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() || isCollision);
+		isCollision = isCollisioningTileAt((int)rightTopCorner.x, (int)rightTopCorner.y);		
 		mario.getMapCollisionEvent().setCollidingRight(mario.getMapCollisionEvent().isCollidingRight() ||isCollision);		
 							
+	}
+	
+	public void checkVerticalMapCollision(Mario mario) {
+		
+		mario.reinitVerticalMapCollisionEvent();
+		
+		Vector2 leftBottomCorner = new Vector2(mario.getX(), mario.getY());
+		Vector2 leftTopCorner = new Vector2(mario.getX(), mario.getY() + 1);
+		Vector2 rightBottomCorner = new Vector2(mario.getX()+1, mario.getY());
+		Vector2 rightTopCorner = new Vector2(mario.getX()+1, mario.getY() + 1);
+				
+		boolean isCollision = isCollisioningTileAt((int)leftBottomCorner.x, (int)leftBottomCorner.y);		
+		mario.getMapCollisionEvent().setCollidingBottom(isCollision);
+		
+		isCollision = isCollisioningTileAt((int)leftTopCorner.x, (int)leftTopCorner.y);		
+		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() || isCollision);
+		
+		isCollision = isCollisioningTileAt((int)rightBottomCorner.x, (int)rightBottomCorner.y);		
+		mario.getMapCollisionEvent().setCollidingBottom(mario.getMapCollisionEvent().isCollidingBottom() || isCollision);
+					
+		isCollision = isCollisioningTileAt((int)rightTopCorner.x, (int)rightTopCorner.y);		
+		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() ||isCollision);
+		
 	}
 
 	public TiledMap getMap() {

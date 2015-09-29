@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
+import com.mygdx.game.mario.tilemap.MarioTileMap;
 
 public class Mario extends Sprite {
 
@@ -31,6 +32,10 @@ public class Mario extends Sprite {
 	private Animation marioSlideRightAnimation;
 	
 	private Animation marioSlideLeftAnimation;
+	
+	private Animation marioJumpLeftAnimation;
+	
+	private Animation marioJumpRightAnimation;
 		
 	private float marioStateTime;
 	
@@ -47,6 +52,8 @@ public class Mario extends Sprite {
 	private TextureRegion currentFrame;	
 	
 	private CollisionEvent mapCollisionEvent;
+	
+	private boolean onFloor;
 				
 	public Mario() {
 							
@@ -54,6 +61,7 @@ public class Mario extends Sprite {
 		setPosition(0, 6);
 		acceleration = new Vector2();
 		oldPosition = new Vector2(0,6);
+		onFloor = true;
 		
 		mapCollisionEvent = new CollisionEvent();
 		
@@ -80,6 +88,14 @@ public class Mario extends Sprite {
 		TextureRegion[] marioSlideLeftFrames = new TextureRegion[1];
 		marioSlideLeftFrames[0] = tmp[0][4];
 		marioSlideLeftAnimation = new Animation(1, marioSlideLeftFrames);
+		
+		TextureRegion[] marioJumpRightFrames = new TextureRegion[1];
+		marioJumpRightFrames[0] = tmp[0][3];
+		marioJumpRightAnimation = new Animation(1, marioJumpRightFrames);
+		
+		TextureRegion[] marioJumpLeftFrames = new TextureRegion[1];
+		marioJumpLeftFrames[0] = tmp[0][8];
+		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
 		
 		marioStateTime = 0f;
 		
@@ -168,14 +184,33 @@ public class Mario extends Sprite {
 	}
 	
 	public void applyGravity() {
-		this.acceleration.y = this.acceleration.y + GRAVITY_COEF; 
+		this.acceleration.y = this.acceleration.y - GRAVITY_COEF; 
 	}
 	
-	public void reinitMapCollisionEvent() {
-		mapCollisionEvent.setCollidingBottom(false);
+	public Animation getMarioJumpLeftAnimation() {
+		return marioJumpLeftAnimation;
+	}
+
+	public void setMarioJumpLeftAnimation(Animation marioJumpLeftAnimation) {
+		this.marioJumpLeftAnimation = marioJumpLeftAnimation;
+	}
+
+	public Animation getMarioJumpRightAnimation() {
+		return marioJumpRightAnimation;
+	}
+
+	public void setMarioJumpRightAnimation(Animation marioJumpRightAnimation) {
+		this.marioJumpRightAnimation = marioJumpRightAnimation;
+	}
+
+	public void reinitHorizontalMapCollisionEvent() {
 		mapCollisionEvent.setCollidingLeft(false);
-		mapCollisionEvent.setCollidingRight(false);
-		mapCollisionEvent.setCollidingTop(false);
+		mapCollisionEvent.setCollidingRight(false);		
+	}
+	
+	public void reinitVerticalMapCollisionEvent() {
+		mapCollisionEvent.setCollidingBottom(false);
+		mapCollisionEvent.setCollidingTop(false);		
 	}
 
 	public void storeOldPosition() {
@@ -188,8 +223,8 @@ public class Mario extends Sprite {
 		return state;
 	}
 
-	public void setState(MarioStateEnum state) {
-		this.state = state;
+	public void setState(MarioStateEnum pstate) {		
+		this.state = pstate;			
 	}
 	
 	public Animation getMarioSlideLeftAnimation() {
@@ -206,6 +241,14 @@ public class Mario extends Sprite {
 
 	public void setPreviousState(MarioStateEnum previousState) {
 		this.previousState = previousState;
+	}
+
+	public boolean isOnFloor() {
+		return onFloor;
+	}
+
+	public void setOnFloor(boolean onFloor) {
+		this.onFloor = onFloor;
 	}
 
 	public Animation getCurrentAnimation() {
@@ -230,6 +273,76 @@ public class Mario extends Sprite {
 
 	public void setMapCollisionEvent(CollisionEvent mapCollisionEvent) {
 		this.mapCollisionEvent = mapCollisionEvent;
+	}
+	
+	public void collideMarioWithTilemap(MarioTileMap tileMap) {
+		
+		tileMap.checkHorizontalMapCollision(this);		
+		float xMove = getX() - getOldPosition().x;		
+		if (xMove>0 && getMapCollisionEvent().isCollidingRight() 
+				|| xMove<0 && getMapCollisionEvent().isCollidingLeft()) {			
+			// Mario is colliding on his right or left
+			setX(getOldPosition().x);
+			getAcceleration().x = 0;
+		}			
+						
+		applyGravity();
+		setY(getY()+getAcceleration().y);
+		
+		float yMove = getY() - getOldPosition().y;	
+		tileMap.checkVerticalMapCollision(this);
+		if (yMove<0) {
+			if (getMapCollisionEvent().isCollidingBottom()) {				
+				setY((int)getY()+1);
+				getAcceleration().y = 0;
+				if (state==MarioStateEnum.FALLING) {
+					state = MarioStateEnum.NO_MOVE;
+				}
+			} else {
+				setState(MarioStateEnum.FALLING);				
+			}
+		} else if (yMove>0) {
+			setState(MarioStateEnum.JUMPING);			
+		} else if (yMove==0) {		
+			if (previousState==MarioStateEnum.JUMPING) {				
+				setState(MarioStateEnum.FALLING);				
+			}
+		}
+		
+		onFloor = getMapCollisionEvent().isCollidingBottom();						
+	}
+	
+	public void updateAnimation() {
+		
+		float xMove = getX() - getOldPosition().x;
+		
+		if (getState()!=MarioStateEnum.JUMPING && getState()!=MarioStateEnum.FALLING) {
+			if (xMove==0) {			
+				if (getState()==MarioStateEnum.SLIDING_LEFT) {
+					setDirection(DirectionEnum.RIGHT);
+				} else if (getState()==MarioStateEnum.SLIDING_RIGHT) {
+					setDirection(DirectionEnum.LEFT);
+				} 
+				setState(MarioStateEnum.NO_MOVE);			 					
+				setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioRunRightAnimation() : getMarioRunLeftAnimation());
+				setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
+			} else {			
+				setCurrentAnimation(getState()==MarioStateEnum.RUNNING_LEFT ? getMarioRunLeftAnimation() :
+					 getState()==MarioStateEnum.RUNNING_RIGHT ? getMarioRunRightAnimation() :
+						 getState()==MarioStateEnum.SLIDING_LEFT ? getMarioSlideLeftAnimation() :
+							 getState()==MarioStateEnum.SLIDING_RIGHT ? getMarioSlideRightAnimation() :
+								 getDirection()==DirectionEnum.RIGHT ? getMarioRunRightAnimation() : getMarioRunLeftAnimation());			
+				setCurrentFrame(getCurrentAnimation().getKeyFrame(getMarioStateTime(), true));
+			}										
+		} else {
+			setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioJumpRightAnimation() : getMarioJumpLeftAnimation());
+			setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
+		}
+		
+		if (!onFloor) {
+			setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioJumpRightAnimation() : getMarioJumpLeftAnimation());
+			setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
+		}
 	}
 	
 }
