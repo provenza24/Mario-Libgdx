@@ -54,6 +54,8 @@ public class Mario extends Sprite {
 	private CollisionEvent mapCollisionEvent;
 	
 	private boolean onFloor;
+	
+	private int jumpTimer;
 				
 	public Mario() {
 							
@@ -99,6 +101,7 @@ public class Mario extends Sprite {
 		
 		marioStateTime = 0f;
 		
+		jumpTimer = 0;
 		direction = DirectionEnum.RIGHT;
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;
@@ -233,6 +236,18 @@ public class Mario extends Sprite {
 		}
 	}
 	
+	public int getJumpTimer() {
+		return jumpTimer;
+	}
+	
+	public void incJumpTimer() {
+		this.jumpTimer++;
+	}
+
+	public void setJumpTimer(int jumpTimer) {
+		this.jumpTimer = jumpTimer;
+	}
+
 	public Animation getMarioSlideLeftAnimation() {
 		return marioSlideLeftAnimation;
 	}

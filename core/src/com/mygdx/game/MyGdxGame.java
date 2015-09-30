@@ -36,10 +36,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	
 	private SpriteBatch spriteBatch;
 	
-	ShapeRenderer shapeRenderer;
+	private ShapeRenderer shapeRenderer;
 	
-	int jumptimer;
-			
 	@Override
 	public void create() {
 	
@@ -109,11 +107,12 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "mario.acceleration="+mario.getAcceleration().x+","+mario.getAcceleration().y, 10,440);
 			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 420);			
 			font.draw(spriteBatch, "direction="+mario.getDirection().toString(), 10, 400);
-			font.draw(spriteBatch, "isOnFloor="+mario.isOnFloor(), 10, 380);
-			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 360);
+			font.draw(spriteBatch, "jumptimer="+mario.getJumpTimer(), 10, 380);
+			font.draw(spriteBatch, "isOnFloor="+mario.isOnFloor(), 10, 360);
+			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 340);
 			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460); 
 			font.draw(spriteBatch, "tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight()+", left=" +mario.getMapCollisionEvent().isCollidingLeft() 
-					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 340);
+					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 320);			
 			spriteBatch.end();
 			
 			// Green rectangle around Mario
@@ -204,10 +203,21 @@ public class MyGdxGame extends ApplicationAdapter {
 				
 		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor()
 				&& !(mario.getState()==MarioStateEnum.JUMPING || mario.getState()==MarioStateEnum.FALLING)) {   
-			//player is on the ground, so he is allowed to start a jump			
+			//player is on the ground, so he is allowed to start a jump
+			mario.setJumpTimer(1);
 			mario.setState(MarioStateEnum.JUMPING);
-			mario.getAcceleration().y = 0.3f;							
-		} 
+			mario.getAcceleration().y = 0.15f;							
+		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING) {
+			if (mario.getJumpTimer()<23) {				//
+				mario.incJumpTimer();
+				mario.getAcceleration().y += 0.01;
+			} else {
+				mario.setJumpTimer(0);
+				mario.setState(MarioStateEnum.FALLING);
+			}			
+		} else {
+			mario.setJumpTimer(0);
+		}
 										
 	}
 	
