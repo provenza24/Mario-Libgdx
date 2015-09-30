@@ -227,6 +227,12 @@ public class Mario extends Sprite {
 		this.state = pstate;			
 	}
 	
+	public void setStateIfNotJumping(MarioStateEnum pstate) {		
+		if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
+			this.state = pstate;			
+		}
+	}
+	
 	public Animation getMarioSlideLeftAnimation() {
 		return marioSlideLeftAnimation;
 	}
@@ -275,22 +281,20 @@ public class Mario extends Sprite {
 		this.mapCollisionEvent = mapCollisionEvent;
 	}
 	
-	public void collideMarioWithTilemap(MarioTileMap tileMap) {
+	public void move() {
 		
-		tileMap.checkHorizontalMapCollision(this);		
-		float xMove = getX() - getOldPosition().x;		
-		if (xMove>0 && getMapCollisionEvent().isCollidingRight() 
-				|| xMove<0 && getMapCollisionEvent().isCollidingLeft()) {			
-			// Mario is colliding on his right or left
-			setX(getOldPosition().x);
-			getAcceleration().x = 0;
-		}			
-						
+		float xVelocity = Gdx.graphics.getDeltaTime() * acceleration.x;
+		xVelocity = direction==DirectionEnum.LEFT ? -xVelocity : xVelocity;
+		setX(getX() + xVelocity);
+		
 		applyGravity();
-		setY(getY()+getAcceleration().y);
-		
-		float yMove = getY() - getOldPosition().y;	
+		setY(getY()+acceleration.y);
+	}
+	
+	public void collideMarioWithTilemap(MarioTileMap tileMap) {
+				
 		tileMap.checkVerticalMapCollision(this);
+		float yMove = getY() - getOldPosition().y;	
 		if (yMove<0) {
 			if (getMapCollisionEvent().isCollidingBottom()) {				
 				setY((int)getY()+1);
@@ -301,13 +305,26 @@ public class Mario extends Sprite {
 			} else {
 				setState(MarioStateEnum.FALLING);				
 			}
-		} else if (yMove>0) {
-			setState(MarioStateEnum.JUMPING);			
 		} else if (yMove==0) {		
 			if (previousState==MarioStateEnum.JUMPING) {				
 				setState(MarioStateEnum.FALLING);				
 			}
+		} else if (yMove>0) {
+			if (getMapCollisionEvent().isCollidingTop()) {				
+				setY(getOldPosition().y);
+				getAcceleration().y = 0;
+				setState(MarioStateEnum.FALLING);		
+			}		
 		}
+		
+		tileMap.checkHorizontalMapCollision(this);		
+		float xMove = getX() - getOldPosition().x;		
+		if (xMove>0 && getMapCollisionEvent().isCollidingRight() 
+				|| xMove<0 && getMapCollisionEvent().isCollidingLeft()) {			
+			// Mario is colliding on his right or left
+			setX(getOldPosition().x);
+			getAcceleration().x = 0;
+		}			
 		
 		onFloor = getMapCollisionEvent().isCollidingBottom();						
 	}

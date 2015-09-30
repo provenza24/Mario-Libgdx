@@ -71,13 +71,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		mario.setMarioStateTime(mario.getMarioStateTime() + Gdx.graphics.getDeltaTime());/**mario.getAcceleration().x/4.5f);*/
 				
-		// Listen to keyboard actions, move mario in consequence
+		// Listen to keyboard actions and update Mario status
 		handleInput();		
 		
-		// Collisions				
+		// Move Mario
+		mario.move();
+		
+		// Handle Mario collisions				
 		// Mario <-> Tilemap collision
 		mario.collideMarioWithTilemap(tileMap);
 		
+		// Update Mario animation before drawing
 		mario.updateAnimation();
 						
 		// Move camera
@@ -98,7 +102,9 @@ public class MyGdxGame extends ApplicationAdapter {
 	
 	private void renderDebugMode() {
 		if (debugMode) {
-			spriteBatch.begin();
+			
+			// Mario information
+			spriteBatch.begin();			
 			font.draw(spriteBatch, "mario.position="+mario.getX()+","+mario.getY(), 10,460);
 			font.draw(spriteBatch, "mario.acceleration="+mario.getAcceleration().x+","+mario.getAcceleration().y, 10,440);
 			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 420);			
@@ -110,6 +116,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 340);
 			spriteBatch.end();
 			
+			// Green rectangle around Mario
 			batch = renderer.getBatch();
 	        batch.begin();  
 	        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
@@ -148,7 +155,7 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.end();		                
 	}
 
-	private float handleInput() {
+	private void handleInput() {
 
 		mario.storeOldPosition();
 		
@@ -166,7 +173,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			if (mario.getDirection()==DirectionEnum.LEFT) {
 				// Sliding
-				mario.setState(MarioStateEnum.SLIDING_LEFT);
+				mario.setStateIfNotJumping(MarioStateEnum.SLIDING_LEFT);
 				mario.decelerate();
 				if (mario.getAcceleration().x<=0) {
 					mario.getAcceleration().x=0;
@@ -175,12 +182,12 @@ public class MyGdxGame extends ApplicationAdapter {
 			} else {
 				mario.accelerate();
 				mario.setDirection(DirectionEnum.RIGHT);
-				mario.setState(MarioStateEnum.RUNNING_RIGHT);
+				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_RIGHT);
 			}													
 		} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
 			if (mario.getDirection()==DirectionEnum.RIGHT) {
 				// Sliding
-				mario.setState(MarioStateEnum.SLIDING_RIGHT);
+				mario.setStateIfNotJumping(MarioStateEnum.SLIDING_RIGHT);
 				mario.decelerate();
 				if (mario.getAcceleration().x<=0) {
 					mario.getAcceleration().x=0;
@@ -189,23 +196,19 @@ public class MyGdxGame extends ApplicationAdapter {
 			} else {
 				mario.accelerate();
 				mario.setDirection(DirectionEnum.LEFT);
-				mario.setState(MarioStateEnum.RUNNING_LEFT);
+				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_LEFT);
 			}	
 		} else {
 			mario.decelerate();
 		}
 				
-		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor()) {   
-			//player is on the ground, so he is allowed to start a jump
+		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor()
+				&& !(mario.getState()==MarioStateEnum.JUMPING || mario.getState()==MarioStateEnum.FALLING)) {   
+			//player is on the ground, so he is allowed to start a jump			
 			mario.setState(MarioStateEnum.JUMPING);
 			mario.getAcceleration().y = 0.3f;							
 		} 
-					
-		float move = Gdx.graphics.getDeltaTime() * mario.getAcceleration().x;
-		move = mario.getDirection()==DirectionEnum.LEFT ? -move : move;
-		mario.setX(mario.getX() + move);
-				
-		return move;				
+										
 	}
 	
 }
