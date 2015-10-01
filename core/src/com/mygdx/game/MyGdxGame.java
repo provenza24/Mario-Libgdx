@@ -57,8 +57,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 16, 15);
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-		camera.update();
-
+		camera.update();		
 	}
 
 	@Override
@@ -201,23 +200,28 @@ public class MyGdxGame extends ApplicationAdapter {
 			mario.decelerate();
 		}
 				
-		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor()
+		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isCanInitiateJump()
 				&& !(mario.getState()==MarioStateEnum.JUMPING || mario.getState()==MarioStateEnum.FALLING)) {   
 			//player is on the ground, so he is allowed to start a jump
 			mario.setJumpTimer(1);
 			mario.setState(MarioStateEnum.JUMPING);
-			mario.getAcceleration().y = 0.15f;							
-		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING) {
+			mario.getAcceleration().y = 0.15f;
+			mario.setCanJumpHigher(true);
+		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.isCanJumpHigher()) {
 			if (mario.getJumpTimer()<23) {				//
 				mario.incJumpTimer();
 				mario.getAcceleration().y += 0.01;
-			} else {
+			} else {		
+				mario.setCanJumpHigher(false);
 				mario.setJumpTimer(0);
 				mario.setState(MarioStateEnum.FALLING);
 			}			
 		} else {
+			mario.setCanJumpHigher(false);
 			mario.setJumpTimer(0);
 		}
+				
+		mario.setCanInitiateJump(!Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor());		
 										
 	}
 	

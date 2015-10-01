@@ -56,6 +56,10 @@ public class Mario extends Sprite {
 	private boolean onFloor;
 	
 	private int jumpTimer;
+	
+	private boolean canInitiateJump;
+	
+	private boolean canJumpHigher;
 				
 	public Mario() {
 							
@@ -102,6 +106,8 @@ public class Mario extends Sprite {
 		marioStateTime = 0f;
 		
 		jumpTimer = 0;
+		canInitiateJump = true;
+		canJumpHigher = true;
 		direction = DirectionEnum.RIGHT;
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;
@@ -375,6 +381,22 @@ public class Mario extends Sprite {
 			setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioJumpRightAnimation() : getMarioJumpLeftAnimation());
 			setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
 		}
+	}
+
+	public boolean isCanInitiateJump() {
+		return canInitiateJump;
+	}
+
+	public void setCanInitiateJump(boolean canInitiateJump) {
+		this.canInitiateJump = canInitiateJump;
+	}
+
+	public boolean isCanJumpHigher() {
+		return canJumpHigher;
+	}
+
+	public void setCanJumpHigher(boolean canJumpHigher) {
+		this.canJumpHigher = canJumpHigher;
 	}
 	
 }
