@@ -38,6 +38,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	
 	private ShapeRenderer shapeRenderer;
 	
+	private int jumpTimerMax = 20;
+	
 	@Override
 	public void create() {
 	
@@ -205,10 +207,11 @@ public class MyGdxGame extends ApplicationAdapter {
 			//player is on the ground, so he is allowed to start a jump
 			mario.setJumpTimer(1);
 			mario.setState(MarioStateEnum.JUMPING);
-			mario.getAcceleration().y = 0.15f;
+			mario.getAcceleration().y = 0.16f;			
 			mario.setCanJumpHigher(true);
+			jumpTimerMax = 20 + (int)mario.getAcceleration().x/4;
 		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.isCanJumpHigher()) {
-			if (mario.getJumpTimer()<23) {				//
+			if (mario.getJumpTimer()<jumpTimerMax) {				//
 				mario.incJumpTimer();
 				mario.getAcceleration().y += 0.01;
 			} else {		
