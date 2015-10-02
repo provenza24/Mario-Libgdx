@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import java.util.List;
+
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -14,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.Mario;
+import com.mygdx.game.mario.sprite.MysteryBlock;
 import com.mygdx.game.mario.tilemap.MarioTileMap;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -68,8 +71,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		mario.setMarioStateTime(mario.getMarioStateTime() + Gdx.graphics.getDeltaTime());/**mario.getAcceleration().x/4.5f);*/
-				
+		float delta = Gdx.graphics.getDeltaTime();
+		
+		mario.setMarioStateTime(mario.getMarioStateTime() + delta);
+								
 		// Listen to keyboard actions and update Mario status
 		handleInput();		
 		
@@ -86,13 +91,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		// Move camera
 		moveCamera();
 										
-		// Draw the scene :
-		// 1 - Render tilemap
-		renderer.setView(camera);		
+		// 1 - Draw tilemap
+		// 1.2 - Render tilemap
+		renderer.setView(camera);				
 		renderer.render();									
+		// 1.1 - Render mystery blocks
+		renderMysteryBlocks(delta);
 		
 		// 2 - Render Mario
-		renderMario();       
+		renderMario();       				
 		
 		// 3 - Render debug mode (press F1 to display/hide debug)
 		renderDebugMode();
@@ -113,7 +120,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 340);
 			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460); 
 			font.draw(spriteBatch, "tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight()+", left=" +mario.getMapCollisionEvent().isCollidingLeft() 
-					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 320);			
+					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 320);
+			font.draw(spriteBatch, "Mysteryblocks: " +tileMap.getMysteryBlocks().size(), 10, 300);			
 			spriteBatch.end();
 			
 			// Green rectangle around Mario
@@ -153,6 +161,36 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.begin();                                       
         batch.draw(mario.getCurrentFrame(), mario.getX(), mario.getY(), 1, 1);        
         batch.end();		                
+	}
+	
+	private void renderMysteryBlocks(float delta) {
+		
+		// Get blocks from tilemap
+		List<MysteryBlock> blocks = tileMap.getMysteryBlocks();
+		if (blocks.size()>0) {			
+			batch = renderer.getBatch();
+	        batch.begin();                                       
+	        // All blocks have the same animation, running in phasis
+	        MysteryBlock.updateAnimation(delta);
+	        for (int i=0;i<blocks.size();i++) {
+	        	// For each block
+	        	MysteryBlock block = blocks.get(i);
+	        	if (block.isVisible()) {
+	        		// Block is drawn only if visible
+	        		if (block.getX()<camera.position.x-9) {
+	        			// Block not visible anymore, delete it from list
+	            		blocks.remove(i--);        		
+	            	} else {            		
+	            		// Block is still visible, draw it
+	            		batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);
+	            	}
+	        	} else if (block.getX()<camera.position.x+7) {
+	        		// Block was not visible, now will be visible and drawable 
+	        		block.setVisible(true);        	
+	        	}        	
+	        }                            
+	        batch.end();
+		}				                
 	}
 
 	private void handleInput() {

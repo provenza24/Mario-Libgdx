@@ -1,11 +1,16 @@
 package com.mygdx.game.mario.tilemap;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.sprite.Mario;
+import com.mygdx.game.mario.sprite.MysteryBlock;
 
 public class MarioTileMap {
 	
@@ -13,9 +18,30 @@ public class MarioTileMap {
 	
 	TiledMapTileLayer layer;
 	
+	private List<MysteryBlock> mysteryBlocks;
+	
 	public MarioTileMap(String levelName) {
 		map = new TmxMapLoader().load(levelName);
 		layer = (TiledMapTileLayer)map.getLayers().get(0);
+		initMysteryBlocks();
+	}
+
+	private void initMysteryBlocks() {
+		
+		mysteryBlocks = new ArrayList<MysteryBlock>(); 
+		
+		for (int i=0; i<layer.getWidth();i++) {
+			for (int j=0; j<layer.getHeight();j++) {
+				Cell cell = layer.getCell(i,j);
+				if (cell!=null) {
+					TiledMapTile tile = cell.getTile();
+					int id = tile.getId();
+					if (id==7 || id==8) {
+						mysteryBlocks.add(new MysteryBlock(i, j));
+					}
+				}
+			}
+		}
 	}
 	 
 	public boolean isCollisioningTileAt(int x, int y) {
@@ -78,5 +104,13 @@ public class MarioTileMap {
 
 	public void setMap(TiledMap map) {
 		this.map = map;
+	}
+
+	public List<MysteryBlock> getMysteryBlocks() {
+		return mysteryBlocks;
+	}
+
+	public void setMysteryBlocks(List<MysteryBlock> mysteryBlocks) {
+		this.mysteryBlocks = mysteryBlocks;
 	}
 }
