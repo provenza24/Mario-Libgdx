@@ -37,7 +37,7 @@ public class MarioTileMap {
 					TiledMapTile tile = cell.getTile();
 					int id = tile.getId();
 					if (id==7 || id==8) {
-						mysteryBlocks.add(new MysteryBlock(i, j));
+						mysteryBlocks.add(new MysteryBlock(i, j, id));
 					}
 				}
 			}
