@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="65">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="640" height="640"/>
+  <tile id="6">
+   <properties>
+    <property name="item" value="coin"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
+  <image source="mario_jump_right.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="402" name="Goomba" tilewidth="32" tileheight="32">
+  <image source="goomba.png" width="96" height="32"/>
+ </tileset>
+ <tileset firstgid="405" name="Flag" tilewidth="32" tileheight="32">
+  <image source="flag.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="406" name="Transfer" tilewidth="8" tileheight="8">
+  <image source="transfer.png" width="32" height="8"/>
+ </tileset>
+ <tileset firstgid="410" name="Coin" tilewidth="28" tileheight="32">
+  <image source="coin.png" width="112" height="32"/>
+ </tileset>
+ <tileset firstgid="414" name="PiranhaPlant" tilewidth="32" tileheight="50">
+  <image source="plant_piranha.png" width="64" height="50"/>
+ </tileset>
+ <layer name="world" width="232" height="15">
+  <properties>
+   <property name="background" value="background_underworld"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztlklOxDAQRQsWDReAHexYgMTQ7Fg0lAIcgfEGzCdgvjgfREvBuDzFcaet+tJTFNtlJ7Zep7cXiLYVpQJqzKz3VFFyUWNmvaeKkosaw452RZnSZ1zrboKtATxjO08Ffwu43FJFw/T33VhA6vfN6xunyZMh+vmpfnYOk/pZQ9TPusIU9k62cba60Pk0/aSkn6NffFE/08OkftaUUn6OSP2MDbeubdp9thqpzzfOVhc6nzneRJOWEn6OSP1MCRtXqc2skfp846T1QuYzx5vUHBbokjWwDjaoXz9NN1P93EHbLtgD44z+cuC4ZbBk4EtjXGPD9H/vbW1SjVQnzeGq881fMitgtdBaDaWfX5eMwT44oP78tLmZ6meDtmNwAk5n4GdMTC8lT/s8d6b5/25JHk7/88WEKX4/GurfT85ITCQ3U/w8w/05uACX4ApcZ3KU80zzE5+Xkp99nD/T/PspeSi1u76rTHH70VBdfrb3xuVmip83uL8Fd+AePIDHAfkZ6mVJP2tIrJ+u7ypT+Fmbbtbg53RvfG6G+GmOeYaLL+AVvIF38JHJzwk4VJI4Gvhetp9vYrlPfU8zrrm61MbyrcTinBCaL613Cxw=
+  </data>
+ </layer>
+ <objectgroup name="objectsLayer">
+  <object id="1" type="mario" gid="401" x="64" y="128" width="32" height="32"/>
+  <object id="47" type="flag" gid="405" x="6580" y="160" width="32" height="32"/>
+  <object id="49" type="transferRight" gid="409" x="5304" y="340" width="8" height="8">
+   <properties>
+    <property name="background" value="background_underworld"/>
+    <property name="mapType" value="0"/>
+    <property name="xCamera" value="5968"/>
+    <property name="xOutgoing" value="5968"/>
+    <property name="yOutgoing" value="352"/>
+   </properties>
+  </object>
+  <object id="52" type="goomba" gid="402" x="512" y="448" width="32" height="32"/>
+  <object id="53" type="goomba" gid="402" x="544" y="416" width="32" height="32"/>
+  <object id="54" type="goomba" gid="402" x="928" y="448" width="32" height="32"/>
+  <object id="55" type="piranha" gid="414" x="3312" y="402" width="32" height="50"/>
+  <object id="56" type="piranha" gid="414" x="3504" y="370" width="32" height="50"/>
+  <object id="57" type="piranha" gid="414" x="3696" y="434" width="32" height="50"/>
+  <object id="58" type="coin" gid="412" x="1282" y="320" width="28" height="32"/>
+  <object id="59" type="coin" gid="412" x="1442" y="320" width="28" height="32"/>
+  <object id="60" type="coin" gid="412" x="1314" y="224" width="28" height="32"/>
+  <object id="61" type="coin" gid="412" x="1346" y="224" width="28" height="32"/>
+  <object id="62" type="coin" gid="412" x="1378" y="224" width="28" height="32"/>
+  <object id="63" type="coin" gid="412" x="1410" y="224" width="28" height="32"/>
+ </objectgroup>
+</map>

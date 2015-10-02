@@ -51,7 +51,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		mario = new Mario();
 		
-		// load the map, set the unit scale to 1/16 (1 unit == 16 pixels)
+		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tileMap = new MarioTileMap("level_1_1.tmx");		
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
@@ -209,7 +209,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			mario.setState(MarioStateEnum.JUMPING);
 			mario.getAcceleration().y = 0.16f;			
 			mario.setCanJumpHigher(true);
-			jumpTimerMax = 20 + (int)mario.getAcceleration().x/4;
+			jumpTimerMax = 21 + (int)mario.getAcceleration().x/5;
 		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.isCanJumpHigher()) {
 			if (mario.getJumpTimer()<jumpTimerMax) {				//
 				mario.incJumpTimer();
