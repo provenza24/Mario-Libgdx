@@ -15,8 +15,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
-import com.mygdx.game.mario.sprite.Mario;
-import com.mygdx.game.mario.sprite.MysteryBlock;
+import com.mygdx.game.mario.sprite.impl.Mario;
+import com.mygdx.game.mario.sprite.impl.MysteryBlock;
 import com.mygdx.game.mario.tilemap.MarioTileMap;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -52,7 +52,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		font = new BitmapFont();
         font.setColor(0.5f,0.4f,0,1);        
 		
-		mario = new Mario();
+		mario = new Mario(1,1);
 		
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tileMap = new MarioTileMap("level_1_1.tmx");		

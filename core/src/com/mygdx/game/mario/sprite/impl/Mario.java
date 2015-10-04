@@ -1,19 +1,19 @@
-package com.mygdx.game.mario.sprite;
+package com.mygdx.game.mario.sprite.impl;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
+import com.mygdx.game.mario.sprite.GameSprite;
 import com.mygdx.game.mario.tilemap.MarioTileMap;
 
-public class Mario extends Sprite {
+public class Mario extends GameSprite {
 
-	private static final int ACCELERATION_MAX = 5;
+	private static final float ACCELERATION_MAX = 7.5f;
 
 	private static final float DECELERATION_COEF = 0.4f;
 
@@ -61,10 +61,11 @@ public class Mario extends Sprite {
 	
 	private boolean canJumpHigher;
 				
-	public Mario() {
-							
-		setSize(32, 32);
-		setPosition(0, 6);
+	public Mario(float x, float y) {
+			
+		super(x,y);
+		
+		setSize(32, 32);		
 		acceleration = new Vector2();
 		oldPosition = new Vector2(0,6);
 		onFloor = true;
