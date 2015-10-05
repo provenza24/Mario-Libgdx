@@ -14,6 +14,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.mario.sprite.GameSprite;
+import com.mygdx.game.mario.sprite.impl.Goomba;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
 
@@ -27,7 +29,7 @@ public class TmxMap {
 
 	private List<MysteryBlock> mysteryBlocks;
 	
-	private List<MysteryBlock> enemies;
+	private List<GameSprite> enemies;
 	
 	public TmxMap(String levelName) {
 		
@@ -35,15 +37,20 @@ public class TmxMap {
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
 		initMysteryBlocks();			
-		initMapObjects();		
+		initMapObjects();				
 	}
 
 	private void initMapObjects() {
 		
+		enemies = new ArrayList<GameSprite>();
+		
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
 			MapProperties objectProperty = mapObject.getProperties();		
-			Gdx.app.log("New object from layer", objectProperty.get("type").toString());			
+			Gdx.app.log("New object from layer", objectProperty.get("type").toString());	
+			if (objectProperty.get("type").toString().equals("goomba")) {
+				enemies.add(new Goomba((Float)objectProperty.get("x"), (Float)objectProperty.get("y")));
+			}
 		}
 	}
 
@@ -134,5 +141,13 @@ public class TmxMap {
 
 	public void setMysteryBlocks(List<MysteryBlock> mysteryBlocks) {
 		this.mysteryBlocks = mysteryBlocks;
+	}
+
+	public List<GameSprite> getEnemies() {
+		return enemies;
+	}
+
+	public void setEnemies(List<GameSprite> enemies) {
+		this.enemies = enemies;
 	}
 }

@@ -17,6 +17,7 @@ import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
+import com.mygdx.game.mario.sprite.GameSprite;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
 import com.mygdx.game.mario.tilemap.TmxMap;
@@ -111,6 +112,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		// 1.2 - Render mystery blocks
 		renderMysteryBlocks(delta);
 		
+		renderEnemies(delta);
+		
 		// 2 - Render Mario
 		renderMario();       				
 		
@@ -174,6 +177,18 @@ public class MyGdxGame extends ApplicationAdapter {
         batch.begin();                                       
         batch.draw(mario.getCurrentFrame(), mario.getX(), mario.getY(), 1, 1);        
         batch.end();		                
+	}
+	
+	private void renderEnemies(float delta) {
+		List<GameSprite> enemies = tileMap.getEnemies();
+		for (GameSprite enemy : enemies) {
+			enemy.setStateTime(enemy.getStateTime() + delta);
+			enemy.setCurrentFrame(enemy.getCurrentAnimation().getKeyFrame(enemy.getStateTime(), true));				
+			batch = renderer.getBatch();
+			batch.begin();      
+			batch.draw(enemy.getCurrentFrame(), enemy.getX(), enemy.getY(), 1, 1);
+			batch.end();
+		}
 	}
 	
 	private void renderMysteryBlocks(float delta) {
