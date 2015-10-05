@@ -17,13 +17,13 @@ import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
-import com.mygdx.game.mario.tilemap.MarioTileMap;
+import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class MyGdxGame extends ApplicationAdapter {
 
 	private boolean debugMode = false;
 	
-	private MarioTileMap tileMap;
+	private TmxMap tileMap;
 
 	private OrthogonalTiledMapRenderer renderer;
 
@@ -55,7 +55,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		mario = new Mario(1,1);
 		
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
-		tileMap = new MarioTileMap("level_1_1.tmx");		
+		tileMap = new TmxMap("level_1_1.tmx");		
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
 		// create an orthographic camera, shows us 30x20 units of the world
@@ -73,17 +73,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		float delta = Gdx.graphics.getDeltaTime();
 		
-		mario.setMarioStateTime(mario.getMarioStateTime() + delta);
+		mario.setStateTime(mario.getStateTime() + delta);
 								
 		// Listen to keyboard actions and update Mario status
 		handleInput();		
 		
 		// Move Mario
-		mario.move();
+		mario.move(delta);
 		
 		// Handle Mario collisions				
 		// Mario <-> Tilemap collision
-		mario.collideMarioWithTilemap(tileMap);
+		mario.collideWithTilemap(tileMap);
 		
 		// Update Mario animation before drawing
 		mario.updateAnimation();
@@ -240,7 +240,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			mario.decelerate();
 		}
 				
-		if (Gdx.input.isKeyPressed(Keys.UP) && mario.isCanInitiateJump()
+		if (Gdx.input.isKeyPressed(Keys.UP) && mario.canInitiateJump()
 				&& !(mario.getState()==MarioStateEnum.JUMPING || mario.getState()==MarioStateEnum.FALLING)) {   
 			//player is on the ground, so he is allowed to start a jump
 			mario.setJumpTimer(1);
@@ -248,7 +248,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			mario.getAcceleration().y = 0.16f;			
 			mario.setCanJumpHigher(true);
 			jumpTimerMax = 21 + (int)mario.getAcceleration().x/5;
-		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.isCanJumpHigher()) {
+		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.canJumpHigher()) {
 			if (mario.getJumpTimer()<jumpTimerMax) {				//
 				mario.incJumpTimer();
 				mario.getAcceleration().y += 0.01;

@@ -17,7 +17,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
 
-public class MarioTileMap {
+public class TmxMap {
 
 	private TiledMap map;
 
@@ -29,7 +29,7 @@ public class MarioTileMap {
 	
 	private List<MysteryBlock> enemies;
 	
-	public MarioTileMap(String levelName) {
+	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
@@ -64,15 +64,7 @@ public class MarioTileMap {
 			}
 		}
 	}
-
-	public boolean isCollisioningTileAt(int x, int y) {
-		Cell cell = tileLayer.getCell(x, y);
-		if (cell != null) {
-			return cell.getTile().getId() < 128;
-		}
-		return false;
-	}
-
+	
 	public void checkHorizontalMapCollision(Mario mario) {
 
 		mario.reinitHorizontalMapCollisionEvent();
@@ -118,6 +110,14 @@ public class MarioTileMap {
 		isCollision = isCollisioningTileAt((int) rightTopCorner.x, (int) rightTopCorner.y);
 		mario.getMapCollisionEvent().setCollidingTop(mario.getMapCollisionEvent().isCollidingTop() || isCollision);
 
+	}
+	
+	private boolean isCollisioningTileAt(int x, int y) {
+		Cell cell = tileLayer.getCell(x, y);
+		if (cell != null) {
+			return cell.getTile().getId() < 128;
+		}
+		return false;
 	}
 
 	public TiledMap getMap() {

@@ -2,5 +2,5 @@ package com.mygdx.game.mario.enums;
 
 public enum DirectionEnum {
 
-	LEFT, RIGHT;
+	LEFT, RIGHT, UP, DOWN;
 }

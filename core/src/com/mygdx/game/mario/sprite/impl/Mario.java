@@ -9,20 +9,16 @@ import com.mygdx.game.mario.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.GameSprite;
-import com.mygdx.game.mario.tilemap.MarioTileMap;
+import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class Mario extends GameSprite {
 
-	private static final float ACCELERATION_MAX = 7.5f;
+	private static final float ACCELERATION_MAX = 5; //7.5f;
 
 	private static final float DECELERATION_COEF = 0.4f;
 
 	private static final float ACCELERATION_COEF = 0.2f;
-	
-	private static final float GRAVITY_COEF = 0.01f;
-
-	private DirectionEnum direction;
-	
+			
 	private Texture marioSpriteSheet;
 		
 	private Animation marioRunRightAnimation;
@@ -36,25 +32,13 @@ public class Mario extends GameSprite {
 	private Animation marioJumpLeftAnimation;
 	
 	private Animation marioJumpRightAnimation;
-		
-	private float marioStateTime;
-	
-	private Vector2 acceleration;
-			
+					
 	private Vector2 oldPosition;
 		
 	private MarioStateEnum state;
 	
-	private MarioStateEnum previousState;
-	
-	private Animation currentAnimation; 
-	
-	private TextureRegion currentFrame;	
-	
-	private CollisionEvent mapCollisionEvent;
-	
-	private boolean onFloor;
-	
+	private MarioStateEnum previousState;		
+		
 	private int jumpTimer;
 	
 	private boolean canInitiateJump;
@@ -104,7 +88,7 @@ public class Mario extends GameSprite {
 		marioJumpLeftFrames[0] = tmp[0][8];
 		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
 		
-		marioStateTime = 0f;
+		stateTime = 0f;
 		
 		jumpTimer = 0;
 		canInitiateJump = true;
@@ -137,15 +121,7 @@ public class Mario extends GameSprite {
 	public void setMarioRunRightAnimation(Animation marioRunRightAnimation) {
 		this.marioRunRightAnimation = marioRunRightAnimation;
 	}
-
-	public float getMarioStateTime() {
-		return marioStateTime;
-	}
-
-	public void setMarioStateTime(float marioStateTime) {
-		this.marioStateTime = marioStateTime;
-	}
-
+	
 	public Animation getMarioRunLeftAnimation() {
 		return marioRunLeftAnimation;
 	}
@@ -153,15 +129,7 @@ public class Mario extends GameSprite {
 	public void setMarioRunLeftAnimation(Animation marioRunLeftAnimation) {
 		this.marioRunLeftAnimation = marioRunLeftAnimation;
 	}
-	
-	public DirectionEnum getDirection() {
-		return direction;
-	}
-
-	public void setDirection(DirectionEnum direction) {
-		this.direction = direction;
-	}
-	
+		
 	public Vector2 getAcceleration() {
 		return acceleration;
 	}
@@ -191,10 +159,6 @@ public class Mario extends GameSprite {
 		if (this.acceleration.x<0) {
 			this.acceleration.x = 0;
 		}
-	}
-	
-	public void applyGravity() {
-		this.acceleration.y = this.acceleration.y - GRAVITY_COEF; 
 	}
 	
 	public Animation getMarioJumpLeftAnimation() {
@@ -228,84 +192,17 @@ public class Mario extends GameSprite {
 		oldPosition.y = getY();
 		previousState = state;
 	}
-	
-	public MarioStateEnum getState() {
-		return state;
-	}
-
-	public void setState(MarioStateEnum pstate) {		
-		this.state = pstate;			
-	}
+		
 	
 	public void setStateIfNotJumping(MarioStateEnum pstate) {		
 		if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
 			this.state = pstate;			
 		}
 	}
-	
-	public int getJumpTimer() {
-		return jumpTimer;
-	}
-	
-	public void incJumpTimer() {
-		this.jumpTimer++;
-	}
-
-	public void setJumpTimer(int jumpTimer) {
-		this.jumpTimer = jumpTimer;
-	}
-
-	public Animation getMarioSlideLeftAnimation() {
-		return marioSlideLeftAnimation;
-	}
-
-	public void setMarioSlideLeftAnimation(Animation marioSlideLeftAnimation) {
-		this.marioSlideLeftAnimation = marioSlideLeftAnimation;
-	}
-
-	public MarioStateEnum getPreviousState() {
-		return previousState;
-	}
-
-	public void setPreviousState(MarioStateEnum previousState) {
-		this.previousState = previousState;
-	}
-
-	public boolean isOnFloor() {
-		return onFloor;
-	}
-
-	public void setOnFloor(boolean onFloor) {
-		this.onFloor = onFloor;
-	}
-
-	public Animation getCurrentAnimation() {
-		return currentAnimation;
-	}
-
-	public void setCurrentAnimation(Animation currentAnimation) {
-		this.currentAnimation = currentAnimation;
-	}
-
-	public TextureRegion getCurrentFrame() {
-		return currentFrame;
-	}
-
-	public void setCurrentFrame(TextureRegion currentFrame) {
-		this.currentFrame = currentFrame;
-	}
-	
-	public CollisionEvent getMapCollisionEvent() {
-		return mapCollisionEvent;
-	}
-
-	public void setMapCollisionEvent(CollisionEvent mapCollisionEvent) {
-		this.mapCollisionEvent = mapCollisionEvent;
-	}
-	
-	public void move() {
 		
-		float xVelocity = Gdx.graphics.getDeltaTime() * acceleration.x;
+	public void move(float deltaTime) {
+		
+		float xVelocity = deltaTime * acceleration.x;
 		xVelocity = direction==DirectionEnum.LEFT ? -xVelocity : xVelocity;
 		setX(getX() + xVelocity);
 		
@@ -313,7 +210,7 @@ public class Mario extends GameSprite {
 		setY(getY()+acceleration.y);
 	}
 	
-	public void collideMarioWithTilemap(MarioTileMap tileMap) {
+	public void collideWithTilemap(TmxMap tileMap) {
 				
 		tileMap.checkVerticalMapCollision(this);
 		float yMove = getY() - getOldPosition().y;	
@@ -363,28 +260,25 @@ public class Mario extends GameSprite {
 					setDirection(DirectionEnum.LEFT);
 				} 
 				setState(MarioStateEnum.NO_MOVE);			 					
-				setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioRunRightAnimation() : getMarioRunLeftAnimation());
-				setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
-			} else {			
-				setCurrentAnimation(getState()==MarioStateEnum.RUNNING_LEFT ? getMarioRunLeftAnimation() :
-					 getState()==MarioStateEnum.RUNNING_RIGHT ? getMarioRunRightAnimation() :
-						 getState()==MarioStateEnum.SLIDING_LEFT ? getMarioSlideLeftAnimation() :
-							 getState()==MarioStateEnum.SLIDING_RIGHT ? getMarioSlideRightAnimation() :
-								 getDirection()==DirectionEnum.RIGHT ? getMarioRunRightAnimation() : getMarioRunLeftAnimation());			
-				setCurrentFrame(getCurrentAnimation().getKeyFrame(getMarioStateTime(), true));
+				currentAnimation = direction==DirectionEnum.RIGHT ? marioRunRightAnimation : marioRunLeftAnimation;
+				currentFrame = currentAnimation.getKeyFrame(0, false);
+			} else {
+				currentAnimation = state == MarioStateEnum.RUNNING_LEFT ? marioRunLeftAnimation : 				
+					 state == MarioStateEnum.RUNNING_RIGHT ? marioRunRightAnimation : 
+						 state == MarioStateEnum.SLIDING_LEFT ? marioSlideLeftAnimation :
+							 state == MarioStateEnum.SLIDING_RIGHT ? marioSlideRightAnimation : 
+								 direction==DirectionEnum.RIGHT ? marioRunRightAnimation : marioRunLeftAnimation;
+				currentFrame = currentAnimation.getKeyFrame(stateTime, true);				
 			}										
-		} else {
-			setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioJumpRightAnimation() : getMarioJumpLeftAnimation());
-			setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
 		}
 		
-		if (!onFloor) {
-			setCurrentAnimation(getDirection()==DirectionEnum.RIGHT ? getMarioJumpRightAnimation() : getMarioJumpLeftAnimation());
-			setCurrentFrame(getCurrentAnimation().getKeyFrame(0, false));
+		if (!onFloor) {			
+			currentAnimation = direction==DirectionEnum.RIGHT ? marioJumpRightAnimation : marioJumpLeftAnimation;			
+			currentFrame = currentAnimation.getKeyFrame(0, false);
 		}
 	}
 
-	public boolean isCanInitiateJump() {
+	public boolean canInitiateJump() {
 		return canInitiateJump;
 	}
 
@@ -392,12 +286,40 @@ public class Mario extends GameSprite {
 		this.canInitiateJump = canInitiateJump;
 	}
 
-	public boolean isCanJumpHigher() {
+	public boolean canJumpHigher() {
 		return canJumpHigher;
 	}
 
 	public void setCanJumpHigher(boolean canJumpHigher) {
 		this.canJumpHigher = canJumpHigher;
+	}
+	
+	public MarioStateEnum getState() {
+		return state;
+	}
+
+	public void setState(MarioStateEnum pstate) {		
+		this.state = pstate;			
+	}
+	
+	public int getJumpTimer() {
+		return jumpTimer;
+	}
+	
+	public void incJumpTimer() {
+		this.jumpTimer++;
+	}
+
+	public void setJumpTimer(int jumpTimer) {
+		this.jumpTimer = jumpTimer;
+	}
+
+	public MarioStateEnum getPreviousState() {
+		return previousState;
+	}
+
+	public void setPreviousState(MarioStateEnum previousState) {
+		this.previousState = previousState;
 	}
 	
 }
