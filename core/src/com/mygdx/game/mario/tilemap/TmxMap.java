@@ -70,9 +70,9 @@ public class TmxMap {
 		mario.reinitHorizontalMapCollisionEvent();
 
 		Vector2 leftBottomCorner = new Vector2(mario.getX(), mario.getY());
-		Vector2 leftTopCorner = new Vector2(mario.getX(), mario.getY() + 1);
+		Vector2 leftTopCorner = new Vector2(mario.getX(), mario.getY() + 0.9f);
 		Vector2 rightBottomCorner = new Vector2(mario.getX() + 1, mario.getY());
-		Vector2 rightTopCorner = new Vector2(mario.getX() + 1, mario.getY() + 1);
+		Vector2 rightTopCorner = new Vector2(mario.getX() + 1, mario.getY() + 0.9f);
 
 		boolean isCollision = isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		mario.getMapCollisionEvent().setCollidingLeft(isCollision);
@@ -93,9 +93,9 @@ public class TmxMap {
 		mario.reinitVerticalMapCollisionEvent();
 
 		Vector2 leftBottomCorner = new Vector2(mario.getX() + 0.1f, mario.getY());
-		Vector2 leftTopCorner = new Vector2(mario.getX() + 0.1f, mario.getY() + 1);
+		Vector2 leftTopCorner = new Vector2(mario.getX() + 0.1f, mario.getY() + 0.9f);
 		Vector2 rightBottomCorner = new Vector2(mario.getX() + 0.9f, mario.getY());
-		Vector2 rightTopCorner = new Vector2(mario.getX() + 0.9f, mario.getY() + 1);
+		Vector2 rightTopCorner = new Vector2(mario.getX() + 0.9f, mario.getY() + 0.9f);
 
 		boolean isCollision = isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		mario.getMapCollisionEvent().setCollidingBottom(isCollision);

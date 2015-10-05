@@ -46,7 +46,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	private int jumpTimerMax = 20;
 	
 	private IScrollingBackground scrollingBackground;
-	
+		
 	@Override
 	public void create() {
 	
@@ -54,7 +54,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		
 		spriteBatch = new SpriteBatch();
 		font = new BitmapFont();
-        font.setColor(0.5f,0.4f,0,1);        
+        //font.setColor(0.5f,0.4f,0,1);
+		font.setColor(0,0,1,1);
 		
 		mario = new Mario(1,1);
 		
@@ -68,7 +69,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
 		camera.update();		
 		
-		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, "background.gif", 16);
+		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, "background.gif", 16);		
 	}
 
 	@Override
@@ -100,7 +101,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (Math.floor(cameraOffset)==8) {
 			scrollingBackground.update();			
 		}
-		scrollingBackground.render();
+		scrollingBackground.render();		
 		
 		// 1 - Draw tilemap
 		// 1.1 - Render tilemap
@@ -123,13 +124,13 @@ public class MyGdxGame extends ApplicationAdapter {
 			
 			// Mario information
 			spriteBatch.begin();			
-			font.draw(spriteBatch, "mario.position="+mario.getX()+","+mario.getY(), 10,460);
-			font.draw(spriteBatch, "mario.acceleration="+mario.getAcceleration().x+","+mario.getAcceleration().y, 10,440);
+			font.draw(spriteBatch, "mario.position="+String.format("%.1f", mario.getX())+","+String.format("%.1f", mario.getY()), 10,460);
+			font.draw(spriteBatch, "mario.acceleration="+String.format("%.1f", mario.getAcceleration().x)+","+String.format("%.1f", mario.getAcceleration().y), 10,440);
 			font.draw(spriteBatch, "state="+mario.getState().toString(), 10, 420);			
 			font.draw(spriteBatch, "direction="+mario.getDirection().toString(), 10, 400);
 			font.draw(spriteBatch, "jumptimer="+mario.getJumpTimer(), 10, 380);
 			font.draw(spriteBatch, "isOnFloor="+mario.isOnFloor(), 10, 360);
-			font.draw(spriteBatch, "camera.x="+camera.position.x+" camera.offset="+cameraOffset, 10, 340);
+			font.draw(spriteBatch, "camera.x="+String.format("%.1f", camera.position.x)+" camera.offset="+String.format("%.1f", cameraOffset), 10, 340);
 			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460); 
 			font.draw(spriteBatch, "tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight()+", left=" +mario.getMapCollisionEvent().isCollidingLeft() 
 					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 320);
@@ -141,7 +142,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	        batch.begin();  
 	        shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 	        shapeRenderer.begin(ShapeType.Line);
-	        shapeRenderer.setColor(0,1,0,0.5f);
+	        shapeRenderer.setColor(0,0,1,1);
 	        shapeRenderer.rect(mario.getX(), mario.getY(),1,1);
 	        shapeRenderer.end();
 	        batch.end();
@@ -259,7 +260,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			mario.setState(MarioStateEnum.JUMPING);
 			mario.getAcceleration().y = 0.16f;			
 			mario.setCanJumpHigher(true);
-			jumpTimerMax = 21 + (int)mario.getAcceleration().x/5;
+			jumpTimerMax = 20 + (int)mario.getAcceleration().x/5;
 		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.canJumpHigher()) {
 			if (mario.getJumpTimer()<jumpTimerMax) {				//
 				mario.incJumpTimer();
