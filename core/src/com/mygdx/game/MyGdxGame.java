@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.mygdx.game.mario.background.IScrollingBackground;
+import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.impl.Mario;
@@ -43,6 +45,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	
 	private int jumpTimerMax = 20;
 	
+	private IScrollingBackground scrollingBackground;
+	
 	@Override
 	public void create() {
 	
@@ -63,6 +67,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.setToOrtho(false, 16, 15);
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
 		camera.update();		
+		
+		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, "background.gif", 16);
 	}
 
 	@Override
@@ -90,19 +96,25 @@ public class MyGdxGame extends ApplicationAdapter {
 						
 		// Move camera
 		moveCamera();
-										
+				
+		if (Math.floor(cameraOffset)==8) {
+			scrollingBackground.update();			
+		}
+		scrollingBackground.render();
+		
 		// 1 - Draw tilemap
-		// 1.2 - Render tilemap
+		// 1.1 - Render tilemap
 		renderer.setView(camera);				
-		renderer.render();									
-		// 1.1 - Render mystery blocks
+		renderer.render();				
+		
+		// 1.2 - Render mystery blocks
 		renderMysteryBlocks(delta);
 		
 		// 2 - Render Mario
 		renderMario();       				
 		
 		// 3 - Render debug mode (press F1 to display/hide debug)
-		renderDebugMode();
+		renderDebugMode();		
 		
 	}
 	
