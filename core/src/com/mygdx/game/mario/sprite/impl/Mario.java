@@ -18,9 +18,7 @@ public class Mario extends GameSprite {
 	private static final float DECELERATION_COEF = 0.4f;
 
 	private static final float ACCELERATION_COEF = 0.2f;
-			
-	private Texture marioSpriteSheet;
-		
+						
 	private Animation marioRunRightAnimation;
 	
 	private Animation marioRunLeftAnimation;
@@ -56,9 +54,9 @@ public class Mario extends GameSprite {
 		
 		mapCollisionEvent = new CollisionEvent();
 		
-		marioSpriteSheet = new Texture(Gdx.files.internal("mario.gif"));
+		spriteSheet = new Texture(Gdx.files.internal("sprites/mario.gif"));
 
-		TextureRegion[][] tmp = TextureRegion.split(marioSpriteSheet, marioSpriteSheet.getWidth() / 14, marioSpriteSheet.getHeight() / 1);
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 14, spriteSheet.getHeight() / 1);
 		
 		TextureRegion[] marioRunRightFrames = new TextureRegion[3];
 		marioRunRightFrames[0] = tmp[0][0];
@@ -98,54 +96,6 @@ public class Mario extends GameSprite {
 		previousState = MarioStateEnum.NO_MOVE;
 	}
 
-	public Animation getMarioSlideRightAnimation() {
-		return marioSlideRightAnimation;
-	}
-
-	public void setMarioSlideRightAnimation(Animation marioSlideRightAnimation) {
-		this.marioSlideRightAnimation = marioSlideRightAnimation;
-	}
-
-	public Texture getMarioSpriteSheet() {
-		return marioSpriteSheet;
-	}
-
-	public void setMarioSpriteSheet(Texture marioSpriteSheet) {
-		this.marioSpriteSheet = marioSpriteSheet;
-	}
-	
-	public Animation getMarioRunRightAnimation() {
-		return marioRunRightAnimation;
-	}
-
-	public void setMarioRunRightAnimation(Animation marioRunRightAnimation) {
-		this.marioRunRightAnimation = marioRunRightAnimation;
-	}
-	
-	public Animation getMarioRunLeftAnimation() {
-		return marioRunLeftAnimation;
-	}
-
-	public void setMarioRunLeftAnimation(Animation marioRunLeftAnimation) {
-		this.marioRunLeftAnimation = marioRunLeftAnimation;
-	}
-		
-	public Vector2 getAcceleration() {
-		return acceleration;
-	}
-
-	public void setAcceleration(Vector2 acceleration) {
-		this.acceleration = acceleration;
-	}
-		
-	public Vector2 getOldPosition() {
-		return oldPosition;
-	}
-
-	public void setOldPosition(Vector2 oldPosition) {
-		this.oldPosition = oldPosition;
-	}
-
 	public void accelerate() {
 		if (this.acceleration.x<ACCELERATION_MAX) {
 			this.acceleration.x = this.acceleration.x + ACCELERATION_COEF;
@@ -177,22 +127,11 @@ public class Mario extends GameSprite {
 		this.marioJumpRightAnimation = marioJumpRightAnimation;
 	}
 
-	public void reinitHorizontalMapCollisionEvent() {
-		mapCollisionEvent.setCollidingLeft(false);
-		mapCollisionEvent.setCollidingRight(false);		
-	}
-	
-	public void reinitVerticalMapCollisionEvent() {
-		mapCollisionEvent.setCollidingBottom(false);
-		mapCollisionEvent.setCollidingTop(false);		
-	}
-
 	public void storeOldPosition() {
 		oldPosition.x = getX();
 		oldPosition.y = getY();
 		previousState = state;
-	}
-		
+	}	
 	
 	public void setStateIfNotJumping(MarioStateEnum pstate) {		
 		if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
@@ -320,6 +259,14 @@ public class Mario extends GameSprite {
 
 	public void setPreviousState(MarioStateEnum previousState) {
 		this.previousState = previousState;
+	}
+	
+	public Vector2 getOldPosition() {
+		return oldPosition;
+	}
+
+	public void setOldPosition(Vector2 oldPosition) {
+		this.oldPosition = oldPosition;
 	}
 	
 }

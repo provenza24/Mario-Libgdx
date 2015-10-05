@@ -1,5 +1,6 @@
 package com.mygdx.game.mario.sprite;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +26,8 @@ public abstract class GameSprite extends Sprite implements IMoveable, ICollision
 	
 	protected TextureRegion currentFrame;
 	
+	protected Texture spriteSheet;
+	
 	public GameSprite(float x ,float y) {
 		setPosition(x, y);
 	}
@@ -32,6 +35,16 @@ public abstract class GameSprite extends Sprite implements IMoveable, ICollision
 	/** Methods */
 	public void applyGravity() {
 		this.acceleration.y = this.acceleration.y - GRAVITY_COEF; 
+	}
+	
+	public void reinitHorizontalMapCollisionEvent() {
+		mapCollisionEvent.setCollidingLeft(false);
+		mapCollisionEvent.setCollidingRight(false);		
+	}
+	
+	public void reinitVerticalMapCollisionEvent() {
+		mapCollisionEvent.setCollidingBottom(false);
+		mapCollisionEvent.setCollidingTop(false);		
 	}
 	
 	/** Getters / Setters */
@@ -89,6 +102,14 @@ public abstract class GameSprite extends Sprite implements IMoveable, ICollision
 
 	public void setCurrentFrame(TextureRegion currentFrame) {
 		this.currentFrame = currentFrame;
+	}
+
+	public Texture getSpriteSheet() {
+		return spriteSheet;
+	}
+
+	public void setSpriteSheet(Texture spriteSheet) {
+		this.spriteSheet = spriteSheet;
 	}
 	
 	

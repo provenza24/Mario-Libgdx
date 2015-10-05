@@ -55,7 +55,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		mario = new Mario(1,1);
 		
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
-		tileMap = new TmxMap("level_1_1.tmx");		
+		tileMap = new TmxMap("tilemaps/level_1_1.tmx");		
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
 		// create an orthographic camera, shows us 30x20 units of the world

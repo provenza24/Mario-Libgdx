@@ -35,7 +35,7 @@ public class MysteryBlock extends Sprite {
 							
 		setPosition(x, y);
 
-		spriteSheet = new Texture(Gdx.files.internal("mystery.png"));
+		spriteSheet = new Texture(Gdx.files.internal("sprites/mystery.png"));
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);		
 		TextureRegion[] animationFrames = new TextureRegion[3];
 		animationFrames[0] = tmp[0][0];
