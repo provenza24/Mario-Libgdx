@@ -49,7 +49,7 @@ public class TmxMap {
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
 			MapProperties objectProperty = mapObject.getProperties();		
-			Gdx.app.log("New object from layer", objectProperty.get("type").toString());
+			//Gdx.app.log("New object from layer", objectProperty.get("type").toString());
 			if (objectProperty.get("type").toString().equals("mario")) {
 				mario = new Mario(mapObject);
 			}

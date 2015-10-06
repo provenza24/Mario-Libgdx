@@ -169,12 +169,26 @@ public class MyGdxGame extends ApplicationAdapter {
 			enemy.update(tileMap, camera, deltaTime);
 			if (enemy.isDeletable()) {
 				enemies.remove(i--);
-			} else if (enemy.isVisible()) {
+			} else {
 				// Draw it
-				enemy.render(renderer.getBatch());	            		
+				if (enemy.isAlive()) {
+					for (int j=i+1; j<enemies.size(); j++) {
+						// Check collision with other enemies
+						AbstractGameSprite enemyToCompare = enemies.get(j);
+						if (enemy.getBoundingRectangle().overlaps(enemyToCompare.getBoundingRectangle())) {							
+							enemy.setOldPosition(enemy.getOldPosition());
+							enemy.getAcceleration().x = - enemy.getAcceleration().x;
+							enemyToCompare.getAcceleration().x = - enemyToCompare.getAcceleration().x;
+						}
+					}
+				}
+				if (enemy.isVisible()) {
+					enemy.render(renderer.getBatch());
+				}				
             }
 						
-		}
+		}				
+		
 	}
 	
 	private void renderMysteryBlocks(float delta) {

@@ -79,7 +79,7 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 			move(deltaTime);
 			collideWithTilemap(tileMap);
 			updateAnimation(deltaTime);			
-			if (getX()<camera.position.x-9) {
+			if (getX()<camera.position.x-9 || getY() < -1) {
 				deletable = true;				
 			} else {
 				visible = getX() < camera.position.x+8;				

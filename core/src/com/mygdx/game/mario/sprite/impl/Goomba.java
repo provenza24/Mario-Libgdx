@@ -13,7 +13,7 @@ public class Goomba extends AbstractGameSprite {
 	
 	public Goomba(MapObject mapObject) {
 		super(mapObject);	
-		
+		setSize(1, 1);
 		spriteSheet = new Texture(Gdx.files.internal("sprites/goomba.png"));		
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);		
 		TextureRegion[] walkFrames = new TextureRegion[2];
@@ -24,7 +24,7 @@ public class Goomba extends AbstractGameSprite {
 		currentAnimation = walkAnimation;		
 		stateTime = 0f;
 		acceleration.x = -2;
-		gravitating = true;		
+		gravitating = true;					
 	}	
 
 }
