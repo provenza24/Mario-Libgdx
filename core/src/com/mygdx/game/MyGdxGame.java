@@ -17,7 +17,7 @@ import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
-import com.mygdx.game.mario.sprite.GameSprite;
+import com.mygdx.game.mario.sprite.AbstractGameSprite;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
 import com.mygdx.game.mario.tilemap.TmxMap;
@@ -57,12 +57,12 @@ public class MyGdxGame extends ApplicationAdapter {
 		font = new BitmapFont();
         //font.setColor(0.5f,0.4f,0,1);
 		font.setColor(0,0,1,1);
-		
-		mario = new Mario(1,1);
-		
+						
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tileMap = new TmxMap("tilemaps/level_1_1.tmx");		
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
+		
+		mario = tileMap.getMario();
 
 		// create an orthographic camera, shows us 30x20 units of the world
 		camera = new OrthographicCamera();
@@ -70,7 +70,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
 		camera.update();		
 		
-		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, "background.gif", 16);		
+		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, "background.gif", 16);						
 	}
 
 	@Override
@@ -80,44 +80,32 @@ public class MyGdxGame extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		float delta = Gdx.graphics.getDeltaTime();
-		
-		mario.setStateTime(mario.getStateTime() + delta);
-								
+											
 		// Listen to keyboard actions and update Mario status
-		handleInput();		
-		
-		// Move Mario
-		mario.move(delta);
-		
-		// Handle Mario collisions				
-		// Mario <-> Tilemap collision
-		mario.collideWithTilemap(tileMap);
-		
-		// Update Mario animation before drawing
-		mario.updateAnimation();
+		handleInput();					
+		mario.move(delta);		
+		mario.collideWithTilemap(tileMap);				
+		mario.updateAnimation(delta);
 						
 		// Move camera
 		moveCamera();
 				
+		// Move scrolling background
 		if (Math.floor(cameraOffset)==8) {
 			scrollingBackground.update();			
 		}
 		scrollingBackground.render();		
 		
-		// 1 - Draw tilemap
-		// 1.1 - Render tilemap
+		// Render tilemap
 		renderer.setView(camera);				
-		renderer.render();				
-		
-		// 1.2 - Render mystery blocks
+		renderer.render();						
+		// Render mystery blocks
 		renderMysteryBlocks(delta);
-		
-		renderEnemies(delta);
-		
-		// 2 - Render Mario
-		renderMario();       				
-		
-		// 3 - Render debug mode (press F1 to display/hide debug)
+		// Render enemies
+		handleEnemies(delta);		
+		// Render Mario
+		mario.render(renderer.getBatch());       						
+		// Render debug mode (press F1 to display/hide debug)
 		renderDebugMode();		
 		
 	}
@@ -138,6 +126,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight()+", left=" +mario.getMapCollisionEvent().isCollidingLeft() 
 					+ ", top="+mario.getMapCollisionEvent().isCollidingTop()+", bottom="+mario.getMapCollisionEvent().isCollidingBottom()+")", 10, 320);
 			font.draw(spriteBatch, "Mysteryblocks: " +tileMap.getMysteryBlocks().size(), 10, 300);			
+			font.draw(spriteBatch, "Enemies: " +tileMap.getEnemies().size(), 10, 280);
 			spriteBatch.end();
 			
 			// Green rectangle around Mario
@@ -171,23 +160,20 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		camera.update();
 	}
-
-	private void renderMario() {		       
-        batch = renderer.getBatch();
-        batch.begin();                                       
-        batch.draw(mario.getCurrentFrame(), mario.getX(), mario.getY(), 1, 1);        
-        batch.end();		                
-	}
 	
-	private void renderEnemies(float delta) {
-		List<GameSprite> enemies = tileMap.getEnemies();
-		for (GameSprite enemy : enemies) {
-			enemy.setStateTime(enemy.getStateTime() + delta);
-			enemy.setCurrentFrame(enemy.getCurrentAnimation().getKeyFrame(enemy.getStateTime(), true));				
-			batch = renderer.getBatch();
-			batch.begin();      
-			batch.draw(enemy.getCurrentFrame(), enemy.getX(), enemy.getY(), 1, 1);
-			batch.end();
+	private void handleEnemies(float deltaTime) {
+	
+		List<AbstractGameSprite> enemies = tileMap.getEnemies();		
+		for (int i=0;i<enemies.size();i++) {			
+			AbstractGameSprite enemy = enemies.get(i);
+			enemy.update(tileMap, camera, deltaTime);
+			if (enemy.isDeletable()) {
+				enemies.remove(i--);
+			} else if (enemy.isVisible()) {
+				// Draw it
+				enemy.render(renderer.getBatch());	            		
+            }
+						
 		}
 	}
 	
@@ -212,7 +198,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	            		// Block is still visible, draw it
 	            		batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);
 	            	}
-	        	} else if (block.getX()<camera.position.x+7) {
+	        	} else if (block.getX()<camera.position.x+8) {
 	        		// Block was not visible, now will be visible and drawable 
 	        		block.setVisible(true);        	
 	        	}        	
@@ -222,9 +208,7 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void handleInput() {
-
-		mario.storeOldPosition();
-		
+				
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			debugMode = !debugMode;
 		}
@@ -275,11 +259,11 @@ public class MyGdxGame extends ApplicationAdapter {
 			mario.setState(MarioStateEnum.JUMPING);
 			mario.getAcceleration().y = 0.16f;			
 			mario.setCanJumpHigher(true);
-			jumpTimerMax = 20 + (int)mario.getAcceleration().x/5;
+			jumpTimerMax = 24 + (int)mario.getAcceleration().x/5;
 		}  else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState()==MarioStateEnum.JUMPING && mario.canJumpHigher()) {
 			if (mario.getJumpTimer()<jumpTimerMax) {				//
 				mario.incJumpTimer();
-				mario.getAcceleration().y += 0.01;
+				mario.getAcceleration().y += 0.009;
 			} else {		
 				mario.setCanJumpHigher(false);
 				mario.setJumpTimer(0);

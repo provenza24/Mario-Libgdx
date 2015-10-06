@@ -4,19 +4,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.mario.sprite.GameSprite;
-import com.mygdx.game.mario.tilemap.TmxMap;
+import com.badlogic.gdx.maps.MapObject;
+import com.mygdx.game.mario.sprite.AbstractGameSprite;
 
-public class Goomba extends GameSprite {
+public class Goomba extends AbstractGameSprite {
 
 	private Animation walkAnimation;
 	
-	public Goomba(float x, float y) {
-		super(x/32, (y/32)+1);	
-		spriteSheet = new Texture(Gdx.files.internal("sprites/goomba.png"));
+	public Goomba(MapObject mapObject) {
+		super(mapObject);	
 		
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);
-		
+		spriteSheet = new Texture(Gdx.files.internal("sprites/goomba.png"));		
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);		
 		TextureRegion[] walkFrames = new TextureRegion[2];
 		walkFrames[0] = tmp[0][0];
 		walkFrames[1] = tmp[0][1];
@@ -24,15 +23,8 @@ public class Goomba extends GameSprite {
 		
 		currentAnimation = walkAnimation;		
 		stateTime = 0f;
-	}
-
-	@Override
-	public void move(float deltaTime) {		
-	}
-
-	@Override
-	public void collideWithTilemap(TmxMap tileMap) {
-		
-	}
+		acceleration.x = -2;
+		gravitating = true;		
+	}	
 
 }
