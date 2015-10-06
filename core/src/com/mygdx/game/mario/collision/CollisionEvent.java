@@ -1,4 +1,4 @@
-package com.mygdx.game.mario;
+package com.mygdx.game.mario.collision;
 
 public class CollisionEvent {
 
