@@ -43,6 +43,8 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 	protected boolean deletable;
 	
 	protected float xAlive;
+	
+	protected Vector2 offset;
 
 	public AbstractGameSprite(MapObject mapObject) {
 		float xPosition = (Float) mapObject.getProperties().get("x")/32;
@@ -55,7 +57,11 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 		visible = false;
 		alive = false;
 		mapCollisionEvent = new CollisionEvent();
+		offset = new Vector2(0,0);
+		initializeAnimations();
 	}
+	
+	public abstract void initializeAnimations();
 
 	/** Methods */
 	public void applyGravity() {
@@ -258,6 +264,14 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 
 	public void setDeletable(boolean deletable) {
 		this.deletable = deletable;
+	}
+
+	public Vector2 getOffset() {
+		return offset;
+	}
+
+	public void setOffset(Vector2 offset) {
+		this.offset = offset;
 	}	
 
 

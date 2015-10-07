@@ -25,7 +25,9 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class MyGdxGame extends ApplicationAdapter {
 
-	private boolean debugMode = false;
+	private boolean textDebugMode = false;
+	
+	private boolean boxDebugMode = false;		
 
 	private TmxMap tileMap;
 
@@ -112,8 +114,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	private void renderDebugMode() {
-		if (debugMode) {
-
+		
+		if (textDebugMode) {
 			// Mario information
 			spriteBatch.begin();
 			font.draw(spriteBatch,
@@ -137,14 +139,21 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "Mysteryblocks: " + tileMap.getMysteryBlocks().size(), 10, 300);
 			font.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
 			spriteBatch.end();
-
+		}
+		
+		if (boxDebugMode) {
 			// Green rectangle around Mario
 			batch = renderer.getBatch();
 			batch.begin();
 			shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
 			shapeRenderer.begin(ShapeType.Line);
 			shapeRenderer.setColor(0, 0, 1, 1);
-			shapeRenderer.rect(mario.getX(), mario.getY(), 1, 1);
+			shapeRenderer.rect(mario.getX()+mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
+			
+			for (AbstractGameSprite sprite : tileMap.getEnemies()) {
+				shapeRenderer.rect(sprite.getX()+sprite.getOffset().x, sprite.getY(), sprite.getWidth(), sprite.getHeight());
+			}
+			
 			shapeRenderer.end();
 			batch.end();
 		}
@@ -225,11 +234,13 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void handleInput() {
 
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-			debugMode = !debugMode;
+			textDebugMode = !textDebugMode;
 		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
-			mario.setX(mario.getX() + 2);
-		}
+			boxDebugMode = !boxDebugMode;
+		}		
+		
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			mario.getAcceleration().y = 0;
 			mario.setY(mario.getY() + 5);

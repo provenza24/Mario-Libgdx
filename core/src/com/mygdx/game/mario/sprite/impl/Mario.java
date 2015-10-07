@@ -45,8 +45,8 @@ public class Mario extends AbstractGameSprite {
 	public Mario(MapObject mapObject) {
 
 		super(mapObject);
-
-		setSize(32, 32);
+		
+		setSize(1, 1);		
 		acceleration = new Vector2();
 		stateTime = 0f;
 		jumpTimer = 0;
@@ -58,8 +58,12 @@ public class Mario extends AbstractGameSprite {
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;
 
-		mapCollisionEvent = new CollisionEvent();
+		mapCollisionEvent = new CollisionEvent();		
+	}
 
+	@Override
+	public void initializeAnimations() {
+		
 		spriteSheet = new Texture(Gdx.files.internal("sprites/mario.gif"));
 
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 14,
@@ -92,8 +96,9 @@ public class Mario extends AbstractGameSprite {
 		TextureRegion[] marioJumpLeftFrames = new TextureRegion[1];
 		marioJumpLeftFrames[0] = tmp[0][8];
 		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
+		
 	}
-
+	
 	public void accelerate() {
 		if (this.acceleration.x < ACCELERATION_MAX) {
 			this.acceleration.x = this.acceleration.x + ACCELERATION_COEF;
@@ -250,6 +255,5 @@ public class Mario extends AbstractGameSprite {
 	public void setPreviousState(MarioStateEnum previousState) {
 		this.previousState = previousState;
 	}
-
 
 }

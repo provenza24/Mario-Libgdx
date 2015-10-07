@@ -81,10 +81,10 @@ public class TmxMap {
 
 		sprite.reinitHorizontalMapCollisionEvent();
 
-		Vector2 leftBottomCorner = new Vector2(sprite.getX(), sprite.getY());
-		Vector2 leftTopCorner = new Vector2(sprite.getX(), sprite.getY() + 0.9f);
-		Vector2 rightBottomCorner = new Vector2(sprite.getX() + 1, sprite.getY());
-		Vector2 rightTopCorner = new Vector2(sprite.getX() + 1, sprite.getY() + 0.9f);
+		Vector2 leftBottomCorner = new Vector2(sprite.getX() + sprite.getOffset().x, sprite.getY());
+		Vector2 leftTopCorner = new Vector2(sprite.getX() + sprite.getOffset().x, sprite.getY() + 0.9f);
+		Vector2 rightBottomCorner = new Vector2(sprite.getX() + 1 - sprite.getOffset().x, sprite.getY());
+		Vector2 rightTopCorner = new Vector2(sprite.getX() + 1 - sprite.getOffset().x, sprite.getY() + 0.9f);
 
 		boolean isCollision = isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		sprite.getMapCollisionEvent().setCollidingLeft(isCollision);
@@ -104,10 +104,10 @@ public class TmxMap {
 
 		sprite.reinitVerticalMapCollisionEvent();
 
-		Vector2 leftBottomCorner = new Vector2(sprite.getX() + 0.1f, sprite.getY());
-		Vector2 leftTopCorner = new Vector2(sprite.getX() + 0.1f, sprite.getY() + 0.9f);
-		Vector2 rightBottomCorner = new Vector2(sprite.getX() + 0.9f, sprite.getY());
-		Vector2 rightTopCorner = new Vector2(sprite.getX() + 0.9f, sprite.getY() + 0.9f);
+		Vector2 leftBottomCorner = new Vector2(sprite.getX() + 0.1f + sprite.getOffset().x, sprite.getY());
+		Vector2 leftTopCorner = new Vector2(sprite.getX() + 0.1f + sprite.getOffset().x, sprite.getY() + 0.9f);
+		Vector2 rightBottomCorner = new Vector2(sprite.getX() + 0.9f - sprite.getOffset().x, sprite.getY());
+		Vector2 rightTopCorner = new Vector2(sprite.getX() + 0.9f - sprite.getOffset().x, sprite.getY() + 0.9f);
 
 		boolean isCollision = isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		sprite.getMapCollisionEvent().setCollidingBottom(isCollision);
