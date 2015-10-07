@@ -9,6 +9,11 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.width = 512;
 		config.height = 480;
+		
+//		config.vSyncEnabled = false; // Setting to false disables vertical sync
+//		config.foregroundFPS = 60; // Setting to 0 disables foreground fps throttling
+//		config.backgroundFPS = 60; // Setting to 0 disables background fps throttling
+		
 		new LwjglApplication(new MyGdxGame(), config);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -25,9 +26,11 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class MyGdxGame extends ApplicationAdapter {
 
-	private boolean textDebugMode = false;
+	private boolean debugShowText = false;
 	
-	private boolean boxDebugMode = false;		
+	private boolean debugShowBounds = false;
+	
+	private boolean debugShowFps = false;
 
 	private TmxMap tileMap;
 
@@ -115,7 +118,7 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void renderDebugMode() {
 		
-		if (textDebugMode) {
+		if (debugShowText) {
 			// Mario information
 			spriteBatch.begin();
 			font.draw(spriteBatch,
@@ -128,8 +131,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, 380);
 			font.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, 360);
 			font.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.position.x) + " camera.offset="
-					+ String.format("%.1f", cameraOffset), 10, 340);
-			font.draw(spriteBatch, "fps: " + Gdx.graphics.getFramesPerSecond(), 450, 460);
+					+ String.format("%.1f", cameraOffset), 10, 340);			
 			font.draw(spriteBatch,
 					"tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight() + ", left="
 							+ mario.getMapCollisionEvent().isCollidingLeft() + ", top="
@@ -141,20 +143,27 @@ public class MyGdxGame extends ApplicationAdapter {
 			spriteBatch.end();
 		}
 		
-		if (boxDebugMode) {
+		if (debugShowFps) {
+			spriteBatch.begin();
+			font.draw(spriteBatch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 492, 475);
+			spriteBatch.end();
+		}
+		
+		if (debugShowBounds) {
 			// Green rectangle around Mario
 			batch = renderer.getBatch();
-			batch.begin();
-			shapeRenderer.setProjectionMatrix(batch.getProjectionMatrix());
-			shapeRenderer.begin(ShapeType.Line);
-			shapeRenderer.setColor(0, 0, 1, 1);
-			shapeRenderer.rect(mario.getX()+mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
-			
+			batch.begin();			
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.begin(ShapeType.Filled);
+			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
+			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
 			for (AbstractGameSprite sprite : tileMap.getEnemies()) {
 				shapeRenderer.rect(sprite.getX()+sprite.getOffset().x, sprite.getY(), sprite.getWidth(), sprite.getHeight());
 			}
-			
-			shapeRenderer.end();
+			shapeRenderer.end();						
+			Gdx.gl.glDisable(GL20.GL_BLEND);
 			batch.end();
 		}
 	}
@@ -234,16 +243,15 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void handleInput() {
 
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-			textDebugMode = !textDebugMode;
+			debugShowText = !debugShowText;
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
-			boxDebugMode = !boxDebugMode;
+			debugShowFps = !debugShowFps;
 		}		
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
-			mario.getAcceleration().y = 0;
-			mario.setY(mario.getY() + 5);
+			debugShowBounds = !debugShowBounds;
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
