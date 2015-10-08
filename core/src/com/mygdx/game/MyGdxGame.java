@@ -65,7 +65,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		font.setColor(0, 0, 1, 1);
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
-		tileMap = new TmxMap("tilemaps/level_1_1.tmx");
+		tileMap = new TmxMap("tilemaps/level_1_2.tmx");
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
 		mario = tileMap.getMario();
@@ -75,8 +75,9 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.setToOrtho(false, 16, 15);
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
 		camera.update();
+		cameraOffset = mario.getX();
 
-		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, "background.gif", 16);
+		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackground(), 16);
 	}
 
 	@Override
@@ -246,12 +247,23 @@ public class MyGdxGame extends ApplicationAdapter {
 			debugShowText = !debugShowText;
 		}
 		
+		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
+			mario.setX(216);
+			mario.setY(2);
+			camera.position.x = 216 + 7;
+			cameraOffset = 0;
+		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
 			debugShowFps = !debugShowFps;
 		}		
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debugShowBounds = !debugShowBounds;
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
+			mario.setY(mario.getY()+10);
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {

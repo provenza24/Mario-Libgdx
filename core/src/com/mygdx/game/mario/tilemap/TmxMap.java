@@ -1,9 +1,10 @@
 package com.mygdx.game.mario.tilemap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
@@ -33,13 +34,25 @@ public class TmxMap {
 	
 	private Mario mario;
 	
+	private static final Map<String, String> BACKGROUNDS = new HashMap<String, String>();
+	
+	private String background;
+	
+	static {
+		BACKGROUNDS.put("overworld", "overworld.gif");
+		BACKGROUNDS.put("underworld", "underworld.png");
+	}
+	
 	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
 		initMysteryBlocks();			
-		initMapObjects();				
+		initMapObjects();	
+		
+		MapProperties properties = tileLayer.getProperties();
+		background = BACKGROUNDS.get((String)properties.get("background"));						
 	}
 
 	private void initMapObjects() {
@@ -162,5 +175,13 @@ public class TmxMap {
 
 	public void setMario(Mario mario) {
 		this.mario = mario;
+	}
+
+	public String getBackground() {
+		return background;
+	}
+
+	public void setBackground(String background) {
+		this.background = background;
 	}
 }

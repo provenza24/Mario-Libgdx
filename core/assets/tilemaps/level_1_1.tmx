@@ -31,7 +31,7 @@
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
-   <property name="background" value="background_overworld"/>
+   <property name="background" value="overworld"/>
    <property name="music" value="main-theme"/>
   </properties>
   <data encoding="base64" compression="zlib">
