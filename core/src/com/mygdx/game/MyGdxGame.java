@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.collision.CollisionHandler;
@@ -53,6 +54,8 @@ public class MyGdxGame extends ApplicationAdapter {
 	private int jumpTimerMax = 20;
 
 	private IScrollingBackground scrollingBackground;
+	
+	private boolean scrollable;
 
 	@Override
 	public void create() {
@@ -65,7 +68,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		font.setColor(0, 0, 1, 1);
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
-		tileMap = new TmxMap("tilemaps/level_1_2.tmx");
+		tileMap = new TmxMap("tilemaps/level_1_1.tmx");
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
 		mario = tileMap.getMario();
@@ -78,6 +81,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		cameraOffset = mario.getX();
 
 		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackground(), 16);
+		
+		scrollable = true;
 	}
 
 	@Override
@@ -94,14 +99,15 @@ public class MyGdxGame extends ApplicationAdapter {
 		mario.collideWithTilemap(tileMap);
 		mario.updateAnimation(delta);
 
-		// Move camera
-		moveCamera();
-
-		// Move scrolling background
-		if (Math.floor(cameraOffset) == 8) {
-			scrollingBackground.update();
+		if (scrollable) {
+			// Move camera
+			moveCamera();
+			// Move scrolling background
+			if (Math.floor(cameraOffset) == 8) {
+				scrollingBackground.update();
+			}
+			scrollingBackground.render();
 		}
-		scrollingBackground.render();
 
 		// Render tilemap
 		renderer.setView(camera);
@@ -248,10 +254,14 @@ public class MyGdxGame extends ApplicationAdapter {
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.setX(216);
-			mario.setY(2);
-			camera.position.x = 216 + 7;
+			mario.setAcceleration(new Vector2(0,0));
+			mario.setDirection(DirectionEnum.RIGHT);
+			mario.setX(217);
+			mario.setY(14);			
 			cameraOffset = 0;
+			camera.position.x = 217 + 6;
+			camera.update();
+			scrollable = false;
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
