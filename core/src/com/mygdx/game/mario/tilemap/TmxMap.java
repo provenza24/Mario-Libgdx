@@ -148,7 +148,7 @@ public class TmxMap {
 	
 	public void changeCellValue(int x, int y, int value) {
 		Cell cell = tileLayer.getCell(x, y);
-		cell.setTile(map.getTileSets().getTile(5));
+		cell.setTile(map.getTileSets().getTile(value));
 	}
 
 	public TiledMap getMap() {

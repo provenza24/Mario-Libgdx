@@ -10,32 +10,15 @@ public class OnCompleteAction extends Action{
 	
 	private TmxMap tmxMap;
 	
-	private int x;
-	
-	private int y;
-	
-	private int value;
-	
-	public OnCompleteAction(TmxMap tmxMap, MysteryBlock block, int x, int y, int value) {
-		this.x = x;
-		this.y = y;
-		this.value = value;
+	public OnCompleteAction(TmxMap tmxMap, MysteryBlock block) {
 		this.tmxMap = tmxMap;
 		this.block = block;
 	}
 	
-	Action completeAction = new Action(){
-	    public boolean act( float delta ) {
-	        // Do your stuff
-	    	tmxMap.changeCellValue(x, y, value);
-	        return true;
-	    }
-	};
-
 	@Override
-	public boolean act(float delta) { 
+	public boolean act(float delta) { 		
+		tmxMap.changeCellValue((int)block.getX(), (int)block.getY(), block.getReplacingTileValue());
 		block.setPosition(-5, 0);
-		tmxMap.changeCellValue(x, y, value);
 		return true;
 	}
 	

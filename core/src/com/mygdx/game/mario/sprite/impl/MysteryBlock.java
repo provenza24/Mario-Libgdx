@@ -26,6 +26,8 @@ public class MysteryBlock extends Actor {
 	
 	private ItemEnum itemEnum;
 	
+	private int replacingTileValue;
+	
 	static {
 		MAP_ITEMS.put(7, ItemEnum.COIN);
 		MAP_ITEMS.put(8, ItemEnum.RED_MUSHROOM);
@@ -46,6 +48,7 @@ public class MysteryBlock extends Actor {
 		visible = false;
 		stateTime = 0f;		
 		itemEnum = MAP_ITEMS.get(tileId);
+		replacingTileValue = 5;
 	}
 	
 	public static void updateAnimation(float delta) {
@@ -80,6 +83,14 @@ public class MysteryBlock extends Actor {
 
 	public void setItemEnum(ItemEnum itemEnum) {
 		this.itemEnum = itemEnum;
+	}
+
+	public int getReplacingTileValue() {
+		return replacingTileValue;
+	}
+
+	public void setReplacingTileValue(int replacingTileValue) {
+		this.replacingTileValue = replacingTileValue;
 	}
 	
 	
