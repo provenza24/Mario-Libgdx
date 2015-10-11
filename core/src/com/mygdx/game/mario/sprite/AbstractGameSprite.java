@@ -4,15 +4,16 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.mario.collision.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public abstract class AbstractGameSprite extends Sprite implements IMoveable, ICollisionable, IDrawable {
+public abstract class AbstractGameSprite extends Actor implements IMoveable, ICollisionable, IDrawable {
 
 	private static final float GRAVITY_COEF = 0.01f;
 
@@ -45,6 +46,8 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 	protected float xAlive;
 	
 	protected Vector2 offset;
+	
+	protected Rectangle bounds;
 
 	public AbstractGameSprite(MapObject mapObject) {
 		float xPosition = (Float) mapObject.getProperties().get("x")/32;
@@ -58,8 +61,12 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 		alive = false;
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);
-		initializeAnimations();
+		initializeAnimations();					
 	}
+	
+	public Rectangle getBounds() {
+        return bounds;
+    }
 	
 	public abstract void initializeAnimations();
 
@@ -105,6 +112,9 @@ public abstract class AbstractGameSprite extends Sprite implements IMoveable, IC
 
 		applyGravity();
 		setY(getY() + acceleration.y);
+		
+		bounds.setX(getX());
+	    bounds.setY(getY());
 	}
 			
 	public void collideWithTilemap(TmxMap tileMap) {

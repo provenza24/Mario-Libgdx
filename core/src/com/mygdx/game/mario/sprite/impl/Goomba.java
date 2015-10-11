@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.mario.sprite.AbstractGameSprite;
 
 public class Goomba extends AbstractGameSprite {
@@ -20,7 +21,8 @@ public class Goomba extends AbstractGameSprite {
 		currentAnimation = walkAnimation;		
 		stateTime = 0f;
 		acceleration.x = -2;
-		gravitating = true;					
+		gravitating = true;		
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}	
 	
 	@Override

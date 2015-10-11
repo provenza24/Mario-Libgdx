@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.collision.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
@@ -58,7 +59,9 @@ public class Mario extends AbstractGameSprite {
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;
 
-		mapCollisionEvent = new CollisionEvent();		
+		mapCollisionEvent = new CollisionEvent();	
+		
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}
 
 	@Override

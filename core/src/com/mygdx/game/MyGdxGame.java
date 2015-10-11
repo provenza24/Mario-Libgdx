@@ -15,12 +15,22 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.mario.action.ActionFacade;
+import com.mygdx.game.mario.action.OnCompleteAction;
 import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.collision.CollisionHandler;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.AbstractGameSprite;
+import com.mygdx.game.mario.sprite.MyActor;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
 import com.mygdx.game.mario.tilemap.TmxMap;
@@ -28,9 +38,9 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 public class MyGdxGame extends ApplicationAdapter {
 
 	private boolean debugShowText = false;
-	
+
 	private boolean debugShowBounds = false;
-	
+
 	private boolean debugShowFps = false;
 
 	private TmxMap tileMap;
@@ -54,8 +64,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	private int jumpTimerMax = 20;
 
 	private IScrollingBackground scrollingBackground;
-	
+
 	private boolean scrollable;
+
+	private Stage stage;
 
 	@Override
 	public void create() {
@@ -81,8 +93,18 @@ public class MyGdxGame extends ApplicationAdapter {
 		cameraOffset = mario.getX();
 
 		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackground(), 16);
-		
+
 		scrollable = true;
+
+		stage = new Stage();
+		
+		/*for (AbstractGameSprite sprite : tileMap.getEnemies()) {
+			stage.addActor(sprite);
+		}*/
+		
+		for (Actor actor : tileMap.getMysteryBlocks()) {
+			stage.addActor(actor);
+		}
 	}
 
 	@Override
@@ -121,10 +143,13 @@ public class MyGdxGame extends ApplicationAdapter {
 		// Render debug mode (press F1 to display/hide debug)
 		renderDebugMode();
 
+		//stage.act(Gdx.graphics.getDeltaTime());
+		stage.draw();
+		
 	}
 
 	private void renderDebugMode() {
-		
+
 		if (debugShowText) {
 			// Mario information
 			spriteBatch.begin();
@@ -138,7 +163,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, 380);
 			font.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, 360);
 			font.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.position.x) + " camera.offset="
-					+ String.format("%.1f", cameraOffset), 10, 340);			
+					+ String.format("%.1f", cameraOffset), 10, 340);
 			font.draw(spriteBatch,
 					"tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight() + ", left="
 							+ mario.getMapCollisionEvent().isCollidingLeft() + ", top="
@@ -149,17 +174,17 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
 			spriteBatch.end();
 		}
-		
+
 		if (debugShowFps) {
 			spriteBatch.begin();
 			font.draw(spriteBatch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 492, 475);
 			spriteBatch.end();
 		}
-		
+
 		if (debugShowBounds) {
 			// Green rectangle around Mario
 			batch = renderer.getBatch();
-			batch.begin();			
+			batch.begin();
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 			shapeRenderer.setProjectionMatrix(camera.combined);
@@ -167,9 +192,10 @@ public class MyGdxGame extends ApplicationAdapter {
 			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
 			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
 			for (AbstractGameSprite sprite : tileMap.getEnemies()) {
-				shapeRenderer.rect(sprite.getX()+sprite.getOffset().x, sprite.getY(), sprite.getWidth(), sprite.getHeight());
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+						sprite.getHeight());
 			}
-			shapeRenderer.end();						
+			shapeRenderer.end();
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 			batch.end();
 		}
@@ -204,10 +230,20 @@ public class MyGdxGame extends ApplicationAdapter {
 			// Draw it
 			if (enemy.isAlive()) {
 				for (int j = i + 1; j < enemies.size(); j++) {
-					// Check collision with other enemies					
+					// Check collision with other enemies
 					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
-				}				
-			}			
+				}
+								
+				boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
+				if (collideMario) {
+					if (mario.getY() > enemy.getY() && mario.getState() == MarioStateEnum.FALLING) {
+						enemy.setDeletable(true);
+						mario.getAcceleration().y = 0.15f;
+					} else {
+						Gdx.app.log("COLLISION", "Mario is dead");
+					}
+				}
+			}
 			if (enemy.isDeletable()) {
 				enemies.remove(i--);
 			} else if (enemy.isVisible()) {
@@ -235,8 +271,16 @@ public class MyGdxGame extends ApplicationAdapter {
 						// Block not visible anymore, delete it from list
 						blocks.remove(i--);
 					} else {
+						block.act(delta);
 						// Block is still visible, draw it
-						batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);
+						if (Gdx.input.isKeyJustPressed(Keys.F6)) {									
+							float y = block.getY();
+							OnCompleteAction onCompleteAction = new OnCompleteAction(tileMap, block, (int)block.getX(), (int)y, 5);
+						    SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(block.getX(), y + 0.5f, 0.05f),
+						    		ActionFacade.createMoveAction(block.getX(), y , 0.05f), onCompleteAction);						    
+						    block.addAction(sequenceAction);													    
+						}
+						batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);						
 					}
 				} else if (block.getX() < camera.position.x + 8) {
 					// Block was not visible, now will be visible and drawable
@@ -252,28 +296,28 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			debugShowText = !debugShowText;
 		}
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.setAcceleration(new Vector2(0,0));
+			mario.setAcceleration(new Vector2(0, 0));
 			mario.setDirection(DirectionEnum.RIGHT);
 			mario.setX(217);
-			mario.setY(14);			
+			mario.setY(14);
 			cameraOffset = 0;
 			camera.position.x = 217 + 6;
 			camera.update();
 			scrollable = false;
 		}
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
 			debugShowFps = !debugShowFps;
-		}		
-		
+		}
+
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debugShowBounds = !debugShowBounds;
 		}
-		
+
 		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
-			mario.setY(mario.getY()+10);
+			mario.setY(mario.getY() + 10);
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {

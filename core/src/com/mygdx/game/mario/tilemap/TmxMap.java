@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.mygdx.game.mario.sprite.AbstractGameSprite;
 import com.mygdx.game.mario.sprite.impl.Goomba;
 import com.mygdx.game.mario.sprite.impl.Mario;
@@ -143,6 +144,11 @@ public class TmxMap {
 			return cell.getTile().getId() < 128;
 		}
 		return false;
+	}
+	
+	public void changeCellValue(int x, int y, int value) {
+		Cell cell = tileLayer.getCell(x, y);
+		cell.setTile(map.getTileSets().getTile(5));
 	}
 
 	public TiledMap getMap() {
