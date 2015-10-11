@@ -275,7 +275,7 @@ public class MyGdxGame extends ApplicationAdapter {
 						// Block is still visible, draw it
 						if (Gdx.input.isKeyJustPressed(Keys.F6)) {									
 							float y = block.getY();
-							OnCompleteAction onCompleteAction = new OnCompleteAction(tileMap, block, (int)block.getX(), (int)y, 5);
+							OnCompleteAction onCompleteAction = new OnCompleteAction(tileMap, block);
 						    SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(block.getX(), y + 0.5f, 0.05f),
 						    		ActionFacade.createMoveAction(block.getX(), y , 0.05f), onCompleteAction);						    
 						    block.addAction(sequenceAction);													    
