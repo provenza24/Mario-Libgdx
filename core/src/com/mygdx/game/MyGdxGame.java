@@ -92,15 +92,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		cameraOffset = mario.getX();
 
 		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackground(), 16);
-
 		scrollable = true;
 
 		stage = new Stage();
-		
-		/*for (AbstractGameSprite sprite : tileMap.getEnemies()) {
-			stage.addActor(sprite);
-		}*/
-		
+				
 		for (Actor actor : tileMap.getBlocks()) {
 			stage.addActor(actor);
 		}
@@ -291,14 +286,15 @@ public class MyGdxGame extends ApplicationAdapter {
 						block.act(delta);
 						// Block is still visible, draw it
 						if (Gdx.input.isKeyJustPressed(Keys.F6)) {
-							float y = block.getY();							
-							   SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(block.getX(), y + 0.5f, 0.05f),
-							   		ActionFacade.createMoveAction(block.getX(), y , 0.05f));							    
-							   block.addAction(sequenceAction);
-							   if (block.getBlocType()==BlockTypeEnum.MYSTERY_BLOCK) {
-								   ReplaceWallAction onCompleteAction = new ReplaceWallAction(tileMap, block);
-								   block.addAction(onCompleteAction);
-							   }
+							if (block.getBlocType()==BlockTypeEnum.MYSTERY_BLOCK) {
+								Gdx.app.log("ANIMATION", "Animate mystery block");
+								float y = block.getY();							
+								  SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(block.getX(), y + 0.5f, 0.05f),
+								  		ActionFacade.createMoveAction(block.getX(), y , 0.05f));							    
+								  block.addAction(sequenceAction);								 
+								  /*ReplaceWallAction onCompleteAction = new ReplaceWallAction(tileMap, block);
+								  block.addAction(onCompleteAction);*/								   
+							}							
 						}																				    						
 						batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);						
 					}
