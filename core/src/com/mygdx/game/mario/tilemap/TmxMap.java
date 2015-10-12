@@ -15,11 +15,12 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.mygdx.game.mario.sprite.AbstractGameSprite;
+import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.sprite.impl.Goomba;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
+import com.mygdx.game.mario.sprite.impl.WallBlock;
 
 public class TmxMap {
 
@@ -29,7 +30,7 @@ public class TmxMap {
 	
 	private MapLayer objectsLayer;
 
-	private List<MysteryBlock> mysteryBlocks;
+	private List<Block> blocks;
 	
 	private List<AbstractGameSprite> enemies;
 	
@@ -49,7 +50,7 @@ public class TmxMap {
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
-		initMysteryBlocks();			
+		initBlocks();			
 		initMapObjects();	
 		
 		MapProperties properties = tileLayer.getProperties();
@@ -73,9 +74,9 @@ public class TmxMap {
 		}
 	}
 
-	private void initMysteryBlocks() {
+	private void initBlocks() {
 
-		mysteryBlocks = new ArrayList<MysteryBlock>();
+		blocks = new ArrayList<Block>();
 
 		for (int i = 0; i < tileLayer.getWidth(); i++) {
 			for (int j = 0; j < tileLayer.getHeight(); j++) {
@@ -84,7 +85,9 @@ public class TmxMap {
 					TiledMapTile tile = cell.getTile();
 					int id = tile.getId();
 					if (id == 7 || id == 8) {
-						mysteryBlocks.add(new MysteryBlock(i, j, id));
+						blocks.add(new MysteryBlock(i, j, id));
+					} else if (id == 4) {
+						//blocks.add(new WallBlock(i, j, id));
 					}
 				}
 			}
@@ -138,12 +141,17 @@ public class TmxMap {
 
 	}
 	
-	private boolean isCollisioningTileAt(int x, int y) {
+	public boolean isCollisioningTileAt(int x, int y) {
 		Cell cell = tileLayer.getCell(x, y);
 		if (cell != null) {
 			return cell.getTile().getId() < 128;
 		}
 		return false;
+	}
+	
+	public Cell getTileAt(int x, int y) {
+		Cell cell = tileLayer.getCell(x, y);		
+		return cell;
 	}
 	
 	public void changeCellValue(int x, int y, int value) {
@@ -159,13 +167,7 @@ public class TmxMap {
 		this.map = map;
 	}
 
-	public List<MysteryBlock> getMysteryBlocks() {
-		return mysteryBlocks;
-	}
-
-	public void setMysteryBlocks(List<MysteryBlock> mysteryBlocks) {
-		this.mysteryBlocks = mysteryBlocks;
-	}
+	
 
 	public List<AbstractGameSprite> getEnemies() {
 		return enemies;
@@ -189,5 +191,13 @@ public class TmxMap {
 
 	public void setBackground(String background) {
 		this.background = background;
+	}
+
+	public List<Block> getBlocks() {
+		return blocks;
+	}
+
+	public void setBlocks(List<Block> blocks) {
+		this.blocks = blocks;
 	}
 }

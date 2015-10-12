@@ -13,26 +13,25 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.mario.action.ActionFacade;
-import com.mygdx.game.mario.action.OnCompleteAction;
+import com.mygdx.game.mario.action.DeleteWallAction;
+import com.mygdx.game.mario.action.ReplaceWallAction;
 import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.collision.CollisionHandler;
+import com.mygdx.game.mario.enums.BlockTypeEnum;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.AbstractGameSprite;
-import com.mygdx.game.mario.sprite.MyActor;
+import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.sprite.impl.Mario;
-import com.mygdx.game.mario.sprite.impl.MysteryBlock;
+import com.mygdx.game.mario.sprite.impl.WallBlock;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -102,7 +101,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			stage.addActor(sprite);
 		}*/
 		
-		for (Actor actor : tileMap.getMysteryBlocks()) {
+		for (Actor actor : tileMap.getBlocks()) {
 			stage.addActor(actor);
 		}
 	}
@@ -121,6 +120,24 @@ public class MyGdxGame extends ApplicationAdapter {
 		mario.collideWithTilemap(tileMap);
 		mario.updateAnimation(delta);
 
+		if (mario.getMapCollisionEvent().isCollidingTop()) {
+			if (tileMap.isCollisioningTileAt((int)mario.getX(), (int)mario.getY()+1)) {
+				Cell cell = tileMap.getTileAt((int)mario.getX(), (int)mario.getY()+1);
+				if (cell.getTile().getId()==4) {
+					WallBlock wallBlock = new WallBlock((int)mario.getX(), (int)mario.getY()+1, 4);
+					tileMap.getBlocks().add(wallBlock);
+					stage.addActor(wallBlock);
+					tileMap.changeCellValue((int)mario.getX(), (int)mario.getY()+1, 128);
+					float y = wallBlock.getY();
+					SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(wallBlock.getX(), y + 0.5f, 0.05f),
+					   		ActionFacade.createMoveAction(wallBlock.getX(), y , 0.05f));							    
+					wallBlock.addAction(sequenceAction);
+					DeleteWallAction deleteWallAction = new DeleteWallAction(tileMap, wallBlock);
+					sequenceAction.addAction(deleteWallAction);
+				}
+			}
+		}
+		
 		if (scrollable) {
 			// Move camera
 			moveCamera();
@@ -130,7 +147,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			}
 			scrollingBackground.render();
 		}
-
+		
 		// Render tilemap
 		renderer.setView(camera);
 		renderer.render();
@@ -138,7 +155,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		renderMysteryBlocks(delta);
 		// Render enemies
 		handleEnemies(delta);
-		// Render Mario
+		// Render Mario		
 		mario.render(renderer.getBatch());
 		// Render debug mode (press F1 to display/hide debug)
 		renderDebugMode();
@@ -170,7 +187,7 @@ public class MyGdxGame extends ApplicationAdapter {
 							+ mario.getMapCollisionEvent().isCollidingTop() + ", bottom="
 							+ mario.getMapCollisionEvent().isCollidingBottom() + ")",
 					10, 320);
-			font.draw(spriteBatch, "Mysteryblocks: " + tileMap.getMysteryBlocks().size(), 10, 300);
+			font.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);
 			font.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
 			spriteBatch.end();
 		}
@@ -256,15 +273,15 @@ public class MyGdxGame extends ApplicationAdapter {
 	private void renderMysteryBlocks(float delta) {
 
 		// Get blocks from tilemap
-		List<MysteryBlock> blocks = tileMap.getMysteryBlocks();
+		List<Block> blocks = tileMap.getBlocks();
 		if (blocks.size() > 0) {
 			batch = renderer.getBatch();
 			batch.begin();
-			// All blocks have the same animation, running in phasis
-			MysteryBlock.updateAnimation(delta);
+			// All blocks have the same animation, running in phasis			
 			for (int i = 0; i < blocks.size(); i++) {
 				// For each block
-				MysteryBlock block = blocks.get(i);
+				Block block = blocks.get(i);
+				block.updateAnimation(delta);
 				if (block.isVisible()) {
 					// Block is drawn only if visible
 					if (block.getX() < camera.position.x - 9) {
@@ -273,13 +290,16 @@ public class MyGdxGame extends ApplicationAdapter {
 					} else {
 						block.act(delta);
 						// Block is still visible, draw it
-						if (Gdx.input.isKeyJustPressed(Keys.F6)) {									
-							float y = block.getY();
-							OnCompleteAction onCompleteAction = new OnCompleteAction(tileMap, block);
-						    SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(block.getX(), y + 0.5f, 0.05f),
-						    		ActionFacade.createMoveAction(block.getX(), y , 0.05f), onCompleteAction);						    
-						    block.addAction(sequenceAction);													    
-						}
+						if (Gdx.input.isKeyJustPressed(Keys.F6)) {
+							float y = block.getY();							
+							   SequenceAction sequenceAction = new SequenceAction(ActionFacade.createMoveAction(block.getX(), y + 0.5f, 0.05f),
+							   		ActionFacade.createMoveAction(block.getX(), y , 0.05f));							    
+							   block.addAction(sequenceAction);
+							   if (block.getBlocType()==BlockTypeEnum.MYSTERY_BLOCK) {
+								   ReplaceWallAction onCompleteAction = new ReplaceWallAction(tileMap, block);
+								   block.addAction(onCompleteAction);
+							   }
+						}																				    						
 						batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);						
 					}
 				} else if (block.getX() < camera.position.x + 8) {

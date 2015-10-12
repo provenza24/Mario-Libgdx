@@ -1,16 +1,16 @@
 package com.mygdx.game.mario.action;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.mygdx.game.mario.sprite.impl.MysteryBlock;
+import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public class OnCompleteAction extends Action{
+public class ReplaceWallAction extends Action{
 
-	private MysteryBlock block;
+	private Block block;
 	
 	private TmxMap tmxMap;
 	
-	public OnCompleteAction(TmxMap tmxMap, MysteryBlock block) {
+	public ReplaceWallAction(TmxMap tmxMap, Block block) {
 		this.tmxMap = tmxMap;
 		this.block = block;
 	}

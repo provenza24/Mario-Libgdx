@@ -1,40 +1,16 @@
 package com.mygdx.game.mario.sprite.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygdx.game.mario.enums.ItemEnum;
+import com.mygdx.game.mario.enums.BlockTypeEnum;
 
-public class MysteryBlock extends Actor {
-	
-	private static final Map<Integer, ItemEnum> MAP_ITEMS = new HashMap<Integer, ItemEnum>();
-	
-	private Texture spriteSheet;
-			
-	private static Animation animation; 
-	
-	private static TextureRegion currentFrame;		
+public class MysteryBlock extends Block {
 		
-	private static float stateTime;
-		
-	private boolean visible;
-	
-	private ItemEnum itemEnum;
-	
-	private int replacingTileValue;
-	
-	static {
-		MAP_ITEMS.put(7, ItemEnum.COIN);
-		MAP_ITEMS.put(8, ItemEnum.RED_MUSHROOM);
-	}
-	
 	public MysteryBlock(int x, int y, int tileId) {
 							
+		this.tileId = tileId;
 		setPosition(x, y);
 
 		spriteSheet = new Texture(Gdx.files.internal("sprites/mystery.png"));
@@ -49,49 +25,12 @@ public class MysteryBlock extends Actor {
 		stateTime = 0f;		
 		itemEnum = MAP_ITEMS.get(tileId);
 		replacingTileValue = 5;
+		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
 	}
 	
-	public static void updateAnimation(float delta) {
+	public void updateAnimation(float delta) {
 		stateTime = stateTime + delta;
     	currentFrame = animation.getKeyFrame(stateTime, true);    	
 	}
-
-	public Texture getSpriteSheet() {
-		return spriteSheet;
-	}
-
-	public void setSpriteSheet(Texture spriteSheet) {
-		this.spriteSheet = spriteSheet;
-	}
-
-	public TextureRegion getCurrentFrame() {
-		return currentFrame;
-	}
-
-	
-	public boolean isVisible() {
-		return visible;
-	}
-
-	public void setVisible(boolean visible) {
-		this.visible = visible;
-	}
-
-	public ItemEnum getItemEnum() {
-		return itemEnum;
-	}
-
-	public void setItemEnum(ItemEnum itemEnum) {
-		this.itemEnum = itemEnum;
-	}
-
-	public int getReplacingTileValue() {
-		return replacingTileValue;
-	}
-
-	public void setReplacingTileValue(int replacingTileValue) {
-		this.replacingTileValue = replacingTileValue;
-	}
-	
 	
 }
