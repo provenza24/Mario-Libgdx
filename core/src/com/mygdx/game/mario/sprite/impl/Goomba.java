@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.mario.sprite.AbstractGameSprite;
+import com.mygdx.game.mario.sprite.AbstractTilemapSprite;
 
-public class Goomba extends AbstractGameSprite {
+public class Goomba extends AbstractTilemapSprite {
 
 	private Animation walkAnimation;
 	

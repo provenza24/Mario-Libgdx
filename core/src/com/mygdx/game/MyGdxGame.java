@@ -22,7 +22,7 @@ import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.collision.CollisionHandler;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
-import com.mygdx.game.mario.sprite.AbstractGameSprite;
+import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.tilemap.TmxMap;
@@ -179,7 +179,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
 			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
-			for (AbstractGameSprite sprite : tileMap.getEnemies()) {
+			for (AbstractSprite sprite : tileMap.getEnemies()) {
 				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
@@ -211,9 +211,9 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void handleEnemies(float deltaTime) {
 
-		List<AbstractGameSprite> enemies = tileMap.getEnemies();
+		List<AbstractSprite> enemies = tileMap.getEnemies();
 		for (int i = 0; i < enemies.size(); i++) {
-			AbstractGameSprite enemy = enemies.get(i);
+			AbstractSprite enemy = enemies.get(i);
 			enemy.update(tileMap, camera, deltaTime);
 			// Draw it
 			if (enemy.isAlive()) {

@@ -6,14 +6,12 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.mario.collision.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
-import com.mygdx.game.mario.sprite.AbstractGameSprite;
+import com.mygdx.game.mario.sprite.AbstractTilemapSprite;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public class Mario extends AbstractGameSprite {
+public class Mario extends AbstractTilemapSprite {
 
 	private static final float ACCELERATION_MAX = 5; // 7.5f;
 
@@ -44,11 +42,8 @@ public class Mario extends AbstractGameSprite {
 	private boolean canJumpHigher;
 		
 	public Mario(MapObject mapObject) {
-
-		super(mapObject);
-		
+		super(mapObject);		
 		setSize(1, 1);		
-		acceleration = new Vector2();
 		stateTime = 0f;
 		jumpTimer = 0;
 		onFloor = true;
@@ -57,10 +52,7 @@ public class Mario extends AbstractGameSprite {
 		gravitating = true;
 		direction = DirectionEnum.RIGHT;
 		state = MarioStateEnum.NO_MOVE;
-		previousState = MarioStateEnum.NO_MOVE;
-
-		mapCollisionEvent = new CollisionEvent();	
-		
+		previousState = MarioStateEnum.NO_MOVE;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}
 

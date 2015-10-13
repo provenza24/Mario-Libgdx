@@ -8,8 +8,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -18,7 +16,7 @@ import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public abstract class AbstractGameSprite extends Actor implements IMoveable, ICollisionable, IDrawable {
+public abstract class AbstractSprite extends Actor implements IMoveable, ICollisionable, IDrawable {
 
 	private static final float GRAVITY_COEF = 0.01f;
 
@@ -56,20 +54,16 @@ public abstract class AbstractGameSprite extends Actor implements IMoveable, ICo
 	
 	protected List<TmxCell> collidingCells;
 
-	public AbstractGameSprite(MapObject mapObject) {
-		float xPosition = (Float) mapObject.getProperties().get("x")/32;
-		float yPosition = (Float) mapObject.getProperties().get("y")/32 + 1;
-		setPosition(xPosition, yPosition);
-		oldPosition = new Vector2(xPosition, yPosition);
-		acceleration = new Vector2(0,0);
-		String xAliveString = (String) mapObject.getProperties().get("xAlive");
-		xAlive = xAliveString!=null ? Float.parseFloat(xAliveString) / 32 : xPosition - 16 ;		
+	public AbstractSprite(float x, float y) {
+		setPosition(x, y);
+		oldPosition = new Vector2(x, y);
+		acceleration = new Vector2(0,0);			
 		visible = false;
 		alive = false;
 		mapCollisionEvent = new CollisionEvent();
-		offset = new Vector2(0,0);
-		initializeAnimations();		
+		offset = new Vector2(0,0);			
 		collidingCells = new ArrayList<TmxCell>();
+		initializeAnimations();
 	}
 	
 	public Rectangle getBounds() {

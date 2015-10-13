@@ -15,7 +15,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
-import com.mygdx.game.mario.sprite.AbstractGameSprite;
+import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.sprite.impl.Goomba;
 import com.mygdx.game.mario.sprite.impl.Mario;
@@ -31,7 +31,7 @@ public class TmxMap {
 
 	private List<Block> blocks;
 	
-	private List<AbstractGameSprite> enemies;
+	private List<AbstractSprite> enemies;
 	
 	private Mario mario;
 	
@@ -57,7 +57,7 @@ public class TmxMap {
 
 	private void initMapObjects() {
 		
-		enemies = new ArrayList<AbstractGameSprite>();
+		enemies = new ArrayList<AbstractSprite>();
 		
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
@@ -99,7 +99,7 @@ public class TmxMap {
 		return null;
 	}
 	
-	public void checkHorizontalMapCollision(AbstractGameSprite sprite) {
+	public void checkHorizontalMapCollision(AbstractSprite sprite) {
 
 		sprite.reinitHorizontalMapCollisionEvent();
 
@@ -122,7 +122,7 @@ public class TmxMap {
 
 	}
 
-	public void checkVerticalMapCollision(AbstractGameSprite sprite) {
+	public void checkVerticalMapCollision(AbstractSprite sprite) {
 
 		sprite.reinitVerticalMapCollisionEvent();
 
@@ -184,11 +184,11 @@ public class TmxMap {
 
 	
 
-	public List<AbstractGameSprite> getEnemies() {
+	public List<AbstractSprite> getEnemies() {
 		return enemies;
 	}
 
-	public void setEnemies(List<AbstractGameSprite> enemies) {
+	public void setEnemies(List<AbstractSprite> enemies) {
 		this.enemies = enemies;
 	}
 

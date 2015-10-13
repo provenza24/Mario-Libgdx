@@ -10,24 +10,22 @@ public class WallBlock extends Block {
 
 	public WallBlock(int x, int y, int tileId) {
 		
-		this.tileId = tileId;
-		setPosition(x, y);
-
-		spriteSheet = new Texture(Gdx.files.internal("sprites/wall-"+tileId+".png"));
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
-		TextureRegion[] animationFrames = new TextureRegion[1];
-		animationFrames[0] = tmp[0][0];
-		animation = new Animation(1, animationFrames);
-				
+		super(x,y, tileId);							
 		visible = false;
 		stateTime = 0f;		
 		//itemEnum = MAP_ITEMS.get(tileId);
 		replacingTileValue = 5;
 		setBlocType(BlockTypeEnum.WALL_BLOCK);
+		
+		spriteSheet = new Texture(Gdx.files.internal("sprites/wall-"+tileId+".png"));
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
+		TextureRegion[] animationFrames = new TextureRegion[1];
+		animationFrames[0] = tmp[0][0];
+		currentAnimation = new Animation(1, animationFrames);
 	}
-	
-	public void updateAnimation(float delta) {
-		currentFrame = animation.getKeyFrame(stateTime, true);
+
+	@Override
+	public void initializeAnimations() {		
 	}
 	
 }

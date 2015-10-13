@@ -23,29 +23,24 @@ public class MysteryBlock extends Block {
 		REPLACING_TILES_OVERGROUND.put(8, 5);
 	}
 	
-	public MysteryBlock(int x, int y, int tileId, String background) {
-							
-		this.tileId = tileId;
-		setPosition(x, y);
+	public MysteryBlock(int x, int y, int tileId, String background) {		
+		super(x,y, tileId);				
+		visible = false;
+		stateTime = 0f;		
+		itemEnum = MAP_ITEMS.get(tileId);
+		replacingTileValue = background.startsWith("overworld") ? REPLACING_TILES_OVERGROUND.get(tileId) : REPLACING_TILES_UNDERGROUND.get(tileId);
+		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
+	}	
 
+	@Override
+	public void initializeAnimations() {
 		spriteSheet = new Texture(Gdx.files.internal("sprites/mystery.png"));
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);		
 		TextureRegion[] animationFrames = new TextureRegion[3];
 		animationFrames[0] = tmp[0][0];
 		animationFrames[1] = tmp[0][1];
 		animationFrames[2] = tmp[0][2];		
-		animation = new Animation(0.15f, animationFrames);
-				
-		visible = false;
-		stateTime = 0f;		
-		itemEnum = MAP_ITEMS.get(tileId);
-		replacingTileValue = background.startsWith("overworld") ? REPLACING_TILES_OVERGROUND.get(tileId) : REPLACING_TILES_UNDERGROUND.get(tileId);
-		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
-	}
-	
-	public void updateAnimation(float delta) {
-		stateTime = stateTime + delta;
-    	currentFrame = animation.getKeyFrame(stateTime, true);    	
+		currentAnimation = new Animation(0.15f, animationFrames);		
 	}
 	
 }
