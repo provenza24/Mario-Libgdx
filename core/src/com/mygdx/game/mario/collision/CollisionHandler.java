@@ -38,7 +38,9 @@ public class CollisionHandler {
 				}
 			}			
 			IUpperBlockCollisionHandler collisionHandler = AbstractUpperBlockCollisionHandler.getHandler(collidingCell.getCell().getTile().getId());
-			collisionHandler.handle(tileMap, collidingCell, stage);			
+			if (collisionHandler!=null) {			
+				collisionHandler.handle(tileMap, collidingCell, stage);
+			}
 		}
 	}
 
