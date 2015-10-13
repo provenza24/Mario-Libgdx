@@ -20,7 +20,6 @@ import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.sprite.impl.Goomba;
 import com.mygdx.game.mario.sprite.impl.Mario;
 import com.mygdx.game.mario.sprite.impl.MysteryBlock;
-import com.mygdx.game.mario.sprite.impl.WallBlock;
 
 public class TmxMap {
 
@@ -50,11 +49,10 @@ public class TmxMap {
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
-		initBlocks();			
-		initMapObjects();	
-		
 		MapProperties properties = tileLayer.getProperties();
-		background = BACKGROUNDS.get((String)properties.get("background"));						
+		background = BACKGROUNDS.get((String)properties.get("background"));				
+		initBlocks(background);			
+		initMapObjects();									
 	}
 
 	private void initMapObjects() {
@@ -74,7 +72,7 @@ public class TmxMap {
 		}
 	}
 
-	private void initBlocks() {
+	private void initBlocks(String background) {
 
 		blocks = new ArrayList<Block>();
 
@@ -85,13 +83,20 @@ public class TmxMap {
 					TiledMapTile tile = cell.getTile();
 					int id = tile.getId();
 					if (id == 7 || id == 8) {
-						blocks.add(new MysteryBlock(i, j, id));
-					} else if (id == 4) {
-						//blocks.add(new WallBlock(i, j, id));
-					}
+						blocks.add(new MysteryBlock(i, j, id, background));
+					} 
 				}
 			}
 		}
+	}
+	
+	public Block getBlockAt(int x, int y) {
+		for (Block block : blocks) {
+			if (block.getX()==x && block.getY()==y) {
+				return block;
+			}
+		}
+		return null;
 	}
 	
 	public void checkHorizontalMapCollision(AbstractGameSprite sprite) {
@@ -129,15 +134,25 @@ public class TmxMap {
 		boolean isCollision = isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		sprite.getMapCollisionEvent().setCollidingBottom(isCollision);
 
-		isCollision = isCollisioningTileAt((int) leftTopCorner.x, (int) leftTopCorner.y);
+		int x = (int) leftTopCorner.x;
+		int y = (int) leftTopCorner.y;
+		isCollision = isCollisioningTileAt(x ,y);		
 		sprite.getMapCollisionEvent().setCollidingTop(sprite.getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			sprite.getCollidingCells().add(new TmxCell(getTileAt(x, y), x ,y));
+		}
 
 		isCollision = isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
 		sprite.getMapCollisionEvent()
 				.setCollidingBottom(sprite.getMapCollisionEvent().isCollidingBottom() || isCollision);
-
-		isCollision = isCollisioningTileAt((int) rightTopCorner.x, (int) rightTopCorner.y);
+		
+		x = (int) rightTopCorner.x;
+		y = (int) rightTopCorner.y;
+		isCollision = isCollisioningTileAt(x, y);
 		sprite.getMapCollisionEvent().setCollidingTop(sprite.getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			sprite.getCollidingCells().add(new TmxCell(getTileAt(x, y), x ,y));
+		}
 
 	}
 	

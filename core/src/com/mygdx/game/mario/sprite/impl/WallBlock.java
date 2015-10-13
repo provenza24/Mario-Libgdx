@@ -13,7 +13,7 @@ public class WallBlock extends Block {
 		this.tileId = tileId;
 		setPosition(x, y);
 
-		spriteSheet = new Texture(Gdx.files.internal("sprites/wall-4.png"));
+		spriteSheet = new Texture(Gdx.files.internal("sprites/wall-"+tileId+".png"));
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];

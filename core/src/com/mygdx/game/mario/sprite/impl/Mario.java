@@ -42,7 +42,7 @@ public class Mario extends AbstractGameSprite {
 	private boolean canInitiateJump;
 
 	private boolean canJumpHigher;
-
+		
 	public Mario(MapObject mapObject) {
 
 		super(mapObject);

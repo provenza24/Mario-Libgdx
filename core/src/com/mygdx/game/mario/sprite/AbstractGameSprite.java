@@ -1,16 +1,21 @@
 package com.mygdx.game.mario.sprite;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.mygdx.game.mario.collision.CollisionEvent;
 import com.mygdx.game.mario.enums.DirectionEnum;
+import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public abstract class AbstractGameSprite extends Actor implements IMoveable, ICollisionable, IDrawable {
@@ -48,6 +53,8 @@ public abstract class AbstractGameSprite extends Actor implements IMoveable, ICo
 	protected Vector2 offset;
 	
 	protected Rectangle bounds;
+	
+	protected List<TmxCell> collidingCells;
 
 	public AbstractGameSprite(MapObject mapObject) {
 		float xPosition = (Float) mapObject.getProperties().get("x")/32;
@@ -61,7 +68,8 @@ public abstract class AbstractGameSprite extends Actor implements IMoveable, ICo
 		alive = false;
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);
-		initializeAnimations();					
+		initializeAnimations();		
+		collidingCells = new ArrayList<TmxCell>();
 	}
 	
 	public Rectangle getBounds() {
@@ -160,6 +168,7 @@ public abstract class AbstractGameSprite extends Actor implements IMoveable, ICo
 	public void reinitVerticalMapCollisionEvent() {
 		mapCollisionEvent.setCollidingBottom(false);
 		mapCollisionEvent.setCollidingTop(false);
+		collidingCells = new ArrayList<TmxCell>();
 	}
 
 	/** Getters / Setters */
@@ -229,6 +238,14 @@ public abstract class AbstractGameSprite extends Actor implements IMoveable, ICo
 
 	public boolean isGravitating() {
 		return gravitating;
+	}
+
+	public List<TmxCell> getCollidingCells() {
+		return collidingCells;
+	}
+
+	public void setCollidingCells(List<TmxCell> collidingCells) {
+		this.collidingCells = collidingCells;
 	}
 
 	public void setGravitating(boolean gravitating) {

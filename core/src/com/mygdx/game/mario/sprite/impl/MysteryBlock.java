@@ -1,5 +1,8 @@
 package com.mygdx.game.mario.sprite.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,7 +11,19 @@ import com.mygdx.game.mario.enums.BlockTypeEnum;
 
 public class MysteryBlock extends Block {
 		
-	public MysteryBlock(int x, int y, int tileId) {
+	protected static final Map<Integer, Integer> REPLACING_TILES_UNDERGROUND = new HashMap<Integer, Integer>();
+	
+	protected static final Map<Integer, Integer> REPLACING_TILES_OVERGROUND = new HashMap<Integer, Integer>();
+	
+	static {
+		REPLACING_TILES_UNDERGROUND.put(7, 65);
+		REPLACING_TILES_UNDERGROUND.put(8, 65);
+		
+		REPLACING_TILES_OVERGROUND.put(7, 5);
+		REPLACING_TILES_OVERGROUND.put(8, 5);
+	}
+	
+	public MysteryBlock(int x, int y, int tileId, String background) {
 							
 		this.tileId = tileId;
 		setPosition(x, y);
@@ -24,7 +39,7 @@ public class MysteryBlock extends Block {
 		visible = false;
 		stateTime = 0f;		
 		itemEnum = MAP_ITEMS.get(tileId);
-		replacingTileValue = 5;
+		replacingTileValue = background.startsWith("overworld") ? REPLACING_TILES_OVERGROUND.get(tileId) : REPLACING_TILES_UNDERGROUND.get(tileId);
 		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
 	}
 	
