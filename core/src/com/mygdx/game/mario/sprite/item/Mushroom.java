@@ -14,7 +14,7 @@ public class Mushroom extends AbstractSprite {
 		moveable = true;
 		collidableWithTilemap = true;
 		gravitating = true;
-		acceleration.x = -1;
+		acceleration.x = -2;		
 	}
 
 	@Override
@@ -25,5 +25,5 @@ public class Mushroom extends AbstractSprite {
 		animationFrames[0] = tmp[0][0];
 		currentAnimation = new Animation(0, animationFrames);
 	}
-
+		
 }

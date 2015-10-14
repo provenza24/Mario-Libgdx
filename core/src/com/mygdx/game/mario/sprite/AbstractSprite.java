@@ -60,14 +60,15 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public AbstractSprite(float x, float y) {
 		setPosition(x, y);
+		setSize(1, 1);
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		oldPosition = new Vector2(x, y);
 		acceleration = new Vector2(0,0);			
 		visible = false;
 		alive = false;
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);			
-		collidingCells = new ArrayList<TmxCell>();		
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
+		collidingCells = new ArrayList<TmxCell>();				
 		moveable = false;
 		collidableWithTilemap = false;
 		gravitating = false;
@@ -82,24 +83,27 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public abstract void initializeAnimations();
 
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
+						
 		if (alive) {
-			updateAnimation(deltaTime);						
-			if (isMoveable()) {
-				move(deltaTime);
-			}
-			if (isCollidableWithTilemap()) {
-				collideWithTilemap(tileMap);
-			}
-					
+			updateAnimation(deltaTime);
+			if (getActions().size>0) {
+				act(deltaTime);
+			} else {
+				if (isMoveable()) {
+					move(deltaTime);
+				}
+				if (isCollidableWithTilemap()) {
+					collideWithTilemap(tileMap);
+				}
+			}								
 			if (getX()<camera.position.x-9 || getY() < -1) {
 				deletable = true;				
 			} else {
 				visible = getX() < camera.position.x+8;				
-			}	
-						
+			}						
 		} else {
 			alive = camera.position.x-8>xAlive;			
-		}
+		}				
 	}
 	
 	protected void applyGravity() {
@@ -154,7 +158,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		float xMove = getX() - getOldPosition().x;
 		if (xMove > 0 && getMapCollisionEvent().isCollidingRight()
 				|| xMove < 0 && getMapCollisionEvent().isCollidingLeft()) {			
-			setX(getOldPosition().x);
+			setX(getOldPosition().x);			
 			getAcceleration().x = -getAcceleration().x;
 		}
 

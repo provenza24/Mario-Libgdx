@@ -1,6 +1,5 @@
 package com.mygdx.game.mario.collision.upperblock;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.game.mario.action.ActionFacade;
@@ -27,8 +26,7 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 		block.addAction(sequenceAction);
 		MysteryBlock mysteryBlock = (MysteryBlock) block;
 		ItemEnum itemEnum = mysteryBlock.getItemEnum();
-		if (itemEnum==ItemEnum.RED_MUSHROOM) {
-			Gdx.app.log("ITEM", "Creating mushroom");
+		if (itemEnum==ItemEnum.RED_MUSHROOM) {			
 			Mushroom mushroom = new Mushroom(block.getX(), yWallBlock);
 			tileMap.getItems().add(mushroom);
 			stage.addActor(mushroom);

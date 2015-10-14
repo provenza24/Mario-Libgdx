@@ -160,6 +160,7 @@ public class MyGdxGame extends ApplicationAdapter {
 					10, 320);
 			font.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);
 			font.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
+			font.draw(spriteBatch, "Items: " + tileMap.getItems().size(), 10, 260);
 			spriteBatch.end();
 		}
 
@@ -180,6 +181,10 @@ public class MyGdxGame extends ApplicationAdapter {
 			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
 			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
 			for (AbstractSprite sprite : tileMap.getEnemies()) {
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+						sprite.getHeight());
+			}
+			for (AbstractSprite sprite : tileMap.getItems()) {
 				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
@@ -214,7 +219,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
 			item.update(tileMap, camera, deltaTime);
-			item.act(deltaTime);
+			//item.act(deltaTime);
 			item.render(renderer.getBatch());
 		}
 	}
@@ -262,7 +267,6 @@ public class MyGdxGame extends ApplicationAdapter {
 				// For each block
 				Block block = blocks.get(i);
 				block.update(tileMap, camera, delta);
-				block.act(delta);
 				if (block.isDeletable()) {
 					blocks.remove(i--);
 				} else if (block.isVisible()) {

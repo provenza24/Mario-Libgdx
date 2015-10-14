@@ -11,8 +11,6 @@ public class WallBlock extends Block {
 	public WallBlock(int x, int y, int tileId) {
 		
 		super(x,y, tileId);							
-		visible = false;
-		stateTime = 0f;		
 		//itemEnum = MAP_ITEMS.get(tileId);
 		replacingTileValue = 5;
 		setBlocType(BlockTypeEnum.WALL_BLOCK);

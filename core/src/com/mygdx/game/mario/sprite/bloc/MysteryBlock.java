@@ -30,9 +30,7 @@ public class MysteryBlock extends Block {
 	}
 	
 	public MysteryBlock(int x, int y, int tileId, BackgroundTypeEnum backgroundType) {		
-		super(x,y, tileId);				
-		visible = false;
-		stateTime = 0f;		
+		super(x,y, tileId);						
 		itemEnum = MAP_ITEMS.get(tileId);
 		replacingTileValue = REPLACING_TILES_LIST.get(backgroundType).get(tileId);		
 		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
