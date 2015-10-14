@@ -1,4 +1,4 @@
-package com.mygdx.game.mario.sprite.impl;
+package com.mygdx.game.mario.sprite.tileobjects.mario;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -8,10 +8,10 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
-import com.mygdx.game.mario.sprite.AbstractTilemapSprite;
+import com.mygdx.game.mario.sprite.tileobjects.AbstractTileObjectSprite;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public class Mario extends AbstractTilemapSprite {
+public class Mario extends AbstractTileObjectSprite {
 
 	private static final float ACCELERATION_MAX = 5; // 7.5f;
 

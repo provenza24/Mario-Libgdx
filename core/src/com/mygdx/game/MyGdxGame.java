@@ -23,8 +23,8 @@ import com.mygdx.game.mario.collision.CollisionHandler;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.AbstractSprite;
-import com.mygdx.game.mario.sprite.impl.Block;
-import com.mygdx.game.mario.sprite.impl.Mario;
+import com.mygdx.game.mario.sprite.bloc.Block;
+import com.mygdx.game.mario.sprite.tileobjects.mario.Mario;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class MyGdxGame extends ApplicationAdapter {

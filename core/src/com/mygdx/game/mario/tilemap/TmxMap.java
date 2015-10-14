@@ -15,10 +15,10 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.enums.BackgroundTypeEnum;
 import com.mygdx.game.mario.sprite.AbstractSprite;
-import com.mygdx.game.mario.sprite.impl.Block;
-import com.mygdx.game.mario.sprite.impl.Goomba;
-import com.mygdx.game.mario.sprite.impl.Mario;
-import com.mygdx.game.mario.sprite.impl.MysteryBlock;
+import com.mygdx.game.mario.sprite.bloc.Block;
+import com.mygdx.game.mario.sprite.bloc.MysteryBlock;
+import com.mygdx.game.mario.sprite.tileobjects.enemy.Goomba;
+import com.mygdx.game.mario.sprite.tileobjects.mario.Mario;
 
 public class TmxMap {
 

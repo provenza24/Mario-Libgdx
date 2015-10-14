@@ -4,7 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.game.mario.action.ActionFacade;
 import com.mygdx.game.mario.action.ReplaceWallAction;
-import com.mygdx.game.mario.sprite.impl.Block;
+import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 

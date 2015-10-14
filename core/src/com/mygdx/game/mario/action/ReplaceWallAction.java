@@ -1,7 +1,7 @@
 package com.mygdx.game.mario.action;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.mygdx.game.mario.sprite.impl.Block;
+import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class ReplaceWallAction extends Action{

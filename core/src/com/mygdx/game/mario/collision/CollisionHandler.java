@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.mario.collision.upperblock.AbstractUpperBlockCollisionHandler;
 import com.mygdx.game.mario.collision.upperblock.IUpperBlockCollisionHandler;
 import com.mygdx.game.mario.sprite.AbstractSprite;
-import com.mygdx.game.mario.sprite.impl.Mario;
+import com.mygdx.game.mario.sprite.tileobjects.mario.Mario;
 import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 

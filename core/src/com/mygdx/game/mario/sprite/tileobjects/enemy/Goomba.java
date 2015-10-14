@@ -1,4 +1,4 @@
-package com.mygdx.game.mario.sprite.impl;
+package com.mygdx.game.mario.sprite.tileobjects.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.mario.sprite.AbstractTilemapSprite;
+import com.mygdx.game.mario.sprite.tileobjects.AbstractTileObjectSprite;
 
-public class Goomba extends AbstractTilemapSprite {
+public class Goomba extends AbstractTileObjectSprite {
 
 	private Animation walkAnimation;
 	

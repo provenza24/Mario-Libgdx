@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.mygdx.game.mario.action.ActionFacade;
 import com.mygdx.game.mario.action.ChangeCellValueAction;
 import com.mygdx.game.mario.action.DeleteBlocSpriteAction;
-import com.mygdx.game.mario.sprite.impl.WallBlock;
+import com.mygdx.game.mario.sprite.bloc.WallBlock;
 import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 

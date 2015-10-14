@@ -1,4 +1,4 @@
-package com.mygdx.game.mario.sprite.impl;
+package com.mygdx.game.mario.sprite.bloc;
 
 import java.util.HashMap;
 import java.util.Map;
