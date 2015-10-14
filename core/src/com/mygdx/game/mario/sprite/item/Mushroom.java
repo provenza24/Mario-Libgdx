@@ -14,7 +14,7 @@ public class Mushroom extends AbstractSprite {
 		moveable = true;
 		collidableWithTilemap = true;
 		gravitating = true;
-		acceleration.x = -2;		
+		acceleration.x = -2.5f;		
 	}
 
 	@Override

@@ -26,7 +26,7 @@ public abstract class ScrollingBackground implements IScrollingBackground {
 	protected int width;
 		
 	static {
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, "overworld.gif");
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, "overworld-800.gif");
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, "underworld.png");
 	}
 	

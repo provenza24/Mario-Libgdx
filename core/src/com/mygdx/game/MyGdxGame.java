@@ -219,8 +219,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
 			item.update(tileMap, camera, deltaTime);
-			//item.act(deltaTime);
-			item.render(renderer.getBatch());
+			if (item.isDeletable()) {
+				items.remove(i--);
+			} else if (item.isVisible()) {
+				item.render(renderer.getBatch());
+			}
 		}
 	}
 	
