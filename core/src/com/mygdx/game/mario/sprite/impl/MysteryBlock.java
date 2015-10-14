@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygdx.game.mario.enums.BackgroundTypeEnum;
 import com.mygdx.game.mario.enums.BlockTypeEnum;
 
 public class MysteryBlock extends Block {
@@ -15,20 +16,25 @@ public class MysteryBlock extends Block {
 	
 	protected static final Map<Integer, Integer> REPLACING_TILES_OVERGROUND = new HashMap<Integer, Integer>();
 	
+	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();
+	
 	static {
 		REPLACING_TILES_UNDERGROUND.put(7, 65);
 		REPLACING_TILES_UNDERGROUND.put(8, 65);
 		
 		REPLACING_TILES_OVERGROUND.put(7, 5);
 		REPLACING_TILES_OVERGROUND.put(8, 5);
+		
+		REPLACING_TILES_LIST.put(BackgroundTypeEnum.OVERWORLD, REPLACING_TILES_OVERGROUND);
+		REPLACING_TILES_LIST.put(BackgroundTypeEnum.UNDERWORLD, REPLACING_TILES_UNDERGROUND);
 	}
 	
-	public MysteryBlock(int x, int y, int tileId, String background) {		
+	public MysteryBlock(int x, int y, int tileId, BackgroundTypeEnum backgroundType) {		
 		super(x,y, tileId);				
 		visible = false;
 		stateTime = 0f;		
 		itemEnum = MAP_ITEMS.get(tileId);
-		replacingTileValue = background.startsWith("overworld") ? REPLACING_TILES_OVERGROUND.get(tileId) : REPLACING_TILES_UNDERGROUND.get(tileId);
+		replacingTileValue = REPLACING_TILES_LIST.get(backgroundType).get(tileId);		
 		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
 	}	
 

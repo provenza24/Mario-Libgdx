@@ -1,9 +1,7 @@
 package com.mygdx.game.mario.tilemap;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -15,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.math.Vector2;
+import com.mygdx.game.mario.enums.BackgroundTypeEnum;
 import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.impl.Block;
 import com.mygdx.game.mario.sprite.impl.Goomba;
@@ -34,24 +33,17 @@ public class TmxMap {
 	private List<AbstractSprite> enemies;
 	
 	private Mario mario;
-	
-	private static final Map<String, String> BACKGROUNDS = new HashMap<String, String>();
-	
-	private String background;
-	
-	static {
-		BACKGROUNDS.put("overworld", "overworld.gif");
-		BACKGROUNDS.put("underworld", "underworld.png");
-	}
+		
+	private BackgroundTypeEnum backgroundType;
 	
 	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
-		MapProperties properties = tileLayer.getProperties();
-		background = BACKGROUNDS.get((String)properties.get("background"));				
-		initBlocks(background);			
+		MapProperties properties = tileLayer.getProperties();				
+		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());				
+		initBlocks(backgroundType);			
 		initMapObjects();									
 	}
 
@@ -72,7 +64,7 @@ public class TmxMap {
 		}
 	}
 
-	private void initBlocks(String background) {
+	private void initBlocks(BackgroundTypeEnum background) {
 
 		blocks = new ArrayList<Block>();
 
@@ -200,19 +192,19 @@ public class TmxMap {
 		this.mario = mario;
 	}
 
-	public String getBackground() {
-		return background;
-	}
-
-	public void setBackground(String background) {
-		this.background = background;
-	}
-
 	public List<Block> getBlocks() {
 		return blocks;
 	}
 
 	public void setBlocks(List<Block> blocks) {
 		this.blocks = blocks;
+	}
+
+	public BackgroundTypeEnum getBackgroundType() {
+		return backgroundType;
+	}
+
+	public void setBackgroundType(BackgroundTypeEnum backgroundType) {
+		this.backgroundType = backgroundType;
 	}
 }

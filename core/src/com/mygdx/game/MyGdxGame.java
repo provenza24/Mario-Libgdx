@@ -84,7 +84,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.update();
 		cameraOffset = mario.getX();
 
-		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackground(), 16);
+		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackgroundType(), 16);
 		scrollable = true;
 
 		stage = new Stage();			

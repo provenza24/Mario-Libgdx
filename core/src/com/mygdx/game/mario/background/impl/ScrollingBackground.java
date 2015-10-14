@@ -1,17 +1,23 @@
 package com.mygdx.game.mario.background.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.mygdx.game.mario.background.IScrollingBackground;
-import com.mygdx.game.mario.sprite.impl.Mario;
+import com.mygdx.game.mario.enums.BackgroundTypeEnum;
+import com.mygdx.game.mario.sprite.AbstractSprite;
 
 public abstract class ScrollingBackground implements IScrollingBackground {
 
+	protected static final Map<BackgroundTypeEnum, String> BACKGROUND_IMAGES = new HashMap<BackgroundTypeEnum, String>();
+	
 	protected float velocity;
 	
 	protected Batch batch;
 	
-	protected Mario mario;
+	protected AbstractSprite followedSprite;
 	
 	protected Texture background;
 	
@@ -19,16 +25,21 @@ public abstract class ScrollingBackground implements IScrollingBackground {
 	
 	protected int width;
 		
-	public ScrollingBackground(Mario mario, Batch batch, String texture) {
+	static {
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, "overworld.gif");
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, "underworld.png");
+	}
+	
+	public ScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
 		this.batch = batch;
-		this.mario = mario;
-		background = new Texture(texture);
+		this.followedSprite = followedSprite;
+		background = new Texture(BACKGROUND_IMAGES.get(backgroundType));
 		width = background.getWidth();
 	}
 	
 	public void update() {
 		
-		float xMarioMove = (mario.getX() - mario.getOldPosition().x);
+		float xMarioMove = (followedSprite.getX() - followedSprite.getOldPosition().x);
 		if (xMarioMove>0) {			
 			x += xMarioMove * velocity;			
 		}							
