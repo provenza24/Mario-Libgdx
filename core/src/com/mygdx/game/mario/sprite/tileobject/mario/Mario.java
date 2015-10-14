@@ -1,6 +1,7 @@
-package com.mygdx.game.mario.sprite.tileobjects.mario;
+package com.mygdx.game.mario.sprite.tileobject.mario;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -8,7 +9,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
-import com.mygdx.game.mario.sprite.tileobjects.AbstractTileObjectSprite;
+import com.mygdx.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
@@ -135,7 +136,13 @@ public class Mario extends AbstractTileObjectSprite {
 			this.state = pstate;
 		}
 	}
-
+	
+	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
+		move(deltaTime);
+		collideWithTilemap(tileMap);
+		updateAnimation(deltaTime);
+	}
+	
 	public void collideWithTilemap(TmxMap tileMap) {
 
 		tileMap.checkVerticalMapCollision(this);

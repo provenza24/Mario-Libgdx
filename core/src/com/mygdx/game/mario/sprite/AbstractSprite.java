@@ -16,7 +16,7 @@ import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public abstract class AbstractSprite extends Actor implements IMoveable, ICollisionable, IDrawable {
+public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
 
 	private static final float GRAVITY_COEF = 0.01f;
 
@@ -53,6 +53,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, ICollis
 	protected Rectangle bounds;
 	
 	protected List<TmxCell> collidingCells;
+	
+	protected boolean moveable;
+	
+	protected boolean collidableWithTilemap;
 
 	public AbstractSprite(float x, float y) {
 		setPosition(x, y);
@@ -62,7 +66,12 @@ public abstract class AbstractSprite extends Actor implements IMoveable, ICollis
 		alive = false;
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);			
-		collidingCells = new ArrayList<TmxCell>();
+		collidingCells = new ArrayList<TmxCell>();		
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
+		moveable = false;
+		collidableWithTilemap = false;
+		gravitating = false;
+		stateTime = 0f;
 		initializeAnimations();
 	}
 	
@@ -72,39 +81,44 @@ public abstract class AbstractSprite extends Actor implements IMoveable, ICollis
 	
 	public abstract void initializeAnimations();
 
-	/** Methods */
-	public void applyGravity() {
-		if (isGravitating()) {
-			this.acceleration.y = this.acceleration.y - GRAVITY_COEF;
-		}		
-	}
-
-	public void updateAnimation(float delta) {
-		stateTime = stateTime + delta;
-		currentFrame = currentAnimation.getKeyFrame(stateTime, true);		
-	}
-	
-	public void storeOldPosition() {
-		oldPosition.x = getX();
-		oldPosition.y = getY();		
-	}
-
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
-		if (alive) {			
-			move(deltaTime);
-			collideWithTilemap(tileMap);
-			updateAnimation(deltaTime);			
+		if (alive) {
+			updateAnimation(deltaTime);						
+			if (isMoveable()) {
+				move(deltaTime);
+			}
+			if (isCollidableWithTilemap()) {
+				collideWithTilemap(tileMap);
+			}
+					
 			if (getX()<camera.position.x-9 || getY() < -1) {
 				deletable = true;				
 			} else {
 				visible = getX() < camera.position.x+8;				
-			}							
+			}	
+						
 		} else {
 			alive = camera.position.x-8>xAlive;			
 		}
 	}
 	
-	public void move(float deltaTime) {
+	protected void applyGravity() {
+		if (isGravitating()) {
+			this.acceleration.y = this.acceleration.y - GRAVITY_COEF;
+		}		
+	}
+
+	protected void updateAnimation(float delta) {
+		stateTime = stateTime + delta;
+		currentFrame = currentAnimation.getKeyFrame(stateTime, true);		
+	}
+	
+	protected void storeOldPosition() {
+		oldPosition.x = getX();
+		oldPosition.y = getY();		
+	}
+
+	protected void move(float deltaTime) {
 
 		storeOldPosition();
 		
@@ -119,7 +133,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, ICollis
 	    bounds.setY(getY());
 	}
 			
-	public void collideWithTilemap(TmxMap tileMap) {
+	protected void collideWithTilemap(TmxMap tileMap) {
 		
 		tileMap.checkVerticalMapCollision(this);
 		float yMove = getY() - getOldPosition().y;
@@ -228,6 +242,22 @@ public abstract class AbstractSprite extends Actor implements IMoveable, ICollis
 
 	public void setSpriteSheet(Texture spriteSheet) {
 		this.spriteSheet = spriteSheet;
+	}
+
+	public boolean isMoveable() {
+		return moveable;
+	}
+
+	public boolean isCollidableWithTilemap() {
+		return collidableWithTilemap;
+	}
+
+	public void setCollidableWithTilemap(boolean collidableWithTilemap) {
+		this.collidableWithTilemap = collidableWithTilemap;
+	}
+
+	public void setMoveable(boolean moveable) {
+		this.moveable = moveable;
 	}
 
 	public boolean isGravitating() {

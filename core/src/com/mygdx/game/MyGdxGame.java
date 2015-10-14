@@ -24,7 +24,7 @@ import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.bloc.Block;
-import com.mygdx.game.mario.sprite.tileobjects.mario.Mario;
+import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class MyGdxGame extends ApplicationAdapter {
@@ -103,10 +103,8 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		// Listen to keyboard actions and update Mario status
 		handleInput();
-		mario.move(delta);
-		mario.collideWithTilemap(tileMap);
-		mario.updateAnimation(delta);
-
+		mario.update(tileMap, camera, delta);
+		
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);
 		
 		if (scrollable) {
@@ -126,6 +124,8 @@ public class MyGdxGame extends ApplicationAdapter {
 		renderMysteryBlocks(delta);
 		// Render enemies
 		handleEnemies(delta);
+		//handleItems
+		handleItems(delta);
 		// Render Mario		
 		mario.render(renderer.getBatch());
 		// Render debug mode (press F1 to display/hide debug)
@@ -209,6 +209,16 @@ public class MyGdxGame extends ApplicationAdapter {
 		camera.update();
 	}
 
+	private void handleItems(float deltaTime) {
+		List<AbstractSprite> items = tileMap.getItems();
+		for (int i = 0; i < items.size(); i++) {
+			AbstractSprite item = items.get(i);			
+			item.update(tileMap, camera, deltaTime);
+			item.act(deltaTime);
+			item.render(renderer.getBatch());
+		}
+	}
+	
 	private void handleEnemies(float deltaTime) {
 
 		List<AbstractSprite> enemies = tileMap.getEnemies();
@@ -247,26 +257,17 @@ public class MyGdxGame extends ApplicationAdapter {
 		List<Block> blocks = tileMap.getBlocks();
 		if (blocks.size() > 0) {
 			batch = renderer.getBatch();
-			batch.begin();
-			// All blocks have the same animation, running in phasis			
+			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {
 				// For each block
 				Block block = blocks.get(i);
-				block.updateAnimation(delta);
-				if (block.isVisible()) {
-					// Block is drawn only if visible
-					if (block.getX() < camera.position.x - 9) {
-						// Block not visible anymore, delete it from list
-						blocks.remove(i--);
-					} else {
-						block.act(delta);
-						// Block is still visible, draw it																										    					
-						batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);						
-					}
-				} else if (block.getX() < camera.position.x + 8) {
-					// Block was not visible, now will be visible and drawable
-					block.setVisible(true);
-				}
+				block.update(tileMap, camera, delta);
+				block.act(delta);
+				if (block.isDeletable()) {
+					blocks.remove(i--);
+				} else if (block.isVisible()) {
+					batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);	
+				}				
 			}
 			batch.end();
 		}

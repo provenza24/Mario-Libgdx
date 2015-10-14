@@ -1,4 +1,4 @@
-package com.mygdx.game.mario.sprite.tileobjects.enemy;
+package com.mygdx.game.mario.sprite.tileobject.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygdx.game.mario.sprite.tileobjects.AbstractTileObjectSprite;
+import com.mygdx.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 
 public class Goomba extends AbstractTileObjectSprite {
 
@@ -14,12 +14,10 @@ public class Goomba extends AbstractTileObjectSprite {
 	
 	public Goomba(MapObject mapObject) {
 		
-		super(mapObject);			
-						
+		super(mapObject);								
 		offset.x = 0.2f;
 		setSize(1-offset.x*2, 1);
-		currentAnimation = walkAnimation;		
-		stateTime = 0f;
+		currentAnimation = walkAnimation;				
 		acceleration.x = -2;
 		gravitating = true;		
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());

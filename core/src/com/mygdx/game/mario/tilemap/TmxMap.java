@@ -17,8 +17,8 @@ import com.mygdx.game.mario.enums.BackgroundTypeEnum;
 import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.sprite.bloc.MysteryBlock;
-import com.mygdx.game.mario.sprite.tileobjects.enemy.Goomba;
-import com.mygdx.game.mario.sprite.tileobjects.mario.Mario;
+import com.mygdx.game.mario.sprite.tileobject.enemy.Goomba;
+import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 
 public class TmxMap {
 
@@ -32,6 +32,8 @@ public class TmxMap {
 	
 	private List<AbstractSprite> enemies;
 	
+	private List<AbstractSprite> items;
+	
 	private Mario mario;
 		
 	private BackgroundTypeEnum backgroundType;
@@ -44,7 +46,8 @@ public class TmxMap {
 		MapProperties properties = tileLayer.getProperties();				
 		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());				
 		initBlocks(backgroundType);			
-		initMapObjects();									
+		initMapObjects();
+		items = new ArrayList<AbstractSprite>();
 	}
 
 	private void initMapObjects() {
@@ -206,5 +209,13 @@ public class TmxMap {
 
 	public void setBackgroundType(BackgroundTypeEnum backgroundType) {
 		this.backgroundType = backgroundType;
+	}
+
+	public List<AbstractSprite> getItems() {
+		return items;
+	}
+
+	public void setItems(List<AbstractSprite> items) {
+		this.items = items;
 	}
 }

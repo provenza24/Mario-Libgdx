@@ -21,7 +21,7 @@ public class WallBlock extends Block {
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
-		currentAnimation = new Animation(1, animationFrames);
+		currentAnimation = new Animation(0, animationFrames);
 	}
 
 	@Override

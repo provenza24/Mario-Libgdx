@@ -27,6 +27,9 @@ public abstract class Block extends AbstractSprite {
 	public Block(float x, float y, int tileId) {
 		super(x, y);	
 		this.tileId = tileId;
+		collidableWithTilemap = false;
+		moveable = false;
+		gravitating = false;
 	}
 
 	public ItemEnum getItemEnum() {
