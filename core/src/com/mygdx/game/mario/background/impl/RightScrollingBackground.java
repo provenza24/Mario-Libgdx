@@ -8,7 +8,7 @@ public class RightScrollingBackground extends ScrollingBackground {
 
 	public RightScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType, float pvelocity) {
 		super(followedSprite, batch, backgroundType);		
-		this.x = 0;
+		setX(0);
 		this.velocity = pvelocity;
 	}
 

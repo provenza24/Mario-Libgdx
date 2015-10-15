@@ -8,7 +8,7 @@ public class LeftScrollingBackground extends ScrollingBackground {
 
 	public LeftScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType, float pvelocity) {
 		super(followedSprite, batch, backgroundType);		
-		this.x = width;
+		setX(width);
 		this.velocity = -pvelocity;
 	}
 

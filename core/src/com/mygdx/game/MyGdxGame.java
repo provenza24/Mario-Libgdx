@@ -238,15 +238,20 @@ public class MyGdxGame extends ApplicationAdapter {
 				for (int j = i + 1; j < enemies.size(); j++) {
 					// Check collision with other enemies
 					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
-				}
-								
-				boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
-				if (collideMario) {
-					if (mario.getY() > enemy.getY() && mario.getState() == MarioStateEnum.FALLING) {
+				}								
+				if (!enemy.isKilled()) {					
+					boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
+					if (collideMario) {
+						if (mario.getY() > enemy.getY() && mario.getState() == MarioStateEnum.FALLING) {									
+							enemy.kill();
+							mario.getAcceleration().y = 0.15f;
+						} else {
+							// Mario is dead
+						}
+					}
+				} else {
+					if (enemy.getActions().size==0) {
 						enemy.setDeletable(true);
-						mario.getAcceleration().y = 0.15f;
-					} else {
-						// Mario is dead
 					}
 				}
 			}

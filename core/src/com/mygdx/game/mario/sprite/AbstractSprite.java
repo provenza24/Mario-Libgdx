@@ -33,6 +33,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected Animation currentAnimation;
 
 	protected TextureRegion currentFrame;
+	
+	protected Animation killedAnimation;
 
 	protected Texture spriteSheet;
 	
@@ -57,6 +59,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected boolean moveable;
 	
 	protected boolean collidableWithTilemap;
+	
+	protected boolean killed;
 
 	public AbstractSprite(float x, float y) {
 		setPosition(x, y);
@@ -66,6 +70,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		acceleration = new Vector2(0,0);			
 		visible = false;
 		alive = false;
+		killed = false;
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);			
 		collidingCells = new ArrayList<TmxCell>();				
@@ -200,6 +205,14 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		this.acceleration = acceleration;
 	}
 
+	public Animation getKilledAnimation() {
+		return killedAnimation;
+	}
+
+	public void setKilledAnimation(Animation killedAnimation) {
+		this.killedAnimation = killedAnimation;
+	}
+
 	public float getStateTime() {
 		return stateTime;
 	}
@@ -250,6 +263,18 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public boolean isMoveable() {
 		return moveable;
+	}
+
+	public boolean isKilled() {
+		return killed;
+	}
+
+	public void setKilled(boolean killed) {
+		this.killed = killed;
+	}
+	
+	public void kill() {
+		this.killed = true;			
 	}
 
 	public boolean isCollidableWithTilemap() {
