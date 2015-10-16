@@ -20,6 +20,8 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private static final float ACCELERATION_COEF = 0.2f;
 
+	Animation animations[][] = new Animation[3][6] ;   
+	
 	private Animation marioRunRightAnimation;
 
 	private Animation marioRunLeftAnimation;
@@ -44,7 +46,7 @@ public class Mario extends AbstractTileObjectSprite {
 		
 	public Mario(MapObject mapObject) {
 		super(mapObject);		
-		setSize(1, 1);		
+		setSize(1, 2);		
 		stateTime = 0f;
 		jumpTimer = 0;
 		onFloor = true;
@@ -58,9 +60,13 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 
 	@Override
-	public void initializeAnimations() {
-		
-		spriteSheet = new Texture(Gdx.files.internal("sprites/mario.gif"));
+	public void initializeAnimations() {		
+		initializeAnimation("sprites/mario.gif", 0);		
+		initializeAnimation("sprites/mario-big.png", 1);
+	}
+
+	private void initializeAnimation(String image, int i) {
+		Texture spriteSheet = new Texture(Gdx.files.internal(image));
 
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 14,
 				spriteSheet.getHeight() / 1);
@@ -93,6 +99,14 @@ public class Mario extends AbstractTileObjectSprite {
 		marioJumpLeftFrames[0] = tmp[0][8];
 		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
 		
+		animations = new Animation[3][6] ;   
+		animations[i] = new Animation[6];
+		animations[i][0] = marioRunRightAnimation; 
+		animations[i][1] = marioRunLeftAnimation;
+		animations[i][2] = marioSlideRightAnimation;
+		animations[i][3] = marioSlideLeftAnimation;
+		animations[i][4] = marioJumpRightAnimation;
+		animations[i][5] = marioJumpLeftAnimation;
 	}
 	
 	public void accelerate() {

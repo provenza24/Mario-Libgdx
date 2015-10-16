@@ -13,7 +13,6 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
 	public WallCollisionHandler() {
-		// TODO Auto-generated constructor stub
 	}
 	
 	public void handle(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
@@ -24,16 +23,13 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
 		float yWallBlock = wallBlock.getY();
 
-		ChangeCellValueAction changeCellValueAction = new ChangeCellValueAction(tileMap, collidingCell.getX(),
-				collidingCell.getY(), 128);
+		ChangeCellValueAction changeCellValueAction = new ChangeCellValueAction(tileMap, collidingCell.getX(), collidingCell.getY(), 128);
 		Action moveUpAction1 = ActionFacade.createMoveAction(wallBlock.getX(), yWallBlock + 0.1f, 0f);
 		Action moveUpAction2 = ActionFacade.createMoveAction(wallBlock.getX(), yWallBlock + 0.4f, 0.08f);
 		Action moveDownAction = ActionFacade.createMoveAction(wallBlock.getX(), yWallBlock, 0.08f);
-		ChangeCellValueAction changeCellValueAction2 = new ChangeCellValueAction(tileMap, collidingCell.getX(),
-				collidingCell.getY(), wallBlock.getTileId());
+		ChangeCellValueAction changeCellValueAction2 = new ChangeCellValueAction(tileMap, collidingCell.getX(), collidingCell.getY(), wallBlock.getTileId());
 		DeleteBlocSpriteAction deleteWallAction = new DeleteBlocSpriteAction(wallBlock);
-		SequenceAction sequenceAction = new SequenceAction(moveUpAction1, changeCellValueAction, moveUpAction2,
-				moveDownAction);
+		SequenceAction sequenceAction = new SequenceAction(moveUpAction1, changeCellValueAction, moveUpAction2, moveDownAction);
 		sequenceAction.addAction(changeCellValueAction2);
 		sequenceAction.addAction(moveUpAction1);
 		sequenceAction.addAction(deleteWallAction);
