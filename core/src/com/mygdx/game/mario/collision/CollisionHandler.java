@@ -3,6 +3,8 @@ package com.mygdx.game.mario.collision;
 import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.mario.collision.item.AbstractItemCollisionHandler;
+import com.mygdx.game.mario.collision.item.IItemCollisionHandler;
 import com.mygdx.game.mario.collision.upperblock.AbstractUpperBlockCollisionHandler;
 import com.mygdx.game.mario.collision.upperblock.IUpperBlockCollisionHandler;
 import com.mygdx.game.mario.sprite.AbstractSprite;
@@ -41,6 +43,13 @@ public class CollisionHandler {
 			if (collisionHandler!=null) {			
 				collisionHandler.handle(tileMap, collidingCell, stage);
 			}
+		}
+	}
+	
+	public void collideMarioWithItem(Mario mario, AbstractSprite item) {
+		IItemCollisionHandler collisionHandler = AbstractItemCollisionHandler.getHandler(item);
+		if (collisionHandler!=null) {			
+			collisionHandler.collide(mario, item);
 		}
 	}
 

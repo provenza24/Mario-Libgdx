@@ -221,7 +221,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			item.update(tileMap, camera, deltaTime);
 			boolean collideMario = mario.getBounds().overlaps(item.getBounds());
 			if (collideMario) {
-				item.setDeletable(true);
+				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item);				
 			}
 			if (item.isDeletable()) {
 				items.remove(i--);
