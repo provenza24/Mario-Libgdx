@@ -219,6 +219,10 @@ public class MyGdxGame extends ApplicationAdapter {
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
 			item.update(tileMap, camera, deltaTime);
+			boolean collideMario = mario.getBounds().overlaps(item.getBounds());
+			if (collideMario) {
+				item.setDeletable(true);
+			}
 			if (item.isDeletable()) {
 				items.remove(i--);
 			} else if (item.isVisible()) {

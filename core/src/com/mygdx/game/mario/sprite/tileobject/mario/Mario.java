@@ -162,8 +162,8 @@ public class Mario extends AbstractTileObjectSprite {
 				setState(MarioStateEnum.FALLING);
 			}
 		} else if (yMove > 0) {
-			if (getMapCollisionEvent().isCollidingTop()) {
-				setY(getOldPosition().y);
+			if (getMapCollisionEvent().isCollidingTop()) {						
+				setY(getOldPosition().y);								
 				getAcceleration().y = 0;
 				setState(MarioStateEnum.FALLING);
 			}
@@ -179,6 +179,8 @@ public class Mario extends AbstractTileObjectSprite {
 		}
 
 		onFloor = getMapCollisionEvent().isCollidingBottom();
+		bounds.setX(getX());
+	    bounds.setY(getY());
 	}
 
 	public void updateAnimation(float delta) {

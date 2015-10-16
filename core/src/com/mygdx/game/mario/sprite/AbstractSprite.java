@@ -99,8 +99,9 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 				}
 				if (isCollidableWithTilemap()) {
 					collideWithTilemap(tileMap);
-				}
-			}								
+				}				
+			}
+			updateBounds();
 			if (getX()<camera.position.x-9 || getY() < -1) {
 				deletable = true;				
 			} else {
@@ -109,6 +110,11 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		} else {
 			alive = camera.position.x-8>xAlive;			
 		}				
+	}
+
+	protected void updateBounds() {
+		bounds.setX(getX());
+		bounds.setY(getY());
 	}
 	
 	protected void applyGravity() {
@@ -128,7 +134,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	}
 
 	protected void move(float deltaTime) {
-
+		
 		storeOldPosition();
 		
 		float xVelocity = deltaTime * acceleration.x;
@@ -136,10 +142,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		setX(getX() + xVelocity);
 
 		applyGravity();
-		setY(getY() + acceleration.y);
-		
-		bounds.setX(getX());
-	    bounds.setY(getY());
+		setY(getY() + acceleration.y);		
 	}
 			
 	protected void collideWithTilemap(TmxMap tileMap) {
@@ -154,7 +157,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			}
 		} else if (yMove > 0) {
 			if (getMapCollisionEvent().isCollidingTop()) {
-				setY(getOldPosition().y);
+				setY((int) getY());
 				getAcceleration().y = 0;			
 			}
 		}		
@@ -167,8 +170,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			getAcceleration().x = -getAcceleration().x;
 		}
 
-		onFloor = getMapCollisionEvent().isCollidingBottom();
-		
+		onFloor = getMapCollisionEvent().isCollidingBottom();					
 	}	
 	
 	public void render(Batch batch) {
