@@ -17,9 +17,9 @@ public class Goomba extends AbstractTileObjectSprite {
 		
 		super(mapObject);								
 		offset.x = 0.2f;
-		setSize(1-offset.x*2, 1);
+		setSize(1-offset.x*2, 1);		
 		currentAnimation = walkAnimation;				
-		acceleration.x = -2;
+		acceleration.x = -1.9f;
 		gravitating = true;		
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}

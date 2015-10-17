@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -14,13 +15,13 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float ACCELERATION_MAX = 5; // 7.5f;
+	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
-	private static final float DECELERATION_COEF = 0.4f;
+	private static final float DECELERATION_COEF = 0.2f;
 
 	private static final float ACCELERATION_COEF = 0.2f;
 
-	Animation animations[][] = new Animation[3][6] ;   
+	Animation animations[][];   
 	
 	private Animation marioRunRightAnimation;
 
@@ -43,10 +44,14 @@ public class Mario extends AbstractTileObjectSprite {
 	private boolean canInitiateJump;
 
 	private boolean canJumpHigher;
+	
+	/** 0=small, 1=big, 2=flowered */
+	private int sizeState;
 		
 	public Mario(MapObject mapObject) {
 		super(mapObject);		
-		setSize(1, 2);		
+		setSize(1, 1);		
+		renderingSize = new Vector2(1,1);
 		stateTime = 0f;
 		jumpTimer = 0;
 		onFloor = true;
@@ -57,8 +62,28 @@ public class Mario extends AbstractTileObjectSprite {
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
+		sizeState = 0;
+		changeSizeState(sizeState);
 	}
 
+	public void changeSizeState(int i) {
+		sizeState = i;
+		if (i==0) {
+			setSize(1, 1);			
+			setRenderingSize(1,1);
+		} else {
+			setSize(1, 2);
+			setRenderingSize(1,2);
+		}
+		//setBounds(getX(), getY(), getWidth(), getHeight());
+		marioRunRightAnimation = animations[i][0]; 
+		marioRunLeftAnimation = animations[i][1];
+		marioSlideRightAnimation =  animations[i][2];
+		marioSlideLeftAnimation=  animations[i][3];				
+		marioJumpRightAnimation = animations[i][4];
+		marioJumpLeftAnimation = animations[i][5];
+	}
+	
 	@Override
 	public void initializeAnimations() {		
 		initializeAnimation("sprites/mario.gif", 0);		
@@ -98,8 +123,10 @@ public class Mario extends AbstractTileObjectSprite {
 		TextureRegion[] marioJumpLeftFrames = new TextureRegion[1];
 		marioJumpLeftFrames[0] = tmp[0][8];
 		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
-		
-		animations = new Animation[3][6] ;   
+				  
+		if (animations == null) {
+			 animations = new Animation[3][6] ;
+		}
 		animations[i] = new Animation[6];
 		animations[i][0] = marioRunRightAnimation; 
 		animations[i][1] = marioRunLeftAnimation;
@@ -115,9 +142,9 @@ public class Mario extends AbstractTileObjectSprite {
 		}
 	}
 
-	public void decelerate() {
+	public void decelerate(float rate) {
 		if (this.acceleration.x > 0) {
-			this.acceleration.x = this.acceleration.x - DECELERATION_COEF;
+			this.acceleration.x = this.acceleration.x - DECELERATION_COEF * rate;
 		}
 		if (this.acceleration.x < 0) {
 			this.acceleration.x = 0;
@@ -157,9 +184,21 @@ public class Mario extends AbstractTileObjectSprite {
 		updateAnimation(deltaTime);
 	}
 	
+	public void checkHorizontalMapCollision(TmxMap tilemap) {
+		super.checkHorizontalMapCollision(tilemap);
+		if (sizeState>0) {
+			Vector2 rightMiddle = new Vector2(getX() + 1 - getOffset().x, getY() + getHeight()/2 - 0.1f);
+			boolean isCollision = tilemap.isCollisioningTileAt((int) rightMiddle.x, (int) rightMiddle.y);
+			getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight()/2 - 0.1f);
+			isCollision = tilemap.isCollisioningTileAt((int) leftMiddle.x, (int) leftMiddle.y);
+			getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
+		}		
+	}
+	
 	public void collideWithTilemap(TmxMap tileMap) {
 
-		tileMap.checkVerticalMapCollision(this);
+		checkVerticalMapCollision(tileMap);
 		float yMove = getY() - getOldPosition().y;
 		if (yMove < 0) {
 			if (getMapCollisionEvent().isCollidingBottom()) {
@@ -183,7 +222,7 @@ public class Mario extends AbstractTileObjectSprite {
 			}
 		}
 
-		tileMap.checkHorizontalMapCollision(this);
+		checkHorizontalMapCollision(tileMap);
 		float xMove = getX() - getOldPosition().x;
 		if (xMove > 0 && getMapCollisionEvent().isCollidingRight()
 				|| xMove < 0 && getMapCollisionEvent().isCollidingLeft()) {
@@ -272,6 +311,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setPreviousState(MarioStateEnum previousState) {
 		this.previousState = previousState;
+	}
+
+	public int getSizeState() {
+		return sizeState;
+	}
+
+	public void setSizeState(int sizeState) {
+		this.sizeState = sizeState;
 	}
 
 }

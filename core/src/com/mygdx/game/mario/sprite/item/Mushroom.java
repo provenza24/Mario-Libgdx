@@ -4,16 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.mygdx.game.mario.sprite.AbstractSprite;
+import com.mygdx.game.mario.action.ActionFacade;
+import com.mygdx.game.mario.sprite.AbstractItem;
 
-public class Mushroom extends AbstractSprite {
+public class Mushroom extends AbstractItem {
 
 	public Mushroom(float x, float y) {
-		super(x, y);
-		alive = true;
-		moveable = true;
-		collidableWithTilemap = true;
-		gravitating = true;
+		super(x, y);		
 		acceleration.x = -2.5f;		
 	}
 
@@ -24,6 +21,11 @@ public class Mushroom extends AbstractSprite {
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
 		currentAnimation = new Animation(0, animationFrames);
+	}
+
+	@Override
+	public void addAppearAction() {
+		addAction(ActionFacade.createMoveAction(getX(), getY()+1, 0.5f));		
 	}
 		
 }

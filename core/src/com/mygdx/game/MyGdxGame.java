@@ -291,11 +291,15 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private void handleInput() {
 
+		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
+			mario.changeSizeState(mario.getSizeState()==0 ? 1 : 0);
+		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			debugShowText = !debugShowText;
 		}
 
-		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
+		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
 			mario.setAcceleration(new Vector2(0, 0));
 			mario.setDirection(DirectionEnum.RIGHT);
 			mario.setX(217);
@@ -314,15 +318,11 @@ public class MyGdxGame extends ApplicationAdapter {
 			debugShowBounds = !debugShowBounds;
 		}
 
-		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
-			mario.setY(mario.getY() + 10);
-		}
-
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
 				// Sliding
 				mario.setStateIfNotJumping(MarioStateEnum.SLIDING_LEFT);
-				mario.decelerate();
+				mario.decelerate(1.5f);
 				if (mario.getAcceleration().x <= 0) {
 					mario.getAcceleration().x = 0;
 					mario.setDirection(DirectionEnum.RIGHT);
@@ -336,7 +336,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			if (mario.getDirection() == DirectionEnum.RIGHT) {
 				// Sliding
 				mario.setStateIfNotJumping(MarioStateEnum.SLIDING_RIGHT);
-				mario.decelerate();
+				mario.decelerate(1.5f);
 				if (mario.getAcceleration().x <= 0) {
 					mario.getAcceleration().x = 0;
 					mario.setDirection(DirectionEnum.LEFT);
@@ -347,7 +347,7 @@ public class MyGdxGame extends ApplicationAdapter {
 				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_LEFT);
 			}
 		} else {
-			mario.decelerate();
+			mario.decelerate(1);
 		}
 
 		if (Gdx.input.isKeyPressed(Keys.UP) && mario.canInitiateJump()

@@ -11,6 +11,9 @@ public class MushroomCollisionHandler extends AbstractItemCollisionHandler {
 	@Override
 	public void collide(Mario mario, AbstractSprite item) {		
 		super.collide(mario, item);
+		if (mario.getSizeState()==0) {
+			mario.changeSizeState(1);
+		}
 	}
 
 }
