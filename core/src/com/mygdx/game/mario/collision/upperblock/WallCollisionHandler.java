@@ -8,7 +8,11 @@ import com.mygdx.game.mario.action.ActionFacade;
 import com.mygdx.game.mario.action.ChangeCellValueAction;
 import com.mygdx.game.mario.action.DeleteBlocSpriteAction;
 import com.mygdx.game.mario.sprite.bloc.WallBlock;
-import com.mygdx.game.mario.sprite.item.WallPiece;
+import com.mygdx.game.mario.sprite.item.wallpiece.AbstractWallPiece;
+import com.mygdx.game.mario.sprite.item.wallpiece.BottomLeftWallPiece;
+import com.mygdx.game.mario.sprite.item.wallpiece.BottomRightWallPiece;
+import com.mygdx.game.mario.sprite.item.wallpiece.TopLeftWallPiece;
+import com.mygdx.game.mario.sprite.item.wallpiece.TopRightWallPiece;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
@@ -30,23 +34,24 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 	}
 
 	private void breakWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
+		
 		tileMap.removeCell(collidingCell.getX(), collidingCell.getY());
-		WallPiece topLeftPiece = new WallPiece(collidingCell.getX(), collidingCell.getY()+1, new Vector2(-6,0.3f)); 
+		
+		AbstractWallPiece topLeftPiece = new TopLeftWallPiece(collidingCell.getX(), collidingCell.getY()+0.5f); 
 		tileMap.getItems().add(topLeftPiece);
 		stage.addActor(topLeftPiece);
 		
-		WallPiece bottomLeftPiece = new WallPiece(collidingCell.getX(), collidingCell.getY(), new Vector2(-6,0.3f)); 
-		tileMap.getItems().add(bottomLeftPiece);
-		stage.addActor(bottomLeftPiece);
-		
-
-		WallPiece topRightPiece = new WallPiece(collidingCell.getX()+1, collidingCell.getY()+1, new Vector2(6,0.3f)); 
+		AbstractWallPiece topRightPiece = new TopRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()+0.5f); 
 		tileMap.getItems().add(topRightPiece);
 		stage.addActor(topRightPiece);
 		
-		WallPiece bottomRightPiece = new WallPiece(collidingCell.getX()+1, collidingCell.getY(), new Vector2(6,0.3f)); 
+		AbstractWallPiece bottomRightPiece = new BottomRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()); 
 		tileMap.getItems().add(bottomRightPiece);
 		stage.addActor(bottomRightPiece);
+		
+		AbstractWallPiece bottomLeftPiece = new BottomLeftWallPiece(collidingCell.getX(), collidingCell.getY()); 
+		tileMap.getItems().add(bottomLeftPiece);
+		stage.addActor(bottomLeftPiece);
 	}
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
