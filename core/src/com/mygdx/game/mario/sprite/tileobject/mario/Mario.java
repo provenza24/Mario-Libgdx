@@ -11,11 +11,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
 import com.mygdx.game.mario.sprite.tileobject.AbstractTileObjectSprite;
+import com.mygdx.game.mario.tilemap.TmxCell;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float ACCELERATION_MAX = 5f; // 7.5f;
+	private static final float ACCELERATION_MAX = 7.5f; // 7.5f;
 
 	private static final float DECELERATION_COEF = 0.2f;
 
@@ -187,7 +188,7 @@ public class Mario extends AbstractTileObjectSprite {
 	public void checkHorizontalMapCollision(TmxMap tilemap) {
 		super.checkHorizontalMapCollision(tilemap);
 		if (sizeState>0) {
-			Vector2 rightMiddle = new Vector2(getX() + 1 - getOffset().x, getY() + getHeight()/2 - 0.1f);
+			Vector2 rightMiddle = new Vector2(getX() + 0.95f - getOffset().x, getY() + getHeight()/2 - 0.1f);
 			boolean isCollision = tilemap.isCollisioningTileAt((int) rightMiddle.x, (int) rightMiddle.y);
 			getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
 			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight()/2 - 0.1f);
@@ -198,7 +199,9 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	public void collideWithTilemap(TmxMap tileMap) {
 
-		checkVerticalMapCollision(tileMap);
+		float oldAccelerationX = acceleration.x;
+		
+		checkVerticalBottomMapCollision(tileMap);
 		float yMove = getY() - getOldPosition().y;
 		if (yMove < 0) {
 			if (getMapCollisionEvent().isCollidingBottom()) {
@@ -214,26 +217,66 @@ public class Mario extends AbstractTileObjectSprite {
 			if (previousState == MarioStateEnum.JUMPING) {
 				setState(MarioStateEnum.FALLING);
 			}
-		} else if (yMove > 0) {
-			if (getMapCollisionEvent().isCollidingTop()) {						
-				setY(getOldPosition().y);								
-				getAcceleration().y = 0;
-				setState(MarioStateEnum.FALLING);
-			}
 		}
-
 		checkHorizontalMapCollision(tileMap);
 		float xMove = getX() - getOldPosition().x;
 		if (xMove > 0 && getMapCollisionEvent().isCollidingRight()
 				|| xMove < 0 && getMapCollisionEvent().isCollidingLeft()) {
 			// Mario is colliding on his right or left
 			setX(getOldPosition().x);
-			getAcceleration().x = 0;
+			acceleration.x = 0;			
+		}
+		
+		checkVerticalUpperMapCollision(tileMap);
+		if (yMove > 0) {
+			if (getMapCollisionEvent().isCollidingTop()) {						
+				setY(getOldPosition().y);		
+				acceleration.x = oldAccelerationX;
+				acceleration.y = 0;
+				setState(MarioStateEnum.FALLING);
+			}
 		}
 
 		onFloor = getMapCollisionEvent().isCollidingBottom();
 		bounds.setX(getX());
 	    bounds.setY(getY());
+	}
+	
+	public void checkVerticalBottomMapCollision(TmxMap tilemap) {
+
+		reinitVerticalMapCollisionEvent();
+
+		Vector2 leftBottomCorner = new Vector2(getX() + 0.1f + getOffset().x, getY());
+		Vector2 rightBottomCorner = new Vector2(getX() + 0.9f - getOffset().x, getY());
+		
+		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
+		getMapCollisionEvent().setCollidingBottom(isCollision);
+		
+		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
+		getMapCollisionEvent().setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);				
+	}
+	
+	public void checkVerticalUpperMapCollision(TmxMap tilemap) {
+	
+		Vector2 leftTopCorner = new Vector2(getX() + 0.1f + getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 rightTopCorner = new Vector2(getX() + 0.9f - getOffset().x, getY() + getHeight() - 0.1f);
+		
+		int x = (int) leftTopCorner.x;
+		int y = (int) leftTopCorner.y;
+		boolean isCollision = tilemap.isCollisioningTileAt(x ,y);		
+		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
+		}
+
+		x = (int) rightTopCorner.x;
+		y = (int) rightTopCorner.y;
+		isCollision = tilemap.isCollisioningTileAt(x, y);
+		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
+		}
+		
 	}
 
 	public void updateAnimation(float delta) {

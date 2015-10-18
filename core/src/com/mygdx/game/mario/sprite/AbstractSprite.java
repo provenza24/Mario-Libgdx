@@ -402,10 +402,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 		reinitVerticalMapCollisionEvent();
 
-		Vector2 leftBottomCorner = new Vector2(getX() + 0.05f + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + 0.05f + getOffset().x, getY() + getHeight() - 0.1f);
-		Vector2 rightBottomCorner = new Vector2(getX() + 0.95f - getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + 0.95f - getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 leftBottomCorner = new Vector2(getX() + 0.1f + getOffset().x, getY());
+		Vector2 leftTopCorner = new Vector2(getX() + 0.1f + getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 rightBottomCorner = new Vector2(getX() + 0.9f - getOffset().x, getY());
+		Vector2 rightTopCorner = new Vector2(getX() + 0.9f - getOffset().x, getY() + getHeight() - 0.1f);
 
 		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		getMapCollisionEvent().setCollidingBottom(isCollision);
@@ -431,4 +431,5 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		}
 
 	}
+	
 }
