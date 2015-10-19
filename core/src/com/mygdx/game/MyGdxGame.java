@@ -7,18 +7,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
+import com.mygdx.game.mario.camera.GameCamera;
 import com.mygdx.game.mario.collision.CollisionHandler;
 import com.mygdx.game.mario.enums.DirectionEnum;
 import com.mygdx.game.mario.enums.MarioStateEnum;
@@ -39,14 +38,12 @@ public class MyGdxGame extends ApplicationAdapter {
 
 	private OrthogonalTiledMapRenderer renderer;
 
-	private OrthographicCamera camera;
-
 	private Batch batch;
 
 	private Mario mario;
 
-	private float cameraOffset = 0;
-
+	private GameCamera camera;
+	
 	private BitmapFont font;
 
 	private SpriteBatch spriteBatch;
@@ -56,8 +53,6 @@ public class MyGdxGame extends ApplicationAdapter {
 	private int jumpTimerMax = 20;
 
 	private IScrollingBackground scrollingBackground;
-
-	private boolean scrollable;
 
 	private Stage stage;
 
@@ -78,15 +73,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		mario = tileMap.getMario();
 
 		// create an orthographic camera, shows us 30x20 units of the world
-		camera = new OrthographicCamera();
-		camera.setToOrtho(false, 16, 15);
-		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-		camera.update();
-		cameraOffset = mario.getX();
-
+		camera = new GameCamera();
+		camera.setCameraOffset(mario.getX());
+		
 		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackgroundType(), 16);
-		scrollable = true;
-
+		
 		stage = new Stage();			
 		for (Actor actor : tileMap.getBlocks()) {
 			stage.addActor(actor);
@@ -103,22 +94,22 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		// Listen to keyboard actions and update Mario status
 		handleInput();
-		mario.update(tileMap, camera, delta);
+		mario.update(tileMap, camera.getCamera(), delta);
 		
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);
 		
-		if (scrollable) {
+		if (camera.isScrollable()) {
 			// Move camera
-			moveCamera();
+			camera.moveCamera(mario);
 			// Move scrolling background
-			if (Math.floor(cameraOffset) == 8) {
+			if (Math.floor(camera.getCameraOffset()) == 8) {
 				scrollingBackground.update();
 			}
 			scrollingBackground.render();
 		}
 		
 		// Render tilemap
-		renderer.setView(camera);
+		renderer.setView(camera.getCamera());
 		renderer.render();
 		// Render mystery blocks
 		renderMysteryBlocks(delta);
@@ -150,8 +141,8 @@ public class MyGdxGame extends ApplicationAdapter {
 			font.draw(spriteBatch, "direction=" + mario.getDirection().toString(), 10, 400);
 			font.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, 380);
 			font.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, 360);
-			font.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.position.x) + " camera.offset="
-					+ String.format("%.1f", cameraOffset), 10, 340);
+			font.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x) + " camera.offset="
+					+ String.format("%.1f", camera.getCameraOffset()), 10, 340);
 			font.draw(spriteBatch,
 					"tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight() + ", left="
 							+ mario.getMapCollisionEvent().isCollidingLeft() + ", top="
@@ -176,7 +167,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			batch.begin();
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			shapeRenderer.setProjectionMatrix(camera.combined);
+			shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
 			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
@@ -193,35 +184,15 @@ public class MyGdxGame extends ApplicationAdapter {
 			batch.end();
 		}
 	}
-
-	private void moveCamera() {
-
-		float move = mario.getX() - mario.getOldPosition().x;
-		if (cameraOffset < 8) {
-			cameraOffset = cameraOffset + move;
-		} else {
-			if (move > 0) {
-				camera.position.x = camera.position.x + move;
-			} else {
-				cameraOffset = cameraOffset + move;
-			}
-		}
-		if (mario.getX() < camera.position.x - 8) {
-			mario.setX(mario.getOldPosition().x);
-			mario.getAcceleration().x = 0;
-			cameraOffset = cameraOffset - move;
-		}
-		camera.update();
-	}
-
+	
 	private void handleItems(float deltaTime) {
 		List<AbstractSprite> items = tileMap.getItems();
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
-			item.update(tileMap, camera, deltaTime);
+			item.update(tileMap, camera.getCamera(), deltaTime);
 			boolean collideMario = mario.getBounds().overlaps(item.getBounds());
 			if (collideMario) {
-				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item);				
+				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera);				
 			}
 			if (item.isDeletable()) {
 				items.remove(i--);
@@ -236,7 +207,7 @@ public class MyGdxGame extends ApplicationAdapter {
 		List<AbstractSprite> enemies = tileMap.getEnemies();
 		for (int i = 0; i < enemies.size(); i++) {
 			AbstractSprite enemy = enemies.get(i);
-			enemy.update(tileMap, camera, deltaTime);
+			enemy.update(tileMap, camera.getCamera(), deltaTime);
 			// Draw it
 			if (enemy.isAlive()) {
 				for (int j = i + 1; j < enemies.size(); j++) {
@@ -278,7 +249,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			for (int i = 0; i < blocks.size(); i++) {
 				// For each block
 				Block block = blocks.get(i);
-				block.update(tileMap, camera, delta);
+				block.update(tileMap, camera.getCamera(), delta);
 				if (block.isDeletable()) {
 					blocks.remove(i--);
 				} else if (block.isVisible()) {
@@ -299,7 +270,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			debugShowText = !debugShowText;
 		}
 
-		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
+		/*if (Gdx.input.isKeyJustPressed(Keys.F5)) {
 			mario.setAcceleration(new Vector2(0, 0));
 			mario.setDirection(DirectionEnum.RIGHT);
 			mario.setX(217);
@@ -308,7 +279,7 @@ public class MyGdxGame extends ApplicationAdapter {
 			camera.position.x = 217 + 6;
 			camera.update();
 			scrollable = false;
-		}
+		}*/
 
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
 			debugShowFps = !debugShowFps;

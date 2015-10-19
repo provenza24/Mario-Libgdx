@@ -115,10 +115,9 @@
   <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
   <object id="25" type="transferDown" gid="406" x="1852" y="320" width="8" height="8">
    <properties>
-    <property name="mapType" value="1"/>
-    <property name="xCamera" value="6944"/>
+    <property name="scrollable" value="false"/>
     <property name="xOutgoing" value="6944"/>
-    <property name="yOutgoing" value="0"/>
+    <property name="yOutgoing" value="480"/>
    </properties>
   </object>
   <object id="26" type="coin" gid="412" x="7008" y="320" width="28" height="32"/>
@@ -142,10 +141,9 @@
   <object id="44" type="coin" gid="412" x="7168" y="192" width="28" height="32"/>
   <object id="46" type="transferRight" gid="409" x="7288" y="402" width="8" height="8">
    <properties>
-    <property name="mapType" value="0"/>
-    <property name="xCamera" value="5288"/>
-    <property name="xOutgoing" value="5248"/>
-    <property name="yOutgoing" value="352"/>
+    <property name="scrollable" value="true"/>
+    <property name="xOutgoing" value="5232"/>
+    <property name="yOutgoing" value="96"/>
    </properties>
   </object>
   <object id="48" type="turtle" gid="416" x="3424" y="448" width="32" height="48"/>

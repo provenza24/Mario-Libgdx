@@ -12,12 +12,13 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.math.Vector2;
 import com.mygdx.game.mario.enums.BackgroundTypeEnum;
 import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.sprite.bloc.MysteryBlock;
 import com.mygdx.game.mario.sprite.tileobject.enemy.Goomba;
+import com.mygdx.game.mario.sprite.tileobject.item.TransferItemDown;
+import com.mygdx.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 
 public class TmxMap {
@@ -45,9 +46,9 @@ public class TmxMap {
 		objectsLayer = map.getLayers().get(1);
 		MapProperties properties = tileLayer.getProperties();				
 		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());				
-		initBlocks(backgroundType);			
-		initMapObjects();
+		initBlocks(backgroundType);
 		items = new ArrayList<AbstractSprite>();
+		initMapObjects();		
 	}
 
 	private void initMapObjects() {
@@ -63,6 +64,12 @@ public class TmxMap {
 			}
 			if (objectProperty.get("type").toString().equals("goomba")) {				
 				enemies.add(new Goomba(mapObject));
+			}
+			if (objectProperty.get("type").toString().equals("transferDown")) {				
+				items.add(new TransferItemDown(mapObject));
+			}
+			if (objectProperty.get("type").toString().equals("transferRight")) {				
+				items.add(new TransferItemRight(mapObject));
 			}
 		}
 	}

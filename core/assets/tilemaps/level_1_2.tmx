@@ -43,6 +43,7 @@
     <property name="background" value="background_underworld"/>
     <property name="mapType" value="0"/>
     <property name="music" value="main-theme"/>
+    <property name="scrollable" value="true"/>
     <property name="xCamera" value="5968"/>
     <property name="xOutgoing" value="5968"/>
     <property name="yOutgoing" value="352"/>

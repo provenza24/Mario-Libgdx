@@ -3,8 +3,11 @@ package com.mygdx.game.mario.collision.item;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.mygdx.game.mario.camera.GameCamera;
 import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.item.Mushroom;
+import com.mygdx.game.mario.sprite.tileobject.item.TransferItemDown;
+import com.mygdx.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 
 public abstract class AbstractItemCollisionHandler implements IItemCollisionHandler {
@@ -13,6 +16,8 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 
 	static {
 		handlers.put(Mushroom.class, new MushroomCollisionHandler());		
+		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
+		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
 	}
 
 	public static IItemCollisionHandler getHandler(AbstractSprite sprite) {		
@@ -24,7 +29,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item) {
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera) {
 		item.setDeletable(true);
 	}
 
