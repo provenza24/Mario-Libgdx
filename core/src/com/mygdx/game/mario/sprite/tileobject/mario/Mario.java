@@ -16,7 +16,7 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float ACCELERATION_MAX = 7.5f; // 7.5f;
+	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
 	private static final float DECELERATION_COEF = 0.2f;
 
@@ -46,6 +46,8 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private boolean canJumpHigher;
 	
+	private int nbCoins;
+	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
 		
@@ -65,6 +67,7 @@ public class Mario extends AbstractTileObjectSprite {
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		sizeState = 0;
 		changeSizeState(sizeState);
+		nbCoins = 0;
 	}
 
 	public void changeSizeState(int i) {
@@ -199,7 +202,8 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	public void collideWithTilemap(TmxMap tileMap) {
 
-		float oldAccelerationX = acceleration.x;
+		float xActualAcceleration = acceleration.x;
+		float xActual = getX();
 		
 		checkVerticalBottomMapCollision(tileMap);
 		float yMove = getY() - getOldPosition().y;
@@ -218,20 +222,22 @@ public class Mario extends AbstractTileObjectSprite {
 				setState(MarioStateEnum.FALLING);
 			}
 		}
+		
 		checkHorizontalMapCollision(tileMap);
 		float xMove = getX() - getOldPosition().x;
 		if (xMove > 0 && getMapCollisionEvent().isCollidingRight()
 				|| xMove < 0 && getMapCollisionEvent().isCollidingLeft()) {
-			// Mario is colliding on his right or left
+			// Mario is colliding on his right or left			
 			setX(getOldPosition().x);
 			acceleration.x = 0;			
 		}
 		
 		checkVerticalUpperMapCollision(tileMap);
 		if (yMove > 0) {
-			if (getMapCollisionEvent().isCollidingTop()) {						
+			if (getMapCollisionEvent().isCollidingTop()) {
+				setX(xActual);
 				setY(getOldPosition().y);		
-				acceleration.x = oldAccelerationX;
+				acceleration.x = xActualAcceleration;
 				acceleration.y = 0;
 				setState(MarioStateEnum.FALLING);
 			}
@@ -362,6 +368,18 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setSizeState(int sizeState) {
 		this.sizeState = sizeState;
+	}
+
+	public int getNbCoins() {
+		return nbCoins;
+	}
+
+	public void setNbCoins(int nbCoins) {
+		this.nbCoins = nbCoins;
+	}
+	
+	public void addCoin() {
+		this.nbCoins++;
 	}
 
 }

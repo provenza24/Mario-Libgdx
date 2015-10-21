@@ -29,7 +29,7 @@ public abstract class ScrollingBackground extends Sprite implements IScrollingBa
 	}
 	
 	public ScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
-		super(new Texture(BACKGROUND_IMAGES.get(backgroundType)), 512, 480);
+		super(new Texture(BACKGROUND_IMAGES.get(backgroundType)));
 		this.batch = batch;
 		this.followedSprite = followedSprite;
 		width = getTexture().getWidth();

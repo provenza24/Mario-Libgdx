@@ -19,7 +19,7 @@ public class EjectedCoin extends AbstractItem {
 	@Override
 	public void initializeAnimations() {
 		
-		spriteSheet = new Texture(Gdx.files.internal("sprites/coin.png"));				
+		spriteSheet = new Texture(Gdx.files.internal("sprites/coin-from-bloc.png"));				
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 9, spriteSheet.getHeight() / 1);				
 		TextureRegion[] coinFrames = new TextureRegion[9];
 		coinFrames[0] = tmp[0][0];

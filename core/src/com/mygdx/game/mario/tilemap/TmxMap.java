@@ -17,6 +17,8 @@ import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.sprite.bloc.MysteryBlock;
 import com.mygdx.game.mario.sprite.tileobject.enemy.Goomba;
+import com.mygdx.game.mario.sprite.tileobject.item.Coin;
+import com.mygdx.game.mario.sprite.tileobject.item.Flag;
 import com.mygdx.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.mygdx.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
@@ -39,6 +41,8 @@ public class TmxMap {
 		
 	private BackgroundTypeEnum backgroundType;
 	
+	private Flag flag;
+	
 	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
@@ -58,7 +62,7 @@ public class TmxMap {
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
 			MapProperties objectProperty = mapObject.getProperties();		
-			//Gdx.app.log("New object from layer", objectProperty.get("type").toString());
+								
 			if (objectProperty.get("type").toString().equals("mario")) {
 				mario = new Mario(mapObject);
 			}
@@ -70,6 +74,13 @@ public class TmxMap {
 			}
 			if (objectProperty.get("type").toString().equals("transferRight")) {				
 				items.add(new TransferItemRight(mapObject));
+			}
+			if (objectProperty.get("type").toString().equals("coin")) {				
+				items.add(new Coin(mapObject));
+			}
+			if (objectProperty.get("type").toString().equals("flag")) {
+				flag = new Flag(mapObject);
+				items.add(flag);
 			}
 		}
 	}
@@ -171,5 +182,13 @@ public class TmxMap {
 
 	public void setItems(List<AbstractSprite> items) {
 		this.items = items;
+	}
+
+	public Flag getFlag() {
+		return flag;
+	}
+
+	public void setFlag(Flag flag) {
+		this.flag = flag;
 	}
 }

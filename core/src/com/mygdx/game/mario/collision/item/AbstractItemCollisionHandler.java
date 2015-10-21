@@ -6,6 +6,7 @@ import java.util.Map;
 import com.mygdx.game.mario.camera.GameCamera;
 import com.mygdx.game.mario.sprite.AbstractSprite;
 import com.mygdx.game.mario.sprite.item.Mushroom;
+import com.mygdx.game.mario.sprite.tileobject.item.Coin;
 import com.mygdx.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.mygdx.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
@@ -18,6 +19,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(Mushroom.class, new MushroomCollisionHandler());		
 		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
 		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
+		handlers.put(Coin.class, new CoinCollisionHandler());
 	}
 
 	public static IItemCollisionHandler getHandler(AbstractSprite sprite) {		
