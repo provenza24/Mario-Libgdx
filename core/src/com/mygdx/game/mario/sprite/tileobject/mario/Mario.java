@@ -16,7 +16,7 @@ import com.mygdx.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float ACCELERATION_MAX = 10f; // 7.5f;
+	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
 	private static final float DECELERATION_COEF = 0.2f;
 
@@ -47,6 +47,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private boolean canJumpHigher;
 	
 	private int nbCoins;
+	
+	private boolean invincible;
 	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -380,6 +382,14 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	public void addCoin() {
 		this.nbCoins++;
+	}
+
+	public boolean isInvincible() {
+		return invincible;
+	}
+
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
 	}
 
 }

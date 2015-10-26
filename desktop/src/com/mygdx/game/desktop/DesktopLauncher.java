@@ -2,7 +2,7 @@ package com.mygdx.game.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.GameManager;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
@@ -17,6 +17,6 @@ public class DesktopLauncher {
 		//config.foregroundFPS = 0; // Setting to 0 disables foreground fps throttling
 		//config.backgroundFPS = 0; // Setting to 0 disables background fps throttling
 		
-		new LwjglApplication(new MyGdxGame(), config);
+		new LwjglApplication(new GameManager(), config);
 	}
 }

@@ -2,8 +2,9 @@ package com.mygdx.game;
 
 import java.util.List;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -26,7 +27,7 @@ import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public class MyGdxGame extends ApplicationAdapter {
+public class GameScreen extends Game implements Screen  {
 
 	private boolean debugShowText = false;
 
@@ -55,7 +56,13 @@ public class MyGdxGame extends ApplicationAdapter {
 	private IScrollingBackground scrollingBackground;
 
 	private Stage stage;
+	
+	private GameManager gameManager;
 
+	public GameScreen(GameManager pgame) {
+		gameManager = pgame;
+	}
+	
 	@Override
 	public void create() {
 
@@ -85,12 +92,10 @@ public class MyGdxGame extends ApplicationAdapter {
 	}
 
 	@Override
-	public void render() {
+	public void render(float delta) {
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		float delta = Gdx.graphics.getDeltaTime();
 
 		// Listen to keyboard actions and update Mario status
 		handleInput();
@@ -277,6 +282,11 @@ public class MyGdxGame extends ApplicationAdapter {
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debugShowBounds = !debugShowBounds;
 		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.P)) {
+			this.pause();
+		}
+		
 
 		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
@@ -335,6 +345,19 @@ public class MyGdxGame extends ApplicationAdapter {
 
 		mario.setCanInitiateJump(!Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor());
 
+	}
+
+	@Override
+	public void show() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void hide() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
