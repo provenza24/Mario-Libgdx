@@ -24,7 +24,7 @@ public abstract class ScrollingBackground extends Sprite implements IScrollingBa
 	protected int width;
 		
 	static {
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, "overworld-800.gif");
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, "overworld.gif");
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, "underworld-800.png");
 	}
 	

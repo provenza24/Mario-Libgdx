@@ -84,6 +84,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		gravitating = false;
 		stateTime = 0f;
 		initializeAnimations();
+		xAlive = getX() - 16 ;
 	}
 	
 	public Rectangle getBounds() {
@@ -112,8 +113,13 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			} else {
 				visible = getX() < camera.position.x+8;				
 			}						
-		} else {
-			alive = camera.position.x-8>xAlive;			
+		} else {			
+			if (camera.position.x < tileMap.getFlag().getX()) {
+				alive = camera.position.x-8>xAlive;
+			} else {
+				alive = getX()>  tileMap.getFlag().getX();
+			}
+							
 		}				
 	}
 

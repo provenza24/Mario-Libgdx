@@ -270,17 +270,6 @@ public class MyGdxGame extends ApplicationAdapter {
 			debugShowText = !debugShowText;
 		}
 
-		/*if (Gdx.input.isKeyJustPressed(Keys.F5)) {
-			mario.setAcceleration(new Vector2(0, 0));
-			mario.setDirection(DirectionEnum.RIGHT);
-			mario.setX(217);
-			mario.setY(14);
-			cameraOffset = 0;
-			camera.position.x = 217 + 6;
-			camera.update();
-			scrollable = false;
-		}*/
-
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
 			debugShowFps = !debugShowFps;
 		}
