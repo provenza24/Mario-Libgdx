@@ -5,15 +5,20 @@ import com.badlogic.gdx.Game;
 public class GameManager extends Game {
 
 	private MenuScreen menuScreen;
+	
 	private GameScreen gameScreen;
 
 	@Override
 	public void create() {
-		menuScreen = new MenuScreen(this);
-		gameScreen = new GameScreen(this);
+		menuScreen = new MenuScreen();
+		gameScreen = new GameScreen();
 		setScreen(menuScreen);
 	}
 
+	public static GameManager getGameManager() {
+		return gameManager;
+	}
+	
 	public MenuScreen getMenuScreen() {
 		return menuScreen;
 	}
@@ -29,5 +34,9 @@ public class GameManager extends Game {
 	public void setGameScreen(GameScreen gameScreen) {
 		this.gameScreen = gameScreen;
 	}
+
+	private static final GameManager gameManager = new GameManager();
+	
+	
 
 }

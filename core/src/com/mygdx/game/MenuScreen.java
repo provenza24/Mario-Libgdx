@@ -1,7 +1,6 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -16,16 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class MenuScreen implements Screen {
 
-	private final GameManager game; // Note it's "MyGame" not "Game"
-
 	private Skin skin;
 	
 	private Stage stage;
 	
 	// constructor to keep a reference to the main Game class
-	public MenuScreen(GameManager pgame) {
-		
-		this.game = pgame;
+	public MenuScreen() {
+				
 		stage = new Stage();
         Gdx.input.setInputProcessor(stage);// Make the stage consume events
  
@@ -37,8 +33,8 @@ public class MenuScreen implements Screen {
         newGameButton.addListener( new ClickListener() {              
 		    @Override
 		    public void clicked(InputEvent event, float x, float y) {
-		    	game.getGameScreen().create();
-		        game.setScreen(game.getGameScreen());
+		    	GameManager.getGameManager().getGameScreen().create();		    	
+		    	GameManager.getGameManager().setScreen(GameManager.getGameManager().getGameScreen());		        
 		    };
 		});
 	}
@@ -74,13 +70,7 @@ public class MenuScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
  
         stage.act();
-        stage.draw();
-		
-		// update and draw stuff
-		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-			game.getGameScreen().create();
-			game.setScreen(game.getGameScreen());
-		}
+        stage.draw();		
 	}
 
 	@Override

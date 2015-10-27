@@ -56,13 +56,7 @@ public class GameScreen extends Game implements Screen  {
 	private IScrollingBackground scrollingBackground;
 
 	private Stage stage;
-	
-	private GameManager gameManager;
-
-	public GameScreen(GameManager pgame) {
-		gameManager = pgame;
-	}
-	
+		
 	@Override
 	public void create() {
 
