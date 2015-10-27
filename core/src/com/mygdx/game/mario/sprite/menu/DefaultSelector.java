@@ -4,11 +4,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-public class Mushroom extends Image {
+public class DefaultSelector extends Image {
 
-	public Mushroom() {		
-		super(new Texture(Gdx.files.internal("sprites/mushroom.png")))	;
-		setSize(16, 16);		
+	public DefaultSelector() {		
+		super(new Texture(Gdx.files.internal("sprites/right_arrow.png")))	;		
 	}
 
 }

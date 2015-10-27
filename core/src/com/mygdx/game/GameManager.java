@@ -2,7 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.mygdx.game.mario.screen.GameScreen;
-import com.mygdx.game.mario.screen.MenuScreen;
+import com.mygdx.game.mario.screen.menu.impl.MenuScreen;
 
 public class GameManager extends Game {
 
