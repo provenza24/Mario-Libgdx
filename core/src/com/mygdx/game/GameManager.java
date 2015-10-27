@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
+import com.mygdx.game.mario.screen.GameScreen;
+import com.mygdx.game.mario.screen.MenuScreen;
 
 public class GameManager extends Game {
 
@@ -10,8 +12,7 @@ public class GameManager extends Game {
 
 	@Override
 	public void create() {
-		menuScreen = new MenuScreen();
-		gameScreen = new GameScreen();
+		menuScreen = new MenuScreen();		
 		setScreen(menuScreen);
 	}
 

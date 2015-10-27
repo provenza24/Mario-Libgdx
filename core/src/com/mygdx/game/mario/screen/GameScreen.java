@@ -1,11 +1,10 @@
-package com.mygdx.game;
+package com.mygdx.game.mario.screen;
 
 import java.util.List;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -16,6 +15,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.GameManager;
 import com.mygdx.game.mario.background.IScrollingBackground;
 import com.mygdx.game.mario.background.impl.LeftScrollingBackground;
 import com.mygdx.game.mario.camera.GameCamera;
@@ -27,7 +27,7 @@ import com.mygdx.game.mario.sprite.bloc.Block;
 import com.mygdx.game.mario.sprite.tileobject.mario.Mario;
 import com.mygdx.game.mario.tilemap.TmxMap;
 
-public class GameScreen extends Game implements Screen  {
+public class GameScreen implements Screen  {
 
 	private boolean debugShowText = false;
 
@@ -57,8 +57,7 @@ public class GameScreen extends Game implements Screen  {
 
 	private Stage stage;
 		
-	@Override
-	public void create() {
+	public GameScreen() {
 
 		shapeRenderer = new ShapeRenderer();
 
@@ -261,6 +260,10 @@ public class GameScreen extends Game implements Screen  {
 
 	private void handleInput() {
 
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			GameManager.getGameManager().setScreen(GameManager.getGameManager().getMenuScreen());
+		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
 			mario.changeSizeState(mario.getSizeState()==0 ? 1 : 0);
 		}
@@ -350,6 +353,30 @@ public class GameScreen extends Game implements Screen  {
 
 	@Override
 	public void hide() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resize(int width, int height) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void pause() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void resume() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
 		// TODO Auto-generated method stub
 		
 	}
