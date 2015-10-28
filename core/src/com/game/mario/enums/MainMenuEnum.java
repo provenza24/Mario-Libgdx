@@ -1,0 +1,23 @@
+package com.game.mario.enums;
+
+public enum MainMenuEnum {
+
+	ONE_PLAYER_GAME ("1 PLAYER GAME"),
+	OPTIONS ("OPTIONS"),
+	CREDITS ("CREDITS");
+
+    private final String name;       
+
+    private MainMenuEnum(String s) {
+        name = s;
+    }
+
+    public boolean equalsName(String otherName) {
+        return (otherName == null) ? false : name.equals(otherName);
+    }
+
+    public String toString() {
+       return this.name;
+    }	
+	
+}
