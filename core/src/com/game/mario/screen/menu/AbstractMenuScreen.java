@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
@@ -17,67 +18,84 @@ import com.game.mario.sprite.menu.DefaultSelector;
 public abstract class AbstractMenuScreen implements IScreen {
 
 	private float horizontalMenuStart = Gdx.graphics.getWidth() / 2;
-	
+
 	private Vector2 offset;
-	
+
 	private float selectorHeight = 0;
-	
-	private int horizontalMenuSpacing = 40;
-	
+
+	private int verticalMenuSpacing = 40;
+
 	private float verticalMenuStart = Gdx.graphics.getHeight() / 2;
-	
+
 	private Stage stage;
-	
+
 	private int currentItem = 0;
-	
+
 	private Actor selector;
-	
+
 	private BitmapFont font;
-	
+
 	private List<MenuItem> menuItems = new ArrayList<MenuItem>();
-				
-	public AbstractMenuScreen(String[] menuItems) {
-		this(null, menuItems);
-	}
-		
-	public AbstractMenuScreen(Class<?> selectorClass, String[] pMenuItems) {				
-		font = new BitmapFont(Gdx.files.internal("verdana.fnt"));			
-		font.setColor(1, 1, 1, 1);	
-		offset = new Vector2(0,0);
-		initItemsPositions(pMenuItems);			
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);// Make the stage consume events
-		generateSelector(selectorClass);		
-		stage.addActor(selector);		
+
+	public <E extends Enum<?>> AbstractMenuScreen(Class<E> menuEnumClass) {
+		this(menuEnumClass, null, null);
 	}
 
-	public void setOffset(float xNewOffset, float yNewOffset) {	
-		verticalMenuStart = verticalMenuStart - offset.y + yNewOffset;
+	public <E extends Enum<?>> AbstractMenuScreen(Class<E> menuEnumClass, BitmapFont pFont) {
+		this(menuEnumClass, pFont, null);
+	}
+
+	public <E extends Enum<?>> AbstractMenuScreen(Class<E> menuEnumClass, Class<?> selectorClass) {
+		this(menuEnumClass, null, selectorClass);
+	}
+
+	public <E extends Enum<?>> AbstractMenuScreen(Class<E> menuEnumClass, BitmapFont pFont, Class<?> selectorClass) {
+
+		stage = new Stage();
+		Gdx.input.setInputProcessor(stage);
+		font = pFont != null ? pFont : new BitmapFont();
+		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		font.setColor(1, 1, 1, 1);
+		selectorHeight = font.getCapHeight();
+		initItemsPositions(menuEnumClass);
+		generateSelector(selectorClass);
+		stage.addActor(selector);
+	}
+
+	private <E extends Enum<?>> void initItemsPositions(Class<E> menuEnumClass) {
+
+		offset = new Vector2(0, 0);
+
+		float verticalMenuSize = font.getXHeight() * (menuEnumClass.getEnumConstants().length) + verticalMenuSpacing * (menuEnumClass.getEnumConstants().length - 1);
+		verticalMenuStart = Gdx.graphics.getHeight() - (Gdx.graphics.getHeight() - verticalMenuSize) / 2;
+
+		float letterMaxWidth = 0;		
+
+		for (E enumValue : menuEnumClass.getEnumConstants()) {
+			GlyphLayout layout = new GlyphLayout();
+			layout.setText(font, enumValue.toString());
+			letterMaxWidth = layout.width > letterMaxWidth ? layout.width : letterMaxWidth;
+			menuItems.add(new MenuItem(enumValue, new Vector2((Gdx.graphics.getWidth() - layout.width) / 2, 0)));
+		}
+		horizontalMenuStart = (Gdx.graphics.getWidth() - letterMaxWidth) / 2;		
+	}
+
+	public void setOffset(float xNewOffset, float yNewOffset) {
 		for (MenuItem menuItem : menuItems) {
 			menuItem.getPosition().x = menuItem.getPosition().x - offset.x + xNewOffset;
+			menuItem.getPosition().y = menuItem.getPosition().y - offset.y + yNewOffset;
 		}
-		horizontalMenuStart = horizontalMenuStart - offset.x + xNewOffset; 
-		selector.setPosition(horizontalMenuStart - 25, verticalMenuStart -12);
+		verticalMenuStart = verticalMenuStart - offset.y + yNewOffset;
+		horizontalMenuStart = horizontalMenuStart - offset.x + xNewOffset;
+		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
+				verticalMenuStart - selector.getHeight() + 2);
 		offset.x = xNewOffset;
 		offset.y = yNewOffset;
 	}
 	
-	private void initItemsPositions(String[] pMenuItems) {
-		float maxWidth = 0;
-		selectorHeight = 0;
-		for (String itemName : pMenuItems) {
-			GlyphLayout layout = new GlyphLayout();
-			layout.setText(font, itemName);
-			selectorHeight = layout.height > selectorHeight ? layout.height : selectorHeight;
-			maxWidth = layout.width > maxWidth ? layout.width : maxWidth;
-			menuItems.add(new MenuItem(itemName, new Vector2((Gdx.graphics.getWidth() - layout.width) /2, 0)));
-		}				
-		horizontalMenuStart = (Gdx.graphics.getWidth() - maxWidth) /2;		
-	}
-
 	private void generateSelector(Class<?> selectorClass) {
 		try {
-			if (selectorClass!=null) {
+			if (selectorClass != null) {
 				selector = (Actor) selectorClass.newInstance();
 			} else {
 				selector = (Actor) DefaultSelector.class.newInstance();
@@ -88,18 +106,19 @@ public abstract class AbstractMenuScreen implements IScreen {
 			} catch (Exception e1) {
 				// Should never happen
 			}
-		} 
-		selector.setSize(selectorHeight*1.5f, selectorHeight*1.5f);
-		selector.setPosition(horizontalMenuStart - 50, verticalMenuStart - 25);
+		}
+		selector.setSize(selectorHeight * 1.2f, selectorHeight * 1.2f);
+		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
+				verticalMenuStart - selector.getHeight() + 2);
 	}
 
 	@Override
-	public void render(float delta) {	
+	public void render(float delta) {
 		handleInput();
 		stage.act();
 		draw();
 	}
-	
+
 	@Override
 	public void draw() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
@@ -111,7 +130,7 @@ public abstract class AbstractMenuScreen implements IScreen {
 		int i = 0;
 		for (MenuItem menuItem : menuItems) {
 			font.draw(batch, menuItem.getName(), menuItems.get(i).getPosition().x, verticalMenuStart - y);
-			y += horizontalMenuSpacing;
+			y += verticalMenuSpacing;
 			i++;
 		}
 		batch.end();
@@ -122,18 +141,34 @@ public abstract class AbstractMenuScreen implements IScreen {
 	public void handleInput() {
 		if (Gdx.input.isKeyJustPressed(Keys.DOWN) && currentItem < menuItems.size() - 1) {
 			currentItem++;
-			selector.setY(selector.getY() - horizontalMenuSpacing);
+			selector.setY(selector.getY() - verticalMenuSpacing);
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.UP) && currentItem > 0) {
 			currentItem--;
-			selector.setY(selector.getY() + horizontalMenuSpacing);
+			selector.setY(selector.getY() + verticalMenuSpacing);
 		}
+	}
+
+	public int getSelectedItemIndex() {
+		return currentItem;
+	}
+
+	public String getSelectedItemName() {
+		return menuItems.get(currentItem).getName();
+	}
+	
+	public Enum<?> getSelectedItemEnum() {
+		return menuItems.get(currentItem).getMenuEnum();
+	}
+
+	public BitmapFont getFont() {
+		return font;
 	}
 
 	@Override
 	public void resize(int width, int height) {
 		// TODO Auto-generated method stub
-	}	
+	}
 
 	@Override
 	public void pause() {
@@ -158,27 +193,11 @@ public abstract class AbstractMenuScreen implements IScreen {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 
-	}
-
-	public int getHorizontalMenuSpacing() {
-		return horizontalMenuSpacing;
-	}
-
-	public void setHorizontalMenuSpacing(int horizontalMenuSpacing) {
-		this.horizontalMenuSpacing = horizontalMenuSpacing;
-	}
-
-	public int getSelectedItemIndex() {
-		return currentItem;
-	}
-	
-	public String getSelectedItemName() {
-		return menuItems.get(currentItem).getName();
 	}
 
 }

@@ -12,6 +12,7 @@ public class GameManager extends Game {
 
 	@Override
 	public void create() {
+		gameScreen = new GameScreen();
 		menuScreen = new MenuScreen();		
 		setScreen(menuScreen);
 	}

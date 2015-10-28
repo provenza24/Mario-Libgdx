@@ -4,15 +4,16 @@ import com.badlogic.gdx.math.Vector2;
 
 public class MenuItem {
 
-	private Enum menuEnum;
+	private Enum<?> menuEnum;
 	
 	private String name;
 
 	private Vector2 position;
 	
-	public MenuItem(String name, Vector2 position) {
+	public MenuItem(Enum<?> pmenuEnum, Vector2 position) {
 		super();
-		this.name = name;
+		this.menuEnum = pmenuEnum;
+		this.name = pmenuEnum.toString();
 		this.position = position;
 	}
 
@@ -32,11 +33,11 @@ public class MenuItem {
 		this.position = position;
 	}
 		
-	public Enum getMenuEnum() {
+	public Enum<?> getMenuEnum() {
 		return menuEnum;
 	}
 
-	public void setMenuEnum(Enum menuEnum) {
+	public void setMenuEnum(Enum<?> menuEnum) {
 		this.menuEnum = menuEnum;
 	}
 
