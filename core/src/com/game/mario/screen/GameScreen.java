@@ -7,6 +7,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -84,7 +85,7 @@ public class GameScreen implements Screen  {
 			stage.addActor(actor);
 		}
 	}
-
+		
 	@Override
 	public void render(float delta) {
 
@@ -193,7 +194,7 @@ public class GameScreen implements Screen  {
 			if (collideMario) {
 				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera);				
 			}
-			if (item.isDeletable()) {
+			if (item.isDeletable()) {				
 				items.remove(i--);
 			} else if (item.isVisible()) {
 				item.render(renderer.getBatch());
@@ -229,7 +230,7 @@ public class GameScreen implements Screen  {
 					}
 				}
 			}
-			if (enemy.isDeletable()) {
+			if (enemy.isDeletable()) {				
 				enemies.remove(i--);
 			} else if (enemy.isVisible()) {
 				enemy.render(renderer.getBatch());
@@ -249,7 +250,7 @@ public class GameScreen implements Screen  {
 				// For each block
 				Block block = blocks.get(i);
 				block.update(tileMap, camera.getCamera(), delta);
-				if (block.isDeletable()) {
+				if (block.isDeletable()) {					
 					blocks.remove(i--);
 				} else if (block.isVisible()) {
 					batch.draw(block.getCurrentFrame(), block.getX(), block.getY(), 1, 1);	
@@ -377,9 +378,13 @@ public class GameScreen implements Screen  {
 	}
 
 	@Override
-	public void dispose() {
-		// TODO Auto-generated method stub
-		
+	public void dispose() {		
+		stage.dispose();
+		tileMap.dispose();		
+		renderer.dispose();		
+		shapeRenderer.dispose();		
+		font.dispose();
+		spriteBatch.dispose();			
 	}
 
 }

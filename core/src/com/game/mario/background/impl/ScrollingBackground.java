@@ -6,13 +6,14 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.game.mario.ImageLoader;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 
 public abstract class ScrollingBackground extends Sprite implements IScrollingBackground {
 
-	protected static final Map<BackgroundTypeEnum, String> BACKGROUND_IMAGES = new HashMap<BackgroundTypeEnum, String>();
+	protected static final Map<BackgroundTypeEnum, Texture> BACKGROUND_IMAGES = new HashMap<BackgroundTypeEnum, Texture>();
 	
 	protected float velocity;
 	
@@ -20,16 +21,15 @@ public abstract class ScrollingBackground extends Sprite implements IScrollingBa
 	
 	protected AbstractSprite followedSprite;
 	
-
 	protected int width;
 		
 	static {
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, "overworld.gif");
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, "underworld.png");
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, ImageLoader.OVERWORLD);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, ImageLoader.UNDERWORLD);
 	}
 	
 	public ScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
-		super(new Texture(BACKGROUND_IMAGES.get(backgroundType)));
+		super(BACKGROUND_IMAGES.get(backgroundType));
 		this.batch = batch;
 		this.followedSprite = followedSprite;
 		width = getTexture().getWidth();

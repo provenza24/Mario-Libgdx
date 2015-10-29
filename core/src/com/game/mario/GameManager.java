@@ -16,10 +16,13 @@ public class GameManager extends Game {
 		
 	private static final GameManager gameManager = new GameManager();
 	
+	private GameScreen gameScreen;
+	
 	@Override
 	public void create() {		
 		
-		SCREENS.put(ScreenEnum.GAME, new GameScreen());
+		gameScreen = new GameScreen();
+		SCREENS.put(ScreenEnum.GAME, gameScreen);
 		SCREENS.put(ScreenEnum.MAIN_MENU, new MainMenuScreen());
 		SCREENS.put(ScreenEnum.PAUSE_MENU, new PauseMenuScreen());
 		
@@ -32,6 +35,16 @@ public class GameManager extends Game {
 
 	public void changeScreen(ScreenEnum screenEnum) {
 		setScreen(SCREENS.get(screenEnum));
+	}
+	
+	public Screen getScreen(ScreenEnum screenEnum) {
+		return SCREENS.get(screenEnum);
+	}
+	
+	public void startNewGame() {
+		gameScreen.dispose();
+		gameScreen = new GameScreen();
+		SCREENS.put(ScreenEnum.GAME, gameScreen);
 	}
 	
 }

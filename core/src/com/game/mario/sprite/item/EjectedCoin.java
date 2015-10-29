@@ -1,11 +1,10 @@
 package com.game.mario.sprite.item;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.game.mario.ImageLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.DeleteItemAction;
 import com.game.mario.sprite.AbstractItem;
@@ -19,7 +18,7 @@ public class EjectedCoin extends AbstractItem {
 	@Override
 	public void initializeAnimations() {
 		
-		spriteSheet = new Texture(Gdx.files.internal("sprites/coin-from-bloc.png"));				
+		spriteSheet = ImageLoader.COIN_BLOC;				
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 9, spriteSheet.getHeight() / 1);				
 		TextureRegion[] coinFrames = new TextureRegion[9];
 		coinFrames[0] = tmp[0][0];

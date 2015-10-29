@@ -1,6 +1,5 @@
 package com.game.mario.sprite.tileobject.mario;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -8,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.ImageLoader;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -92,15 +92,14 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	@Override
 	public void initializeAnimations() {		
-		initializeAnimation("sprites/mario.gif", 0);		
-		initializeAnimation("sprites/mario-big.png", 1);
+		initializeAnimation(ImageLoader.MARIO_SMALL, 0);		
+		initializeAnimation(ImageLoader.MARIO_BIG, 1);
 	}
 
-	private void initializeAnimation(String image, int i) {
-		Texture spriteSheet = new Texture(Gdx.files.internal(image));
-
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 14,
-				spriteSheet.getHeight() / 1);
+	private void initializeAnimation(Texture texture, int i) {
+				
+		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / 14,
+				texture.getHeight() / 1);
 
 		TextureRegion[] marioRunRightFrames = new TextureRegion[3];
 		marioRunRightFrames[0] = tmp[0][0];
@@ -390,6 +389,10 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setInvincible(boolean invincible) {
 		this.invincible = invincible;
+	}
+	
+	public void dispose() {
+		spriteSheet.dispose();
 	}
 
 }

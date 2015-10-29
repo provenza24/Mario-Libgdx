@@ -1,11 +1,10 @@
 package com.game.mario.sprite.tileobject.item;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.game.mario.ImageLoader;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 
 public class Coin extends AbstractTileObjectSprite {
@@ -20,7 +19,7 @@ public class Coin extends AbstractTileObjectSprite {
 			
 	@Override
 	public void initializeAnimations()  {		
-		spriteSheet = new Texture(Gdx.files.internal("sprites/coin.png"));				
+		spriteSheet = ImageLoader.COIN;				
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);				
 		TextureRegion[] coinFrames = new TextureRegion[4];
 		coinFrames[0] = tmp[0][0];

@@ -21,10 +21,11 @@ public class PauseMenuScreen extends AbstractMenuScreen {
 		
 		super.handleInput();
 		
-		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			if (getSelectedItemEnum()==PauseMenuEnum.CONTINUE) {				
 				GameManager.getGameManager().changeScreen(ScreenEnum.GAME);
 			} if (getSelectedItemEnum()==PauseMenuEnum.QUIT) {
+				GameManager.getGameManager().startNewGame();
 				GameManager.getGameManager().changeScreen(ScreenEnum.MAIN_MENU);				
 			}
 		}

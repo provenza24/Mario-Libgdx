@@ -21,7 +21,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		
 		super.handleInput();
 		
-		if (Gdx.input.isKeyJustPressed(Keys.SPACE)) {
+		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			if (getSelectedItemEnum()==MainMenuEnum.ONE_PLAYER_GAME) {				
 				GameManager.getGameManager().changeScreen(ScreenEnum.GAME);				
 			}

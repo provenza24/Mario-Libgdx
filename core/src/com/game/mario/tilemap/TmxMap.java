@@ -191,4 +191,8 @@ public class TmxMap {
 	public void setFlag(Flag flag) {
 		this.flag = flag;
 	}
+	
+	public void dispose() {	
+		map.dispose();							
+	}
 }

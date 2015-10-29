@@ -3,10 +3,9 @@ package com.game.mario.sprite.bloc;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.game.mario.ImageLoader;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 
@@ -16,9 +15,9 @@ public class MysteryBlock extends Block {
 	
 	protected static final Map<Integer, Integer> REPLACING_TILES_OVERGROUND = new HashMap<Integer, Integer>();
 	
-	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();
-	
-	static {
+	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();				
+		
+	static {					
 		REPLACING_TILES_UNDERGROUND.put(7, 65);
 		REPLACING_TILES_UNDERGROUND.put(8, 65);
 		
@@ -38,13 +37,13 @@ public class MysteryBlock extends Block {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = new Texture(Gdx.files.internal("sprites/mystery.png"));
+		spriteSheet = ImageLoader.MYSTERY_BLOC;
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);		
 		TextureRegion[] animationFrames = new TextureRegion[3];
 		animationFrames[0] = tmp[0][0];
 		animationFrames[1] = tmp[0][1];
 		animationFrames[2] = tmp[0][2];		
-		currentAnimation = new Animation(0.15f, animationFrames);		
+		currentAnimation = new Animation(0.15f, animationFrames);
 	}
 	
 }

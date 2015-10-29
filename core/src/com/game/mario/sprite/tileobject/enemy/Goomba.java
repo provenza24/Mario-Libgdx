@@ -1,11 +1,10 @@
 package com.game.mario.sprite.tileobject.enemy;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.game.mario.ImageLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 
@@ -26,7 +25,7 @@ public class Goomba extends AbstractTileObjectSprite {
 			
 	@Override
 	public void initializeAnimations()  {
-		spriteSheet = new Texture(Gdx.files.internal("sprites/goomba.png"));		
+		spriteSheet = ImageLoader.GOOMBA;		
 		
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);		
 		

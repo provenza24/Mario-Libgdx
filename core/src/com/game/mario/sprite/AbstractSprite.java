@@ -438,4 +438,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	}
 	
+	public void dispose() {
+		spriteSheet.dispose();		
+	}
+	
 }
