@@ -25,6 +25,8 @@ public class ImageLoader {
 	
 	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("underworld.png"));
 	
+	public static final Texture TRANSFER_ITEM = new Texture(Gdx.files.internal("sprites/transfer.png"));	
+	
 	
 
 }

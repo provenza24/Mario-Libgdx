@@ -27,7 +27,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 
 	private float verticalMenuStart = Gdx.graphics.getHeight() / 2;
 
-	private Stage stage;
+	protected Stage stage;
 
 	private int currentItem = 0;
 
@@ -55,7 +55,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		Gdx.input.setInputProcessor(stage);
 		font = pFont != null ? pFont : new BitmapFont();
 		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		font.setColor(1, 1, 1, 1);
+		font.setColor(0, 0, 0, 1);
 		selectorHeight = font.getCapHeight();
 		initItemsPositions(menuEnumClass);
 		generateSelector(selectorClass);
@@ -107,6 +107,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 				// Should never happen
 			}
 		}
+		selector.setZIndex(10);
 		selector.setSize(selectorHeight * 1.2f, selectorHeight * 1.2f);
 		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
 				verticalMenuStart - selector.getHeight() + 2);
@@ -124,6 +125,8 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+		stage.draw();
+		
 		Batch batch = stage.getBatch();
 		batch.begin();
 		float y = 0;
@@ -133,8 +136,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 			y += verticalMenuSpacing;
 			i++;
 		}
-		batch.end();
-		stage.draw();
+		batch.end();		
 	}
 
 	@Override

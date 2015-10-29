@@ -384,7 +384,7 @@ public class GameScreen implements Screen  {
 		renderer.dispose();		
 		shapeRenderer.dispose();		
 		font.dispose();
-		spriteBatch.dispose();			
+		spriteBatch.dispose();				
 	}
 
 }
