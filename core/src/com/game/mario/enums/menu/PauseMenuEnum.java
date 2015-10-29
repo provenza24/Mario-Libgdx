@@ -1,14 +1,13 @@
-package com.game.mario.enums;
+package com.game.mario.enums.menu;
 
-public enum MainMenuEnum {
+public enum PauseMenuEnum {
 
-	ONE_PLAYER_GAME ("1 player game"),
-	OPTIONS ("options"),
-	CREDITS ("credits");
+	CONTINUE ("continue"),
+	QUIT ("quit");	
 
     private final String name;       
 
-    private MainMenuEnum(String s) {
+    private PauseMenuEnum(String s) {
         name = s;
     }
 

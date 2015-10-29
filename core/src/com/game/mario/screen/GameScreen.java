@@ -22,6 +22,7 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.enums.ScreenEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -261,7 +262,7 @@ public class GameScreen implements Screen  {
 	private void handleInput() {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			GameManager.getGameManager().setScreen(GameManager.getGameManager().getMenuScreen());
+			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {

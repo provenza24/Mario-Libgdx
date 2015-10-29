@@ -1,10 +1,14 @@
-package com.game.mario.enums;
+package com.game.mario.enums.menu;
 
-public abstract class AbstractEnum {
+public enum MainMenuEnum {
 
-	private final String name;       
+	ONE_PLAYER_GAME ("1 player game"),
+	OPTIONS ("options"),
+	CREDITS ("credits");
 
-    private AbstractEnum(String s) {
+    private final String name;       
+
+    private MainMenuEnum(String s) {
         name = s;
     }
 
@@ -15,4 +19,5 @@ public abstract class AbstractEnum {
     public String toString() {
        return this.name;
     }	
+	
 }

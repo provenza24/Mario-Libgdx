@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.sprite.menu.DefaultSelector;
 
-public abstract class AbstractMenuScreen implements IScreen {
+public abstract class AbstractMenuScreen implements IMenuScreen {
 
 	private float horizontalMenuStart = Gdx.graphics.getWidth() / 2;
 
