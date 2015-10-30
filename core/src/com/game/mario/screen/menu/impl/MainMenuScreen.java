@@ -14,17 +14,16 @@ import com.game.mario.sprite.menu.MushroomSelector;
 public class MainMenuScreen extends AbstractMenuScreen {
 
 	public MainMenuScreen() {				
-		super(MainMenuEnum.class, new BitmapFont(Gdx.files.internal("fonts/mario.fnt")),MushroomSelector.class);
-		setOffset(0, -110);		
-		
-		Image titlescreenBackground = new Image(new Texture(Gdx.files.internal("titlescreen_background.png")));
-		titlescreenBackground.setZIndex(0);
-		stage.addActor(titlescreenBackground);		
+		super(MainMenuEnum.class, new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt")),MushroomSelector.class);
+		setOffset(0, -110);				
+	}
+	
+	public void addBackgroundElements() {		
+		backgroundGroup.addActor(new Image(new Texture(Gdx.files.internal("titlescreen_background.png"))));		
 		
 		Image titlescreen = new Image(new Texture(Gdx.files.internal("titlescreen.png")));			
-		titlescreen.setPosition(Gdx.graphics.getWidth() / 2 - titlescreen.getWidth() /2, 220);
-		titlescreen.setZIndex(0);
-		stage.addActor(titlescreen);		
+		titlescreen.setPosition(Gdx.graphics.getWidth() / 2 - titlescreen.getWidth() /2, 220);		
+		backgroundGroup.addActor(titlescreen);		
 	}
 
 	@Override

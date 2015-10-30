@@ -2,8 +2,8 @@ package com.game.mario.enums.menu;
 
 public enum PauseMenuEnum {
 
-	CONTINUE ("continue"),
-	QUIT ("quit");	
+	CONTINUE ("CONTINUE"),
+	QUIT ("QUIT");	
 
     private final String name;       
 

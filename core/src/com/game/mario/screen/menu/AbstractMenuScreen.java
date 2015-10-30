@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.sprite.menu.DefaultSelector;
 
@@ -23,11 +24,11 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 
 	private float selectorHeight = 0;
 
-	private int verticalMenuSpacing = 40;
+	private int verticalMenuSpacing = 30;
 
 	private float verticalMenuStart = Gdx.graphics.getHeight() / 2;
 
-	protected Stage stage;
+	private Stage stage;
 
 	private int currentItem = 0;
 
@@ -36,6 +37,10 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 	private BitmapFont font;
 
 	private List<MenuItem> menuItems = new ArrayList<MenuItem>();
+	
+	protected Group backgroundGroup;
+	
+	private Group foregroundGroup;
 
 	public <E extends Enum<?>> AbstractMenuScreen(Class<E> menuEnumClass) {
 		this(menuEnumClass, null, null);
@@ -54,12 +59,21 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		stage = new Stage();
 		Gdx.input.setInputProcessor(stage);
 		font = pFont != null ? pFont : new BitmapFont();
-		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		font.getRegion().getTexture().setFilter(TextureFilter.Linear, TextureFilter.Linear);		
 		font.setColor(0, 0, 0, 1);
 		selectorHeight = font.getCapHeight();
 		initItemsPositions(menuEnumClass);
 		generateSelector(selectorClass);
-		stage.addActor(selector);
+		foregroundGroup= new Group();
+		backgroundGroup = new Group();
+		addBackgroundElements();
+		foregroundGroup.addActor(selector);
+		stage.addActor(backgroundGroup);
+		stage.addActor(foregroundGroup);		
+	}
+	
+	public void setFontColor(float r, float g, float b) {
+		font.setColor(r, g, b, 1);
 	}
 
 	private <E extends Enum<?>> void initItemsPositions(Class<E> menuEnumClass) {
@@ -113,6 +127,8 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 				verticalMenuStart - selector.getHeight() + 2);
 	}
 
+	public abstract void addBackgroundElements();
+	
 	@Override
 	public void render(float delta) {
 		handleInput();

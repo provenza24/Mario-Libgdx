@@ -12,8 +12,9 @@ import com.game.mario.sprite.menu.MushroomSelector;
 public class PauseMenuScreen extends AbstractMenuScreen {
 
 	public PauseMenuScreen() {				
-		super(PauseMenuEnum.class, new BitmapFont(Gdx.files.internal("fonts/mario.fnt")),MushroomSelector.class);
-		setOffset(0, -80);		
+		super(PauseMenuEnum.class, new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt")),MushroomSelector.class);		
+		setOffset(0, -80);	
+		setFontColor(1, 1, 1);
 	}
 
 	@Override
@@ -29,6 +30,12 @@ public class PauseMenuScreen extends AbstractMenuScreen {
 				GameManager.getGameManager().changeScreen(ScreenEnum.MAIN_MENU);				
 			}
 		}
+	}
+
+	@Override
+	public void addBackgroundElements() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
