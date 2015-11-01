@@ -7,7 +7,6 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -220,8 +219,13 @@ public class GameScreen implements Screen  {
 						if (mario.getY() > enemy.getY() && mario.getState() == MarioStateEnum.FALLING) {									
 							enemy.kill();
 							mario.getAcceleration().y = 0.15f;
-						} else {
-							// Mario is dead
+						} else if (!mario.isInvincible()){							
+							if (mario.getSizeState()>0) {
+								mario.changeSizeState(0);
+								mario.setInvincible(true);								
+							} else {
+								Gdx.app.log("STATE", "Mario just died");
+							}
 						}
 					}
 				} else {

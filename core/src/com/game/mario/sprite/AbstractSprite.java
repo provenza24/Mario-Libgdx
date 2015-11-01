@@ -186,7 +186,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	public void render(Batch batch) {
 		batch.begin();
-		//@TODO replace this by computing value at initialization
+		//@TODO replace this by computing value at initialization		
 		batch.draw(currentFrame, getX(), getY(), renderingSize.x, renderingSize.y);
 		batch.end();
 	}

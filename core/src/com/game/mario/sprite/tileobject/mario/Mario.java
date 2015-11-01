@@ -3,6 +3,7 @@ package com.game.mario.sprite.tileobject.mario;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -44,11 +45,11 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private boolean canInitiateJump;
 
-	private boolean canJumpHigher;
-	
-	private int nbCoins;
+	private boolean canJumpHigher;	
 	
 	private boolean invincible;
+	
+	private float invincibleDuration;
 	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -68,8 +69,9 @@ public class Mario extends AbstractTileObjectSprite {
 		previousState = MarioStateEnum.NO_MOVE;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		sizeState = 0;
-		changeSizeState(sizeState);
-		nbCoins = 0;
+		changeSizeState(sizeState);		
+		invincible = false;
+		invincibleDuration = 0;
 	}
 
 	public void changeSizeState(int i) {
@@ -187,6 +189,16 @@ public class Mario extends AbstractTileObjectSprite {
 		move(deltaTime);
 		collideWithTilemap(tileMap);
 		updateAnimation(deltaTime);
+		updateInvincibleStatus(deltaTime);
+	}
+	
+	private void updateInvincibleStatus(float deltaTime) {
+		if (isInvincible() && invincibleDuration<3) {			
+			invincibleDuration +=deltaTime;
+		} else {
+			invincible = false;
+			invincibleDuration = 0;
+		}
 	}
 	
 	public void checkHorizontalMapCollision(TmxMap tilemap) {
@@ -370,19 +382,7 @@ public class Mario extends AbstractTileObjectSprite {
 	public void setSizeState(int sizeState) {
 		this.sizeState = sizeState;
 	}
-
-	public int getNbCoins() {
-		return nbCoins;
-	}
-
-	public void setNbCoins(int nbCoins) {
-		this.nbCoins = nbCoins;
-	}
 	
-	public void addCoin() {
-		this.nbCoins++;
-	}
-
 	public boolean isInvincible() {
 		return invincible;
 	}
@@ -393,6 +393,17 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	public void dispose() {
 		spriteSheet.dispose();
+	}
+	
+	@Override
+	public void render(Batch batch) {
+		if (isInvincible()) {
+			batch.setColor(1,1,1, 0.5f);
+			super.render(batch);
+			batch.setColor(1,1,1,1);
+		} else {
+			super.render(batch);
+		}				
 	}
 
 }

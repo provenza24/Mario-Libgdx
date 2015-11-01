@@ -11,7 +11,7 @@ import com.game.mario.screen.menu.impl.MainMenuScreen;
 import com.game.mario.screen.menu.impl.PauseMenuScreen;
 
 public class GameManager extends Game {
-
+		
 	private static final Map<ScreenEnum, Screen> SCREENS = new HashMap<ScreenEnum, Screen>();
 		
 	private static final GameManager gameManager = new GameManager();
