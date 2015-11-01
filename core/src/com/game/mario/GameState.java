@@ -30,6 +30,10 @@ public class GameState {
 		sizeState = 0;
 		currentLevel = 0;
 	}
+	
+	public void nextLevel() {
+		currentLevel++;
+	}
 
 	
 	
