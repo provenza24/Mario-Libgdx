@@ -11,18 +11,27 @@ public class GameState {
 	
 	private int nbCoins;
 	
+	private int currentLevel;
+	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
 	
 	private List<String> levels = new ArrayList<String>();
 	
 	public GameState() {
+		initState();
+		levels.add(0, "level_1_1.tmx");		
+		levels.add(1, "level_1_2.tmx");
+	}
+
+	private void initState() {
 		nbLifes = 3;
 		nbCoins = 0;
 		sizeState = 0;
-		levels.add(0, "level_1_1.tmx");		
+		currentLevel = 0;
 	}
 
+	
 	
 	public void addCoin() {
 		this.nbCoins++;
@@ -56,6 +65,28 @@ public class GameState {
 
 	public void setSizeState(int sizeState) {
 		this.sizeState = sizeState;
+	}
+
+
+
+	public int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public String getCurrentLevelName() {
+		return levels.get(currentLevel);
+	}
+
+	public void setCurrentLevel(int currentLevel) {
+		this.currentLevel = currentLevel;
+	}
+
+	public List<String> getLevels() {
+		return levels;
+	}
+
+	public void setLevels(List<String> levels) {
+		this.levels = levels;
 	}
 
 }
