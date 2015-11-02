@@ -2,9 +2,9 @@ package com.game.mario.enums.menu;
 
 public enum MainMenuEnum {
 
-	ONE_PLAYER_GAME ("1 PLAYER GAME"),
-	OPTIONS ("OPTIONS"),
-	CREDITS ("CREDITS");
+	ONE_PLAYER_GAME ("1 PLAYER GAME");
+	//OPTIONS ("OPTIONS"),
+	//CREDITS ("CREDITS");
 
     private final String name;       
 

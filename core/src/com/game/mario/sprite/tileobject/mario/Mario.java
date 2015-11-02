@@ -17,7 +17,7 @@ import com.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float ACCELERATION_MAX = 5f; // 7.5f;
+	private static final float ACCELERATION_MAX = 10f; // 7.5f;
 
 	private static final float DECELERATION_COEF = 0.2f;
 

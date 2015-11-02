@@ -16,7 +16,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.GameManager;
-import com.game.mario.GameState;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -69,7 +68,7 @@ public class GameScreen implements Screen  {
 		font.setColor(0, 0, 1, 1);
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
-		tileMap = new TmxMap("tilemaps/"+GameState.getInstance().getCurrentLevelName());
+		tileMap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
 		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
 
 		mario = tileMap.getMario();
@@ -88,10 +87,6 @@ public class GameScreen implements Screen  {
 		
 	@Override
 	public void render(float delta) {
-
-		if (mario.getX()>=tileMap.getFlag().getX() && camera.getCamera().position.x < tileMap.getFlag().getX()) {
-			GameManager.getGameManager().nextLevel();
-		}
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -128,6 +123,10 @@ public class GameScreen implements Screen  {
 
 		//stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
+		
+		if (mario.getX()>=tileMap.getFlag().getX() && camera.getCamera().position.x < tileMap.getFlag().getX()) {
+			GameManager.getGameManager().nextLevel();
+		}
 		
 	}
 

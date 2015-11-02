@@ -15,7 +15,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 
 	public MainMenuScreen() {				
 		super(MainMenuEnum.class, new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt")),MushroomSelector.class);
-		setOffset(0, -110);				
+		setOffset(0, -50);				
 	}
 	
 	public void addBackgroundElements() {		
