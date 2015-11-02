@@ -3,6 +3,7 @@ package com.game.mario.collision.item;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.item.Mushroom;
@@ -10,6 +11,7 @@ import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.tilemap.TmxMap;
 
 public abstract class AbstractItemCollisionHandler implements IItemCollisionHandler {
 
@@ -34,5 +36,12 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera) {
 		item.setDeletable(true);
 	}
+	
+	@Override
+	public void bump(Stage stage, TmxMap tileMap, AbstractSprite item) {
+		item.setDeletable(true);
+	}
+	
+	
 
 }

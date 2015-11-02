@@ -46,6 +46,8 @@ public class GameScreen implements Screen  {
 
 	private GameCamera camera;
 	
+	private BitmapFont debugFont;
+	
 	private BitmapFont font;
 
 	private SpriteBatch spriteBatch;
@@ -63,9 +65,11 @@ public class GameScreen implements Screen  {
 		shapeRenderer = new ShapeRenderer();
 
 		spriteBatch = new SpriteBatch();
-		font = new BitmapFont();
+		debugFont = new BitmapFont();
 		// font.setColor(0.5f,0.4f,0,1);
-		font.setColor(0, 0, 1, 1);
+		debugFont.setColor(0, 0, 1, 1);
+		
+		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tileMap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
@@ -124,7 +128,13 @@ public class GameScreen implements Screen  {
 		//stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
 		
-		if (mario.getX()>=tileMap.getFlag().getX() && camera.getCamera().position.x < tileMap.getFlag().getX()) {
+		spriteBatch.begin();		
+		debugFont.draw(spriteBatch, "Coins=" + GameManager.getGameManager().getNbCoins(), 10, 460);
+		debugFont.draw(spriteBatch, "Lifes=" + GameManager.getGameManager().getNbLifes(), 150, 460);
+		spriteBatch.end();
+		
+		if (mario.getX()>=tileMap.getFlag().getX() 
+				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
 			GameManager.getGameManager().nextLevel();
 		}
 		
@@ -135,32 +145,32 @@ public class GameScreen implements Screen  {
 		if (debugShowText) {
 			// Mario information
 			spriteBatch.begin();
-			font.draw(spriteBatch,
+			debugFont.draw(spriteBatch,
 					"mario.position=" + String.format("%.1f", mario.getX()) + "," + String.format("%.1f", mario.getY()),
 					10, 460);
-			font.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + ","
+			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + ","
 					+ String.format("%.1f", mario.getAcceleration().y), 10, 440);
-			font.draw(spriteBatch, "state=" + mario.getState().toString(), 10, 420);
-			font.draw(spriteBatch, "direction=" + mario.getDirection().toString(), 10, 400);
-			font.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, 380);
-			font.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, 360);
-			font.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x) + " camera.offset="
+			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), 10, 420);
+			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), 10, 400);
+			debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, 380);
+			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, 360);
+			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x) + " camera.offset="
 					+ String.format("%.1f", camera.getCameraOffset()), 10, 340);
-			font.draw(spriteBatch,
+			debugFont.draw(spriteBatch,
 					"tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight() + ", left="
 							+ mario.getMapCollisionEvent().isCollidingLeft() + ", top="
 							+ mario.getMapCollisionEvent().isCollidingTop() + ", bottom="
 							+ mario.getMapCollisionEvent().isCollidingBottom() + ")",
 					10, 320);
-			font.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);
-			font.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
-			font.draw(spriteBatch, "Items: " + tileMap.getItems().size(), 10, 260);
+			debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);
+			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
+			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size(), 10, 260);
 			spriteBatch.end();
 		}
 
 		if (debugShowFps) {
 			spriteBatch.begin();
-			font.draw(spriteBatch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 492, 475);
+			debugFont.draw(spriteBatch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 492, 475);
 			spriteBatch.end();
 		}
 
@@ -227,7 +237,7 @@ public class GameScreen implements Screen  {
 							if (mario.getSizeState()>0) {
 								mario.changeSizeState(0);
 								mario.setInvincible(true);								
-							} else {
+							} else {								
 								Gdx.app.log("STATE", "Mario just died");
 							}
 						}
@@ -391,7 +401,7 @@ public class GameScreen implements Screen  {
 		tileMap.dispose();		
 		renderer.dispose();		
 		shapeRenderer.dispose();		
-		font.dispose();
+		debugFont.dispose();
 		spriteBatch.dispose();				
 	}
 

@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.ImageLoader;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 
@@ -37,7 +37,7 @@ public class MysteryBlock extends Block {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ImageLoader.MYSTERY_BLOC;
+		spriteSheet = ResourcesLoader.MYSTERY_BLOC;
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);		
 		TextureRegion[] animationFrames = new TextureRegion[3];
 		animationFrames[0] = tmp[0][0];

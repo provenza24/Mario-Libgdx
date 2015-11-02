@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.game.mario.ImageLoader;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 
 public class Flag extends AbstractTileObjectSprite {
@@ -19,7 +19,7 @@ public class Flag extends AbstractTileObjectSprite {
 			
 	@Override
 	public void initializeAnimations()  {		
-		spriteSheet = ImageLoader.FLAG;			
+		spriteSheet = ResourcesLoader.FLAG;			
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);				
 		TextureRegion[] flagFrames = new TextureRegion[3];
 		flagFrames[0] = tmp[0][0];

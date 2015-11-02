@@ -2,8 +2,9 @@ package com.game.mario;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
-public class ImageLoader {
+public class ResourcesLoader {
 
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/mystery.png"));  
 	
@@ -26,6 +27,8 @@ public class ImageLoader {
 	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("underworld.png"));
 	
 	public static final Texture TRANSFER_ITEM = new Texture(Gdx.files.internal("sprites/transfer.png"));	
+	
+	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	
 	
 

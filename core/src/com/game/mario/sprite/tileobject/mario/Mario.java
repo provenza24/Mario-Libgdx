@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.game.mario.ImageLoader;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -17,7 +17,7 @@ import com.game.mario.tilemap.TmxMap;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float ACCELERATION_MAX = 10f; // 7.5f;
+	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
 	private static final float DECELERATION_COEF = 0.2f;
 
@@ -94,8 +94,8 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	@Override
 	public void initializeAnimations() {		
-		initializeAnimation(ImageLoader.MARIO_SMALL, 0);		
-		initializeAnimation(ImageLoader.MARIO_BIG, 1);
+		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);		
+		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
 	}
 
 	private void initializeAnimation(Texture texture, int i) {

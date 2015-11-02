@@ -2,7 +2,7 @@ package com.game.mario.sprite.item;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.ImageLoader;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.sprite.AbstractItem;
 
@@ -15,7 +15,7 @@ public class Mushroom extends AbstractItem {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ImageLoader.MUSHROOM;
+		spriteSheet = ResourcesLoader.MUSHROOM;
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];

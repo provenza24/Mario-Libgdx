@@ -19,13 +19,13 @@ public class GameManager extends Game {
 
 	private static final GameManager gameManager = new GameManager();
 
-	private GameScreen gameScreen;
+	private static GameScreen gameScreen;
 
-	private int nbLifes;
+	private static int nbLifes;
 
-	private int nbCoins;
+	private static int nbCoins;
 
-	private int currentLevel;
+	private static int currentLevel;
 
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -34,6 +34,8 @@ public class GameManager extends Game {
 
 	@Override
 	public void create() {
+		
+		initState();
 		
 		levels.add(0, "level_1_1.tmx");		
 		levels.add(1, "level_1_2.tmx");
@@ -93,17 +95,9 @@ public class GameManager extends Game {
 	public int getNbLifes() {
 		return nbLifes;
 	}
-
-	public void setNbLifes(int nbLifes) {
-		this.nbLifes = nbLifes;
-	}
-
+	
 	public int getNbCoins() {
 		return nbCoins;
-	}
-
-	public void setNbCoins(int nbCoins) {
-		this.nbCoins = nbCoins;
 	}
 
 	public int getSizeState() {
@@ -124,10 +118,6 @@ public class GameManager extends Game {
 
 	public int getCurrentLevel() {
 		return currentLevel;
-	}
-
-	public void setCurrentLevel(int currentLevel) {
-		this.currentLevel = currentLevel;
 	}
 
 }
