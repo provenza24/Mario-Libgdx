@@ -103,15 +103,15 @@ public class GameScreen implements Screen  {
 		
 	@Override
 	public void render(float delta) {
-		
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-				
+					
 		// Listen to keyboard actions and update Mario status
 		handleInput();
 		mario.update(tileMap, camera.getCamera(), delta);
 		
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);
+		
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if (camera.isScrollable()) {
 			// Move camera

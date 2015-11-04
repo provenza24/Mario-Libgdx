@@ -86,6 +86,10 @@ public class GameManager extends Game {
 
 	public void addCoin() {
 		nbCoins++;
+		if (nbCoins==100) {
+			nbCoins =0;
+			nbLifes++;
+		}
 	}
 	
 	public String getCurrentLevelName() {
