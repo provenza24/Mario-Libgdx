@@ -14,8 +14,9 @@ import com.game.mario.sprite.menu.MushroomSelector;
 public class MainMenuScreen extends AbstractMenuScreen {
 
 	public MainMenuScreen() {				
-		super(MainMenuEnum.class, ResourcesLoader.MENU_FONT,MushroomSelector.class);
-		setOffset(0, -50);				
+		super(MainMenuEnum.class, ResourcesLoader.MAIN_MENU_FONT,MushroomSelector.class);
+		setOffset(0, -50);		
+		setFontColor(0,0,0);
 	}
 	
 	public void addBackgroundElements() {		

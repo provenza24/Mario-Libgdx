@@ -13,8 +13,8 @@ public class PauseMenuScreen extends AbstractMenuScreen {
 
 	public PauseMenuScreen() {				
 		super(PauseMenuEnum.class, ResourcesLoader.MENU_FONT,MushroomSelector.class);		
-		setOffset(0, -80);	
-		setFontColor(1, 1, 1);
+		setOffset(0, -80);			
+		setFontColor(1,1,1);
 	}
 
 	@Override

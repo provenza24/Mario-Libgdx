@@ -37,7 +37,7 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 			if (itemEnum!=null) {
 				AbstractItem item = null;
 				if (itemEnum==ItemEnum.RED_MUSHROOM) {
-					item = new Mushroom(block.getX(), yWallBlock);
+					item = new Mushroom(block.getX(), yWallBlock+0.1f);
 				} else if (itemEnum==ItemEnum.COIN) {
 					GameManager.getGameManager().addCoin();
 					item = new EjectedCoin(block.getX(), yWallBlock+1);

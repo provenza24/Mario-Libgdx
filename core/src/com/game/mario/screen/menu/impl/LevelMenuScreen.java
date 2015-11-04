@@ -13,8 +13,8 @@ public class LevelMenuScreen extends AbstractMenuScreen {
 
 	public LevelMenuScreen() {				
 		super(LevelMenuEnum.class, ResourcesLoader.MENU_FONT,MushroomSelector.class);		
-		setOffset(0, -80);	
-		setFontColor(1, 1, 1);
+		setOffset(0, -80);
+		setFontColor(1,1,1);
 	}
 
 	@Override

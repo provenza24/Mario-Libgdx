@@ -24,7 +24,7 @@ public class Mushroom extends AbstractItem {
 
 	@Override
 	public void addAppearAction() {
-		addAction(ActionFacade.createMoveAction(getX(), getY()+1, 0.5f));		
+		addAction(ActionFacade.createMoveAction(getX(), getY()+0.9f, 0.5f));		
 	}
 		
 }

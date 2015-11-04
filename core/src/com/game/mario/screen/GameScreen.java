@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.GameManager;
+import com.game.mario.RectangleUtil;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -25,6 +26,8 @@ import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.statusbar.MarioCoins;
+import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -69,7 +72,8 @@ public class GameScreen implements Screen  {
 		// font.setColor(0.5f,0.4f,0,1);
 		debugFont.setColor(0, 0, 1, 1);
 		
-		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));
+		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));		
+		font.setColor(1,1,1,1);
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tileMap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
@@ -83,10 +87,18 @@ public class GameScreen implements Screen  {
 		
 		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackgroundType(), 16);
 		
-		stage = new Stage();			
+		stage = new Stage();
+					
 		for (Actor actor : tileMap.getBlocks()) {
 			stage.addActor(actor);
 		}
+		
+		MarioLifes marioLifes = new MarioLifes();
+		marioLifes.setPosition(10, 460 - marioLifes.getHeight()/2);
+		MarioCoins marioCoins= new MarioCoins();
+		marioCoins.setPosition(100, 460 - marioCoins.getHeight()/2);
+		stage.addActor(marioLifes);
+		stage.addActor(marioCoins);
 	}
 		
 	@Override
@@ -127,17 +139,21 @@ public class GameScreen implements Screen  {
 
 		//stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-		
-		spriteBatch.begin();		
-		debugFont.draw(spriteBatch, "Coins=" + GameManager.getGameManager().getNbCoins(), 10, 460);
-		debugFont.draw(spriteBatch, "Lifes=" + GameManager.getGameManager().getNbLifes(), 150, 460);
-		spriteBatch.end();
+						
+		renderStatusBar();
 		
 		if (mario.getX()>=tileMap.getFlag().getX() 
 				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
 			GameManager.getGameManager().nextLevel();
 		}
 		
+	}
+
+	private void renderStatusBar() {
+		spriteBatch.begin();		
+		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, 470);
+		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, 470);		
+		spriteBatch.end();
 	}
 
 	private void renderDebugMode() {
@@ -203,7 +219,7 @@ public class GameScreen implements Screen  {
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
 			item.update(tileMap, camera.getCamera(), deltaTime);
-			boolean collideMario = mario.getBounds().overlaps(item.getBounds());
+			boolean collideMario = RectangleUtil.overlaps(mario.getBounds(), item.getBounds());
 			if (collideMario) {
 				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera);				
 			}
