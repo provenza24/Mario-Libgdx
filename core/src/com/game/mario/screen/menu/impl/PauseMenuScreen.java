@@ -26,8 +26,7 @@ public class PauseMenuScreen extends AbstractMenuScreen {
 			if (getSelectedItemEnum()==PauseMenuEnum.CONTINUE) {				
 				GameManager.getGameManager().changeScreen(ScreenEnum.GAME);
 			} if (getSelectedItemEnum()==PauseMenuEnum.QUIT) {
-				GameManager.getGameManager().startNewGame();
-				GameManager.getGameManager().changeScreen(ScreenEnum.MAIN_MENU);				
+				GameManager.getGameManager().startNewGame();							
 			}
 		}
 	}

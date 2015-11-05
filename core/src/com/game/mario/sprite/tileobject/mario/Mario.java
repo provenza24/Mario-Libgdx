@@ -72,6 +72,7 @@ public class Mario extends AbstractTileObjectSprite {
 		changeSizeState(sizeState);		
 		invincible = false;
 		invincibleDuration = 0;
+		alive = true;
 	}
 
 	public void changeSizeState(int i) {

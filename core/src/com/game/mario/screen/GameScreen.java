@@ -147,6 +147,16 @@ public class GameScreen implements Screen  {
 			GameManager.getGameManager().nextLevel();
 		}
 		
+		if (!mario.isAlive()) {
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			GameManager.getGameManager().restartLevel();
+		}
+		
 	}
 
 	private void renderStatusBar() {
@@ -253,7 +263,8 @@ public class GameScreen implements Screen  {
 							if (mario.getSizeState()>0) {
 								mario.changeSizeState(0);
 								mario.setInvincible(true);								
-							} else {								
+							} else {
+								mario.setAlive(false);								
 								Gdx.app.log("STATE", "Mario just died");
 							}
 						}

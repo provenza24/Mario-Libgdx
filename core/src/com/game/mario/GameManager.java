@@ -74,6 +74,19 @@ public class GameManager extends Game {
 		gameScreen.dispose();
 		gameScreen = new GameScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
+		changeScreen(ScreenEnum.MAIN_MENU);
+	}
+	
+	public void restartLevel() {
+		nbLifes--;
+		gameScreen.dispose();
+		gameScreen = new GameScreen();
+		SCREENS.put(ScreenEnum.GAME, gameScreen);
+		if (nbLifes<0) {
+			startNewGame();
+		} else {
+			changeScreen(ScreenEnum.LEVEL_MENU);
+		}		
 	}
 
 	public void nextLevel() {
@@ -102,6 +115,10 @@ public class GameManager extends Game {
 	
 	public int getNbCoins() {
 		return nbCoins;
+	}
+	
+	public void looseLife() {
+		nbLifes--;
 	}
 
 	public int getSizeState() {
