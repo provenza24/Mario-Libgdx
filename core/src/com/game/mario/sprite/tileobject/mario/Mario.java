@@ -1,8 +1,10 @@
 package com.game.mario.sprite.tileobject.mario;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -38,6 +40,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private Animation marioJumpRightAnimation;
 	
 	private Animation marioDeathAnimation;
+	
+	private Animation marioGrowDownAnimation;
 
 	private MarioStateEnum state;
 
@@ -100,9 +104,20 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 	
 	@Override
-	public void initializeAnimations() {		
+	public void initializeAnimations() {			
 		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);		
 		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
+		
+		Texture growDownTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
+		TextureRegion[][] tmp = TextureRegion.split(growDownTexture, growDownTexture.getWidth() / 3,
+				growDownTexture.getHeight() / 1);
+		TextureRegion[] frames = new TextureRegion[5];
+		frames[0] = tmp[0][2];
+		frames[1] = tmp[0][1];
+		frames[2] = tmp[0][0];
+		frames[3] = tmp[0][1];
+		frames[4] = tmp[0][0];
+		marioGrowDownAnimation = new Animation(0.2f, frames);		
 	}
 
 	private void initializeAnimation(Texture texture, int i) {
@@ -320,6 +335,15 @@ public class Mario extends AbstractTileObjectSprite {
 		currentAnimation = marioDeathAnimation;
 		currentFrame = currentAnimation.getKeyFrame(0, false);
 	}
+	
+	public void setGrowDownAnimation() {
+		currentAnimation = marioGrowDownAnimation;		
+	}
+	
+	public void updateCinematicAnimation(float delta) {
+		stateTime = stateTime + delta;
+		currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+	}
 
 	public void updateAnimation(float delta) {
 
@@ -435,6 +459,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setDeathNoMoveDuration(float deathNoMoveDuration) {
 		this.deathNoMoveDuration = deathNoMoveDuration;
+	}
+
+	public Animation getMarioGrowDownAnimation() {
+		return marioGrowDownAnimation;
+	}
+
+	public void setMarioGrowDownAnimation(Animation marioGrowDownAnimation) {
+		this.marioGrowDownAnimation = marioGrowDownAnimation;
 	}
 
 }

@@ -64,7 +64,11 @@ public class GameScreen implements Screen  {
 
 	private Stage stage;
 	
-	private boolean waitBeforeDeathAnimating = true;;
+	private boolean waitBeforeDeathAnimating = true;
+	
+	private boolean growingUp = false;
+	
+	private float growingUpDuration =0;
 		
 	public GameScreen() {
 
@@ -108,7 +112,21 @@ public class GameScreen implements Screen  {
 	public void render(float delta) {
 					
 		if (mario.isAlive()) {
-			handleMarioAlive(delta);			
+			if (growingUp) {				
+				growingUpDuration = growingUpDuration + delta;
+				mario.updateCinematicAnimation(delta);
+				renderCinematicScene(delta);				
+				if (growingUpDuration>=2) {
+					growingUpDuration = 0;
+					growingUp = false;
+					if (mario.getSizeState()>0) {
+						mario.changeSizeState(0);
+						mario.setInvincible(true);						
+					}
+				}
+			} else {
+				handleMarioAlive(delta);
+			}						
 		} else {
 			handleMarioDeath(delta);			
 		}
@@ -119,10 +137,23 @@ public class GameScreen implements Screen  {
 		
 		if (!waitBeforeDeathAnimating) {
 			mario.move(delta);
-		}			
-		
+		}					
+		renderCinematicScene(delta);						
+		if (waitBeforeDeathAnimating) {
+			mario.setDeathNoMoveDuration(mario.getDeathNoMoveDuration()+delta);
+			if (mario.getDeathNoMoveDuration()>=1) {
+				waitBeforeDeathAnimating = false;
+			}			
+		}		
+		if (mario.getY()<-50) {
+			GameManager.getGameManager().restartLevel();
+		}
+				
+	}
+
+	private void renderCinematicScene(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
 		scrollingBackground.render();
 		renderer.setView(camera.getCamera());
 		renderer.render();
@@ -132,19 +163,7 @@ public class GameScreen implements Screen  {
 				enemy.render(renderer.getBatch());
 			}				
 		}
-		mario.render(renderer.getBatch());				
-		
-		if (waitBeforeDeathAnimating) {
-			mario.setDeathNoMoveDuration(mario.getDeathNoMoveDuration()+delta);
-			if (mario.getDeathNoMoveDuration()>=1) {
-				waitBeforeDeathAnimating = false;
-			}			
-		}
-		
-		if (mario.getY()<-50) {
-			GameManager.getGameManager().restartLevel();
-		}
-				
+		mario.render(renderer.getBatch());
 	}
 
 	private void handleMarioAlive(float delta) {
@@ -294,8 +313,10 @@ public class GameScreen implements Screen  {
 							mario.getAcceleration().y = 0.15f;
 						} else if (!mario.isInvincible()){							
 							if (mario.getSizeState()>0) {
-								mario.changeSizeState(0);
-								mario.setInvincible(true);								
+								//mario.changeSizeState(0);
+								//mario.setInvincible(true);
+								growingUp = true;
+								mario.setGrowDownAnimation();
 							} else {
 								mario.setAlive(false);
 								mario.setDeathAnimation();
