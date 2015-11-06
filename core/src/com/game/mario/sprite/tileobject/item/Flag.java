@@ -9,12 +9,15 @@ import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 
 public class Flag extends AbstractTileObjectSprite {
 
+	private float flagTargetPosition;
+	
 	public Flag(MapObject mapObject) {
 		
 		super(mapObject);	
 		collidableWithTilemap = false;
 		gravitating = false;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
+		flagTargetPosition = getX() - getWidth() /2;
 	}
 			
 	@Override
@@ -26,5 +29,9 @@ public class Flag extends AbstractTileObjectSprite {
 		flagFrames[1] = tmp[0][1];
 		flagFrames[2] = tmp[0][2];		
 		currentAnimation = new Animation(0.15f, flagFrames);				
+	}
+
+	public float getFlagTargetPosition() {
+		return flagTargetPosition;
 	}
 }

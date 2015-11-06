@@ -125,7 +125,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	protected void updateBounds() {
 		bounds.setX(getX()+offset.x);
-		bounds.setY(getY()+offset.y);
+		bounds.setY(getY());
 	}
 	
 	protected void applyGravity() {
@@ -144,7 +144,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		oldPosition.y = getY();		
 	}
 
-	protected void move(float deltaTime) {
+	public void move(float deltaTime) {
 		
 		storeOldPosition();
 		

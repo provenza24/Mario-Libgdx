@@ -184,6 +184,10 @@ public class TmxMap {
 		this.items = items;
 	}
 
+	public float getFlagTargetPosition() {
+		return flag.getFlagTargetPosition();
+	}
+	
 	public Flag getFlag() {
 		return flag;
 	}

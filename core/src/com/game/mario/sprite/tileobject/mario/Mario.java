@@ -36,6 +36,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private Animation marioJumpLeftAnimation;
 
 	private Animation marioJumpRightAnimation;
+	
+	private Animation marioDeathAnimation;
 
 	private MarioStateEnum state;
 
@@ -50,6 +52,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private boolean invincible;
 	
 	private float invincibleDuration;
+	
+	private float deathNoMoveDuration;
 	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -73,6 +77,7 @@ public class Mario extends AbstractTileObjectSprite {
 		invincible = false;
 		invincibleDuration = 0;
 		alive = true;
+		deathNoMoveDuration = 0;
 	}
 
 	public void changeSizeState(int i) {
@@ -91,6 +96,7 @@ public class Mario extends AbstractTileObjectSprite {
 		marioSlideLeftAnimation=  animations[i][3];				
 		marioJumpRightAnimation = animations[i][4];
 		marioJumpLeftAnimation = animations[i][5];
+		marioDeathAnimation = animations[i][6];
 	}
 	
 	@Override
@@ -131,17 +137,23 @@ public class Mario extends AbstractTileObjectSprite {
 		TextureRegion[] marioJumpLeftFrames = new TextureRegion[1];
 		marioJumpLeftFrames[0] = tmp[0][8];
 		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
+		
+		TextureRegion[] marioDeathFrames = new TextureRegion[1];
+		marioDeathFrames[0] = tmp[0][10];
+		marioDeathAnimation = new Animation(1, marioDeathFrames);
 				  
 		if (animations == null) {
 			 animations = new Animation[3][6] ;
 		}
-		animations[i] = new Animation[6];
+		animations[i] = new Animation[7];
 		animations[i][0] = marioRunRightAnimation; 
 		animations[i][1] = marioRunLeftAnimation;
 		animations[i][2] = marioSlideRightAnimation;
 		animations[i][3] = marioSlideLeftAnimation;
 		animations[i][4] = marioJumpRightAnimation;
 		animations[i][5] = marioJumpLeftAnimation;
+		animations[i][6] = marioDeathAnimation;
+		
 	}
 	
 	public void accelerate() {
@@ -191,8 +203,13 @@ public class Mario extends AbstractTileObjectSprite {
 		collideWithTilemap(tileMap);
 		updateAnimation(deltaTime);
 		updateInvincibleStatus(deltaTime);
+		updateAliveStatus();
 	}
 	
+	private void updateAliveStatus() {
+		setAlive(getY()>=0);			
+	}
+
 	private void updateInvincibleStatus(float deltaTime) {
 		if (isInvincible() && invincibleDuration<3) {			
 			invincibleDuration +=deltaTime;
@@ -297,6 +314,11 @@ public class Mario extends AbstractTileObjectSprite {
 			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
 		}
 		
+	}
+	
+	public void setDeathAnimation() {
+		currentAnimation = marioDeathAnimation;
+		currentFrame = currentAnimation.getKeyFrame(0, false);
 	}
 
 	public void updateAnimation(float delta) {
@@ -405,6 +427,14 @@ public class Mario extends AbstractTileObjectSprite {
 		} else {
 			super.render(batch);
 		}				
+	}
+
+	public float getDeathNoMoveDuration() {
+		return deathNoMoveDuration;
+	}
+
+	public void setDeathNoMoveDuration(float deathNoMoveDuration) {
+		this.deathNoMoveDuration = deathNoMoveDuration;
 	}
 
 }

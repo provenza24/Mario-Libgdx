@@ -26,6 +26,7 @@ import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -104,6 +105,35 @@ public class GameScreen implements Screen  {
 	@Override
 	public void render(float delta) {
 					
+		if (mario.isAlive()) {
+			handleMarioAlive(delta);			
+		} else {
+			handleMarioDeath(delta);			
+		}
+				
+	}
+
+	private void handleMarioDeath(float delta) {		
+		mario.move(delta);		
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		scrollingBackground.render();
+		renderer.setView(camera.getCamera());
+		renderer.render();
+		renderMysteryBlocks(delta);
+		for (AbstractSprite enemy : tileMap.getEnemies()) {
+			if (enemy.isVisible()) {
+				enemy.render(renderer.getBatch());
+			}				
+		}
+		mario.render(renderer.getBatch());		
+		if (mario.getY()<-50) {
+			GameManager.getGameManager().restartLevel();
+		}
+				
+	}
+
+	private void handleMarioAlive(float delta) {
 		// Listen to keyboard actions and update Mario status
 		handleInput();
 		mario.update(tileMap, camera.getCamera(), delta);
@@ -139,24 +169,13 @@ public class GameScreen implements Screen  {
 
 		//stage.act(Gdx.graphics.getDeltaTime());
 		stage.draw();
-						
+		// Display status bar				
 		renderStatusBar();
-		
-		if (mario.getX()>=tileMap.getFlag().getX() 
+				
+		if (mario.getX()>=tileMap.getFlagTargetPosition() 
 				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
 			GameManager.getGameManager().nextLevel();
-		}
-		
-		if (!mario.isAlive()) {
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			GameManager.getGameManager().restartLevel();
-		}
-		
+		}	
 	}
 
 	private void renderStatusBar() {
@@ -264,8 +283,10 @@ public class GameScreen implements Screen  {
 								mario.changeSizeState(0);
 								mario.setInvincible(true);								
 							} else {
-								mario.setAlive(false);								
-								Gdx.app.log("STATE", "Mario just died");
+								mario.setAlive(false);
+								mario.setDeathAnimation();
+								mario.getAcceleration().x = -3;
+								mario.getAcceleration().y = 0.2f;					
 							}
 						}
 					}
@@ -289,6 +310,7 @@ public class GameScreen implements Screen  {
 		// Get blocks from tilemap
 		List<Block> blocks = tileMap.getBlocks();
 		if (blocks.size() > 0) {
+			MysteryBlock.updateStateTime(delta);
 			batch = renderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {

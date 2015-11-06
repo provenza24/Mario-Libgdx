@@ -17,6 +17,8 @@ public class MysteryBlock extends Block {
 	
 	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();				
 		
+	protected static float blocStateTime;
+	
 	static {					
 		REPLACING_TILES_UNDERGROUND.put(7, 65);
 		REPLACING_TILES_UNDERGROUND.put(8, 65);
@@ -44,6 +46,14 @@ public class MysteryBlock extends Block {
 		animationFrames[1] = tmp[0][1];
 		animationFrames[2] = tmp[0][2];		
 		currentAnimation = new Animation(0.15f, animationFrames);
+	}
+	
+	public static void updateStateTime(float delta) {		
+		blocStateTime = blocStateTime + delta;
+	}
+	
+	protected void updateAnimation(float delta) {				
+		currentFrame = currentAnimation.getKeyFrame(blocStateTime, true);		
 	}
 	
 }
