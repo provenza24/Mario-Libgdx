@@ -207,7 +207,7 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 	
 	private void updateAliveStatus() {
-		setAlive(getY()>=0);			
+		setAlive(getY()>=-getHeight());			
 	}
 
 	private void updateInvincibleStatus(float deltaTime) {

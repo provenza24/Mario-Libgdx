@@ -63,6 +63,8 @@ public class GameScreen implements Screen  {
 	private IScrollingBackground scrollingBackground;
 
 	private Stage stage;
+	
+	private boolean waitBeforeDeathAnimating = true;;
 		
 	public GameScreen() {
 
@@ -113,8 +115,12 @@ public class GameScreen implements Screen  {
 				
 	}
 
-	private void handleMarioDeath(float delta) {		
-		mario.move(delta);		
+	private void handleMarioDeath(float delta) {
+		
+		if (!waitBeforeDeathAnimating) {
+			mario.move(delta);
+		}			
+		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		scrollingBackground.render();
@@ -126,7 +132,15 @@ public class GameScreen implements Screen  {
 				enemy.render(renderer.getBatch());
 			}				
 		}
-		mario.render(renderer.getBatch());		
+		mario.render(renderer.getBatch());				
+		
+		if (waitBeforeDeathAnimating) {
+			mario.setDeathNoMoveDuration(mario.getDeathNoMoveDuration()+delta);
+			if (mario.getDeathNoMoveDuration()>=1) {
+				waitBeforeDeathAnimating = false;
+			}			
+		}
+		
 		if (mario.getY()<-50) {
 			GameManager.getGameManager().restartLevel();
 		}
