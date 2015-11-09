@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.game.mario.GameManager;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.ChangeCellValueAction;
 import com.game.mario.action.ReplaceWallAction;
@@ -38,9 +39,11 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 				AbstractItem item = null;
 				if (itemEnum==ItemEnum.RED_MUSHROOM) {
 					item = new Mushroom(block.getX(), yWallBlock+0.1f);
+					ResourcesLoader.SOUND_POWERUP_APPEAR.play();
 				} else if (itemEnum==ItemEnum.COIN) {
 					GameManager.getGameManager().addCoin();
 					item = new EjectedCoin(block.getX(), yWallBlock+1);
+					ResourcesLoader.SOUND_COIN.play();
 				}
 				tileMap.getItems().add(item);
 				stage.addActor(item);

@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -17,6 +18,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.GameManager;
 import com.game.mario.RectangleUtil;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -33,7 +35,7 @@ import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
 public class GameScreen implements Screen  {
-
+	
 	private boolean debugShowText = false;
 
 	private boolean debugShowBounds = false;
@@ -65,13 +67,11 @@ public class GameScreen implements Screen  {
 	private Stage stage;
 	
 	private boolean waitBeforeDeathAnimating = true;
-	
-	private boolean growingUp = false;
-	
-	private float growingUpDuration =0;
+		
+	private float growingDuration =0;
 		
 	public GameScreen() {
-
+		
 		shapeRenderer = new ShapeRenderer();
 
 		spriteBatch = new SpriteBatch();
@@ -105,32 +105,36 @@ public class GameScreen implements Screen  {
 		MarioCoins marioCoins= new MarioCoins();
 		marioCoins.setPosition(100, 460 - marioCoins.getHeight()/2);
 		stage.addActor(marioLifes);
-		stage.addActor(marioCoins);
+		stage.addActor(marioCoins);				
 	}
 		
 	@Override
-	public void render(float delta) {
-					
+	public void render(float delta) {				
 		if (mario.isAlive()) {
-			if (growingUp) {				
-				growingUpDuration = growingUpDuration + delta;
-				mario.updateCinematicAnimation(delta);
-				renderCinematicScene(delta);				
-				if (growingUpDuration>=2) {
-					growingUpDuration = 0;
-					growingUp = false;
-					if (mario.getSizeState()>0) {
-						mario.changeSizeState(0);
-						mario.setInvincible(true);						
-					}
-				}
+			if (mario.isGrowing()) {				
+				handleGrowAnimation(delta);
 			} else {
 				handleMarioAlive(delta);
 			}						
 		} else {
 			handleMarioDeath(delta);			
+		}				
+	}
+
+	private void handleGrowAnimation(float delta) {
+		growingDuration = growingDuration + delta;
+		mario.updateCinematicAnimation(delta);
+		renderCinematicScene(delta);				
+		if (growingDuration>=1) {
+			growingDuration = 0;					
+			if (mario.isGrowingDown()) {
+				mario.changeSizeState(0);				
+				mario.setGrowingDown(false);
+				mario.setInvincible(true);
+			} else if (mario.isGrowingUp()) {												
+				mario.setGrowingUp(false);
+			}
 		}
-				
 	}
 
 	private void handleMarioDeath(float delta) {
@@ -162,8 +166,11 @@ public class GameScreen implements Screen  {
 			if (enemy.isVisible()) {
 				enemy.render(renderer.getBatch());
 			}				
-		}
+		}						
+		renderStatusBar();
 		mario.render(renderer.getBatch());
+		stage.act();
+		stage.draw();
 	}
 
 	private void handleMarioAlive(float delta) {
@@ -311,17 +318,16 @@ public class GameScreen implements Screen  {
 						if (mario.getY() > enemy.getY() && mario.getState() == MarioStateEnum.FALLING) {									
 							enemy.kill();
 							mario.getAcceleration().y = 0.15f;
+							ResourcesLoader.SOUND_KICK.play();							
 						} else if (!mario.isInvincible()){							
-							if (mario.getSizeState()>0) {
-								//mario.changeSizeState(0);
-								//mario.setInvincible(true);
-								growingUp = true;
+							if (mario.getSizeState()>0) {								
+								mario.setGrowingDown(true);
 								mario.setGrowDownAnimation();
+								ResourcesLoader.SOUND_PIPE.play();
 							} else {
 								mario.setAlive(false);
 								mario.setDeathAnimation();
-								mario.getAcceleration().x = -3;
-								mario.getAcceleration().y = 0.2f;					
+								ResourcesLoader.SOUND_MARIO_DEATH.play();
 							}
 						}
 					}
@@ -429,6 +435,8 @@ public class GameScreen implements Screen  {
 			mario.getAcceleration().y = 0.16f;
 			mario.setCanJumpHigher(true);
 			jumpTimerMax = 24 + (int) mario.getAcceleration().x / 5;
+			Sound soundToPlay = mario.getSizeState()>0 ? ResourcesLoader.SOUND_JUMP_SUPER : ResourcesLoader.SOUND_JUMP_SMALL;
+			soundToPlay.play();
 		} else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState() == MarioStateEnum.JUMPING
 				&& mario.canJumpHigher()) {
 			if (mario.getJumpTimer() < jumpTimerMax) { //
@@ -487,6 +495,7 @@ public class GameScreen implements Screen  {
 		shapeRenderer.dispose();		
 		debugFont.dispose();
 		spriteBatch.dispose();				
+		ResourcesLoader.SOUND_MAIN_THEME.stop();
 	}
 
 }

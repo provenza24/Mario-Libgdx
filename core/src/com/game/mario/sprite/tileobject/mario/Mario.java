@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -41,7 +40,13 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	private Animation marioDeathAnimation;
 	
-	private Animation marioGrowDownAnimation;
+	private Animation marioGrowDownRightAnimation;
+	
+	private Animation marioGrowDownLeftAnimation;
+	
+	private Animation marioGrowUpRightAnimation;
+	
+	private Animation marioGrowUpLeftAnimation;
 
 	private MarioStateEnum state;
 
@@ -58,6 +63,10 @@ public class Mario extends AbstractTileObjectSprite {
 	private float invincibleDuration;
 	
 	private float deathNoMoveDuration;
+	
+	private boolean growingUp;
+	
+	private boolean growingDown;
 	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -108,16 +117,33 @@ public class Mario extends AbstractTileObjectSprite {
 		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);		
 		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
 		
-		Texture growDownTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
-		TextureRegion[][] tmp = TextureRegion.split(growDownTexture, growDownTexture.getWidth() / 3,
-				growDownTexture.getHeight() / 1);
-		TextureRegion[] frames = new TextureRegion[5];
-		frames[0] = tmp[0][2];
-		frames[1] = tmp[0][1];
-		frames[2] = tmp[0][0];
-		frames[3] = tmp[0][1];
-		frames[4] = tmp[0][0];
-		marioGrowDownAnimation = new Animation(0.2f, frames);		
+		Texture growDownRightTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
+		TextureRegion[][] tmp = TextureRegion.split(growDownRightTexture, growDownRightTexture.getWidth() / 3, growDownRightTexture.getHeight() / 1);
+		TextureRegion[] frames = new TextureRegion[2];
+		frames[0] = tmp[0][1];
+		frames[1] = tmp[0][0];		
+		marioGrowDownRightAnimation = new Animation(0.15f, frames);				
+		
+		Texture growDownLeftTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-left.png"));
+		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3, growDownLeftTexture.getHeight() / 1);
+		frames = new TextureRegion[2];
+		frames[0] = tmp[0][1];
+		frames[1] = tmp[0][0];		
+		marioGrowDownLeftAnimation = new Animation(0.15f, frames);
+		
+		Texture growUpLeftTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-left.png"));
+		tmp = TextureRegion.split(growUpLeftTexture, growUpLeftTexture.getWidth() / 3, growUpLeftTexture.getHeight() / 1);
+		frames = new TextureRegion[2];
+		frames[0] = tmp[0][0];
+		frames[1] = tmp[0][1];		
+		marioGrowUpLeftAnimation = new Animation(0.15f, frames);
+		
+		Texture growUpRightTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
+		tmp = TextureRegion.split(growUpRightTexture, growUpRightTexture.getWidth() / 3, growUpRightTexture.getHeight() / 1);
+		frames = new TextureRegion[2];
+		frames[0] = tmp[0][0];
+		frames[1] = tmp[0][1];		
+		marioGrowUpRightAnimation = new Animation(0.15f, frames);
 	}
 
 	private void initializeAnimation(Texture texture, int i) {
@@ -334,13 +360,21 @@ public class Mario extends AbstractTileObjectSprite {
 	public void setDeathAnimation() {
 		currentAnimation = marioDeathAnimation;
 		currentFrame = currentAnimation.getKeyFrame(0, false);
+		acceleration.x = direction == DirectionEnum.LEFT ? 3 : -3;
+		acceleration.y = 0.2f;
 	}
 	
-	public void setGrowDownAnimation() {
-		currentAnimation = marioGrowDownAnimation;		
+	public void setGrowDownAnimation() {		
+		currentAnimation = direction == DirectionEnum.RIGHT ? marioGrowDownRightAnimation : marioGrowDownLeftAnimation;	
+		currentFrame = currentAnimation.getKeyFrame(1, false);
 	}
 	
-	public void updateCinematicAnimation(float delta) {
+	public void setGrowUpAnimation() {		
+		currentAnimation = direction == DirectionEnum.RIGHT ? marioGrowUpRightAnimation : marioGrowUpLeftAnimation;	
+		currentFrame = currentAnimation.getKeyFrame(1, false);
+	}
+	
+	public void updateCinematicAnimation(float delta) {		
 		stateTime = stateTime + delta;
 		currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 	}
@@ -461,12 +495,24 @@ public class Mario extends AbstractTileObjectSprite {
 		this.deathNoMoveDuration = deathNoMoveDuration;
 	}
 
-	public Animation getMarioGrowDownAnimation() {
-		return marioGrowDownAnimation;
+	public boolean isGrowingUp() {
+		return growingUp;
 	}
 
-	public void setMarioGrowDownAnimation(Animation marioGrowDownAnimation) {
-		this.marioGrowDownAnimation = marioGrowDownAnimation;
+	public void setGrowingUp(boolean growingUp) {
+		this.growingUp = growingUp;
+	}
+
+	public boolean isGrowingDown() {
+		return growingDown;
+	}
+
+	public void setGrowingDown(boolean growingDown) {
+		this.growingDown = growingDown;
+	}
+
+	public boolean isGrowing() {		
+		return isGrowingDown() || isGrowingUp();
 	}
 
 }

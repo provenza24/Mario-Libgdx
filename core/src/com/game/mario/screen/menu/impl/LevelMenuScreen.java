@@ -23,6 +23,7 @@ public class LevelMenuScreen extends AbstractMenuScreen {
 		super.handleInput();
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+			ResourcesLoader.SOUND_MAIN_THEME.play(GameManager.getGameManager().getMusicVolume());
 			GameManager.getGameManager().changeScreen(ScreenEnum.GAME);							
 		}
 	}

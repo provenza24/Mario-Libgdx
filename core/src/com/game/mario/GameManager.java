@@ -26,6 +26,10 @@ public class GameManager extends Game {
 	private static int nbCoins;
 
 	private static int currentLevel;
+	
+	private float soundFxVolume;
+	
+	private float musicVolume;
 
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -34,6 +38,9 @@ public class GameManager extends Game {
 
 	@Override
 	public void create() {
+		
+		soundFxVolume = 1f;
+		musicVolume = 1f;
 		
 		initState();
 		
@@ -46,6 +53,7 @@ public class GameManager extends Game {
 		SCREENS.put(ScreenEnum.PAUSE_MENU, new PauseMenuScreen());
 		SCREENS.put(ScreenEnum.LEVEL_MENU, new LevelMenuScreen());
 		
+		ResourcesLoader.SOUND_TITLE_THEME.play(musicVolume);		
 		setScreen(SCREENS.get(ScreenEnum.MAIN_MENU));
 	}
 	
@@ -74,6 +82,7 @@ public class GameManager extends Game {
 		gameScreen.dispose();
 		gameScreen = new GameScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
+		ResourcesLoader.SOUND_TITLE_THEME.play(musicVolume);
 		changeScreen(ScreenEnum.MAIN_MENU);
 	}
 	
@@ -139,6 +148,22 @@ public class GameManager extends Game {
 
 	public int getCurrentLevel() {
 		return currentLevel;
+	}
+
+	public float getSoundFxVolume() {
+		return soundFxVolume;
+	}
+
+	public void setSoundFxVolume(float soundFxVolume) {
+		this.soundFxVolume = soundFxVolume;
+	}
+
+	public float getMusicVolume() {
+		return musicVolume;
+	}
+
+	public void setMusicVolume(float musicVolume) {
+		this.musicVolume = musicVolume;
 	}
 
 }
