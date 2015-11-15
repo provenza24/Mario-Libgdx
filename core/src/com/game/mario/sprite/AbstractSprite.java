@@ -11,8 +11,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.game.mario.ResourcesLoader;
 import com.game.mario.collision.CollisionEvent;
 import com.game.mario.enums.DirectionEnum;
+import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 
@@ -62,6 +65,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected boolean killed;
 	
+	protected boolean bumped;
+	
 	protected Vector2 renderingSize;
 	
 	protected String image;
@@ -82,6 +87,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		moveable = false;
 		collidableWithTilemap = false;
 		gravitating = false;
+		bumped = false;
 		stateTime = 0f;
 		initializeAnimations();
 		xAlive = getX() - 16 ;
@@ -295,6 +301,16 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		this.killed = killed;
 	}
 	
+	public boolean collideMario(Mario mario) {
+		boolean isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
+		if (isEnemyHit) {
+			kill();
+			mario.getAcceleration().y = 0.15f;
+			ResourcesLoader.SOUND_KICK.play();	
+		}
+		 return isEnemyHit;
+	}
+	
 	public void kill() {
 		this.killed = true;			
 	}
@@ -440,6 +456,19 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	public void dispose() {
 		spriteSheet.dispose();		
+	}
+
+	public void bump() {
+		killed = true;
+		bumped = true;
+	}
+
+	public boolean isBumped() {
+		return bumped;
+	}
+
+	public void setBumped(boolean bumped) {
+		this.bumped = bumped;
 	}
 	
 }

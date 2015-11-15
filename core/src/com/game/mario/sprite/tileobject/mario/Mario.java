@@ -19,10 +19,14 @@ import com.game.mario.tilemap.TmxMap;
 public class Mario extends AbstractTileObjectSprite {
 
 	private static final float ACCELERATION_MAX = 5f; // 7.5f;
+	
+	private static final float ACCELERATION_MAX_SPEEDUP = 8.5f;
 
 	private static final float DECELERATION_COEF = 0.2f;
 
 	private static final float ACCELERATION_COEF = 0.2f;
+	
+	private static final float ACCELERATION_COEF_SPEEDUP = 0.2f;
 
 	Animation animations[][];   
 	
@@ -197,9 +201,9 @@ public class Mario extends AbstractTileObjectSprite {
 		
 	}
 	
-	public void accelerate() {
-		if (this.acceleration.x < ACCELERATION_MAX) {
-			this.acceleration.x = this.acceleration.x + ACCELERATION_COEF;
+	public void accelerate(boolean accelerationKeyHold) {		
+		if (this.acceleration.x < (accelerationKeyHold ? ACCELERATION_MAX_SPEEDUP : ACCELERATION_MAX)) {
+			this.acceleration.x = this.acceleration.x + (accelerationKeyHold ? ACCELERATION_COEF_SPEEDUP : ACCELERATION_COEF);
 		}
 	}
 
@@ -360,7 +364,7 @@ public class Mario extends AbstractTileObjectSprite {
 	public void setDeathAnimation() {
 		currentAnimation = marioDeathAnimation;
 		currentFrame = currentAnimation.getKeyFrame(0, false);
-		acceleration.x = direction == DirectionEnum.LEFT ? 3 : -3;
+		acceleration.x = 0;
 		acceleration.y = 0.2f;
 	}
 	

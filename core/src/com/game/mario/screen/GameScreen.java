@@ -167,6 +167,11 @@ public class GameScreen implements Screen  {
 				enemy.render(renderer.getBatch());
 			}				
 		}						
+		for (AbstractSprite item : tileMap.getItems()) {
+			if (item.isVisible()) {
+				item.render(renderer.getBatch());
+			}				
+		}
 		renderStatusBar();
 		mario.render(renderer.getBatch());
 		stage.act();
@@ -315,23 +320,22 @@ public class GameScreen implements Screen  {
 				if (!enemy.isKilled()) {					
 					boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
 					if (collideMario) {
-						if (mario.getY() > enemy.getY() && mario.getState() == MarioStateEnum.FALLING) {									
-							enemy.kill();
-							mario.getAcceleration().y = 0.15f;
-							ResourcesLoader.SOUND_KICK.play();							
-						} else if (!mario.isInvincible()){							
-							if (mario.getSizeState()>0) {								
-								mario.setGrowingDown(true);
-								mario.setGrowDownAnimation();
-								ResourcesLoader.SOUND_PIPE.play();
-							} else {
-								mario.setAlive(false);
-								mario.setDeathAnimation();
-								ResourcesLoader.SOUND_MARIO_DEATH.play();
+						boolean isEnemyHit = enemy.collideMario(mario);
+						if (!isEnemyHit) {
+							if (!mario.isInvincible()){							
+								if (mario.getSizeState()>0) {								
+									mario.setGrowingDown(true);
+									mario.setGrowDownAnimation();
+									ResourcesLoader.SOUND_PIPE.play();
+								} else {
+									mario.setAlive(false);
+									mario.setDeathAnimation();
+									ResourcesLoader.SOUND_MARIO_DEATH.play();
+								}
 							}
-						}
+						}						
 					}
-				} else {
+				} else if (!enemy.isBumped()) {
 					if (enemy.getActions().size==0) {
 						enemy.setDeletable(true);
 					}
@@ -405,7 +409,7 @@ public class GameScreen implements Screen  {
 					mario.setDirection(DirectionEnum.RIGHT);
 				}
 			} else {
-				mario.accelerate();
+				mario.accelerate(Gdx.input.isKeyPressed(Keys.A));
 				mario.setDirection(DirectionEnum.RIGHT);
 				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_RIGHT);
 			}
@@ -419,7 +423,7 @@ public class GameScreen implements Screen  {
 					mario.setDirection(DirectionEnum.LEFT);
 				}
 			} else {
-				mario.accelerate();
+				mario.accelerate(Gdx.input.isKeyPressed(Keys.A));
 				mario.setDirection(DirectionEnum.LEFT);
 				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_LEFT);
 			}
@@ -434,7 +438,7 @@ public class GameScreen implements Screen  {
 			mario.setState(MarioStateEnum.JUMPING);
 			mario.getAcceleration().y = 0.16f;
 			mario.setCanJumpHigher(true);
-			jumpTimerMax = 24 + (int) mario.getAcceleration().x / 5;
+			jumpTimerMax = 24 + (int) (mario.getAcceleration().x / 4);
 			Sound soundToPlay = mario.getSizeState()>0 ? ResourcesLoader.SOUND_JUMP_SUPER : ResourcesLoader.SOUND_JUMP_SMALL;
 			soundToPlay.play();
 		} else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState() == MarioStateEnum.JUMPING

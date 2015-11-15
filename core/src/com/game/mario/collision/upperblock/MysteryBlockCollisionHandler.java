@@ -48,7 +48,9 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 				tileMap.getItems().add(item);
 				stage.addActor(item);
 				item.addAppearAction();
-			}			
+			}
+			// Check if one or several items were over the wall
+			bumpElements(tileMap, collidingCell, stage);
 		} else {
 			Gdx.app.log("ERROR", "Block already taken in account");
 		}

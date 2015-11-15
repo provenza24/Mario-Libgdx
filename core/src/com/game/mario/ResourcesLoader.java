@@ -11,6 +11,8 @@ public class ResourcesLoader {
 	
 	public static final Texture GOOMBA = new Texture(Gdx.files.internal("sprites/goomba.png"));
 	
+	public static final Texture KOOPA = new Texture(Gdx.files.internal("sprites/koopa.png"));
+	
 	public static final Texture COIN = new Texture(Gdx.files.internal("sprites/coin.png"));
 	
 	public static final Texture MARIO_SMALL = new Texture(Gdx.files.internal("sprites/mario.gif"));

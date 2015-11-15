@@ -11,6 +11,8 @@ import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 public class Goomba extends AbstractTileObjectSprite {
 
 	private Animation walkAnimation;
+	
+	private Animation bumpAnimation;
 		
 	public Goomba(MapObject mapObject) {
 		
@@ -37,6 +39,10 @@ public class Goomba extends AbstractTileObjectSprite {
 		TextureRegion[] killedFrames = new TextureRegion[1];
 		killedFrames[0] = tmp[0][2];
 		killedAnimation = new Animation(0, killedFrames);		
+		
+		TextureRegion[] bumpFrames = new TextureRegion[1];
+		bumpFrames[0] = tmp[0][3];
+		bumpAnimation = new Animation(0, bumpFrames);
 	}
 	
 	public void kill() {
@@ -44,6 +50,14 @@ public class Goomba extends AbstractTileObjectSprite {
 		acceleration.x = 0;
 		this.currentAnimation = killedAnimation;
 		addAction(ActionFacade.createMoveAction(getX(), getY(), 1f));
+	}
+	
+	public void bump() {		
+		super.bump();
+		collidableWithTilemap = false;
+		this.currentAnimation = bumpAnimation;
+		acceleration.x = acceleration.x>0 ? 3 : -3;
+		acceleration.y = 0.1f;
 	}
 
 }

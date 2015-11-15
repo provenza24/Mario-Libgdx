@@ -17,6 +17,7 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
+import com.game.mario.sprite.tileobject.enemy.Koopa;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
@@ -69,6 +70,9 @@ public class TmxMap {
 			if (objectProperty.get("type").toString().equals("goomba")) {				
 				enemies.add(new Goomba(mapObject));
 			}
+			if (objectProperty.get("type").toString().equals("koopa")) {				
+				enemies.add(new Koopa(mapObject));
+			}			
 			if (objectProperty.get("type").toString().equals("transferDown")) {				
 				items.add(new TransferItemDown(mapObject));
 			}
