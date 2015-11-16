@@ -44,8 +44,8 @@ public class GameManager extends Game {
 		
 		initState();
 		
-		levels.add(0, "test_world.tmx");
-		levels.add(1, "level_1_1.tmx");	
+		levels.add(0, "test_world.tmx");				
+		levels.add(1, "level_1_1.tmx");
 		levels.add(2, "level_1_2.tmx");
 		
 		gameScreen = new GameScreen();

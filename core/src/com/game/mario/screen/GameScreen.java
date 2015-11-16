@@ -31,10 +31,19 @@ import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
+import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
 public class GameScreen implements Screen  {
+	
+	private int KEY_UP = Keys.Z;
+	
+	private int KEY_LEFT = Keys.LEFT;
+	
+	private int KEY_RIGHT = Keys.RIGHT;
+	
+	private int KEY_SPEED_UP = Keys.A;
 	
 	private boolean debugShowText = false;
 
@@ -315,7 +324,7 @@ public class GameScreen implements Screen  {
 			if (enemy.isAlive()) {
 				for (int j = i + 1; j < enemies.size(); j++) {
 					// Check collision with other enemies
-					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
+					CollisionHandler.getCollisionHandler().collideEnemies((AbstractEnemy)enemy, (AbstractEnemy)enemies.get(j));
 				}								
 				if (!enemy.isKilled()) {					
 					boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
@@ -399,7 +408,7 @@ public class GameScreen implements Screen  {
 		}
 		
 
-		if (Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		if (Gdx.input.isKeyPressed(KEY_RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
 				// Sliding
 				mario.setStateIfNotJumping(MarioStateEnum.SLIDING_LEFT);
@@ -409,11 +418,11 @@ public class GameScreen implements Screen  {
 					mario.setDirection(DirectionEnum.RIGHT);
 				}
 			} else {
-				mario.accelerate(Gdx.input.isKeyPressed(Keys.A));
+				mario.accelerate(Gdx.input.isKeyPressed(KEY_SPEED_UP));
 				mario.setDirection(DirectionEnum.RIGHT);
 				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_RIGHT);
 			}
-		} else if (Gdx.input.isKeyPressed(Keys.LEFT)) {
+		} else if (Gdx.input.isKeyPressed(KEY_LEFT)) {
 			if (mario.getDirection() == DirectionEnum.RIGHT) {
 				// Sliding
 				mario.setStateIfNotJumping(MarioStateEnum.SLIDING_RIGHT);
@@ -423,7 +432,7 @@ public class GameScreen implements Screen  {
 					mario.setDirection(DirectionEnum.LEFT);
 				}
 			} else {
-				mario.accelerate(Gdx.input.isKeyPressed(Keys.A));
+				mario.accelerate(Gdx.input.isKeyPressed(KEY_SPEED_UP));
 				mario.setDirection(DirectionEnum.LEFT);
 				mario.setStateIfNotJumping(MarioStateEnum.RUNNING_LEFT);
 			}
@@ -431,7 +440,7 @@ public class GameScreen implements Screen  {
 			mario.decelerate(1);
 		}
 
-		if (Gdx.input.isKeyPressed(Keys.UP) && mario.canInitiateJump()
+		if (Gdx.input.isKeyPressed(KEY_UP) && mario.canInitiateJump()
 				&& !(mario.getState() == MarioStateEnum.JUMPING || mario.getState() == MarioStateEnum.FALLING)) {
 			// player is on the ground, so he is allowed to start a jump
 			mario.setJumpTimer(1);
@@ -441,7 +450,7 @@ public class GameScreen implements Screen  {
 			jumpTimerMax = 24 + (int) (mario.getAcceleration().x / 4);
 			Sound soundToPlay = mario.getSizeState()>0 ? ResourcesLoader.SOUND_JUMP_SUPER : ResourcesLoader.SOUND_JUMP_SMALL;
 			soundToPlay.play();
-		} else if (Gdx.input.isKeyPressed(Keys.UP) && mario.getState() == MarioStateEnum.JUMPING
+		} else if (Gdx.input.isKeyPressed(KEY_UP) && mario.getState() == MarioStateEnum.JUMPING
 				&& mario.canJumpHigher()) {
 			if (mario.getJumpTimer() < jumpTimerMax) { //
 				mario.incJumpTimer();
@@ -456,7 +465,7 @@ public class GameScreen implements Screen  {
 			mario.setJumpTimer(0);
 		}
 
-		mario.setCanInitiateJump(!Gdx.input.isKeyPressed(Keys.UP) && mario.isOnFloor());
+		mario.setCanInitiateJump(!Gdx.input.isKeyPressed(KEY_UP) && mario.isOnFloor());
 
 	}
 

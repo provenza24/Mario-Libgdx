@@ -6,9 +6,10 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
-import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
+import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.enums.KoopaStateEnum;
 
-public class Goomba extends AbstractTileObjectSprite {
+public class Goomba extends AbstractEnemy {
 
 	private Animation walkAnimation;
 	
@@ -58,6 +59,16 @@ public class Goomba extends AbstractTileObjectSprite {
 		this.currentAnimation = bumpAnimation;
 		acceleration.x = acceleration.x>0 ? 3 : -3;
 		acceleration.y = 0.1f;
+	}
+
+	@Override
+	public EnemyTypeEnum getEnemyType() {		
+		return EnemyTypeEnum.GOOMBA;
+	}
+
+	@Override
+	public KoopaStateEnum getEnemyState() { 
+		return KoopaStateEnum.WALKING;
 	}
 
 }

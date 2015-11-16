@@ -8,7 +8,10 @@ import com.game.mario.collision.item.AbstractItemCollisionHandler;
 import com.game.mario.collision.item.IItemCollisionHandler;
 import com.game.mario.collision.upperblock.AbstractUpperBlockCollisionHandler;
 import com.game.mario.collision.upperblock.IUpperBlockCollisionHandler;
+import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.enums.KoopaStateEnum;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -17,12 +20,18 @@ public class CollisionHandler {
 
 	private static final CollisionHandler collisionHandler = new CollisionHandler();
 
-	public void collideEnemies(AbstractSprite enemy1, AbstractSprite enemy2) {
+	public void collideEnemies(AbstractEnemy enemy1, AbstractEnemy enemy2) {
 		if (enemy1.getBounds().overlaps(enemy2.getBounds())) {
-			enemy1.setOldPosition(enemy2.getOldPosition());
-			enemy1.getAcceleration().x = -enemy1.getAcceleration().x;
-			enemy2.getAcceleration().x = -enemy2.getAcceleration().x;
-		}
+			if (enemy1.getEnemyType()==EnemyTypeEnum.KOOPA && enemy1.getEnemyState()==KoopaStateEnum.SLIDING) {
+				enemy2.bump();
+			} else if (enemy2.getEnemyType()==EnemyTypeEnum.KOOPA && enemy2.getEnemyState()==KoopaStateEnum.SLIDING) {
+				enemy1.bump();
+			} else {
+				enemy1.setOldPosition(enemy2.getOldPosition());
+				enemy1.getAcceleration().x = -enemy1.getAcceleration().x;
+				enemy2.getAcceleration().x = -enemy2.getAcceleration().x;
+			}
+		}						
 	}
 
 	public static CollisionHandler getCollisionHandler() {
