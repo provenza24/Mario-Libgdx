@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.Mushroom;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
@@ -19,6 +20,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 
 	static {
 		handlers.put(Mushroom.class, new MushroomCollisionHandler());		
+		handlers.put(Flower.class, new FlowerCollisionHandler());
 		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
 		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
 		handlers.put(Coin.class, new CoinCollisionHandler());
