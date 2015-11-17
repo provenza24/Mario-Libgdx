@@ -19,11 +19,15 @@ public class ResourcesLoader {
 	
 	public static final Texture MARIO_BIG = new Texture(Gdx.files.internal("sprites/mario-big.png"));
 	
+	public static final Texture MARIO_FLOWER = new Texture(Gdx.files.internal("sprites/mario-big-flower.png"));
+	
 	public static final Texture FLAG = new Texture(Gdx.files.internal("sprites/flag.png"));
 	
 	public static final Texture COIN_BLOC = new Texture(Gdx.files.internal("sprites/coin-from-bloc.png"));
 	
 	public static final Texture MUSHROOM = new Texture(Gdx.files.internal("sprites/mushroom.png"));
+	
+	public static final Texture FLOWER = new Texture(Gdx.files.internal("sprites/flower.png"));
 	
 	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("overworld.gif"));
 	

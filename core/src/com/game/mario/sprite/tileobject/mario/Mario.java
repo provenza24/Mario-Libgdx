@@ -120,6 +120,7 @@ public class Mario extends AbstractTileObjectSprite {
 	public void initializeAnimations() {			
 		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);		
 		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
+		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);
 		
 		Texture growDownRightTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
 		TextureRegion[][] tmp = TextureRegion.split(growDownRightTexture, growDownRightTexture.getWidth() / 3, growDownRightTexture.getHeight() / 1);
