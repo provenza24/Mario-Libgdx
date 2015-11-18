@@ -7,7 +7,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.enums.KoopaStateEnum;
 
 public class Goomba extends AbstractEnemy {
 
@@ -64,11 +63,6 @@ public class Goomba extends AbstractEnemy {
 	@Override
 	public EnemyTypeEnum getEnemyType() {		
 		return EnemyTypeEnum.GOOMBA;
-	}
-
-	@Override
-	public KoopaStateEnum getEnemyState() { 
-		return KoopaStateEnum.WALKING;
 	}
 
 }

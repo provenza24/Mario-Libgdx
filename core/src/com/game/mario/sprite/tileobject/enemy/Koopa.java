@@ -7,7 +7,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.enums.KoopaStateEnum;
+import com.game.mario.enums.EnemyStateEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
@@ -22,8 +22,6 @@ public class Koopa extends AbstractEnemy {
 	
 	private Animation wakeUpAnimation;
 	
-	private KoopaStateEnum koopaState;
-	
 	private float noMoveTime;
 	
 	public Koopa(MapObject mapObject) {
@@ -35,8 +33,7 @@ public class Koopa extends AbstractEnemy {
 		currentAnimation = walkLeftAnimation;
 		acceleration.x = -1.9f;		
 		gravitating = true;
-		bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
-		koopaState = KoopaStateEnum.WALKING;
+		bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());		
 	}
 
 	@Override
@@ -75,7 +72,7 @@ public class Koopa extends AbstractEnemy {
 
 	public boolean collideMario(Mario mario) {
 		boolean isEnemyHit = false;
-		if (koopaState == KoopaStateEnum.WALKING) {
+		if (state == EnemyStateEnum.WALKING) {
 			isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
 			if (isEnemyHit) {
 				setSize(1 - offset.x * 2, 0.875f);	
@@ -83,23 +80,23 @@ public class Koopa extends AbstractEnemy {
 				mario.getAcceleration().y = 0.15f;
 				ResourcesLoader.SOUND_KICK.play();	
 				acceleration.x = 0;
-				koopaState = KoopaStateEnum.NO_MOVE;
+				state = EnemyStateEnum.NO_MOVE;
 				currentAnimation = killedAnimation;
 				noMoveTime = 0;
 			}	
-		} else if (koopaState == KoopaStateEnum.NO_MOVE) {
+		} else if (state == EnemyStateEnum.NO_MOVE) {
 			isEnemyHit = true;
 			acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 10 : -10;
 			setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
-			koopaState = KoopaStateEnum.SLIDING;
+			state = EnemyStateEnum.SLIDING;
 			currentAnimation = slideAnimation;			
-		} else if (koopaState == KoopaStateEnum.SLIDING) {
+		} else if (state == EnemyStateEnum.SLIDING) {
 			isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
 			if (isEnemyHit) {
 				mario.getAcceleration().y = 0.15f;
 				ResourcesLoader.SOUND_KICK.play();	
 				acceleration.x = 0;
-				koopaState = KoopaStateEnum.NO_MOVE;
+				state = EnemyStateEnum.NO_MOVE;
 				noMoveTime = 0;
 				currentAnimation = killedAnimation;			
 			}
@@ -111,7 +108,7 @@ public class Koopa extends AbstractEnemy {
 	}
 	
 	public void updateAnimation(float delta) {		
-		if (koopaState==KoopaStateEnum.WALKING) {
+		if (state==EnemyStateEnum.WALKING) {
 			if (acceleration.x>0 && currentAnimation!=walkRightAnimation) {
 				currentAnimation = walkRightAnimation;
 				
@@ -127,18 +124,11 @@ public class Koopa extends AbstractEnemy {
 	public EnemyTypeEnum getEnemyType() {		
 		return EnemyTypeEnum.KOOPA;
 	}
-
-	@Override
-	// TODO : remonter ça au niveau enemy
-	public KoopaStateEnum getEnemyState() {		
-		return koopaState;
-	}
-
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 		// TODO Auto-generated method stub
 		super.update(tileMap, camera, deltaTime);
-		if (koopaState==KoopaStateEnum.NO_MOVE) {									
+		if (state==EnemyStateEnum.NO_MOVE) {									
 			noMoveTime = noMoveTime + deltaTime;
 			if (noMoveTime<5) {
 				// nothing to do
@@ -150,7 +140,7 @@ public class Koopa extends AbstractEnemy {
 				currentAnimation = walkLeftAnimation;
 				acceleration.x = -1.9f;		
 				bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
-				koopaState = KoopaStateEnum.WALKING;
+				state = EnemyStateEnum.WALKING;
 			} 
 		}
 		if (isAlive() && camera.position.x < tileMap.getFlag().getX()) {
