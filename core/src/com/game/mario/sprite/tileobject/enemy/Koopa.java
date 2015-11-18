@@ -1,5 +1,6 @@
 package com.game.mario.sprite.tileobject.enemy;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
@@ -9,6 +10,7 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.KoopaStateEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.tilemap.TmxMap;
 
 public class Koopa extends AbstractEnemy {
 		
@@ -131,10 +133,11 @@ public class Koopa extends AbstractEnemy {
 	public KoopaStateEnum getEnemyState() {		
 		return koopaState;
 	}
-	
+
 	@Override
-	public void move(float deltaTime) {
-		super.move(deltaTime);
+	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
+		// TODO Auto-generated method stub
+		super.update(tileMap, camera, deltaTime);
 		if (koopaState==KoopaStateEnum.NO_MOVE) {									
 			noMoveTime = noMoveTime + deltaTime;
 			if (noMoveTime<5) {
@@ -150,5 +153,9 @@ public class Koopa extends AbstractEnemy {
 				koopaState = KoopaStateEnum.WALKING;
 			} 
 		}
+		if (isAlive() && camera.position.x < tileMap.getFlag().getX()) {
+			deletable = camera.position.x+8<getX();
+		} 
 	}
+	
 }

@@ -316,15 +316,15 @@ public class GameScreen implements Screen  {
 	
 	private void handleEnemies(float deltaTime) {
 
-		List<AbstractSprite> enemies = tileMap.getEnemies();
+		List<AbstractEnemy> enemies = tileMap.getEnemies();
 		for (int i = 0; i < enemies.size(); i++) {
-			AbstractSprite enemy = enemies.get(i);
+			AbstractEnemy enemy = enemies.get(i);
 			enemy.update(tileMap, camera.getCamera(), deltaTime);
 			// Draw it
 			if (enemy.isAlive()) {
 				for (int j = i + 1; j < enemies.size(); j++) {
 					// Check collision with other enemies
-					CollisionHandler.getCollisionHandler().collideEnemies((AbstractEnemy)enemy, (AbstractEnemy)enemies.get(j));
+					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
 				}								
 				if (!enemy.isKilled()) {					
 					boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
@@ -337,6 +337,7 @@ public class GameScreen implements Screen  {
 									mario.setGrowDownAnimation();
 									ResourcesLoader.SOUND_PIPE.play();
 								} else {
+									
 									mario.setAlive(false);
 									mario.setDeathAnimation();
 									ResourcesLoader.SOUND_MARIO_DEATH.play();

@@ -106,7 +106,7 @@ public class Mario extends AbstractTileObjectSprite {
 			setSize(1, 2);
 			setRenderingSize(1,2);
 		}
-		//setBounds(getX(), getY(), getWidth(), getHeight());
+		setBounds(getX(), getY(), getWidth(), getHeight());
 		marioRunRightAnimation = animations[i][0]; 
 		marioRunLeftAnimation = animations[i][1];
 		marioSlideRightAnimation =  animations[i][2];
@@ -329,8 +329,8 @@ public class Mario extends AbstractTileObjectSprite {
 
 		reinitVerticalMapCollisionEvent();
 
-		Vector2 leftBottomCorner = new Vector2(getX() + 0.1f + getOffset().x, getY());
-		Vector2 rightBottomCorner = new Vector2(getX() + 0.9f - getOffset().x, getY());
+		Vector2 leftBottomCorner = new Vector2(getX() + 0.05f + getOffset().x, getY());
+		Vector2 rightBottomCorner = new Vector2(getX() + 0.95f - getOffset().x, getY());
 		
 		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		getMapCollisionEvent().setCollidingBottom(isCollision);
@@ -341,8 +341,8 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	public void checkVerticalUpperMapCollision(TmxMap tilemap) {
 	
-		Vector2 leftTopCorner = new Vector2(getX() + 0.1f + getOffset().x, getY() + getHeight() - 0.1f);
-		Vector2 rightTopCorner = new Vector2(getX() + 0.9f - getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 leftTopCorner = new Vector2(getX() + 0.05f + getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 rightTopCorner = new Vector2(getX() + 0.95f - getOffset().x, getY() + getHeight() - 0.1f);
 		
 		int x = (int) leftTopCorner.x;
 		int y = (int) leftTopCorner.y;

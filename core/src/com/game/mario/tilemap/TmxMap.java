@@ -16,6 +16,7 @@ import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
+import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.enemy.Koopa;
 import com.game.mario.sprite.tileobject.item.Coin;
@@ -34,7 +35,7 @@ public class TmxMap {
 
 	private List<Block> blocks;
 	
-	private List<AbstractSprite> enemies;
+	private List<AbstractEnemy> enemies;
 	
 	private List<AbstractSprite> items;
 	
@@ -58,7 +59,7 @@ public class TmxMap {
 
 	private void initMapObjects() {
 		
-		enemies = new ArrayList<AbstractSprite>();
+		enemies = new ArrayList<AbstractEnemy>();
 		
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
@@ -148,11 +149,11 @@ public class TmxMap {
 
 	
 
-	public List<AbstractSprite> getEnemies() {
+	public List<AbstractEnemy> getEnemies() {
 		return enemies;
 	}
 
-	public void setEnemies(List<AbstractSprite> enemies) {
+	public void setEnemies(List<AbstractEnemy> enemies) {
 		this.enemies = enemies;
 	}
 
