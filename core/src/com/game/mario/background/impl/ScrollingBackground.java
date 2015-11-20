@@ -6,10 +6,10 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.util.ResourcesLoader;
 
 public abstract class ScrollingBackground extends Sprite implements IScrollingBackground {
 

@@ -1,14 +1,14 @@
 package com.game.mario.enums.menu;
 
-public enum MainMenuEnum {
+public enum SoundMenuEnum {
 
-	ONE_PLAYER_GAME ("1 PLAYER GAME"),
-	SOUND_OPTIONS ("SOUND OPTIONS");
-	//CREDITS ("CREDITS");
+	MUSIC_VOL ("MUSIC VOLUME"),
+	SOUND_VOL ("SOUND VOLUME"),
+	BACK ("BACK");
 
     private final String name;       
 
-    private MainMenuEnum(String s) {
+    private SoundMenuEnum(String s) {
         name = s;
     }
 

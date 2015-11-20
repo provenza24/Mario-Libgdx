@@ -17,8 +17,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.GameManager;
-import com.game.mario.RectangleUtil;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -26,6 +24,7 @@ import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.ScreenEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
@@ -34,6 +33,7 @@ import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.RectangleUtil;
 
 public class GameScreen implements Screen  {
 	
@@ -335,12 +335,13 @@ public class GameScreen implements Screen  {
 								if (mario.getSizeState()>0) {								
 									mario.setGrowingDown(true);
 									mario.setGrowDownAnimation();
-									ResourcesLoader.SOUND_PIPE.play();
+									SoundManager.getSoundManager().playSound(SoundManager.SOUND_PIPE);									
 								} else {
 									
 									mario.setAlive(false);
 									mario.setDeathAnimation();
-									ResourcesLoader.SOUND_MARIO_DEATH.play();
+									SoundManager.getSoundManager().stopMusic(SoundManager.SOUND_MAIN_THEME);
+									SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);									
 								}
 							}
 						}						
@@ -449,8 +450,8 @@ public class GameScreen implements Screen  {
 			mario.getAcceleration().y = 0.16f;
 			mario.setCanJumpHigher(true);
 			jumpTimerMax = 24 + (int) (mario.getAcceleration().x / 4);
-			Sound soundToPlay = mario.getSizeState()>0 ? ResourcesLoader.SOUND_JUMP_SUPER : ResourcesLoader.SOUND_JUMP_SMALL;
-			soundToPlay.play();
+			Sound soundToPlay = mario.getSizeState()>0 ? SoundManager.SOUND_JUMP_SUPER : SoundManager.SOUND_JUMP_SMALL;
+			SoundManager.getSoundManager().playSound(soundToPlay);			
 		} else if (Gdx.input.isKeyPressed(KEY_UP) && mario.getState() == MarioStateEnum.JUMPING
 				&& mario.canJumpHigher()) {
 			if (mario.getJumpTimer() < jumpTimerMax) { //
@@ -508,8 +509,8 @@ public class GameScreen implements Screen  {
 		renderer.dispose();		
 		shapeRenderer.dispose();		
 		debugFont.dispose();
-		spriteBatch.dispose();				
-		ResourcesLoader.SOUND_MAIN_THEME.stop();
+		spriteBatch.dispose();	
+		SoundManager.getSoundManager().stopMusic(SoundManager.SOUND_MAIN_THEME);		
 	}
 
 }

@@ -5,8 +5,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
+import com.game.mario.util.ResourcesLoader;
 
 public abstract class TransferItem extends AbstractTileObjectSprite {
 

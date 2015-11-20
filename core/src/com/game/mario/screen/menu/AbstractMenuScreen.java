@@ -36,7 +36,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 
 	private BitmapFont font;
 
-	private List<MenuItem> menuItems = new ArrayList<MenuItem>();
+	protected List<MenuItem> menuItems = new ArrayList<MenuItem>();
 	
 	protected Group backgroundGroup;
 	
