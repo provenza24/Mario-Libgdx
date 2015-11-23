@@ -4,11 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.game.mario.GameManager;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.ChangeCellValueAction;
 import com.game.mario.action.ReplaceWallAction;
 import com.game.mario.enums.ItemEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
@@ -46,12 +46,11 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 					} else {
 						item = new Flower(block.getX(), yWallBlock+0.1f);
 					}
-					
-					ResourcesLoader.SOUND_POWERUP_APPEAR.play();
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);					
 				} else if (itemEnum==ItemEnum.COIN) {
 					GameManager.getGameManager().addCoin();
 					item = new EjectedCoin(block.getX(), yWallBlock+1);
-					ResourcesLoader.SOUND_COIN.play();
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);					
 				}
 				tileMap.getItems().add(item);
 				stage.addActor(item);

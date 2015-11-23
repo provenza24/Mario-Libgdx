@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.DeleteItemAction;
 import com.game.mario.sprite.AbstractItem;
+import com.game.mario.util.ResourcesLoader;
 
 public class EjectedCoin extends AbstractItem {
 

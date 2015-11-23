@@ -2,9 +2,9 @@ package com.game.mario.sprite.item;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.sprite.AbstractItem;
+import com.game.mario.util.ResourcesLoader;
 
 public class Flower extends AbstractItem {
 

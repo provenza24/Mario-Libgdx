@@ -1,12 +1,14 @@
 package com.game.mario.sprite.tileobject.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.sound.SoundManager;
+import com.game.mario.util.ResourcesLoader;
 
 public class Goomba extends AbstractEnemy {
 
@@ -52,12 +54,15 @@ public class Goomba extends AbstractEnemy {
 		addAction(ActionFacade.createMoveAction(getX(), getY(), 1f));
 	}
 	
-	public void bump() {		
-		super.bump();
-		collidableWithTilemap = false;
-		this.currentAnimation = bumpAnimation;
-		acceleration.x = acceleration.x>0 ? 3 : -3;
-		acceleration.y = 0.1f;
+	public void bump() {
+		if (!isBumped()) {
+			super.bump();			
+			collidableWithTilemap = false;
+			this.currentAnimation = bumpAnimation;
+			acceleration.x = acceleration.x>0 ? 3 : -3;
+			acceleration.y = 0.1f;
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+		} 		
 	}
 
 	@Override

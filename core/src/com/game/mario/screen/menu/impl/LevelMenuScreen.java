@@ -3,11 +3,12 @@ package com.game.mario.screen.menu.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.game.mario.GameManager;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.enums.menu.LevelMenuEnum;
 import com.game.mario.screen.menu.AbstractMenuScreen;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.menu.MushroomSelector;
+import com.game.mario.util.ResourcesLoader;
 
 public class LevelMenuScreen extends AbstractMenuScreen {
 
@@ -23,7 +24,7 @@ public class LevelMenuScreen extends AbstractMenuScreen {
 		super.handleInput();
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			ResourcesLoader.SOUND_MAIN_THEME.play(GameManager.getGameManager().getMusicVolume());
+			SoundManager.getSoundManager().playMusic(SoundManager.SOUND_MAIN_THEME);			
 			GameManager.getGameManager().changeScreen(ScreenEnum.GAME);							
 		}
 	}

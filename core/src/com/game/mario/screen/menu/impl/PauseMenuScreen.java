@@ -3,11 +3,11 @@ package com.game.mario.screen.menu.impl;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.game.mario.GameManager;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.enums.menu.PauseMenuEnum;
 import com.game.mario.screen.menu.AbstractMenuScreen;
 import com.game.mario.sprite.menu.MushroomSelector;
+import com.game.mario.util.ResourcesLoader;
 
 public class PauseMenuScreen extends AbstractMenuScreen {
 
@@ -26,6 +26,7 @@ public class PauseMenuScreen extends AbstractMenuScreen {
 			if (getSelectedItemEnum()==PauseMenuEnum.CONTINUE) {				
 				GameManager.getGameManager().changeScreen(ScreenEnum.GAME);
 			} if (getSelectedItemEnum()==PauseMenuEnum.QUIT) {
+				resetCursorPosition();
 				GameManager.getGameManager().startNewGame();							
 			}
 		}

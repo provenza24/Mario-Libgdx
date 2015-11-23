@@ -36,7 +36,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 
 	private BitmapFont font;
 
-	private List<MenuItem> menuItems = new ArrayList<MenuItem>();
+	protected List<MenuItem> menuItems = new ArrayList<MenuItem>();
 	
 	protected Group backgroundGroup;
 	
@@ -72,7 +72,13 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		stage.addActor(foregroundGroup);		
 	}
 	
-	public void setFontColor(float r, float g, float b) {
+	protected void resetCursorPosition() {
+		currentItem = 0;
+		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
+				verticalMenuStart - selector.getHeight() + 2);
+	}
+	
+	protected void setFontColor(float r, float g, float b) {
 		font.setColor(r, g, b, 1);
 	}
 
@@ -94,7 +100,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		horizontalMenuStart = (Gdx.graphics.getWidth() - letterMaxWidth) / 2;		
 	}
 
-	public void setOffset(float xNewOffset, float yNewOffset) {
+	protected void setOffset(float xNewOffset, float yNewOffset) {
 		for (MenuItem menuItem : menuItems) {
 			menuItem.getPosition().x = menuItem.getPosition().x - offset.x + xNewOffset;
 			menuItem.getPosition().y = menuItem.getPosition().y - offset.y + yNewOffset;
@@ -127,7 +133,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 				verticalMenuStart - selector.getHeight() + 2);
 	}
 
-	public abstract void addBackgroundElements();
+	protected abstract void addBackgroundElements();
 	
 	@Override
 	public void render(float delta) {
@@ -167,19 +173,19 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		}
 	}
 
-	public int getSelectedItemIndex() {
+	protected int getSelectedItemIndex() {
 		return currentItem;
 	}
 
-	public String getSelectedItemName() {
+	protected String getSelectedItemName() {
 		return menuItems.get(currentItem).getName();
 	}
 	
-	public Enum<?> getSelectedItemEnum() {
+	protected Enum<?> getSelectedItemEnum() {
 		return menuItems.get(currentItem).getMenuEnum();
 	}
 
-	public BitmapFont getFont() {
+	protected BitmapFont getFont() {
 		return font;
 	}
 

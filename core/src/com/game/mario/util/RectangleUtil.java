@@ -1,4 +1,4 @@
-package com.game.mario;
+package com.game.mario.util;
 
 import com.badlogic.gdx.math.Rectangle;
 

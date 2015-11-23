@@ -5,12 +5,13 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.EnemyStateEnum;
 import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.ResourcesLoader;
 
 public class Koopa extends AbstractEnemy {
 		
@@ -78,7 +79,7 @@ public class Koopa extends AbstractEnemy {
 				setSize(1 - offset.x * 2, 0.875f);	
 				bounds.set(getX(), getY(), getWidth(), getHeight());				
 				mario.getAcceleration().y = 0.15f;
-				ResourcesLoader.SOUND_KICK.play();	
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
 				acceleration.x = 0;
 				state = EnemyStateEnum.NO_MOVE;
 				currentAnimation = killedAnimation;
@@ -94,7 +95,7 @@ public class Koopa extends AbstractEnemy {
 			isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
 			if (isEnemyHit) {
 				mario.getAcceleration().y = 0.15f;
-				ResourcesLoader.SOUND_KICK.play();	
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 				acceleration.x = 0;
 				state = EnemyStateEnum.NO_MOVE;
 				noMoveTime = 0;

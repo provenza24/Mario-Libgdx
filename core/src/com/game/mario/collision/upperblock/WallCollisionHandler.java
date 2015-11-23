@@ -3,10 +3,10 @@ package com.game.mario.collision.upperblock;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.ChangeCellValueAction;
 import com.game.mario.action.DeleteBlocSpriteAction;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.item.wallpiece.AbstractWallPiece;
 import com.game.mario.sprite.item.wallpiece.BottomLeftWallPiece;
@@ -58,7 +58,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		tileMap.getItems().add(bottomLeftPiece);
 		stage.addActor(bottomLeftPiece);
 		
-		ResourcesLoader.SOUND_BREAK_BLOCK.play();
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BREAK_BLOCK);		
 	}
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
@@ -79,7 +79,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		sequenceAction.addAction(deleteWallAction);
 		wallBlock.addAction(sequenceAction);
 		
-		ResourcesLoader.SOUND_BUMP.play();
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BUMP);		
 	}
 	
 }

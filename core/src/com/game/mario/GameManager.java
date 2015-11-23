@@ -12,6 +12,8 @@ import com.game.mario.screen.GameScreen;
 import com.game.mario.screen.menu.impl.LevelMenuScreen;
 import com.game.mario.screen.menu.impl.MainMenuScreen;
 import com.game.mario.screen.menu.impl.PauseMenuScreen;
+import com.game.mario.screen.menu.impl.SoundMenuScreen;
+import com.game.mario.sound.SoundManager;
 
 public class GameManager extends Game {
 
@@ -27,10 +29,6 @@ public class GameManager extends Game {
 
 	private static int currentLevel;
 	
-	private float soundFxVolume;
-	
-	private float musicVolume;
-
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
 
@@ -39,8 +37,6 @@ public class GameManager extends Game {
 	@Override
 	public void create() {
 		
-		soundFxVolume = 1f;
-		musicVolume = 1f;
 		
 		initState();
 		
@@ -53,8 +49,9 @@ public class GameManager extends Game {
 		SCREENS.put(ScreenEnum.MAIN_MENU, new MainMenuScreen());
 		SCREENS.put(ScreenEnum.PAUSE_MENU, new PauseMenuScreen());
 		SCREENS.put(ScreenEnum.LEVEL_MENU, new LevelMenuScreen());
+		SCREENS.put(ScreenEnum.SOUND_MENU, new SoundMenuScreen());
 		
-		ResourcesLoader.SOUND_TITLE_THEME.play(musicVolume);		
+		SoundManager.getSoundManager().playMusic(SoundManager.SOUND_TITLE_THEME);		
 		setScreen(SCREENS.get(ScreenEnum.MAIN_MENU));
 	}
 	
@@ -83,7 +80,7 @@ public class GameManager extends Game {
 		gameScreen.dispose();
 		gameScreen = new GameScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
-		ResourcesLoader.SOUND_TITLE_THEME.play(musicVolume);
+		SoundManager.getSoundManager().playMusic(SoundManager.SOUND_TITLE_THEME);		
 		changeScreen(ScreenEnum.MAIN_MENU);
 	}
 	
@@ -150,21 +147,4 @@ public class GameManager extends Game {
 	public int getCurrentLevel() {
 		return currentLevel;
 	}
-
-	public float getSoundFxVolume() {
-		return soundFxVolume;
-	}
-
-	public void setSoundFxVolume(float soundFxVolume) {
-		this.soundFxVolume = soundFxVolume;
-	}
-
-	public float getMusicVolume() {
-		return musicVolume;
-	}
-
-	public void setMusicVolume(float musicVolume) {
-		this.musicVolume = musicVolume;
-	}
-
 }

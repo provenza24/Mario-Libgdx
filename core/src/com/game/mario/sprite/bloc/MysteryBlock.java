@@ -5,9 +5,9 @@ import java.util.Map;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.ResourcesLoader;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
+import com.game.mario.util.ResourcesLoader;
 
 public class MysteryBlock extends Block {
 		
