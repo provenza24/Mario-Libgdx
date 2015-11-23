@@ -57,9 +57,8 @@ public class SoundMenuScreen extends AbstractMenuScreen {
 	}
 
 	@Override
-	public void addBackgroundElements() {
+	protected void addBackgroundElements() {
 		// TODO Auto-generated method stub
 		
 	}
-
 }

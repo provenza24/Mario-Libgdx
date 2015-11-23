@@ -335,11 +335,12 @@ public class GameScreen implements Screen  {
 								if (mario.getSizeState()>0) {								
 									mario.setGrowingDown(true);
 									mario.setGrowDownAnimation();
-									SoundManager.getSoundManager().playSound(SoundManager.SOUND_PIPE);											
-								} else {									
+									SoundManager.getSoundManager().playSound(SoundManager.SOUND_PIPE);									
+								} else {
 									mario.setAlive(false);
 									mario.setDeathAnimation();
-									SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);											
+									SoundManager.getSoundManager().stopMusic(SoundManager.SOUND_MAIN_THEME);
+									SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);									
 								}
 							}
 						}						

@@ -147,4 +147,5 @@ public class GameManager extends Game {
 	public int getCurrentLevel() {
 		return currentLevel;
 	}
+
 }

@@ -58,7 +58,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		tileMap.getItems().add(bottomLeftPiece);
 		stage.addActor(bottomLeftPiece);
 		
-		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BREAK_BLOCK);		
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BREAK_BLOCK);
 	}
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
@@ -77,9 +77,8 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		sequenceAction.addAction(changeCellValueAction2);
 		sequenceAction.addAction(moveUpAction1);
 		sequenceAction.addAction(deleteWallAction);
-		wallBlock.addAction(sequenceAction);
-		
-		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BUMP);		
+		wallBlock.addAction(sequenceAction);		
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BUMP);
 	}
 	
 }

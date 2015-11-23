@@ -4,7 +4,6 @@ public enum MainMenuEnum {
 
 	ONE_PLAYER_GAME ("1 PLAYER GAME"),
 	SOUND_OPTIONS ("SOUND OPTIONS");
-	//OPTIONS ("OPTIONS"),
 	//CREDITS ("CREDITS");
 
     private final String name;       

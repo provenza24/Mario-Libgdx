@@ -46,11 +46,11 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 					} else {
 						item = new Flower(block.getX(), yWallBlock+0.1f);
 					}
-					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);					
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
 				} else if (itemEnum==ItemEnum.COIN) {
 					GameManager.getGameManager().addCoin();
 					item = new EjectedCoin(block.getX(), yWallBlock+1);
-					SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);					
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);						
 				}
 				tileMap.getItems().add(item);
 				stage.addActor(item);
