@@ -1,5 +1,8 @@
 package com.game.mario.sprite.tileobject.mario;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,6 +14,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -28,7 +32,7 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	private static final float ACCELERATION_COEF_SPEEDUP = 0.2f;
 
-	Animation animations[][];   
+	private Animation animations[][];   
 	
 	private Animation marioRunRightAnimation;
 
@@ -72,6 +76,8 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	private boolean growingDown;
 	
+	private List<AbstractSprite> fireballs;
+	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
 		
@@ -95,6 +101,7 @@ public class Mario extends AbstractTileObjectSprite {
 		invincibleDuration = 0;
 		alive = true;
 		deathNoMoveDuration = 0;
+		fireballs = new ArrayList<AbstractSprite>();
 	}
 
 	public void changeSizeState(int i) {
@@ -518,6 +525,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public boolean isGrowing() {		
 		return isGrowingDown() || isGrowingUp();
+	}
+
+	public List<AbstractSprite> getFireballs() {
+		return fireballs;
+	}
+
+	public void setFireballs(List<AbstractSprite> fireballs) {
+		this.fireballs = fireballs;
 	}
 
 }

@@ -28,6 +28,7 @@ import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
+import com.game.mario.sprite.item.Fireball;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
@@ -216,6 +217,10 @@ public class GameScreen implements Screen  {
 		handleEnemies(delta);
 		//handleItems
 		handleItems(delta);
+		
+		// Fireballs
+		handleFireballs(delta);
+		
 		// Render Mario		
 		mario.render(renderer.getBatch());
 		// Render debug mode (press F1 to display/hide debug)
@@ -291,6 +296,10 @@ public class GameScreen implements Screen  {
 				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
+			for (AbstractSprite sprite : mario.getFireballs()) {
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+						sprite.getHeight());
+			}
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 			batch.end();
@@ -311,6 +320,14 @@ public class GameScreen implements Screen  {
 			} else if (item.isVisible()) {
 				item.render(renderer.getBatch());
 			}
+		}
+	}
+	
+	private void handleFireballs(float deltaTime) {
+		List<AbstractSprite> fireballs = mario.getFireballs();
+		for (AbstractSprite abstractSprite : fireballs) {
+			abstractSprite.update(tileMap, camera.getCamera(), deltaTime);
+			abstractSprite.render(renderer.getBatch());
 		}
 	}
 	
@@ -402,6 +419,10 @@ public class GameScreen implements Screen  {
 
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debugShowBounds = !debugShowBounds;
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
+			mario.getFireballs().add(new Fireball(mario.getX()+mario.getWidth(), mario.getY()+mario.getHeight()));
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.P)) {

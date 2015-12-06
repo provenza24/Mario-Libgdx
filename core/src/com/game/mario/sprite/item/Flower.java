@@ -7,7 +7,7 @@ import com.game.mario.sprite.AbstractItem;
 import com.game.mario.util.ResourcesLoader;
 
 public class Flower extends AbstractItem {
-
+	
 	public Flower(float x, float y) {
 		super(x, y);				
 	}

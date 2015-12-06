@@ -34,6 +34,8 @@ public class ResourcesLoader {
 	
 	public static final Texture TRANSFER_ITEM = new Texture(Gdx.files.internal("sprites/transfer.png"));	
 	
+	public static final Texture FIREBALL = new Texture(Gdx.files.internal("sprites/fireball.png"));
+	
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	
 	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
