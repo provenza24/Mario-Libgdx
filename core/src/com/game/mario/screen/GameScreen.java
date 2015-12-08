@@ -78,7 +78,7 @@ public class GameScreen implements Screen  {
 	
 	private boolean waitBeforeDeathAnimating = true;
 		
-	private float growingDuration =0;
+	private float growingDuration = 0;
 		
 	public GameScreen() {
 		
@@ -269,6 +269,12 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);
 			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
 			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size(), 10, 260);
+			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), 10, 240);
+			int i=0;
+			for (AbstractSprite sprite : mario.getFireballs()) {
+				debugFont.draw(spriteBatch, "x"+i+":" + String.format("%.1f",sprite.getX()), 10, 200 + i*20);
+				i++;
+			}
 			spriteBatch.end();
 		}
 
@@ -325,9 +331,14 @@ public class GameScreen implements Screen  {
 	
 	private void handleFireballs(float deltaTime) {
 		List<AbstractSprite> fireballs = mario.getFireballs();
-		for (AbstractSprite abstractSprite : fireballs) {
-			abstractSprite.update(tileMap, camera.getCamera(), deltaTime);
-			abstractSprite.render(renderer.getBatch());
+		for (int i = 0; i < fireballs.size(); i++) {
+			AbstractSprite abstractSprite = fireballs.get(i); 
+			abstractSprite.update(tileMap, camera.getCamera(), deltaTime);			
+			if (abstractSprite.isDeletable()) {				
+				fireballs.remove(i--);				
+			} else if (abstractSprite.isVisible()) {
+				abstractSprite.render(renderer.getBatch());
+			}
 		}
 	}
 	
@@ -342,7 +353,15 @@ public class GameScreen implements Screen  {
 				for (int j = i + 1; j < enemies.size(); j++) {
 					// Check collision with other enemies
 					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
-				}								
+				}	
+				for (int k = 0; k < mario.getFireballs().size(); k++) {
+					AbstractSprite fireball = mario.getFireballs().get(k);
+					boolean collideFireball = fireball.getBounds().overlaps(enemy.getBounds());
+					if (collideFireball) {
+						enemy.killByFireball(fireball);
+						mario.getFireballs().remove(k--);
+					}
+				}
 				if (!enemy.isKilled()) {					
 					boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
 					if (collideMario) {
@@ -406,7 +425,7 @@ public class GameScreen implements Screen  {
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.changeSizeState(mario.getSizeState()==0 ? 1 : 0);
+			mario.changeSizeState(mario.getSizeState()==0 ? 1 : mario.getSizeState()==1 ? 2 : 0);
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
@@ -421,15 +440,18 @@ public class GameScreen implements Screen  {
 			debugShowBounds = !debugShowBounds;
 		}
 		
-		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
-			mario.getFireballs().add(new Fireball(mario.getX()+mario.getWidth(), mario.getY()+mario.getHeight()));
-		}
-		
 		if (Gdx.input.isKeyJustPressed(Keys.P)) {
 			this.pause();
 		}
 		
-
+		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {
+			List<AbstractSprite> fireballs = mario.getFireballs();
+			if (fireballs.size()==0 && mario.getSizeState()==2) {
+				// A fireball can be launched only if mario has a flower
+				fireballs.add(new Fireball(mario));
+			}			
+		}		
+		
 		if (Gdx.input.isKeyPressed(KEY_RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
 				// Sliding

@@ -9,12 +9,13 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.EnemyStateEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
 public class Koopa extends AbstractEnemy {
-		
+			
 	private Animation walkLeftAnimation;
 	
 	private Animation walkRightAnimation;
@@ -108,8 +109,9 @@ public class Koopa extends AbstractEnemy {
 	public void kill() {
 	}
 	
+	@Override
 	public void updateAnimation(float delta) {		
-		if (state==EnemyStateEnum.WALKING) {
+		if (!bumped && state==EnemyStateEnum.WALKING) {
 			if (acceleration.x>0 && currentAnimation!=walkRightAnimation) {
 				currentAnimation = walkRightAnimation;
 				
@@ -129,7 +131,7 @@ public class Koopa extends AbstractEnemy {
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 		// TODO Auto-generated method stub
 		super.update(tileMap, camera, deltaTime);
-		if (state==EnemyStateEnum.NO_MOVE) {									
+		if (!bumped && state==EnemyStateEnum.NO_MOVE) {									
 			noMoveTime = noMoveTime + deltaTime;
 			if (noMoveTime<5) {
 				// nothing to do
@@ -147,6 +149,18 @@ public class Koopa extends AbstractEnemy {
 		if (isAlive() && camera.position.x < tileMap.getFlag().getX()) {
 			deletable = camera.position.x+8<getX();
 		} 
+	}
+	
+	@Override
+	public void killByFireball(AbstractSprite fireball) {		
+		if (!isBumped()) {
+			super.bump();			
+			collidableWithTilemap = false;
+			this.currentAnimation = killedAnimation;
+			acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
+			acceleration.y = 0.1f;
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+		} 	
 	}
 	
 }

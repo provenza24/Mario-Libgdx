@@ -19,9 +19,9 @@ public class Goomba extends AbstractEnemy {
 		
 		super(mapObject);								
 		offset.x = 0.2f;
-		setSize(1-offset.x*2, 1);		
+		setSize(0.6f, 1);		
 		currentAnimation = walkAnimation;				
-		acceleration.x = -1.9f;
+		acceleration.x = -1.9f; 
 		gravitating = true;		
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}
@@ -62,7 +62,7 @@ public class Goomba extends AbstractEnemy {
 			acceleration.y = 0.1f;
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 		} 		
-	}
+	}		
 
 	@Override
 	public EnemyTypeEnum getEnemyType() {		
