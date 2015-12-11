@@ -59,7 +59,7 @@ public class Goomba extends AbstractEnemy {
 			collidableWithTilemap = false;
 			this.currentAnimation = bumpAnimation;
 			acceleration.x = acceleration.x>0 ? 3 : -3;
-			acceleration.y = 0.1f;
+			acceleration.y = 0.15f;
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 		} 		
 	}		

@@ -21,7 +21,8 @@ public class CollisionHandler {
 	private static final CollisionHandler collisionHandler = new CollisionHandler();
 
 	public void collideEnemies(AbstractEnemy enemy1, AbstractEnemy enemy2) {
-		if (enemy1.getBounds().overlaps(enemy2.getBounds())) {
+		if (enemy1.getBounds().overlaps(enemy2.getBounds()) 
+				&& !enemy1.isBumped() && !enemy2.isBumped()) {
 			if (enemy1.getEnemyType()==EnemyTypeEnum.KOOPA && enemy1.getEnemyState()==EnemyStateEnum.SLIDING) {
 				enemy2.bump();				
 			} else if (enemy2.getEnemyType()==EnemyTypeEnum.KOOPA && enemy2.getEnemyState()==EnemyStateEnum.SLIDING) {

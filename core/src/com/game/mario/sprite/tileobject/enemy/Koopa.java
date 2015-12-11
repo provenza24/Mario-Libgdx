@@ -24,6 +24,8 @@ public class Koopa extends AbstractEnemy {
 	
 	private Animation wakeUpAnimation;
 	
+	private Animation bumpAnimation;
+	
 	private float noMoveTime;
 	
 	public Koopa(MapObject mapObject) {
@@ -42,7 +44,7 @@ public class Koopa extends AbstractEnemy {
 	public void initializeAnimations() {
 		spriteSheet = ResourcesLoader.KOOPA;
 
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 7,
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 8,
 				spriteSheet.getHeight() / 1);
 
 		TextureRegion[] walkFrames = new TextureRegion[2];
@@ -69,6 +71,10 @@ public class Koopa extends AbstractEnemy {
 		wakeUpFrames[0] = tmp[0][2];		
 		wakeUpFrames[1] = tmp[0][4];
 		wakeUpAnimation = new Animation(0.1f, wakeUpFrames);
+		
+		TextureRegion[] bumpedFrames = new TextureRegion[1];
+		bumpedFrames[0] = tmp[0][7];				
+		bumpAnimation = new Animation(0, bumpedFrames);
 		
 	}
 
@@ -127,9 +133,9 @@ public class Koopa extends AbstractEnemy {
 	public EnemyTypeEnum getEnemyType() {		
 		return EnemyTypeEnum.KOOPA;
 	}
+	
 	@Override
-	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
-		// TODO Auto-generated method stub
+	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
 		super.update(tileMap, camera, deltaTime);
 		if (!bumped && state==EnemyStateEnum.NO_MOVE) {									
 			noMoveTime = noMoveTime + deltaTime;
@@ -156,9 +162,9 @@ public class Koopa extends AbstractEnemy {
 		if (!isBumped()) {
 			super.bump();			
 			collidableWithTilemap = false;
-			this.currentAnimation = killedAnimation;
+			this.currentAnimation = bumpAnimation;
 			acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
-			acceleration.y = 0.1f;
+			acceleration.y = 0.15f;
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 		} 	
 	}

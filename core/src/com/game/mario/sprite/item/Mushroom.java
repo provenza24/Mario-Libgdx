@@ -10,7 +10,7 @@ public class Mushroom extends AbstractItem {
 
 	public Mushroom(float x, float y) {
 		super(x, y);		
-		acceleration.x = -2.5f;		
+		acceleration.x = 3f;		
 	}
 
 	@Override
