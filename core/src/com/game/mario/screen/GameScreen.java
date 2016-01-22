@@ -149,6 +149,8 @@ public class GameScreen implements Screen  {
 
 	private void handleMarioDeath(float delta) {
 		
+		GameManager.getGameManager().setSizeState(0);
+		
 		if (!waitBeforeDeathAnimating) {
 			mario.move(delta);
 		}					
@@ -232,7 +234,8 @@ public class GameScreen implements Screen  {
 		renderStatusBar();
 				
 		if (mario.getX()>=tileMap.getFlagTargetPosition() 
-				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
+				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {
+			GameManager.getGameManager().setSizeState(mario.getSizeState());
 			GameManager.getGameManager().nextLevel();
 		}	
 	}

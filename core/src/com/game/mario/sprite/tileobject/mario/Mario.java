@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.GameManager;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sprite.AbstractSprite;
@@ -95,7 +96,7 @@ public class Mario extends AbstractTileObjectSprite {
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
-		sizeState = 0;
+		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);		
 		invincible = false;
 		invincibleDuration = 0;
