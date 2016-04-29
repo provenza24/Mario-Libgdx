@@ -14,9 +14,11 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.GameManager;
+import com.game.mario.action.ActionFacade;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -37,6 +39,8 @@ import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
 
 public class GameScreen implements Screen  {
+	
+	private boolean levelFinished = false;
 	
 	private boolean keyUpReleased = true;
 	
@@ -81,6 +85,10 @@ public class GameScreen implements Screen  {
 	private boolean waitBeforeDeathAnimating = true;
 		
 	private float growingDuration = 0;
+	
+	private float timer = 0;
+	
+	private int endLevelState = 0;
 		
 	public GameScreen() {
 		
@@ -117,20 +125,33 @@ public class GameScreen implements Screen  {
 		MarioCoins marioCoins= new MarioCoins();
 		marioCoins.setPosition(100, 460 - marioCoins.getHeight()/2);
 		stage.addActor(marioLifes);
-		stage.addActor(marioCoins);				
+		stage.addActor(marioCoins);
+		
+		levelFinished = false;			
+		
+		/*mario.setX(180);
+		mario.setY(2);
+		camera.setCameraOffset(2f);
+		camera.getCamera().position.x = 186;						
+		camera.getCamera().update();*/
+		
 	}
 		
 	@Override
-	public void render(float delta) {				
-		if (mario.isAlive()) {
-			if (mario.isGrowing()) {				
-				handleGrowAnimation(delta);
-			} else {
-				handleMarioAlive(delta);
-			}						
+	public void render(float delta) {
+		if (levelFinished) {
+			handleEndLevel(delta);
 		} else {
-			handleMarioDeath(delta);			
-		}				
+			if (mario.isAlive()) {
+				if (mario.isGrowing()) {				
+					handleGrowAnimation(delta);
+				} else {
+					handleMarioAlive(delta);
+				}						
+			} else {
+				handleMarioDeath(delta);			
+			}		
+		}
 	}
 
 	private void handleGrowAnimation(float delta) {
@@ -168,6 +189,60 @@ public class GameScreen implements Screen  {
 		}
 				
 	}
+	
+	private void handleEndLevel(float delta) {
+				
+		timer += delta;
+		
+		if (endLevelState==0) {			
+			mario.setPosition(mario.getX()-0.6f, mario.getY());
+			mario.setCurrentAnimation(mario.getMarioFlagRightAnimation());
+			mario.setAcceleration(new Vector2());
+			mario.setGravitating(false);
+			endLevelState = 1;
+			timer = 0;
+		} else if (endLevelState==1 && timer>1) {
+			timer = 0;
+			mario.setPosition(mario.getX()+0.85f, mario.getY());
+			mario.setCurrentAnimation(mario.getMarioFlagLeftAnimation());
+			mario.setAcceleration(new Vector2());
+			mario.setGravitating(true);
+			endLevelState = 2;			
+			tileMap.getFlag().addAction(ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY()-8.5f, 1f));
+		} else if (endLevelState==2 && mario.getMapCollisionEvent().isCollidingBottom() && timer >1) {
+			timer = 0;
+			endLevelState = 3;
+			mario.setPosition(mario.getX()+1f, mario.getY());
+			mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
+			mario.setAcceleration(new Vector2(2f,0));
+		}		
+		
+		if (endLevelState==3) {
+			if (mario.getX() > tileMap.getFlagTargetPosition()+6.5f) {
+				mario.setAcceleration(new Vector2());
+				endLevelState=4;
+				timer = 0;
+				mario.setCurrentAnimation(mario.getMarioVictoryAnimation());
+			} else {
+				camera.moveCamera(mario);
+				// Move scrolling background
+				if (Math.floor(camera.getCameraOffset()) == 8) {
+					scrollingBackground.update();
+				}
+				scrollingBackground.render();
+			}
+		}
+		
+		if (endLevelState==4 && timer>3) {
+			GameManager.getGameManager().setSizeState(mario.getSizeState());
+			GameManager.getGameManager().nextLevel();
+		} else {
+			mario.move(delta);
+			mario.collideWithTilemap(tileMap);
+			mario.updateCinematicAnimation(delta);
+			renderCinematicScene(delta);
+		}		
+	}
 
 	private void renderCinematicScene(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -183,6 +258,7 @@ public class GameScreen implements Screen  {
 		}						
 		for (AbstractSprite item : tileMap.getItems()) {
 			if (item.isVisible()) {
+				item.update(tileMap, camera.getCamera(), delta);
 				item.render(renderer.getBatch());
 			}				
 		}
@@ -237,8 +313,9 @@ public class GameScreen implements Screen  {
 				
 		if (mario.getX()>=tileMap.getFlagTargetPosition() 
 				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {
-			GameManager.getGameManager().setSizeState(mario.getSizeState());
-			GameManager.getGameManager().nextLevel();
+			/*GameManager.getGameManager().setSizeState(mario.getSizeState());
+			GameManager.getGameManager().nextLevel();*/
+			levelFinished = true;
 		}	
 	}
 

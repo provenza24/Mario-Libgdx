@@ -56,6 +56,12 @@ public class Mario extends AbstractTileObjectSprite {
 	private Animation marioGrowUpRightAnimation;
 	
 	private Animation marioGrowUpLeftAnimation;
+	
+	private Animation marioFlagRightAnimation;
+	
+	private Animation marioFlagLeftAnimation;
+	
+	private Animation marioVictoryAnimation;
 
 	private MarioStateEnum state;
 
@@ -122,6 +128,9 @@ public class Mario extends AbstractTileObjectSprite {
 		marioJumpRightAnimation = animations[i][4];
 		marioJumpLeftAnimation = animations[i][5];
 		marioDeathAnimation = animations[i][6];
+		marioFlagRightAnimation = animations[i][7];
+		marioFlagLeftAnimation = animations[i][8];
+		marioVictoryAnimation = animations[i][9];
 	}
 	
 	@Override
@@ -195,11 +204,23 @@ public class Mario extends AbstractTileObjectSprite {
 		TextureRegion[] marioDeathFrames = new TextureRegion[1];
 		marioDeathFrames[0] = tmp[0][10];
 		marioDeathAnimation = new Animation(1, marioDeathFrames);
-				  
+		
+		TextureRegion[] marioFlagRightFrames = new TextureRegion[1];
+		marioFlagRightFrames[0] = tmp[0][11];
+		marioFlagRightAnimation = new Animation(1, marioFlagRightFrames);
+			
+		TextureRegion[] marioFlagLeftFrames = new TextureRegion[1];
+		marioFlagLeftFrames[0] = tmp[0][12];
+		marioFlagLeftAnimation = new Animation(1, marioFlagLeftFrames);
+		
+		TextureRegion[] marioVictoryFrames = new TextureRegion[1];
+		marioVictoryFrames[0] = tmp[0][13];
+		marioVictoryAnimation = new Animation(1, marioVictoryFrames);
+		
 		if (animations == null) {
-			 animations = new Animation[3][6] ;
+			 animations = new Animation[3][10] ;
 		}
-		animations[i] = new Animation[7];
+		animations[i] = new Animation[10];
 		animations[i][0] = marioRunRightAnimation; 
 		animations[i][1] = marioRunLeftAnimation;
 		animations[i][2] = marioSlideRightAnimation;
@@ -207,6 +228,9 @@ public class Mario extends AbstractTileObjectSprite {
 		animations[i][4] = marioJumpRightAnimation;
 		animations[i][5] = marioJumpLeftAnimation;
 		animations[i][6] = marioDeathAnimation;
+		animations[i][7] = marioFlagRightAnimation;
+		animations[i][8] = marioFlagLeftAnimation;
+		animations[i][9] = marioVictoryAnimation;
 		
 	}
 	
@@ -333,6 +357,14 @@ public class Mario extends AbstractTileObjectSprite {
 	    bounds.setY(getY());
 	}
 	
+	public Animation getMarioVictoryAnimation() {
+		return marioVictoryAnimation;
+	}
+
+	public void setMarioVictoryAnimation(Animation marioVictoryAnimation) {
+		this.marioVictoryAnimation = marioVictoryAnimation;
+	}
+
 	public void checkVerticalBottomMapCollision(TmxMap tilemap) {
 
 		reinitVerticalMapCollisionEvent();
@@ -461,6 +493,14 @@ public class Mario extends AbstractTileObjectSprite {
 		this.jumpTimer = jumpTimer;
 	}
 
+	public Animation getMarioRunRightAnimation() {
+		return marioRunRightAnimation;
+	}
+
+	public void setMarioRunRightAnimation(Animation marioRunRightAnimation) {
+		this.marioRunRightAnimation = marioRunRightAnimation;
+	}
+
 	public MarioStateEnum getPreviousState() {
 		return previousState;
 	}
@@ -534,6 +574,22 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setFireballs(List<AbstractSprite> fireballs) {
 		this.fireballs = fireballs;
+	}
+
+	public Animation getMarioFlagRightAnimation() {
+		return marioFlagRightAnimation;
+	}
+
+	public void setMarioFlagRightAnimation(Animation marioFlagRightAnimation) {
+		this.marioFlagRightAnimation = marioFlagRightAnimation;
+	}
+
+	public Animation getMarioFlagLeftAnimation() {
+		return marioFlagLeftAnimation;
+	}
+
+	public void setMarioFlagLeftAnimation(Animation marioFlagLeftAnimation) {
+		this.marioFlagLeftAnimation = marioFlagLeftAnimation;
 	}
 
 }
