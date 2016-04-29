@@ -38,6 +38,8 @@ import com.game.mario.util.RectangleUtil;
 
 public class GameScreen implements Screen  {
 	
+	private boolean keyUpReleased = true;
+	
 	private int KEY_UP = Keys.Z;
 	
 	private int KEY_LEFT = Keys.LEFT;
@@ -447,13 +449,16 @@ public class GameScreen implements Screen  {
 			this.pause();
 		}
 		
-		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {
+		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			
 			List<AbstractSprite> fireballs = mario.getFireballs();
-			if (fireballs.size()==0 && mario.getSizeState()==2) {
+			if (fireballs.size()<2 && mario.getSizeState()==2 && keyUpReleased == true) {
 				// A fireball can be launched only if mario has a flower
 				fireballs.add(new Fireball(mario));
-			}			
-		}		
+			}
+			keyUpReleased = false;
+		} else {
+			keyUpReleased = true;
+		}
 		
 		if (Gdx.input.isKeyPressed(KEY_RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
