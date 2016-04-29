@@ -14,11 +14,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.game.mario.GameManager;
-import com.game.mario.action.ActionFacade;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -81,22 +79,19 @@ public class GameScreen implements Screen  {
 	private IScrollingBackground scrollingBackground;
 
 	private Stage stage;
+			
+	private AbstractCinematicSceneHandler levelEndingSceneHandler;
 	
-	private boolean waitBeforeDeathAnimating = true;
-		
-	private float growingDuration = 0;
+	private AbstractCinematicSceneHandler marioDeathSceneHandler;
 	
-	private float timer = 0;
-	
-	private int endLevelState = 0;
+	private AbstractCinematicSceneHandler marioGrowingSceneHandler;
 		
 	public GameScreen() {
 		
 		shapeRenderer = new ShapeRenderer();
 
 		spriteBatch = new SpriteBatch();
-		debugFont = new BitmapFont();
-		// font.setColor(0.5f,0.4f,0,1);
+		debugFont = new BitmapFont();		
 		debugFont.setColor(0, 0, 1, 1);
 		
 		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));		
@@ -128,7 +123,11 @@ public class GameScreen implements Screen  {
 		stage.addActor(marioCoins);
 		
 		levelFinished = false;			
-		
+				
+		levelEndingSceneHandler = new LevelEndingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
+		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
+		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
+				
 		/*mario.setX(180);
 		mario.setY(2);
 		camera.setCameraOffset(2f);
@@ -139,135 +138,22 @@ public class GameScreen implements Screen  {
 		
 	@Override
 	public void render(float delta) {
-		if (levelFinished) {
-			handleEndLevel(delta);
+				
+		if (levelFinished) {			
+			levelEndingSceneHandler.handleScene(delta);
 		} else {
 			if (mario.isAlive()) {
 				if (mario.isGrowing()) {				
-					handleGrowAnimation(delta);
+					marioGrowingSceneHandler.handleScene(delta);					
 				} else {
 					handleMarioAlive(delta);
 				}						
 			} else {
-				handleMarioDeath(delta);			
+				marioDeathSceneHandler.handleScene(delta);				
 			}		
 		}
 	}
-
-	private void handleGrowAnimation(float delta) {
-		growingDuration = growingDuration + delta;
-		mario.updateCinematicAnimation(delta);
-		renderCinematicScene(delta);				
-		if (growingDuration>=1) {
-			growingDuration = 0;					
-			if (mario.isGrowingDown()) {
-				mario.changeSizeState(0);				
-				mario.setGrowingDown(false);
-				mario.setInvincible(true);
-			} else if (mario.isGrowingUp()) {												
-				mario.setGrowingUp(false);
-			}
-		}
-	}
-
-	private void handleMarioDeath(float delta) {
 		
-		GameManager.getGameManager().setSizeState(0);
-		
-		if (!waitBeforeDeathAnimating) {
-			mario.move(delta);
-		}					
-		renderCinematicScene(delta);						
-		if (waitBeforeDeathAnimating) {
-			mario.setDeathNoMoveDuration(mario.getDeathNoMoveDuration()+delta);
-			if (mario.getDeathNoMoveDuration()>=1) {
-				waitBeforeDeathAnimating = false;
-			}			
-		}		
-		if (mario.getY()<-50) {
-			GameManager.getGameManager().restartLevel();
-		}
-				
-	}
-	
-	private void handleEndLevel(float delta) {
-				
-		timer += delta;
-		
-		if (endLevelState==0) {			
-			mario.setPosition(mario.getX()-0.6f, mario.getY());
-			mario.setCurrentAnimation(mario.getMarioFlagRightAnimation());
-			mario.setAcceleration(new Vector2());
-			mario.setGravitating(false);
-			endLevelState = 1;
-			timer = 0;
-		} else if (endLevelState==1 && timer>1) {
-			timer = 0;
-			mario.setPosition(mario.getX()+0.85f, mario.getY());
-			mario.setCurrentAnimation(mario.getMarioFlagLeftAnimation());
-			mario.setAcceleration(new Vector2());
-			mario.setGravitating(true);
-			endLevelState = 2;			
-			tileMap.getFlag().addAction(ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY()-8.5f, 1f));
-		} else if (endLevelState==2 && mario.getMapCollisionEvent().isCollidingBottom() && timer >1) {
-			timer = 0;
-			endLevelState = 3;
-			mario.setPosition(mario.getX()+1f, mario.getY());
-			mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
-			mario.setAcceleration(new Vector2(2f,0));
-		}		
-		
-		if (endLevelState==3) {
-			if (mario.getX() > tileMap.getFlagTargetPosition()+6.5f) {
-				mario.setAcceleration(new Vector2());
-				endLevelState=4;
-				timer = 0;
-				mario.setCurrentAnimation(mario.getMarioVictoryAnimation());
-			} else {
-				camera.moveCamera(mario);
-				// Move scrolling background
-				if (Math.floor(camera.getCameraOffset()) == 8) {
-					scrollingBackground.update();
-				}
-				scrollingBackground.render();
-			}
-		}
-		
-		if (endLevelState==4 && timer>3) {
-			GameManager.getGameManager().setSizeState(mario.getSizeState());
-			GameManager.getGameManager().nextLevel();
-		} else {
-			mario.move(delta);
-			mario.collideWithTilemap(tileMap);
-			mario.updateCinematicAnimation(delta);
-			renderCinematicScene(delta);
-		}		
-	}
-
-	private void renderCinematicScene(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
-		scrollingBackground.render();
-		renderer.setView(camera.getCamera());
-		renderer.render();
-		renderMysteryBlocks(delta);
-		for (AbstractSprite enemy : tileMap.getEnemies()) {
-			if (enemy.isVisible()) {
-				enemy.render(renderer.getBatch());
-			}				
-		}						
-		for (AbstractSprite item : tileMap.getItems()) {
-			if (item.isVisible()) {
-				item.update(tileMap, camera.getCamera(), delta);
-				item.render(renderer.getBatch());
-			}				
-		}
-		renderStatusBar();
-		mario.render(renderer.getBatch());
-		stage.act();
-		stage.draw();
-	}
-
 	private void handleMarioAlive(float delta) {
 		// Listen to keyboard actions and update Mario status
 		handleInput();
@@ -312,9 +198,7 @@ public class GameScreen implements Screen  {
 		renderStatusBar();
 				
 		if (mario.getX()>=tileMap.getFlagTargetPosition() 
-				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {
-			/*GameManager.getGameManager().setSizeState(mario.getSizeState());
-			GameManager.getGameManager().nextLevel();*/
+				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
 			levelFinished = true;
 		}	
 	}
