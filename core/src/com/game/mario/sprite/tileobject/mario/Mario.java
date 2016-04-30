@@ -238,6 +238,10 @@ public class Mario extends AbstractTileObjectSprite {
 		if (this.acceleration.x < (accelerationKeyHold ? ACCELERATION_MAX_SPEEDUP : ACCELERATION_MAX)) {
 			this.acceleration.x = this.acceleration.x + (accelerationKeyHold ? ACCELERATION_COEF_SPEEDUP : ACCELERATION_COEF);
 		}
+		
+		if (accelerationKeyHold==false && this.acceleration.x > ACCELERATION_MAX) {
+			this.acceleration.x = ACCELERATION_MAX;
+		}
 	}
 
 	public void decelerate(float rate) {

@@ -8,7 +8,7 @@ import java.util.Map;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.game.mario.enums.ScreenEnum;
-import com.game.mario.screen.GameScreen;
+import com.game.mario.screen.game.GameScreen;
 import com.game.mario.screen.menu.impl.LevelMenuScreen;
 import com.game.mario.screen.menu.impl.MainMenuScreen;
 import com.game.mario.screen.menu.impl.PauseMenuScreen;

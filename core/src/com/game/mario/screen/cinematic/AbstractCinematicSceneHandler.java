@@ -1,4 +1,4 @@
-package com.game.mario.screen;
+package com.game.mario.screen.cinematic;
 
 import java.util.List;
 

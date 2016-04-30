@@ -1,4 +1,4 @@
-package com.game.mario.screen;
+package com.game.mario.screen.cinematic;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;

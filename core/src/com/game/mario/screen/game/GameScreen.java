@@ -1,4 +1,4 @@
-package com.game.mario.screen;
+package com.game.mario.screen.game;
 
 import java.util.List;
 
@@ -24,6 +24,10 @@ import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.ScreenEnum;
+import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
+import com.game.mario.screen.cinematic.LevelEndingSceneHandler;
+import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
+import com.game.mario.screen.cinematic.MarioGrowingSceneHandler;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
@@ -132,8 +136,7 @@ public class GameScreen implements Screen  {
 		mario.setY(2);
 		camera.setCameraOffset(2f);
 		camera.getCamera().position.x = 186;						
-		camera.getCamera().update();*/
-		
+		camera.getCamera().update();*/		
 	}
 		
 	@Override
