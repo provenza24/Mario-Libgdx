@@ -3,6 +3,7 @@ package com.game.mario.collision;
 import java.util.List;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.item.AbstractItemCollisionHandler;
 import com.game.mario.collision.item.IItemCollisionHandler;
@@ -57,10 +58,10 @@ public class CollisionHandler {
 		}
 	}
 	
-	public void collideMarioWithItem(Mario mario, AbstractSprite item, GameCamera camera) {
+	public void collideMarioWithItem(Mario mario, AbstractSprite item, GameCamera camera, IScrollingBackground scrollingBackground) {
 		IItemCollisionHandler collisionHandler = AbstractItemCollisionHandler.getHandler(item);
 		if (collisionHandler!=null) {			
-			collisionHandler.collide(mario, item, camera);
+			collisionHandler.collide(mario, item, camera, scrollingBackground);
 		}
 	}
 

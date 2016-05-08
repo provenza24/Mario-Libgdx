@@ -28,6 +28,14 @@ public abstract class ScrollingBackground extends Sprite implements IScrollingBa
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, ResourcesLoader.UNDERWORLD);
 	}
 	
+	public void changeImage(BackgroundTypeEnum backgroundTypeEnum) {
+	
+		if (backgroundTypeEnum!=null) {
+			 setRegion(BACKGROUND_IMAGES.get(backgroundTypeEnum));	
+		}
+	}
+		
+	
 	public ScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
 		super(BACKGROUND_IMAGES.get(backgroundType));
 		this.batch = batch;

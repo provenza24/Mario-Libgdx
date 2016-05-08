@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
 
@@ -15,6 +16,8 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 	protected Vector2 transferPosition;
 	
 	protected boolean scrollableCamera;
+	
+	protected BackgroundTypeEnum backgroundTypeEnum;
 
 	public TransferItem(MapObject mapObject) {		
 		super(mapObject);					
@@ -25,7 +28,8 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 		collidableWithTilemap= false;
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		transferPosition = new Vector2(Float.parseFloat((String)mapObject.getProperties().get("xOutgoing"))/32, Float.parseFloat((String)mapObject.getProperties().get("yOutgoing"))/32);		
-		scrollableCamera = ((String)mapObject.getProperties().get("scrollable")).equals("true");
+		scrollableCamera = ((String)mapObject.getProperties().get("scrollable")).equals("true");		
+		backgroundTypeEnum = BackgroundTypeEnum.valueOf(((String)mapObject.getProperties().get("background")).toUpperCase());		
 	}
 			
 	@Override
@@ -61,4 +65,13 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 		this.keyToPress = keyToPress;
 	}
 
+	public BackgroundTypeEnum getBackgroundTypeEnum() {
+		return backgroundTypeEnum;
+	}
+
+	public void setBackgroundTypeEnum(BackgroundTypeEnum backgroundTypeEnum) {
+		this.backgroundTypeEnum = backgroundTypeEnum;
+	}
+	
+	
 }

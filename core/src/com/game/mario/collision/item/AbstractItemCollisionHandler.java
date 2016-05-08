@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.item.Flower;
@@ -35,7 +36,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera) {
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, IScrollingBackground scrollingBackground) {
 		item.setDeletable(true);
 	}
 	

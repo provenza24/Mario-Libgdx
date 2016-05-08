@@ -36,6 +36,7 @@ import com.game.mario.sprite.item.Fireball;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
+import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
@@ -132,11 +133,11 @@ public class GameScreen implements Screen  {
 		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 				
-		/*mario.setX(180);
-		mario.setY(2);
+		mario.setX(160);
+		mario.setY(4);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 186;						
-		camera.getCamera().update();*/		
+		camera.getCamera().position.x = 166;						
+		camera.getCamera().update();		
 	}
 		
 	@Override
@@ -283,12 +284,15 @@ public class GameScreen implements Screen  {
 	
 	private void handleItems(float deltaTime) {
 		List<AbstractSprite> items = tileMap.getItems();
+		if (items.size()>0) {
+			Coin.updateStateTime(deltaTime);
+		}
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
 			item.update(tileMap, camera.getCamera(), deltaTime);
 			boolean collideMario = RectangleUtil.overlaps(mario.getBounds(), item.getBounds());
 			if (collideMario) {
-				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera);				
+				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, scrollingBackground);				
 			}
 			if (item.isDeletable()) {				
 				items.remove(i--);
@@ -388,7 +392,7 @@ public class GameScreen implements Screen  {
 	}
 
 	private void handleInput() {
-
+	
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
 		}
