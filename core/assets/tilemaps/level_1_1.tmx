@@ -142,6 +142,7 @@
   <object id="44" type="coin" gid="412" x="7168" y="192" width="28" height="32"/>
   <object id="46" type="transferRight" gid="409" x="7288" y="402" width="8" height="8">
    <properties>
+   	<property name="background" value="overworld"/>
     <property name="scrollable" value="true"/>
     <property name="xOutgoing" value="5232"/>
     <property name="yOutgoing" value="96"/>

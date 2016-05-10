@@ -133,11 +133,11 @@ public class GameScreen implements Screen  {
 		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 				
-		mario.setX(160);
+		/*mario.setX(160);
 		mario.setY(4);
 		camera.setCameraOffset(2f);
 		camera.getCamera().position.x = 166;						
-		camera.getCamera().update();		
+		camera.getCamera().update();*/		
 	}
 		
 	@Override

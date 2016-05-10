@@ -46,7 +46,7 @@
     <property name="scrollable" value="true"/>
     <property name="xCamera" value="5968"/>
     <property name="xOutgoing" value="5968"/>
-    <property name="yOutgoing" value="128"/>
+    <property name="yOutgoing" value="96"/>
    </properties>
   </object>
   <object id="52" type="goomba" gid="402" x="512" y="448" width="32" height="32">
