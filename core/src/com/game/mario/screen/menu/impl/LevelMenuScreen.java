@@ -11,7 +11,7 @@ import com.game.mario.sprite.menu.MushroomSelector;
 import com.game.mario.util.ResourcesLoader;
 
 public class LevelMenuScreen extends AbstractMenuScreen {
-
+	
 	public LevelMenuScreen() {				
 		super(LevelMenuEnum.class, ResourcesLoader.MENU_FONT,MushroomSelector.class);		
 		setOffset(0, -80);
@@ -24,7 +24,8 @@ public class LevelMenuScreen extends AbstractMenuScreen {
 		super.handleInput();
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-			SoundManager.getSoundManager().playMusic(SoundManager.SOUND_MAIN_THEME);			
+			
+			SoundManager.getSoundManager().playMusic(true);			
 			GameManager.getGameManager().changeScreen(ScreenEnum.GAME);							
 		}
 	}

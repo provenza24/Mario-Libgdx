@@ -1,5 +1,7 @@
 package com.game.mario.screen.cinematic;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,6 +12,7 @@ import com.game.mario.GameManager;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -27,6 +30,11 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 
 	public void handleScene(float delta) {
 
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			endLevelState = 4;
+			timer = 4;
+		}
+		
 		timer += delta;
 
 		if (endLevelState == 0) {
@@ -36,16 +44,20 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			mario.setGravitating(false);
 			endLevelState = 1;
 			timer = 0;
+			SoundManager.getSoundManager().stopMusic();			
 		} else if (endLevelState == 1 && timer > 1) {
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_FLAGPOLE);
 			timer = 0;
 			mario.setPosition(mario.getX() + 0.85f, mario.getY());
 			mario.setCurrentAnimation(mario.getMarioFlagLeftAnimation());
 			mario.setAcceleration(new Vector2());
 			mario.setGravitating(true);
 			endLevelState = 2;
-			tileMap.getFlag().addAction(
-					ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY() - 8.5f, 1f));
+			/*tileMap.getFlag().addAction(ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY() - 8.5f, 1f));*/
+			tileMap.getFlag().setGravitating(true);
+			tileMap.getFlag().setCollidableWithTilemap(true);
 		} else if (endLevelState == 2 && mario.getMapCollisionEvent().isCollidingBottom() && timer > 1) {
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_STAGE_CLEAR);
 			timer = 0;
 			endLevelState = 3;
 			mario.setPosition(mario.getX() + 1f, mario.getY());

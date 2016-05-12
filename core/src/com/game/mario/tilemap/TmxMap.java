@@ -45,13 +45,16 @@ public class TmxMap {
 	
 	private Flag flag;
 	
+	private String musicTheme;
+	
 	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
 		MapProperties properties = tileLayer.getProperties();				
-		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());				
+		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());
+		musicTheme = ((String)properties.get("music")).toUpperCase();		
 		initBlocks(backgroundType);
 		items = new ArrayList<AbstractSprite>();
 		initMapObjects();		
@@ -203,5 +206,13 @@ public class TmxMap {
 	
 	public void dispose() {	
 		map.dispose();							
+	}
+
+	public String getMusicTheme() {
+		return musicTheme;
+	}
+
+	public void setMusicTheme(String musicTheme) {
+		this.musicTheme = musicTheme;
 	}
 }

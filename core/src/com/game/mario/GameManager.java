@@ -51,7 +51,8 @@ public class GameManager extends Game {
 		SCREENS.put(ScreenEnum.LEVEL_MENU, new LevelMenuScreen());
 		SCREENS.put(ScreenEnum.SOUND_MENU, new SoundMenuScreen());
 		
-		SoundManager.getSoundManager().playMusic(SoundManager.SOUND_TITLE_THEME);		
+		SoundManager.getSoundManager().setCurrentMusic(SoundManager.SOUND_TITLE_THEME);		
+		SoundManager.getSoundManager().playMusic(false);		
 		setScreen(SCREENS.get(ScreenEnum.MAIN_MENU));
 	}
 	
@@ -80,7 +81,8 @@ public class GameManager extends Game {
 		gameScreen.dispose();
 		gameScreen = new GameScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
-		SoundManager.getSoundManager().playMusic(SoundManager.SOUND_TITLE_THEME);		
+		SoundManager.getSoundManager().setCurrentMusic(SoundManager.SOUND_TITLE_THEME);
+		SoundManager.getSoundManager().playMusic(false);		
 		changeScreen(ScreenEnum.MAIN_MENU);
 	}
 	

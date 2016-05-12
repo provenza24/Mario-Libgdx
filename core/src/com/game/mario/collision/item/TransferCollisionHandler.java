@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.DirectionEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.item.TransferItem;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -26,7 +27,10 @@ public class TransferCollisionHandler extends AbstractItemCollisionHandler {
 			camera.getCamera().position.x = transferItem.getTransferPosition().x + 6;						
 			camera.getCamera().update();			
 			camera.setScrollable(transferItem.isScrollableCamera());				
-			scrollingBackground.changeImage(transferItem.getBackgroundTypeEnum());			
+			scrollingBackground.changeImage(transferItem.getBackgroundTypeEnum());					
+			SoundManager.getSoundManager().stopMusic();
+			SoundManager.getSoundManager().setCurrentMusic(transferItem.getMusic());
+			SoundManager.getSoundManager().playMusic(false);
  		}
 	}
 

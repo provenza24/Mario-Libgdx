@@ -42,7 +42,7 @@
    <properties>
     <property name="background" value="overworld"/>
     <property name="mapType" value="0"/>
-    <property name="music" value="main-theme"/>
+    <property name="music" value="overworld"/>
     <property name="scrollable" value="true"/>
     <property name="xCamera" value="5968"/>
     <property name="xOutgoing" value="5968"/>

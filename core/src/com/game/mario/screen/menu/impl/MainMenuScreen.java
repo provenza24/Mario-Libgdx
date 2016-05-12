@@ -35,7 +35,7 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		
 		if (Gdx.input.isKeyJustPressed(Keys.ENTER)) {
 			if (getSelectedItemEnum()==MainMenuEnum.ONE_PLAYER_GAME) {	
-				SoundManager.getSoundManager().stopMusic(SoundManager.SOUND_TITLE_THEME);				
+				SoundManager.getSoundManager().stopMusic();				
 				GameManager.getGameManager().changeScreen(ScreenEnum.LEVEL_MENU);				
 			}
 			if (getSelectedItemEnum()==MainMenuEnum.SOUND_OPTIONS) {

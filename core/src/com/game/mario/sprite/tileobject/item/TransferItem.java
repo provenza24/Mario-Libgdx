@@ -1,11 +1,14 @@
 package com.game.mario.sprite.tileobject.item;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.MusicEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
 
@@ -18,6 +21,8 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 	protected boolean scrollableCamera;
 	
 	protected BackgroundTypeEnum backgroundTypeEnum;
+	
+	protected Sound music;
 
 	public TransferItem(MapObject mapObject) {		
 		super(mapObject);					
@@ -30,6 +35,7 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 		transferPosition = new Vector2(Float.parseFloat((String)mapObject.getProperties().get("xOutgoing"))/32, Float.parseFloat((String)mapObject.getProperties().get("yOutgoing"))/32);		
 		scrollableCamera = ((String)mapObject.getProperties().get("scrollable")).equals("true");		
 		backgroundTypeEnum = BackgroundTypeEnum.valueOf(((String)mapObject.getProperties().get("background")).toUpperCase());		
+		music = SoundManager.getSoundManager().getMusicTheme(MusicEnum.valueOf(((String)mapObject.getProperties().get("music")).toUpperCase()));
 	}
 			
 	@Override
@@ -71,6 +77,14 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 
 	public void setBackgroundTypeEnum(BackgroundTypeEnum backgroundTypeEnum) {
 		this.backgroundTypeEnum = backgroundTypeEnum;
+	}
+
+	public Sound getMusic() {
+		return music;
+	}
+
+	public void setMusic(Sound music) {
+		this.music = music;
 	}
 	
 	

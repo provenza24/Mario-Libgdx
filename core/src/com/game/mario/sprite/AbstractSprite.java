@@ -146,7 +146,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	protected void updateBounds() {
 		bounds.setX(getX()+offset.x);
-		bounds.setY(getY()+offset.y);
+		bounds.setY(getY());
 	}
 	
 	protected void applyGravity() {
@@ -209,10 +209,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 		reinitHorizontalMapCollisionEvent();
 
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY() + offset.y);
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() + offset.y);
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + offset.y);
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() + offset.y);
+		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
+		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight());
 
 		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		getMapCollisionEvent().setCollidingLeft(isCollision);
@@ -232,10 +232,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 		reinitVerticalMapCollisionEvent();
 
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY() + offset.y);
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() + offset.y);
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + offset.y);
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() + offset.y);
+		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
+		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight());
 
 		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
 		getMapCollisionEvent().setCollidingBottom(isCollision);

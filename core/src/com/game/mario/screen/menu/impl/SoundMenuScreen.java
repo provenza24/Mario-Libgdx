@@ -43,12 +43,14 @@ public class SoundMenuScreen extends AbstractMenuScreen {
 		
 		if (Gdx.input.isKeyJustPressed(Keys.LEFT)) {
 			if (getSelectedItemEnum()==SoundMenuEnum.SOUND_VOLUME) {
-				SoundManager.getSoundManager().decreaseSoundVolume();				
+				SoundManager.getSoundManager().decreaseSoundVolume();
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 			}
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.RIGHT)) {
 			if (getSelectedItemEnum()==SoundMenuEnum.SOUND_VOLUME) {
 				SoundManager.getSoundManager().increaseSoundVolume();
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 			}
 		}
 		

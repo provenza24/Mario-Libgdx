@@ -23,6 +23,7 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.screen.cinematic.LevelEndingSceneHandler;
@@ -42,7 +43,7 @@ import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
 
 public class GameScreen implements Screen  {
-	
+		
 	private boolean levelFinished = false;
 	
 	private boolean keyUpReleased = true;
@@ -132,11 +133,18 @@ public class GameScreen implements Screen  {
 		levelEndingSceneHandler = new LevelEndingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
-				
-		/*mario.setX(160);
-		mario.setY(4);
+			
+		System.out.println(tileMap.getMusicTheme());
+		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERWORLD.toString())) {
+			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_OVERWORLD_THEME);	
+		} else {
+			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
+		}		
+		
+		/*mario.setX(180);
+		mario.setY(3);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 166;						
+		camera.getCamera().position.x = 186;						
 		camera.getCamera().update();*/		
 	}
 		
@@ -356,7 +364,7 @@ public class GameScreen implements Screen  {
 								} else {
 									mario.setAlive(false);
 									mario.setDeathAnimation();
-									SoundManager.getSoundManager().stopMusic(SoundManager.SOUND_MAIN_THEME);
+									SoundManager.getSoundManager().stopMusic();
 									SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);									
 								}
 							}
@@ -420,10 +428,16 @@ public class GameScreen implements Screen  {
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debugShowBounds = !debugShowBounds;
 		}
-		
+						
 		if (Gdx.input.isKeyJustPressed(Keys.P)) {
-			this.pause();
+			mario.setX(mario.getX()+8);
+			mario.setY(mario.getY()+6);
+			camera.getCamera().position.x = camera.getCamera().position.x+8;				
+			camera.getCamera().update();
 		}
+		
+		
+		
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			
 			List<AbstractSprite> fireballs = mario.getFireballs();
@@ -536,7 +550,7 @@ public class GameScreen implements Screen  {
 		shapeRenderer.dispose();		
 		debugFont.dispose();
 		spriteBatch.dispose();				
-		SoundManager.getSoundManager().stopMusic(SoundManager.SOUND_MAIN_THEME);		
+		SoundManager.getSoundManager().stopMusic();		
 	}
 
 }

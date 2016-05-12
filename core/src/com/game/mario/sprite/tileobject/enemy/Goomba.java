@@ -19,11 +19,12 @@ public class Goomba extends AbstractEnemy {
 		
 		super(mapObject);								
 		offset.x = 0.2f;
-		setSize(1 - 2*offset.x, 1 - 2*offset.y);		
+		offset.y = 0.1f;
+		setSize(1 - 2*offset.x, 1f - offset.y);		
 		currentAnimation = walkAnimation;				
 		acceleration.x = -1.9f; 
 		gravitating = true;		
-		bounds=new Rectangle(getX() + offset.x, getY() + offset.y, getWidth(), getHeight());
+		bounds=new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 	}
 			
 	@Override
