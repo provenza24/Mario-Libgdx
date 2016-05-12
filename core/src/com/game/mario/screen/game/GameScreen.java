@@ -236,9 +236,17 @@ public class GameScreen implements Screen  {
 							+ mario.getMapCollisionEvent().isCollidingTop() + ", bottom="
 							+ mario.getMapCollisionEvent().isCollidingBottom() + ")",
 					10, 320);
-			debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);
-			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size(), 10, 280);
-			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size(), 10, 260);
+			debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);			
+			int alive = 0;
+			for (AbstractEnemy enemy : tileMap.getEnemies()) {
+				alive += enemy.isAlive() ? 1 : 0;
+			}
+			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", 10, 280);
+			alive = 0;
+			for (AbstractSprite item : tileMap.getItems()) {
+				alive += item.isAlive() ? 1 : 0;
+			}
+			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", 10, 260);
 			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), 10, 240);
 			int i=0;
 			for (AbstractSprite sprite : mario.getFireballs()) {

@@ -299,18 +299,72 @@ public class Mario extends AbstractTileObjectSprite {
 			invincible = false;
 			invincibleDuration = 0;
 		}
-	}
+	}	
 	
 	public void checkHorizontalMapCollision(TmxMap tilemap) {
-		super.checkHorizontalMapCollision(tilemap);
+
+		reinitHorizontalMapCollisionEvent();
+
+		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
+		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() - 0.1f);
+
+		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
+		getMapCollisionEvent().setCollidingLeft(isCollision);
+
+		isCollision = tilemap.isCollisioningTileAt((int) leftTopCorner.x, (int) leftTopCorner.y);
+		getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
+
+		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
+		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+
+		isCollision = tilemap.isCollisioningTileAt((int) rightTopCorner.x, (int) rightTopCorner.y);
+		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+
 		if (sizeState>0) {
 			Vector2 rightMiddle = new Vector2(getX() + 0.95f - getOffset().x, getY() + getHeight()/2 - 0.1f);
-			boolean isCollision = tilemap.isCollisioningTileAt((int) rightMiddle.x, (int) rightMiddle.y);
+			isCollision = tilemap.isCollisioningTileAt((int) rightMiddle.x, (int) rightMiddle.y);
 			getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
 			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight()/2 - 0.1f);
 			isCollision = tilemap.isCollisioningTileAt((int) leftMiddle.x, (int) leftMiddle.y);
 			getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
 		}		
+		
+	}
+
+	public void checkVerticalMapCollision(TmxMap tilemap) {
+
+		reinitVerticalMapCollisionEvent();
+
+		Vector2 leftBottomCorner = new Vector2(getX() + 0.1f + getOffset().x, getY());
+		Vector2 leftTopCorner = new Vector2(getX() + 0.1f + getOffset().x, getY() + getHeight() - 0.1f);
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() - 0.1f + getOffset().x, getY());
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() - 0.1f +getOffset().x, getY() + getHeight() - 0.1f);
+
+		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
+		getMapCollisionEvent().setCollidingBottom(isCollision);
+
+		int x = (int) leftTopCorner.x;
+		int y = (int) leftTopCorner.y;
+		isCollision = tilemap.isCollisioningTileAt(x ,y);		
+		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
+		}
+
+		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
+		getMapCollisionEvent()
+				.setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);
+		
+		x = (int) rightTopCorner.x;
+		y = (int) rightTopCorner.y;
+		isCollision = tilemap.isCollisioningTileAt(x, y);
+		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
+		}
+
 	}
 	
 	public void collideWithTilemap(TmxMap tileMap) {

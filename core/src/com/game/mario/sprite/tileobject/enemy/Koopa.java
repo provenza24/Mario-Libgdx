@@ -32,12 +32,13 @@ public class Koopa extends AbstractEnemy {
 
 		super(mapObject);
 		offset.x = 0.2f;
-		setSize(1 - offset.x * 2, 1.5f);
+		offset.y = 0f;
+		setSize(1 - offset.x * 2, 1.5f - offset.y * 2);
 		renderingSize.y = 1.5f;
 		currentAnimation = walkLeftAnimation;
 		acceleration.x = -1.9f;		
 		gravitating = true;
-		bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());		
+		bounds = new Rectangle(getX() + offset.x, getY() + offset.y, getWidth(), getHeight());		
 	}
 
 	@Override

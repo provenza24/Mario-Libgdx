@@ -72,25 +72,31 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected String image;
 
 	public AbstractSprite(float x, float y) {
-		setPosition(x, y);
-		setSize(1, 1);
+		
+		setPosition(x, y);		
+		setSize(1, 1);		
 		renderingSize = new Vector2(1,1);
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		oldPosition = new Vector2(x, y);
 		acceleration = new Vector2(0,0);			
-		visible = false;
-		alive = false;
-		killed = false;
+		
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);			
 		collidingCells = new ArrayList<TmxCell>();				
+		
+		visible = false;
+		alive = false;
+		killed = false;
 		moveable = false;
 		collidableWithTilemap = false;
 		gravitating = false;
 		bumped = false;
-		stateTime = 0f;
-		initializeAnimations();
+		
+		stateTime = 0f;				
+		
 		xAlive = getX() - 16 ;
+		
+		initializeAnimations();
 	}
 	
 	public Rectangle getBounds() {
@@ -102,28 +108,37 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 						
 		if (alive) {
+			// The sprite is alive, we first update its animation
 			updateAnimation(deltaTime);
 			if (getActions().size>0) {
+				// If sprite is acting (ex: sprite is an enemy, and has just been killed, an animation is playing to simulate its death) 
 				act(deltaTime);
 			} else {
+				// else sprite is not acting
 				if (isMoveable()) {
+					// if sprite is moveable, we move it
 					move(deltaTime);
 				}
 				if (isCollidableWithTilemap()) {
+					// if sprite collides with tilemap, collide it
 					collideWithTilemap(tileMap);
 				}				
 			}
+			// Update sprite bounds (for future collisions)
 			updateBounds();
-			if (getX()<camera.position.x-9 || getY() < -1) {				
+			if (getX()<camera.position.x-9 || getY() < -1) {
+				// Sprite is left out of screen, or has felt out of down screen
 				deletable = true;				
 			} else {
+				// Check if sprite is visible
 				visible = getX() < camera.position.x+8;				
 			}						
 		} else {			
-			if (camera.position.x < tileMap.getFlag().getX()) {
+			if (camera.position.x < tileMap.getFlag().getX()) {				
 				alive = camera.position.x-8>xAlive;
 			} else {
-				alive = getX()>  tileMap.getFlag().getX();
+				// Sprite of bonus stage are alive
+				alive = getX() >  tileMap.getFlag().getX();
 			}
 							
 		}				
@@ -131,7 +146,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	protected void updateBounds() {
 		bounds.setX(getX()+offset.x);
-		bounds.setY(getY());
+		bounds.setY(getY()+offset.y);
 	}
 	
 	protected void applyGravity() {
@@ -189,6 +204,63 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 		onFloor = getMapCollisionEvent().isCollidingBottom();					
 	}	
+	
+	public void checkHorizontalMapCollision(TmxMap tilemap) {
+
+		reinitHorizontalMapCollisionEvent();
+
+		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY() + offset.y);
+		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() + offset.y);
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + offset.y);
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() + offset.y);
+
+		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
+		getMapCollisionEvent().setCollidingLeft(isCollision);
+
+		isCollision = tilemap.isCollisioningTileAt((int) leftTopCorner.x, (int) leftTopCorner.y);
+		getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
+
+		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
+		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+
+		isCollision = tilemap.isCollisioningTileAt((int) rightTopCorner.x, (int) rightTopCorner.y);
+		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+
+	}
+
+	public void checkVerticalMapCollision(TmxMap tilemap) {
+
+		reinitVerticalMapCollisionEvent();
+
+		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY() + offset.y);
+		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() + offset.y);
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + offset.y);
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() + offset.y);
+
+		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
+		getMapCollisionEvent().setCollidingBottom(isCollision);
+
+		int x = (int) leftTopCorner.x;
+		int y = (int) leftTopCorner.y;
+		isCollision = tilemap.isCollisioningTileAt(x ,y);		
+		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
+		}
+
+		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
+		getMapCollisionEvent()
+				.setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);
+		
+		x = (int) rightTopCorner.x;
+		y = (int) rightTopCorner.y;
+		isCollision = tilemap.isCollisioningTileAt(x, y);
+		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		if (isCollision) {
+			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
+		}
+
+	}
 	
 	public void render(Batch batch) {
 		batch.begin();
@@ -395,63 +467,6 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public void setRenderingSize(float px, float py) {
 		renderingSize.x = px;
 		renderingSize.y = py;
-	}
-
-	public void checkHorizontalMapCollision(TmxMap tilemap) {
-
-		reinitHorizontalMapCollisionEvent();
-
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() - 0.1f);
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() - 0.1f);
-
-		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
-		getMapCollisionEvent().setCollidingLeft(isCollision);
-
-		isCollision = tilemap.isCollisioningTileAt((int) leftTopCorner.x, (int) leftTopCorner.y);
-		getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
-
-		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
-		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
-
-		isCollision = tilemap.isCollisioningTileAt((int) rightTopCorner.x, (int) rightTopCorner.y);
-		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
-
-	}
-
-	public void checkVerticalMapCollision(TmxMap tilemap) {
-
-		reinitVerticalMapCollisionEvent();
-
-		Vector2 leftBottomCorner = new Vector2(getX() + 0.1f + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + 0.1f + getOffset().x, getY() + getHeight() - 0.1f);
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() - 0.1f + getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() - 0.1f +getOffset().x, getY() + getHeight() - 0.1f);
-
-		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
-		getMapCollisionEvent().setCollidingBottom(isCollision);
-
-		int x = (int) leftTopCorner.x;
-		int y = (int) leftTopCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x ,y);		
-		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
-		if (isCollision) {
-			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
-		}
-
-		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
-		getMapCollisionEvent()
-				.setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);
-		
-		x = (int) rightTopCorner.x;
-		y = (int) rightTopCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
-		if (isCollision) {
-			getCollidingCells().add(new TmxCell(tilemap.getTileAt(x, y), x ,y));
-		}
-
 	}
 	
 	public void dispose() {
