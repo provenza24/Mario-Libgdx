@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="50">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="51">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -35,117 +35,11 @@
    <property name="music" value="main-theme"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmllOwzAURV1AaTcAUss3YpCYBD8IPiwoS2DcAfMKmDfOjdRQY+L4xYnbNL1HulKS2i+u69PUUpUihMRAI9udcbRyx2yX5gDXDic+YkLmB63+eycN/STEzUuneg2t6CchMfimn4Q0FvpJSHNpu5/diLWbxJInrrZV5qdXYYx5r3VHyXu9bSSj+Gi7n4Q0jUTRT0KaSKLo5ywyL7/D5xnbzVA/d3BtF9lD9gX+ajV9P+31ne5hemq8r4m1p1lGViK0lWC+x1Bc3wuuvWlXcGzXkeLam2YkjmMftgtl+maY+/WQ+c5zM9TPU1w7Q4bIeYCfWrXn/0M+pzaRLWGtMm3JX/Ick6zvPBekfevC5WaInxc4v0SukGvkBrn1OKpVeT/XcbyBrKnp+Cl9lvmcop/xKXKsaI27XPD1rfo7x+xf5GaIn3c4v0cekEfkCXmO4Ocxjk+QIxXuZx91Bsiq4Bnft9pJXTHb2TXK1MmrJR27694h1FlnEuO31/NgdF/fOi9ywb7u+0zLjj3r73NT+vw3ecU43pB35AP5RL4EflZNeosF5jeLxvyGzo1Zo0qdNqSO+ZzV6BryA/G+Tm8=
+   eJzt0wEKgzAMhWF1A73ABroTzMt5iN1gJ14HK0hZS9RYY/k/CBVJakBeVQEAAAAAoGeqj94AQMyLfAJmkc9ydEcvAHXkE7CLfAJ2kU/ALvJpyzVxtn/6W8Ezzot8lufm6r5DL/Ijn+V5uhp36EV+mvns3V2Dq4fgzl7Yl8uS3X2/xv6a9/j955l71/Ez7F1j+H03p6X/6sxi+fy+boR1WTEzn9s6K50PZyRzfqZJ9Ic9qV6K0qgP8I4NpA==
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
-  <object id="3" type="goomba" gid="402" x="770" y="318" width="32" height="32"/>
-  <object id="4" type="goomba" gid="402" x="1632" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="1080"/>
-   </properties>
-  </object>
-  <object id="5" type="goomba" gid="402" x="1680" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="1080"/>
-   </properties>
-  </object>
-  <object id="6" type="goomba" gid="402" x="2560" y="192" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="2008"/>
-   </properties>
-  </object>
-  <object id="7" type="goomba" gid="402" x="2624" y="192" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="2008"/>
-   </properties>
-  </object>
-  <object id="8" type="goomba" gid="402" x="3104" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="2552"/>
-   </properties>
-  </object>
-  <object id="9" type="goomba" gid="402" x="3152" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="2552"/>
-   </properties>
-  </object>
-  <object id="11" type="goomba" gid="402" x="3648" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="3096"/>
-   </properties>
-  </object>
-  <object id="12" type="goomba" gid="402" x="3696" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="3096"/>
-   </properties>
-  </object>
-  <object id="13" type="goomba" gid="402" x="3968" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="3416"/>
-   </properties>
-  </object>
-  <object id="14" type="goomba" gid="402" x="4016" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="3416"/>
-   </properties>
-  </object>
-  <object id="15" type="goomba" gid="402" x="4096" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="3544"/>
-   </properties>
-  </object>
-  <object id="16" type="goomba" gid="402" x="4144" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="3544"/>
-   </properties>
-  </object>
-  <object id="17" type="goomba" gid="402" x="5568" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="5016"/>
-   </properties>
-  </object>
-  <object id="18" type="goomba" gid="402" x="5616" y="448" width="32" height="32">
-   <properties>
-    <property name="xAlive" value="5016"/>
-   </properties>
-  </object>
-  <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
-  <object id="25" type="transferDown" gid="406" x="1852" y="320" width="8" height="8">
-   <properties>
-    <property name="scrollable" value="false"/>
-    <property name="xOutgoing" value="6944"/>
-    <property name="yOutgoing" value="480"/>
-   </properties>
-  </object>
-  <object id="26" type="coin" gid="412" x="7008" y="320" width="28" height="32"/>
-  <object id="27" type="coin" gid="412" x="7040" y="320" width="28" height="32"/>
-  <object id="28" type="coin" gid="412" x="7072" y="320" width="28" height="32"/>
-  <object id="29" type="coin" gid="412" x="7104" y="320" width="28" height="32"/>
-  <object id="30" type="coin" gid="412" x="7136" y="320" width="28" height="32"/>
-  <object id="31" type="coin" gid="412" x="7168" y="320" width="28" height="32"/>
-  <object id="32" type="coin" gid="412" x="7200" y="320" width="28" height="32"/>
-  <object id="33" type="coin" gid="412" x="7008" y="256" width="28" height="32"/>
-  <object id="34" type="coin" gid="412" x="7040" y="256" width="28" height="32"/>
-  <object id="35" type="coin" gid="412" x="7072" y="256" width="28" height="32"/>
-  <object id="36" type="coin" gid="412" x="7104" y="256" width="28" height="32"/>
-  <object id="37" type="coin" gid="412" x="7136" y="256" width="28" height="32"/>
-  <object id="38" type="coin" gid="412" x="7168" y="256" width="28" height="32"/>
-  <object id="39" type="coin" gid="412" x="7200" y="256" width="28" height="32"/>
-  <object id="40" type="coin" gid="412" x="7040" y="192" width="28" height="32"/>
-  <object id="41" type="coin" gid="412" x="7072" y="192" width="28" height="32"/>
-  <object id="42" type="coin" gid="412" x="7104" y="192" width="28" height="32"/>
-  <object id="43" type="coin" gid="412" x="7136" y="192" width="28" height="32"/>
-  <object id="44" type="coin" gid="412" x="7168" y="192" width="28" height="32"/>
-  <object id="46" type="transferRight" gid="409" x="7288" y="402" width="8" height="8">
-   <properties>
-    <property name="scrollable" value="true"/>
-    <property name="xOutgoing" value="5232"/>
-    <property name="yOutgoing" value="96"/>
-   </properties>
-  </object>
-  <object id="48" type="koopa" gid="416" x="3424" y="448" width="32" height="48"/>
-  <object id="49" type="koopa" gid="416" x="500" y="448" width="32" height="48"/>
+  <object id="50" type="flag" gid="405" x="7252" y="160" width="32" height="32"/>
  </objectgroup>
 </map>
