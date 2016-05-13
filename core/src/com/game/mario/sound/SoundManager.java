@@ -74,9 +74,8 @@ public class SoundManager {
 		
 		if (change) {
 			currentMusic = stageMusic;
-		}
-		
-		currentMusicId = currentMusic.play(musicVolume);
+		}		
+		currentMusicId = currentMusic.loop(musicVolume);
 	}
 	
 	public void resumeMusic() {

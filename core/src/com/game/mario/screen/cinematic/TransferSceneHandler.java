@@ -1,0 +1,44 @@
+package com.game.mario.screen.cinematic;
+
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.game.mario.background.IScrollingBackground;
+import com.game.mario.camera.GameCamera;
+import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.ResourcesLoader;
+
+public class TransferSceneHandler extends AbstractCinematicSceneHandler {
+
+	private float timer = 0;
+
+	public TransferSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
+			IScrollingBackground scrollingBackground, BitmapFont font, SpriteBatch spriteBatch,
+			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
+		super(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);			
+	}
+
+	public void handleScene(float delta) {
+		
+		mario.act(delta);
+		mario.updateCinematicAnimation(delta);
+		renderCinematicScene(delta);
+		
+		renderer.getBatch().begin();				
+		renderer.getBatch().draw(ResourcesLoader.MUSHROOM, (int)mario.getTransferItem().getX()+0.25f, (int)mario.getTransferItem().getY() -1, 1, 1);	
+		renderer.getBatch().end();
+				
+		timer += delta;
+		
+		if (timer>3) {
+			mario.getActions().removeAll(mario.getActions(), true);
+			mario.setInTransfer(false);
+			mario.transfer(camera, scrollingBackground);
+			timer = 0;			
+		}
+	}
+	
+}

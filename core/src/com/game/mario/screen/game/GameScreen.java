@@ -29,6 +29,7 @@ import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.screen.cinematic.LevelEndingSceneHandler;
 import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
 import com.game.mario.screen.cinematic.MarioGrowingSceneHandler;
+import com.game.mario.screen.cinematic.TransferSceneHandler;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
@@ -91,6 +92,8 @@ public class GameScreen implements Screen  {
 	private AbstractCinematicSceneHandler marioDeathSceneHandler;
 	
 	private AbstractCinematicSceneHandler marioGrowingSceneHandler;
+	
+	private AbstractCinematicSceneHandler marioTransferSceneHandler;
 		
 	public GameScreen() {
 		
@@ -133,7 +136,9 @@ public class GameScreen implements Screen  {
 		levelEndingSceneHandler = new LevelEndingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
-			
+		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);	
+		
+		
 		System.out.println(tileMap.getMusicTheme());
 		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERWORLD.toString())) {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_OVERWORLD_THEME);	
@@ -157,6 +162,8 @@ public class GameScreen implements Screen  {
 			if (mario.isAlive()) {
 				if (mario.isGrowing()) {				
 					marioGrowingSceneHandler.handleScene(delta);					
+				} else if (mario.isInTransfer()) {
+					marioTransferSceneHandler.handleScene(delta);
 				} else {
 					handleMarioAlive(delta);
 				}						

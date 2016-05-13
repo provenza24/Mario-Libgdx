@@ -13,10 +13,14 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.GameManager;
+import com.game.mario.background.IScrollingBackground;
+import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
+import com.game.mario.sprite.tileobject.item.TransferItem;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
@@ -83,6 +87,10 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	private boolean growingDown;
 	
+	private boolean inTransfer;	
+	
+	private TransferItem transferItem;
+		
 	private List<AbstractSprite> fireballs;
 	
 	/** 0=small, 1=big, 2=flowered */
@@ -648,6 +656,37 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setMarioFlagLeftAnimation(Animation marioFlagLeftAnimation) {
 		this.marioFlagLeftAnimation = marioFlagLeftAnimation;
+	}
+
+	public boolean isInTransfer() {
+		return inTransfer;
+	}
+
+	public void setInTransfer(boolean inTransfer) {
+		this.inTransfer = inTransfer;
+	}
+	
+	public void transfer(GameCamera camera, IScrollingBackground scrollingBackground) {		
+		setAcceleration(new Vector2(0, 0));
+		setDirection(DirectionEnum.RIGHT);
+		setX(transferItem.getTransferPosition().x);
+		setY(transferItem.getTransferPosition().y);
+		camera.setCameraOffset(2f);
+		camera.getCamera().position.x = transferItem.getTransferPosition().x + 6;						
+		camera.getCamera().update();			
+		camera.setScrollable(transferItem.isScrollableCamera());				
+		scrollingBackground.changeImage(transferItem.getBackgroundTypeEnum());					
+		SoundManager.getSoundManager().stopMusic();
+		SoundManager.getSoundManager().setCurrentMusic(transferItem.getMusic());
+		SoundManager.getSoundManager().playMusic(false);
+	}
+
+	public TransferItem getTransferItem() {
+		return transferItem;
+	}
+
+	public void setTransferItem(TransferItem transferItem) {
+		this.transferItem = transferItem;
 	}
 
 }

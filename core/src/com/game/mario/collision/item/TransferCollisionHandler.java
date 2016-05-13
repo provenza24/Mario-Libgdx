@@ -1,10 +1,9 @@
 package com.game.mario.collision.item;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.Vector2;
+import com.game.mario.action.ActionFacade;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
-import com.game.mario.enums.DirectionEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.item.TransferItem;
@@ -18,19 +17,12 @@ public class TransferCollisionHandler extends AbstractItemCollisionHandler {
 	@Override
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera, IScrollingBackground scrollingBackground) {		
 		TransferItem transferItem = (TransferItem)item;
-		if (Gdx.input.isKeyPressed(transferItem.getKeyToPress())) {			
-			mario.setAcceleration(new Vector2(0, 0));
-			mario.setDirection(DirectionEnum.RIGHT);
-			mario.setX(transferItem.getTransferPosition().x);
-			mario.setY(transferItem.getTransferPosition().y);
-			camera.setCameraOffset(2f);
-			camera.getCamera().position.x = transferItem.getTransferPosition().x + 6;						
-			camera.getCamera().update();			
-			camera.setScrollable(transferItem.isScrollableCamera());				
-			scrollingBackground.changeImage(transferItem.getBackgroundTypeEnum());					
-			SoundManager.getSoundManager().stopMusic();
-			SoundManager.getSoundManager().setCurrentMusic(transferItem.getMusic());
-			SoundManager.getSoundManager().playMusic(false);
+		if (Gdx.input.isKeyPressed(transferItem.getKeyToPress())) {	
+			mario.setTransferItem(transferItem);
+			mario.setInTransfer(true);
+			mario.setCurrentAnimation(mario.getMarioVictoryAnimation());
+			mario.addAction(ActionFacade.createMoveAction(mario.getX(), mario.getY()-2, 2f));			
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_PIPE);			
  		}
 	}
 
