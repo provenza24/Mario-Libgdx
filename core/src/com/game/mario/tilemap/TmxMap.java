@@ -16,6 +16,7 @@ import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
+import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.enemy.Koopa;
@@ -34,6 +35,8 @@ public class TmxMap {
 	private MapLayer objectsLayer;
 
 	private List<Block> blocks;
+	
+	private List<WallBlock> wallBlocks;
 	
 	private List<AbstractEnemy> enemies;
 	
@@ -94,8 +97,9 @@ public class TmxMap {
 	}
 
 	private void initBlocks(BackgroundTypeEnum background) {
-
+		
 		blocks = new ArrayList<Block>();
+		wallBlocks = new ArrayList<WallBlock>();
 
 		for (int i = 0; i < tileLayer.getWidth(); i++) {
 			for (int j = 0; j < tileLayer.getHeight(); j++) {
@@ -106,6 +110,9 @@ public class TmxMap {
 					if (id == 7 || id == 8) {
 						blocks.add(new MysteryBlock(i, j, id, background));
 					} 
+					if (id == 10) {
+						wallBlocks.add(new WallBlock(i, j, id));
+					}
 				}
 			}
 		}
@@ -134,7 +141,7 @@ public class TmxMap {
 	}
 	
 	public void changeCellValue(int x, int y, int value) {
-		Cell cell = tileLayer.getCell(x, y);
+		Cell cell = tileLayer.getCell(x, y);		
 		cell.setTile(map.getTileSets().getTile(value));
 	}
 	
@@ -214,5 +221,13 @@ public class TmxMap {
 
 	public void setMusicTheme(String musicTheme) {
 		this.musicTheme = musicTheme;
+	}
+
+	public List<WallBlock> getWallBlocks() {
+		return wallBlocks;
+	}
+
+	public void setWallBlocks(List<WallBlock> wallBlocks) {
+		this.wallBlocks = wallBlocks;
 	}
 }

@@ -36,8 +36,13 @@ public class ResourcesLoader {
 	
 	public static final Texture FIREBALL = new Texture(Gdx.files.internal("sprites/fireball.png"));
 	
+	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/pipe_down.png"));
+	
+	public static final Texture PIPE_LEFT = new Texture(Gdx.files.internal("sprites/pipe_left.png"));
+	
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	
 	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
+		
 	
 }

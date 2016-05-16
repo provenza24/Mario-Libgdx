@@ -8,6 +8,8 @@ import com.game.mario.enums.BlockTypeEnum;
 
 public class WallBlock extends Block {
 
+	int coins;
+	
 	public WallBlock(int x, int y, int tileId) {
 		
 		super(x,y, tileId);							
@@ -20,10 +22,26 @@ public class WallBlock extends Block {
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
 		currentAnimation = new Animation(0, animationFrames);
+		
+		coins = tileId == 10 ? 1 : 0; 
+		
+		replacingTileValue = 5;
 	}
 
 	@Override
 	public void initializeAnimations() {		
+	}
+
+	public void removeCoin() {
+		coins--;
+	}
+
+	public int getCoins() {
+		return coins;
+	}
+
+	public void setCoins(int coins) {
+		this.coins = coins;
 	}
 	
 }

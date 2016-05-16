@@ -3,11 +3,14 @@ package com.game.mario.collision.upperblock;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.game.mario.GameManager;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.ChangeCellValueAction;
 import com.game.mario.action.DeleteBlocSpriteAction;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.bloc.WallBlock;
+import com.game.mario.sprite.item.EjectedCoin;
 import com.game.mario.sprite.item.wallpiece.AbstractWallPiece;
 import com.game.mario.sprite.item.wallpiece.BottomLeftWallPiece;
 import com.game.mario.sprite.item.wallpiece.BottomRightWallPiece;
@@ -23,19 +26,53 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 	}
 	
 	public void handle(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
+				
 		
 		Mario mario = tileMap.getMario();		
-		if (mario.getSizeState()==0) {
-			// Mario is small, can't beak the wall, just move it
-			moveWall(tileMap, collidingCell, stage);
-		} else {
-			// Mario is big, break the wall
-			breakWall(tileMap, collidingCell, stage);
-		}
+		
+		WallBlock wallBlock = findBlock(tileMap, collidingCell);
+		
+		if (wallBlock!=null) {
+			int nbPieces = wallBlock.getCoins();
+			if (nbPieces > 0 ) {
+				moveWall(tileMap, collidingCell, stage);
+				GameManager.getGameManager().addCoin();
+				wallBlock.removeCoin();				
+				AbstractItem item = new EjectedCoin(wallBlock.getX(), wallBlock.getY()+1);
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);						
+				tileMap.getItems().add(item);
+				stage.addActor(item);				   				
+				item.addAppearAction();
+				if (wallBlock.getCoins()==0) {								
+					tileMap.changeCellValue((int)wallBlock.getX(), (int)wallBlock.getY(), wallBlock.getReplacingTileValue());					
+				}
+			}
+		} else {			
+			if (mario.getSizeState()==0) {
+				// Mario is small, can't beak the wall, just move it
+				moveWall(tileMap, collidingCell, stage);
+			} else {
+				// Mario is big, break the wall
+				breakWall(tileMap, collidingCell, stage);
+			}
+		}		
 		
 		// Check if one or several items were over the wall
 		bumpElements(tileMap, collidingCell, stage);
 						
+	}
+
+	private WallBlock findBlock(TmxMap tileMap, TmxCell collidingCell) {
+		
+		 WallBlock wallBlock = null;
+		
+		for (int i=0; i<tileMap.getWallBlocks().size() && wallBlock==null;i++) {
+			WallBlock block = tileMap.getWallBlocks().get(i);
+			if (block.getX()==collidingCell.getX() && block.getY()== collidingCell.getY()) {
+				wallBlock = block;
+			}
+		}
+		return wallBlock;
 	}
 
 	private void breakWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {

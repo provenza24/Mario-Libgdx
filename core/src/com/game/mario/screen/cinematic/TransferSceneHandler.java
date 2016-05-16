@@ -9,7 +9,6 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
-import com.game.mario.util.ResourcesLoader;
 
 public class TransferSceneHandler extends AbstractCinematicSceneHandler {
 
@@ -28,12 +27,12 @@ public class TransferSceneHandler extends AbstractCinematicSceneHandler {
 		renderCinematicScene(delta);
 		
 		renderer.getBatch().begin();				
-		renderer.getBatch().draw(ResourcesLoader.MUSHROOM, (int)mario.getTransferItem().getX()+0.25f, (int)mario.getTransferItem().getY() -1, 1, 1);	
+		renderer.getBatch().draw(mario.getTransferItem().getPipe(), mario.getTransferItem().getPipe().getX(), mario.getTransferItem().getPipe().getY(), 2,2);	
 		renderer.getBatch().end();
 				
 		timer += delta;
 		
-		if (timer>3) {
+		if (timer>2f) {
 			mario.getActions().removeAll(mario.getActions(), true);
 			mario.setInTransfer(false);
 			mario.transfer(camera, scrollingBackground);

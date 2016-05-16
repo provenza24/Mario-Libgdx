@@ -137,20 +137,18 @@ public class GameScreen implements Screen  {
 		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);	
-		
-		
-		System.out.println(tileMap.getMusicTheme());
+						
 		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERWORLD.toString())) {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_OVERWORLD_THEME);	
 		} else {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
 		}		
 		
-		/*mario.setX(180);
-		mario.setY(3);
+		/*mario.setX(56);
+		mario.setY(8);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 186;						
-		camera.getCamera().update();*/		
+		camera.getCamera().position.x = 62;						
+		camera.getCamera().update();*/
 	}
 		
 	@Override
@@ -442,9 +440,6 @@ public class GameScreen implements Screen  {
 			camera.getCamera().position.x = camera.getCamera().position.x+8;				
 			camera.getCamera().update();
 		}
-		
-		
-		
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			
 			List<AbstractSprite> fireballs = mario.getFireballs();

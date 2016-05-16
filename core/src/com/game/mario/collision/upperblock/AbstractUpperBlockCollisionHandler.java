@@ -21,6 +21,8 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 		handlers.put(64, new WallCollisionHandler());
 		handlers.put(7, new MysteryBlockCollisionHandler());
 		handlers.put(8, new MysteryBlockCollisionHandler());
+		
+		handlers.put(10, new WallCollisionHandler());
 	}
 	
 	public static IUpperBlockCollisionHandler getHandler(Integer tileId) {

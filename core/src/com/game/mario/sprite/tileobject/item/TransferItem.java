@@ -2,6 +2,7 @@ package com.game.mario.sprite.tileobject.item;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
@@ -23,6 +24,8 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 	protected BackgroundTypeEnum backgroundTypeEnum;
 	
 	protected Sound music;
+	
+	protected Sprite pipe;
 
 	public TransferItem(MapObject mapObject) {		
 		super(mapObject);					
@@ -85,6 +88,14 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 
 	public void setMusic(Sound music) {
 		this.music = music;
+	}
+
+	public Sprite getPipe() {
+		return pipe;
+	}
+
+	public void setPipe(Sprite pipe) {
+		this.pipe = pipe;
 	}
 	
 	
