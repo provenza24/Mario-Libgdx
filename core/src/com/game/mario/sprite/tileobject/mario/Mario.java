@@ -147,28 +147,28 @@ public class Mario extends AbstractTileObjectSprite {
 		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
 		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);
 		
-		Texture growDownRightTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
+		Texture growDownRightTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-right.png"));
 		TextureRegion[][] tmp = TextureRegion.split(growDownRightTexture, growDownRightTexture.getWidth() / 3, growDownRightTexture.getHeight() / 1);
 		TextureRegion[] frames = new TextureRegion[2];
 		frames[0] = tmp[0][1];
 		frames[1] = tmp[0][0];		
 		marioGrowDownRightAnimation = new Animation(0.15f, frames);				
 		
-		Texture growDownLeftTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-left.png"));
+		Texture growDownLeftTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
 		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3, growDownLeftTexture.getHeight() / 1);
 		frames = new TextureRegion[2];
 		frames[0] = tmp[0][1];
 		frames[1] = tmp[0][0];		
 		marioGrowDownLeftAnimation = new Animation(0.15f, frames);
 		
-		Texture growUpLeftTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-left.png"));
+		Texture growUpLeftTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
 		tmp = TextureRegion.split(growUpLeftTexture, growUpLeftTexture.getWidth() / 3, growUpLeftTexture.getHeight() / 1);
 		frames = new TextureRegion[2];
 		frames[0] = tmp[0][0];
 		frames[1] = tmp[0][1];		
 		marioGrowUpLeftAnimation = new Animation(0.15f, frames);
 		
-		Texture growUpRightTexture = new Texture(Gdx.files.internal("sprites/mario-grow-up-right.png"));
+		Texture growUpRightTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-right.png"));
 		tmp = TextureRegion.split(growUpRightTexture, growUpRightTexture.getWidth() / 3, growUpRightTexture.getHeight() / 1);
 		frames = new TextureRegion[2];
 		frames[0] = tmp[0][0];

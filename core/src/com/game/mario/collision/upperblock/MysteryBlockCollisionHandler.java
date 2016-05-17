@@ -14,7 +14,8 @@ import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.item.EjectedCoin;
 import com.game.mario.sprite.item.Flower;
-import com.game.mario.sprite.item.Mushroom;
+import com.game.mario.sprite.item.GreenMushroom;
+import com.game.mario.sprite.item.RedMushroom;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -42,10 +43,13 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 				if (itemEnum==ItemEnum.RED_MUSHROOM) {
 					Mario mario = tileMap.getMario();
 					if (mario.getSizeState()==0) {
-						item = new Mushroom(block.getX(), yWallBlock+0.1f);
+						item = new RedMushroom(block.getX(), yWallBlock+0.1f);
 					} else {
 						item = new Flower(block.getX(), yWallBlock+0.1f);
 					}
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
+				} if (itemEnum==ItemEnum.GREEN_MUSHROOM) {
+					item = new GreenMushroom(block.getX(), yWallBlock+0.1f);
 					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
 				} else if (itemEnum==ItemEnum.COIN) {
 					GameManager.getGameManager().addCoin();

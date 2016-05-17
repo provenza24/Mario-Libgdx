@@ -8,7 +8,8 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.item.Flower;
-import com.game.mario.sprite.item.Mushroom;
+import com.game.mario.sprite.item.GreenMushroom;
+import com.game.mario.sprite.item.RedMushroom;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
@@ -20,7 +21,8 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 	private static Map<Class<?>, IItemCollisionHandler> handlers = new HashMap<Class<?>, IItemCollisionHandler>();
 
 	static {
-		handlers.put(Mushroom.class, new MushroomCollisionHandler());		
+		handlers.put(RedMushroom.class, new RedMushroomCollisionHandler());
+		handlers.put(GreenMushroom.class, new GreenMushroomCollisionHandler());
 		handlers.put(Flower.class, new FlowerCollisionHandler());
 		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
 		handlers.put(TransferItemRight.class, new TransferCollisionHandler());

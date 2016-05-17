@@ -106,6 +106,10 @@ public class GameManager extends Game {
 		changeScreen(ScreenEnum.LEVEL_MENU);
 	}
 
+	public void addLife() {
+		nbLifes++;
+	}
+	
 	public void addCoin() {
 		nbCoins++;
 		if (nbCoins==100) {

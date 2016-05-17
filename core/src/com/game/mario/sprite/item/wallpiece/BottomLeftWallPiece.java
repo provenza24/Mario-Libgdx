@@ -14,7 +14,7 @@ public class BottomLeftWallPiece extends AbstractWallPiece {
 	
 	@Override
 	public void initializeAnimations() {		
-		spriteSheet = new Texture(Gdx.files.internal("sprites/brokenWall_0_3.png"));				
+		spriteSheet = new Texture(Gdx.files.internal("sprites/wall/brokenWall_0_3.png"));				
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);				
 		TextureRegion[] frame = new TextureRegion[1];
 		frame[0] = tmp[0][0];			

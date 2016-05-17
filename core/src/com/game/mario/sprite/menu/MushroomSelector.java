@@ -7,7 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 public class MushroomSelector extends Image {
 
 	public MushroomSelector() {		
-		super(new Texture(Gdx.files.internal("sprites/mushroom_selector.png")))	;		
+		super(new Texture(Gdx.files.internal("sprites/menu/mushroom_selector.png")))	;		
 	}
 
 }

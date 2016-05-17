@@ -10,7 +10,7 @@ import com.game.mario.enums.ItemEnum;
 
 public class WallBlock extends Block {
 
-	int coins;
+	private int coins;
 	
 	public WallBlock(int x, int y, int tileId, BackgroundTypeEnum backgroundType) {
 		
@@ -27,7 +27,7 @@ public class WallBlock extends Block {
 	
 	@Override
 	public void initializeAnimationsWithBackground() {
-		spriteSheet = new Texture(Gdx.files.internal("sprites/wall-"+tileId+".png"));
+		spriteSheet = new Texture(Gdx.files.internal("sprites/wall/wall-"+tileId+".png"));
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];

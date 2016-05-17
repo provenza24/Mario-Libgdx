@@ -8,9 +8,9 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
-public class MushroomCollisionHandler extends AbstractItemCollisionHandler {
+public class RedMushroomCollisionHandler extends AbstractItemCollisionHandler {
 	
-	public MushroomCollisionHandler() {		
+	public RedMushroomCollisionHandler() {		
 	}
 
 	@Override

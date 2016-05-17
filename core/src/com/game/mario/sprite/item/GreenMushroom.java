@@ -6,9 +6,9 @@ import com.game.mario.action.ActionFacade;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.util.ResourcesLoader;
 
-public class Mushroom extends AbstractItem {
+public class GreenMushroom extends AbstractItem {
 
-	public Mushroom(float x, float y) {
+	public GreenMushroom(float x, float y) {
 		super(x, y);
 		offset.x = 0.2f;		
 		setSize(1 - 2*offset.x, 1f - offset.y);
@@ -17,7 +17,7 @@ public class Mushroom extends AbstractItem {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ResourcesLoader.MUSHROOM;
+		spriteSheet = ResourcesLoader.GREEN_MUSHROOM;
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
