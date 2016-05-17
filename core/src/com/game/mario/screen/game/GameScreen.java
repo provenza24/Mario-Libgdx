@@ -41,6 +41,7 @@ import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.KeysConstants;
 import com.game.mario.util.RectangleUtil;
 
 public class GameScreen implements Screen  {
@@ -49,13 +50,13 @@ public class GameScreen implements Screen  {
 	
 	private boolean keyUpReleased = true;
 	
-	private int KEY_UP = Keys.Z;
+	private int KEY_UP = KeysConstants.KEY_UP;
 	
-	private int KEY_LEFT = Keys.LEFT;
+	private int KEY_LEFT =  KeysConstants.KEY_LEFT;
 	
-	private int KEY_RIGHT = Keys.RIGHT;
+	private int KEY_RIGHT =  KeysConstants.KEY_RIGHT;
 	
-	private int KEY_SPEED_UP = Keys.A;
+	private int KEY_SPEED_UP = KeysConstants.KEY_SPEED_UP;
 	
 	private boolean debugShowText = false;
 

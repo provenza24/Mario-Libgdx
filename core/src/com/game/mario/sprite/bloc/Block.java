@@ -14,6 +14,8 @@ public abstract class Block extends AbstractSprite {
 	
 	protected static final Map<Integer, Integer> REPLACING_TILES_OVERGROUND = new HashMap<Integer, Integer>();
 	
+	protected static final Map<Integer, Integer> REPLACING_TILES_BONUS = new HashMap<Integer, Integer>();
+	
 	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();				
 	
 	
@@ -26,8 +28,13 @@ public abstract class Block extends AbstractSprite {
 		REPLACING_TILES_OVERGROUND.put(8, 5);
 		REPLACING_TILES_OVERGROUND.put(10, 5);
 		
+		REPLACING_TILES_BONUS.put(7, 65);
+		REPLACING_TILES_BONUS.put(8, 65);
+		REPLACING_TILES_BONUS.put(10, 65);
+		
 		REPLACING_TILES_LIST.put(BackgroundTypeEnum.OVERWORLD, REPLACING_TILES_OVERGROUND);
 		REPLACING_TILES_LIST.put(BackgroundTypeEnum.UNDERWORLD, REPLACING_TILES_UNDERGROUND);
+		REPLACING_TILES_LIST.put(BackgroundTypeEnum.BONUS, REPLACING_TILES_BONUS);
 	}
 	
 	protected BlockTypeEnum blocType;

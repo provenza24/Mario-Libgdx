@@ -11,7 +11,7 @@ import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.util.ResourcesLoader;
 
-public abstract class ScrollingBackground extends Sprite implements IScrollingBackground {
+public abstract class AbstractScrollingBackground extends Sprite implements IScrollingBackground {
 
 	protected static final Map<BackgroundTypeEnum, Texture> BACKGROUND_IMAGES = new HashMap<BackgroundTypeEnum, Texture>();
 	
@@ -26,6 +26,7 @@ public abstract class ScrollingBackground extends Sprite implements IScrollingBa
 	static {
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, ResourcesLoader.OVERWORLD);
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, ResourcesLoader.UNDERWORLD);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.BONUS, ResourcesLoader.BONUS_STAGE);
 	}
 	
 	public void changeImage(BackgroundTypeEnum backgroundTypeEnum) {
@@ -36,7 +37,7 @@ public abstract class ScrollingBackground extends Sprite implements IScrollingBa
 	}
 		
 	
-	public ScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
+	public AbstractScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
 		super(BACKGROUND_IMAGES.get(backgroundType));
 		this.batch = batch;
 		this.followedSprite = followedSprite;

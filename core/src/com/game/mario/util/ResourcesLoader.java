@@ -45,6 +45,8 @@ public class ResourcesLoader {
 	
 	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("underworld.png"));
 	
+	public static final Texture BONUS_STAGE = new Texture(Gdx.files.internal("bonus_stage.png"));
+	
 	// Transparency sprites	
 	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/transparency/pipe_down.png"));
 	
