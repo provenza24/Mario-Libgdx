@@ -9,7 +9,9 @@ import com.game.mario.util.ResourcesLoader;
 public class Mushroom extends AbstractItem {
 
 	public Mushroom(float x, float y) {
-		super(x, y);		
+		super(x, y);
+		offset.x = 0.2f;		
+		setSize(1 - 2*offset.x, 1f - offset.y);
 		acceleration.x = 3f;		
 	}
 

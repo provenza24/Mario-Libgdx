@@ -98,7 +98,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		
 		initializeAnimations();
 	}
-	
+		
 	public Rectangle getBounds() {
         return bounds;
     }

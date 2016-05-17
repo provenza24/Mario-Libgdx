@@ -75,7 +75,7 @@ public class TmxMap {
 				mario = new Mario(mapObject);
 			}
 			if (objectProperty.get("type").toString().equals("goomba")) {				
-				enemies.add(new Goomba(mapObject));
+				enemies.add(new Goomba(mapObject, backgroundType));
 			}
 			if (objectProperty.get("type").toString().equals("koopa")) {				
 				enemies.add(new Koopa(mapObject));
@@ -111,7 +111,7 @@ public class TmxMap {
 						blocks.add(new MysteryBlock(i, j, id, background));
 					} 
 					if (id == 10) {
-						wallBlocks.add(new WallBlock(i, j, id));
+						wallBlocks.add(new WallBlock(i, j, id, background));
 					}
 				}
 			}

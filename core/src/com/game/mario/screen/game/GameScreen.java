@@ -414,6 +414,10 @@ public class GameScreen implements Screen  {
 
 	private void handleInput() {
 	
+		if (Gdx.input.isKeyJustPressed(Keys.C)) {
+			tileMap.changeCellValue(0, 0, 5);
+		}
+		
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
 		}

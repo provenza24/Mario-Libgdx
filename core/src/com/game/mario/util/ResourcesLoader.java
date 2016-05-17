@@ -8,7 +8,9 @@ public class ResourcesLoader {
 
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/mystery.png"));  
 	
-	public static final Texture GOOMBA = new Texture(Gdx.files.internal("sprites/goomba.png"));
+	public static final Texture GOOMBA_UNDERWORLD = new Texture(Gdx.files.internal("sprites/goomba_underworld.png"));
+	
+	public static final Texture GOOMBA_OVERWORLD = new Texture(Gdx.files.internal("sprites/goomba_overworld.png"));
 	
 	public static final Texture KOOPA = new Texture(Gdx.files.internal("sprites/koopa.png"));
 	
