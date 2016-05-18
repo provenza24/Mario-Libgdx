@@ -22,6 +22,7 @@ import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
+import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
@@ -126,9 +127,9 @@ public class GameScreen implements Screen  {
 		}
 		
 		MarioLifes marioLifes = new MarioLifes();
-		marioLifes.setPosition(10, 460 - marioLifes.getHeight()/2);
+		marioLifes.setPosition(10, Gdx.graphics.getHeight()-20 - marioLifes.getHeight()/2);
 		MarioCoins marioCoins= new MarioCoins();
-		marioCoins.setPosition(100, 460 - marioCoins.getHeight()/2);
+		marioCoins.setPosition(100, Gdx.graphics.getHeight()-20 - marioCoins.getHeight()/2);
 		stage.addActor(marioLifes);
 		stage.addActor(marioCoins);
 		
@@ -223,8 +224,8 @@ public class GameScreen implements Screen  {
 
 	private void renderStatusBar() {
 		spriteBatch.begin();		
-		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, 470);
-		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, 470);		
+		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
+		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
 		spriteBatch.end();
 	}
 
@@ -414,11 +415,7 @@ public class GameScreen implements Screen  {
 	}
 
 	private void handleInput() {
-	
-		if (Gdx.input.isKeyJustPressed(Keys.C)) {
-			tileMap.changeCellValue(0, 0, 5);
-		}
-		
+			
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
 		}
@@ -439,11 +436,16 @@ public class GameScreen implements Screen  {
 			debugShowBounds = !debugShowBounds;
 		}
 						
-		if (Gdx.input.isKeyJustPressed(Keys.P)) {
-			mario.setX(mario.getX()+8);
-			mario.setY(mario.getY()+6);
-			camera.getCamera().position.x = camera.getCamera().position.x+8;				
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
+			mario.setX(mario.getX()+4);			
+			camera.getCamera().position.x = camera.getCamera().position.x+4;				
 			camera.getCamera().update();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {			
+			mario.setY(mario.getY()-5);			
+		}		
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
+			mario.setY(mario.getY()+5);			
 		}
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			

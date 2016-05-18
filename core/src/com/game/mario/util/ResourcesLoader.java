@@ -13,6 +13,8 @@ public class ResourcesLoader {
 	
 	public static final Texture KOOPA = new Texture(Gdx.files.internal("sprites/enemies/koopa.png"));
 	
+	public static final Texture PIRANHA_PLANT = new Texture(Gdx.files.internal("sprites/enemies/piranha_plant.png"));
+	
 	// Items
 	public static final Texture COIN = new Texture(Gdx.files.internal("sprites/items/coin.png"));	
 	
@@ -39,11 +41,11 @@ public class ResourcesLoader {
 	
 	// Blocks
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));  	
-			
-	// Backgrounds	
-	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("overworld.gif"));
+			 
+	// Backgrounds	// overworld-800.gif underworld-800.png	
+	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("overworld-800.gif"));
 	
-	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("underworld.png"));
+	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("underworld-800.png"));
 	
 	public static final Texture BONUS_STAGE = new Texture(Gdx.files.internal("bonus_stage.png"));
 	

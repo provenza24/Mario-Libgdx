@@ -20,6 +20,7 @@ import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.enemy.Koopa;
+import com.game.mario.sprite.tileobject.enemy.PiranhaPlant;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
@@ -58,13 +59,13 @@ public class TmxMap {
 		MapProperties properties = tileLayer.getProperties();				
 		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());
 		musicTheme = ((String)properties.get("music")).toUpperCase();		
-		initBlocks(backgroundType);
-		items = new ArrayList<AbstractSprite>();
+		initBlocks(backgroundType);		
 		initMapObjects();		
 	}
 
 	private void initMapObjects() {
 		
+		items = new ArrayList<AbstractSprite>();
 		enemies = new ArrayList<AbstractEnemy>();
 		
 		MapObjects objects = objectsLayer.getObjects();
@@ -73,6 +74,9 @@ public class TmxMap {
 								
 			if (objectProperty.get("type").toString().equals("mario")) {
 				mario = new Mario(mapObject);
+			}
+			if (objectProperty.get("type").toString().equals("piranha")) {				
+				enemies.add(new PiranhaPlant(mapObject, mario));
 			}
 			if (objectProperty.get("type").toString().equals("goomba")) {				
 				enemies.add(new Goomba(mapObject, backgroundType));

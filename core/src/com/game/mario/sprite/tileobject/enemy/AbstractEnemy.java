@@ -24,6 +24,6 @@ public abstract class AbstractEnemy extends AbstractTileObjectSprite {
 	public void killByFireball(AbstractSprite fireball) {
 		this.bump();
 		acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
-	}
+	}		
 
 }

@@ -81,8 +81,8 @@ public abstract class AbstractCinematicSceneHandler {
 	
 	protected void renderStatusBar() {
 		spriteBatch.begin();		
-		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, 470);
-		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, 470);		
+		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
+		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
 		spriteBatch.end();
 	}
 	

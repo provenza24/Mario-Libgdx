@@ -36,6 +36,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private static final float ACCELERATION_COEF = 0.2f;
 	
 	private static final float ACCELERATION_COEF_SPEEDUP = 0.2f;
+	
+	private static final float HALF_WIDHT = 0.5f;;
 
 	private Animation animations[][];   
 	

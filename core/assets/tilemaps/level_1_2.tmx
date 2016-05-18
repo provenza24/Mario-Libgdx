@@ -64,9 +64,9 @@
     <property name="xAlive" value="376"/>
    </properties>
   </object>
-  <object id="55" type="piranha" gid="414" x="3312" y="406" width="32" height="50"/>
-  <object id="56" type="piranha" gid="414" x="3504" y="374" width="32" height="50"/>
-  <object id="57" type="piranha" gid="414" x="3696" y="438" width="32" height="50"/>
+  <object id="55" type="piranha" gid="414" x="3312" y="398" width="32" height="50"/>
+  <object id="56" type="piranha" gid="414" x="3504" y="366" width="32" height="50"/>
+  <object id="57" type="piranha" gid="414" x="3696" y="430" width="32" height="50"/>
   <object id="58" type="coin" gid="412" x="1282" y="320" width="28" height="32"/>
   <object id="59" type="coin" gid="412" x="1442" y="320" width="28" height="32"/>
   <object id="60" type="coin" gid="412" x="1314" y="224" width="28" height="32"/>
