@@ -7,6 +7,7 @@ import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.util.TileIdConstants;
 
 public abstract class Block extends AbstractSprite {
 	
@@ -19,18 +20,19 @@ public abstract class Block extends AbstractSprite {
 	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();				
 	
 	
-	static {					
-		REPLACING_TILES_UNDERGROUND.put(7, 65);
-		REPLACING_TILES_UNDERGROUND.put(8, 65);
-		REPLACING_TILES_UNDERGROUND.put(10, 65);
+	static {	
 		
-		REPLACING_TILES_OVERGROUND.put(7, 5);
-		REPLACING_TILES_OVERGROUND.put(8, 5);
-		REPLACING_TILES_OVERGROUND.put(10, 5);
+		REPLACING_TILES_OVERGROUND.put(TileIdConstants.MYSTERY_BLOCK_COIN, TileIdConstants.BLOCK_OVERGROUND);
+		REPLACING_TILES_OVERGROUND.put(TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM, TileIdConstants.BLOCK_OVERGROUND);
+		REPLACING_TILES_OVERGROUND.put(TileIdConstants.WALL_OVERGROUND_10_COINS, TileIdConstants.BLOCK_OVERGROUND);		
 		
-		REPLACING_TILES_BONUS.put(7, 65);
-		REPLACING_TILES_BONUS.put(8, 65);
-		REPLACING_TILES_BONUS.put(10, 65);
+		REPLACING_TILES_UNDERGROUND.put(TileIdConstants.MYSTERY_BLOCK_COIN, TileIdConstants.BLOCK_UNDERGROUND);
+		REPLACING_TILES_UNDERGROUND.put(TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM, TileIdConstants.BLOCK_UNDERGROUND);
+		REPLACING_TILES_UNDERGROUND.put(TileIdConstants.WALL_UNDERGROUND_10_COINS, TileIdConstants.BLOCK_UNDERGROUND);		
+				
+		REPLACING_TILES_BONUS.put(TileIdConstants.MYSTERY_BLOCK_COIN, TileIdConstants.BLOCK_UNDERGROUND);
+		REPLACING_TILES_BONUS.put(TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM, TileIdConstants.BLOCK_UNDERGROUND);		
+		REPLACING_TILES_BONUS.put(TileIdConstants.WALL_UNDERGROUND_10_COINS, TileIdConstants.BLOCK_UNDERGROUND);
 		
 		REPLACING_TILES_LIST.put(BackgroundTypeEnum.OVERWORLD, REPLACING_TILES_OVERGROUND);
 		REPLACING_TILES_LIST.put(BackgroundTypeEnum.UNDERWORLD, REPLACING_TILES_UNDERGROUND);
@@ -49,10 +51,11 @@ public abstract class Block extends AbstractSprite {
 	
 	protected BackgroundTypeEnum backgroundTypeEnum;
 	
-	static {
-		MAP_ITEMS.put(7, ItemEnum.COIN);
-		MAP_ITEMS.put(8, ItemEnum.RED_MUSHROOM);		
+	static {		
+		MAP_ITEMS.put(TileIdConstants.MYSTERY_BLOCK_COIN, ItemEnum.COIN);
+		MAP_ITEMS.put(TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM, ItemEnum.RED_MUSHROOM);		
 		MAP_ITEMS.put(10, ItemEnum.COINS_10);
+		MAP_ITEMS.put(70, ItemEnum.COINS_10);
 	}
 	
 	public Block(float x, float y, int tileId, BackgroundTypeEnum backgroundTypeEnum) {

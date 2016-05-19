@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="51">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="640" height="640"/>
+  <tile id="6">
+   <properties>
+    <property name="item" value="coin"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
+  <image source="mario_jump_right.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="402" name="Goomba" tilewidth="32" tileheight="32">
+  <image source="goomba.png" width="96" height="32"/>
+ </tileset>
+ <tileset firstgid="405" name="Flag" tilewidth="32" tileheight="32">
+  <image source="flag.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="406" name="Transfer" tilewidth="8" tileheight="8">
+  <image source="transfer.png" width="32" height="8"/>
+ </tileset>
+ <tileset firstgid="410" name="Coin" tilewidth="28" tileheight="32">
+  <image source="coin.png" width="112" height="32"/>
+ </tileset>
+ <tileset firstgid="414" name="piranah" tilewidth="32" tileheight="50">
+  <image source="plant_piranha.png" width="64" height="50"/>
+ </tileset>
+ <tileset firstgid="416" name="turtle" tilewidth="32" tileheight="48">
+  <image source="turtle.png" width="32" height="48"/>
+ </tileset>
+ <layer name="world" width="232" height="15">
+  <properties>
+   <property name="background" value="overworld"/>
+   <property name="music" value="main-theme"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt0wEKgzAMhWF1A73ABroTzMt5iN1gJ14HK0hZS9RYY/k/CBVJakBeVQEAAAAAoGeqj94AQMyLfAJmkc9ydEcvAHXkE7CLfAJ2kU/ALvJpyzVxtn/6W8Ezzot8lufm6r5DL/Ijn+V5uhp36EV+mvns3V2Dq4fgzl7Yl8uS3X2/xv6a9/j955l71/Ez7F1j+H03p6X/6sxi+fy+boR1WTEzn9s6K50PZyRzfqZJ9Ic9qV6K0qgP8I4NpA==
+  </data>
+ </layer>
+ <objectgroup name="objectsLayer">
+  <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
+  <object id="50" type="flag" gid="405" x="7252" y="160" width="32" height="32"/>
+ </objectgroup>
+</map>

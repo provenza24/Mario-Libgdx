@@ -22,7 +22,6 @@ import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
@@ -32,10 +31,12 @@ import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
 import com.game.mario.screen.cinematic.MarioGrowingSceneHandler;
 import com.game.mario.screen.cinematic.TransferSceneHandler;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.item.Fireball;
+import com.game.mario.sprite.misc.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
@@ -331,7 +332,8 @@ public class GameScreen implements Screen  {
 			AbstractSprite abstractSprite = fireballs.get(i); 
 			abstractSprite.update(tileMap, camera.getCamera(), deltaTime);			
 			if (abstractSprite.isDeletable()) {				
-				fireballs.remove(i--);				
+				fireballs.remove(i--);
+				explodeFireball(abstractSprite);		
 			} else if (abstractSprite.isVisible()) {
 				abstractSprite.render(renderer.getBatch());
 			}
@@ -356,6 +358,7 @@ public class GameScreen implements Screen  {
 					if (collideFireball) {
 						enemy.killByFireball(fireball);
 						mario.getFireballs().remove(k--);
+						explodeFireball(fireball);		
 					}
 				}
 				if (!enemy.isKilled()) {					
@@ -390,6 +393,13 @@ public class GameScreen implements Screen  {
 			}
 
 		}
+	}
+
+	private void explodeFireball(AbstractSprite fireball) {		
+		AbstractItem item = new FireballExplosion(fireball);		
+		tileMap.getItems().add(item);
+		stage.addActor(item);				   				
+		item.addAppearAction();
 	}
 
 	private void renderMysteryBlocks(float delta) {
@@ -437,15 +447,15 @@ public class GameScreen implements Screen  {
 		}
 						
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
-			mario.setX(mario.getX()+4);			
-			camera.getCamera().position.x = camera.getCamera().position.x+4;				
+			mario.setX(mario.getX()+8);			
+			camera.getCamera().position.x = camera.getCamera().position.x+8;				
 			camera.getCamera().update();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {			
-			mario.setY(mario.getY()-5);			
+			mario.setY(mario.getY()-8);			
 		}		
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
-			mario.setY(mario.getY()+5);			
+			mario.setY(mario.getY()+8);			
 		}
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			

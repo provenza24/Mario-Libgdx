@@ -43,16 +43,19 @@ public class ResourcesLoader {
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));  	
 			 
 	// Backgrounds	// overworld-800.gif underworld-800.png	
-	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("overworld-800.gif"));
+	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("backgrounds/overworld.gif"));
 	
-	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("underworld-800.png"));
+	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("backgrounds/underworld.png"));
 	
-	public static final Texture BONUS_STAGE = new Texture(Gdx.files.internal("bonus_stage.png"));
+	public static final Texture BONUS_STAGE = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));
 	
 	// Transparency sprites	
 	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/transparency/pipe_down.png"));
 	
 	public static final Texture PIPE_LEFT = new Texture(Gdx.files.internal("sprites/transparency/pipe_left.png"));
+	
+	// Miscelleanous
+	public static final Texture FIREBALL_EXPLOSION = new Texture(Gdx.files.internal("sprites/misc/fireball_explosion.png"));
 	
 	// Menu
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));

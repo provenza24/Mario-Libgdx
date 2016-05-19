@@ -36,7 +36,8 @@ public class PiranhaPlant extends AbstractEnemy {
 	public PiranhaPlant(MapObject mapObject, Mario mario) {
 		super(mapObject);	
 		offset.x = 0.1f;
-		setSize(1 - 2*offset.x, HEIGHT);
+		offset.y = 0.1f;
+		setSize(1 - 2*offset.x, HEIGHT - offset.y);
 		renderingSize.y = HEIGHT;
 		setGravitating(false);
 		setCollidableWithTilemap(false);

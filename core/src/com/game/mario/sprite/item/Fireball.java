@@ -13,6 +13,19 @@ import com.game.mario.util.ResourcesLoader;
 
 public class Fireball extends AbstractSprite {
 
+	public Fireball(Mario mario) {
+		super(mario.getX() + mario.getWidth()/2, mario.getY() + 0.9f);		
+		setSize(0.5f, 0.5f);		
+		renderingSize = new Vector2(0.5f,0.5f);
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
+		alive = true;		
+		acceleration.x = mario.getDirection()==DirectionEnum.RIGHT ? 16 : -16;
+		acceleration.y = -0.1f;
+		moveable = true;
+		collidableWithTilemap = true;
+		gravitating = true; 
+	}
+	
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 		super.update(tileMap, camera, deltaTime);		
@@ -24,20 +37,7 @@ public class Fireball extends AbstractSprite {
 				|| this.getMapCollisionEvent().isCollidingRight() 
 				|| this.getMapCollisionEvent().isCollidingTop()
 				|| camera.position.x+8<getX();
-	}
-	
-	public Fireball(Mario mario) {
-		super(mario.getX(), mario.getY()+mario.getHeight() - 0.25f);		
-		setSize(0.5f, 0.5f);		
-		renderingSize = new Vector2(0.5f,0.5f);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
-		alive = true;		
-		acceleration.x = mario.getDirection()==DirectionEnum.RIGHT ? 16 : -16;
-		acceleration.y = -0.1f;
-		moveable = true;
-		collidableWithTilemap = true;
-		gravitating = true; 
-	}
+	}	
 
 	@Override
 	public void initializeAnimations() {

@@ -32,13 +32,13 @@ public class Koopa extends AbstractEnemy {
 
 		super(mapObject);
 		offset.x = 0.2f;
-		offset.y = 0f;
-		setSize(1 - offset.x * 2, 1.5f - offset.y * 2);
+		offset.y = 0.1f;
+		setSize(1 - offset.x * 2, 1 - offset.y);
 		renderingSize.y = 1.5f;
 		currentAnimation = walkLeftAnimation;
 		acceleration.x = -1.9f;		
 		gravitating = true;
-		bounds = new Rectangle(getX() + offset.x, getY() + offset.y, getWidth(), getHeight());		
+		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());		
 	}
 
 	@Override
@@ -92,6 +92,7 @@ public class Koopa extends AbstractEnemy {
 				state = EnemyStateEnum.NO_MOVE;
 				currentAnimation = killedAnimation;
 				noMoveTime = 0;
+				mario.setY(getY()+1);
 			}	
 		} else if (state == EnemyStateEnum.NO_MOVE) {
 			isEnemyHit = true;
@@ -102,6 +103,7 @@ public class Koopa extends AbstractEnemy {
 		} else if (state == EnemyStateEnum.SLIDING) {
 			isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
 			if (isEnemyHit) {
+				mario.setY(getY()+1);
 				mario.getAcceleration().y = 0.15f;
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 				acceleration.x = 0;
@@ -145,7 +147,7 @@ public class Koopa extends AbstractEnemy {
 			} else if (noMoveTime>=5 && noMoveTime<=8) {
 				currentAnimation = wakeUpAnimation;
 			} else {
-				setSize(1 - offset.x * 2, 1.5f);
+				setSize(1 - offset.x * 2, 1);
 				renderingSize.y = 1.5f;
 				currentAnimation = walkLeftAnimation;
 				acceleration.x = -1.9f;		
@@ -168,6 +170,18 @@ public class Koopa extends AbstractEnemy {
 			acceleration.y = 0.15f;
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 		} 	
+	}
+	
+	@Override
+	public void bump() {
+		if (!isBumped()) {
+			super.bump();			
+			collidableWithTilemap = false;
+			this.currentAnimation = bumpAnimation;
+			acceleration.x = getAcceleration().x > 0 ? 3 : -3;
+			acceleration.y = 0.15f;
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+		}
 	}
 	
 }

@@ -26,6 +26,7 @@ import com.game.mario.sprite.tileobject.item.Flag;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.util.TileIdConstants;
 
 public class TmxMap {
 
@@ -111,10 +112,10 @@ public class TmxMap {
 				if (cell != null) {
 					TiledMapTile tile = cell.getTile();
 					int id = tile.getId();
-					if (id == 7 || id == 8) {
+					if (id == TileIdConstants.MYSTERY_BLOCK_COIN || id == TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM) {
 						blocks.add(new MysteryBlock(i, j, id, background));
 					} 
-					if (id == 10) {
+					if (id == TileIdConstants.WALL_UNDERGROUND_10_COINS || id == TileIdConstants.WALL_OVERGROUND_10_COINS) {
 						wallBlocks.add(new WallBlock(i, j, id, background));
 					}
 				}

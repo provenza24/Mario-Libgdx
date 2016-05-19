@@ -11,18 +11,20 @@ import com.game.mario.collision.item.IItemCollisionHandler;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.TileIdConstants;
 
 public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockCollisionHandler  {
 
 	private static Map<Integer, IUpperBlockCollisionHandler> handlers = new HashMap<Integer, IUpperBlockCollisionHandler>();
 	
 	static {
-		handlers.put(4, new WallCollisionHandler());
-		handlers.put(64, new WallCollisionHandler());
-		handlers.put(7, new MysteryBlockCollisionHandler());
-		handlers.put(8, new MysteryBlockCollisionHandler());
+		handlers.put(TileIdConstants.WALL_OVERGROUND, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_UNDERGROUND, new WallCollisionHandler());
+		handlers.put(TileIdConstants.MYSTERY_BLOCK_COIN, new MysteryBlockCollisionHandler());
+		handlers.put(TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM, new MysteryBlockCollisionHandler());
 		
-		handlers.put(10, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_OVERGROUND_10_COINS, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_UNDERGROUND_10_COINS, new WallCollisionHandler());
 	}
 	
 	public static IUpperBlockCollisionHandler getHandler(Integer tileId) {

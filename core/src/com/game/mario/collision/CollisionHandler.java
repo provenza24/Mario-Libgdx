@@ -22,13 +22,20 @@ public class CollisionHandler {
 	private static final CollisionHandler collisionHandler = new CollisionHandler();
 
 	public void collideEnemies(AbstractEnemy enemy1, AbstractEnemy enemy2) {
-		if (enemy1.getBounds().overlaps(enemy2.getBounds()) 
-				&& !enemy1.isBumped() && !enemy2.isBumped()) {
+		
+		if (enemy1.getBounds().overlaps(enemy2.getBounds()) && !enemy1.isBumped() && !enemy2.isBumped()) {
+		
+			boolean isKoopaSliding = false;
 			if (enemy1.getEnemyType()==EnemyTypeEnum.KOOPA && enemy1.getEnemyState()==EnemyStateEnum.SLIDING) {
-				enemy2.bump();				
-			} else if (enemy2.getEnemyType()==EnemyTypeEnum.KOOPA && enemy2.getEnemyState()==EnemyStateEnum.SLIDING) {
-				enemy1.bump();				
-			} else {
+				enemy2.bump();	
+				isKoopaSliding = true;
+			}
+			if (enemy2.getEnemyType()==EnemyTypeEnum.KOOPA && enemy2.getEnemyState()==EnemyStateEnum.SLIDING) {
+				enemy1.bump();
+				isKoopaSliding = true;
+			}
+			
+			if (!isKoopaSliding) {
 				enemy1.setOldPosition(enemy2.getOldPosition());
 				enemy1.getAcceleration().x = -enemy1.getAcceleration().x;
 				enemy2.getAcceleration().x = -enemy2.getAcceleration().x;
