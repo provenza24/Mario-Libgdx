@@ -141,7 +141,7 @@ public class GameScreen implements Screen  {
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
 		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);	
 						
-		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERWORLD.toString())) {
+		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERGROUND.toString())) {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_OVERWORLD_THEME);	
 		} else {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);

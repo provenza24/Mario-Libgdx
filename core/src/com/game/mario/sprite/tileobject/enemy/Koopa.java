@@ -86,13 +86,13 @@ public class Koopa extends AbstractEnemy {
 			if (isEnemyHit) {
 				setSize(1 - offset.x * 2, 0.875f);	
 				bounds.set(getX(), getY(), getWidth(), getHeight());				
-				mario.getAcceleration().y = 0.15f;
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
+				mario.getAcceleration().y = 0.15f;				
 				acceleration.x = 0;
 				state = EnemyStateEnum.NO_MOVE;
 				currentAnimation = killedAnimation;
 				noMoveTime = 0;
 				mario.setY(getY()+1);
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
 			}	
 		} else if (state == EnemyStateEnum.NO_MOVE) {
 			isEnemyHit = true;
@@ -100,16 +100,17 @@ public class Koopa extends AbstractEnemy {
 			setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
 			state = EnemyStateEnum.SLIDING;
 			currentAnimation = slideAnimation;			
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 		} else if (state == EnemyStateEnum.SLIDING) {
 			isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
 			if (isEnemyHit) {
 				mario.setY(getY()+1);
-				mario.getAcceleration().y = 0.15f;
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+				mario.getAcceleration().y = 0.15f;				
 				acceleration.x = 0;
 				state = EnemyStateEnum.NO_MOVE;
 				noMoveTime = 0;
-				currentAnimation = killedAnimation;			
+				currentAnimation = killedAnimation;
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 			}
 		}
 		return isEnemyHit;

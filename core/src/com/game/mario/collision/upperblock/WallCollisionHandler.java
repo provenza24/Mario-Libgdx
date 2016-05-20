@@ -10,6 +10,7 @@ import com.game.mario.action.DeleteBlocSpriteAction;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.item.EjectedCoin;
 import com.game.mario.sprite.item.wallpiece.AbstractWallPiece;
@@ -88,7 +89,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage, WallBlock specialWallBlock) {
 		
-		WallBlock wallBlock = new WallBlock(collidingCell.getX(), collidingCell.getY(),collidingCell.getCell().getTile().getId(), tileMap.getBackgroundType());		
+		Block wallBlock = new WallBlock(collidingCell.getX(), collidingCell.getY(),collidingCell.getCell().getTile().getId(), tileMap.getBackgroundType());		
 		tileMap.getBlocks().add(wallBlock);
 		stage.addActor(wallBlock);
 		float yWallBlock = wallBlock.getY();
@@ -112,7 +113,11 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 					replacingTileValue = specialWallBlock.getReplacingTileValue();
 				}											
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);
-			}
+			} else {
+				super.addItemFromBlock(tileMap, stage, specialWallBlock);
+				replacingTileValue = specialWallBlock.getReplacingTileValue();
+			}			
+						
 		}
 		
 		ChangeCellValueAction changeCellValueAction2 = new ChangeCellValueAction(tileMap, collidingCell.getX(), collidingCell.getY(), replacingTileValue);
@@ -124,5 +129,6 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		wallBlock.addAction(sequenceAction);		
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BUMP);		
 	}
+		
 			
 }

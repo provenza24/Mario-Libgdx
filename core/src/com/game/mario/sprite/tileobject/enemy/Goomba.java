@@ -19,8 +19,8 @@ public class Goomba extends AbstractEnemy {
 	protected static final Map<BackgroundTypeEnum, Texture> TEXTURES = new HashMap<BackgroundTypeEnum, Texture>();
 	
 	static {
-		TEXTURES.put(BackgroundTypeEnum.OVERWORLD, ResourcesLoader.GOOMBA_OVERWORLD);
-		TEXTURES.put(BackgroundTypeEnum.UNDERWORLD, ResourcesLoader.GOOMBA_UNDERWORLD);
+		TEXTURES.put(BackgroundTypeEnum.OVERGROUND, ResourcesLoader.GOOMBA_OVERWORLD);
+		TEXTURES.put(BackgroundTypeEnum.UNDERGROUND, ResourcesLoader.GOOMBA_UNDERWORLD);
 	}
 	
 	private Animation walkAnimation;

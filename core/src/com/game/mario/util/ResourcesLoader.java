@@ -1,11 +1,17 @@
 package com.game.mario.util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.game.mario.enums.BackgroundTypeEnum;
 
 public class ResourcesLoader {
 
+	public static final Map<BackgroundTypeEnum, Texture> WALL_TEXTURES = new HashMap<BackgroundTypeEnum, Texture>();		
+	
 	// Enemies
 	public static final Texture GOOMBA_UNDERWORLD = new Texture(Gdx.files.internal("sprites/enemies/goomba_underworld.png"));
 	
@@ -40,7 +46,12 @@ public class ResourcesLoader {
 	public static final Texture MARIO_FLOWER = new Texture(Gdx.files.internal("sprites/mario/mario-big-flower.png"));
 	
 	// Blocks
-	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));  	
+	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));
+	
+	// Walls
+	public static final Texture WALL_UNDERGROUND = new Texture(Gdx.files.internal("sprites/wall/wall_underground.png"));
+	
+	public static final Texture WALL_OVERGROUND = new Texture(Gdx.files.internal("sprites/wall/wall_overground.png"));
 			 
 	// Backgrounds	// overworld-800.gif underworld-800.png	
 	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("backgrounds/overworld.gif"));
@@ -62,5 +73,8 @@ public class ResourcesLoader {
 	
 	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 		
-	
+	static {
+		WALL_TEXTURES.put(BackgroundTypeEnum.OVERGROUND, WALL_OVERGROUND);		
+		WALL_TEXTURES.put(BackgroundTypeEnum.UNDERGROUND, WALL_UNDERGROUND);				
+	}
 }

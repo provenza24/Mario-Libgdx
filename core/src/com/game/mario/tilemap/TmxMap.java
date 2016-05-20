@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
@@ -112,12 +113,13 @@ public class TmxMap {
 				if (cell != null) {
 					TiledMapTile tile = cell.getTile();
 					int id = tile.getId();
-					if (id == TileIdConstants.MYSTERY_BLOCK_COIN || id == TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM) {
+					
+					BlockTypeEnum blockTypeEnum = TileIdConstants.getSpecialBlockType(id);
+					if (blockTypeEnum==BlockTypeEnum.MYSTERY_BLOCK) {
 						blocks.add(new MysteryBlock(i, j, id, background));
-					} 
-					if (id == TileIdConstants.WALL_UNDERGROUND_10_COINS || id == TileIdConstants.WALL_OVERGROUND_10_COINS) {
+					} else if (blockTypeEnum==BlockTypeEnum.WALL_BLOCK) {
 						wallBlocks.add(new WallBlock(i, j, id, background));
-					}
+					}					
 				}
 			}
 		}

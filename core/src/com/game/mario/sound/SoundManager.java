@@ -56,8 +56,8 @@ public class SoundManager {
 	private static long currentMusicId;
 	
 	static {
-		THEMES.put(MusicEnum.UNDERWORLD, SOUND_UNDERGROUND_THEME);
-		THEMES.put(MusicEnum.OVERWORLD, SOUND_OVERWORLD_THEME);
+		THEMES.put(MusicEnum.UNDERGROUND, SOUND_UNDERGROUND_THEME);
+		THEMES.put(MusicEnum.OVERGROUND, SOUND_OVERWORLD_THEME);
 		THEMES.put(MusicEnum.BONUS, SOUND_BONUS_THEME);
 	}
 	

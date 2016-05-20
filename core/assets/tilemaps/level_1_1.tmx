@@ -31,8 +31,8 @@
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
-   <property name="background" value="overworld"/>
-   <property name="music" value="overworld"/>
+   <property name="background" value="overground"/>
+   <property name="music" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJztmslOwzAURV1AacUepJY1YpCYBBsEC4vhExj/gPkLmH+cW6mlxtjxixO3aXqPdKUktV9c16eppSpFCEmBRrZao2jlj9mun31cOxj7iAmZHbT675009JMQPy+t8jW0op+EpOCbfhJSW+gnIfWl6X62E9auEwuB+NqWmZ9OiTG6XmsP4nq9aWSDhGi6n4TUjUzRT0LqSKbo5zQyK7/DZxnbzVg/t3FtB9lF9gT+ajV5P+313d/DdNRoX5NqT7OELCdoK8F8j7Es5tR2fWe0Bcd2HSm+vemQzHMcwnahSN8h5n49Zr5dbsb6eYJrp8gZch7hp1bN+f9QyKkNZFNYq0hb8heXY5L17XJB2rcqfG7G+HmB80vkCrlGbpDbgKNaFfdzDcfryKqajJ/SZ1nIKfqZnjzH8ta4z4VQ37K/c8z+eW7G+HmH83vkAXlEnpDnBH4e4fgYOVTxfnZRp4esCJ7xXaud1BWznV2jSB1XLenYffeOoco64xi/vZ57g/uG1nmeC/b10GdadOzD/iE3pc9/k1eM4w15Rz6QT+RL4GfZ9G8xx/xm3pjf2Lkxa5Sp04RUMZ/TGl1BfgAjxU5y
@@ -143,8 +143,8 @@
   <object id="44" type="coin" gid="412" x="7168" y="192" width="28" height="32"/>
   <object id="46" type="transferRight" gid="409" x="7288" y="402" width="8" height="8">
    <properties>
-    <property name="background" value="overworld"/>
-    <property name="music" value="overworld"/>
+    <property name="background" value="overground"/>
+    <property name="music" value="overground"/>
     <property name="scrollable" value="true"/>
     <property name="xOutgoing" value="5232"/>
     <property name="yOutgoing" value="96"/>

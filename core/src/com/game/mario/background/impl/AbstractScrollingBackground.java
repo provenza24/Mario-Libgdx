@@ -24,8 +24,8 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 	protected int width;
 		
 	static {
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERWORLD, ResourcesLoader.OVERWORLD);
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERWORLD, ResourcesLoader.UNDERWORLD);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERGROUND, ResourcesLoader.OVERWORLD);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERGROUND, ResourcesLoader.UNDERWORLD);
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.BONUS, ResourcesLoader.BONUS_STAGE);
 	}
 	
