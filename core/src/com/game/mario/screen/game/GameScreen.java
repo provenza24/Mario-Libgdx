@@ -21,6 +21,7 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
+import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.enums.MusicEnum;
@@ -87,6 +88,8 @@ public class GameScreen implements Screen  {
 	private int jumpTimerMax = 20;
 
 	private IScrollingBackground scrollingBackground;
+	
+	private IScrollingBackground scrollingBackground2;
 
 	private Stage stage;
 			
@@ -120,6 +123,7 @@ public class GameScreen implements Screen  {
 		camera.setCameraOffset(mario.getX());
 		
 		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackgroundType(), 16);
+		scrollingBackground2 = new LeftScrollingBackground(mario, spriteBatch, BackgroundTypeEnum.OVERGROUND_2, 32);
 		
 		stage = new Stage();
 					
@@ -190,8 +194,10 @@ public class GameScreen implements Screen  {
 			// Move scrolling background
 			if (Math.floor(camera.getCameraOffset()) == 8) {
 				scrollingBackground.update();
+				scrollingBackground2.update();
 			}
 			scrollingBackground.render();
+			scrollingBackground2.render();
 		}
 		
 		// Render tilemap

@@ -60,6 +60,8 @@ public class ResourcesLoader {
 	
 	public static final Texture BONUS_STAGE = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));
 	
+	public static final Texture OVERWORLD_2 = new Texture(Gdx.files.internal("backgrounds/background_2.png"));
+	
 	// Transparency sprites	
 	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/transparency/pipe_down.png"));
 	
