@@ -31,14 +31,20 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 		// Mystery blocks collision handlers		
 		handlers.put(TileIdConstants.MYSTERY_BLOCK_COIN, new MysteryBlockCollisionHandler());
 		handlers.put(TileIdConstants.MYSTERY_BLOCK_RED_MUSHROOM, new MysteryBlockCollisionHandler());
+		handlers.put(TileIdConstants.MYSTERY_BLOCK_GREEN_MUSHROOM, new MysteryBlockCollisionHandler());
 		
 		// Walls collision handlers
 		handlers.put(TileIdConstants.WALL_OVERGROUND, new WallCollisionHandler());
 		handlers.put(TileIdConstants.WALL_UNDERGROUND, new WallCollisionHandler());
+		
 		handlers.put(TileIdConstants.WALL_OVERGROUND_10_COINS, new WallCollisionHandler());
-		handlers.put(TileIdConstants.WALL_UNDERGROUND_10_COINS, new WallCollisionHandler());
-		handlers.put(TileIdConstants.WALL_UNDERGROUND_GREEN_MUSHROOM, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_OVERGROUND_RED_MUSHROOM, new WallCollisionHandler());
 		handlers.put(TileIdConstants.WALL_OVERGROUND_GREEN_MUSHROOM, new WallCollisionHandler());		
+		
+		handlers.put(TileIdConstants.WALL_UNDERGROUND_10_COINS, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_UNDERGROUND_RED_MUSHROOM, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_UNDERGROUND_GREEN_MUSHROOM, new WallCollisionHandler());
+		
 	}
 	
 	public static IUpperBlockCollisionHandler getHandler(Integer tileId) {

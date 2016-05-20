@@ -35,14 +35,11 @@
    <property name="music" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt11EKgzAMxnF1so2xC6iH3CF28cWHwhAsaRNrhP8PvpeRtPEh6LoOAAAc6SF5Sl6S98mzAADQwqc/ewIAe77sJxCWZT/HTADY8f4E4mI/gbis+3n3GUN9Vu19nnMCrdTuZ+6/pyVH3wlcCd+3QFzsJxCX535OctYsWRRnTsq6VkpmT/Ue83ueUzL/ynpvurP0XquaZ72qvf1cfx6UuVX0/PdZe7X92x5NX+oZMvXbmlwtIR75ATIdCq0=
+   eJzt1UEOgjAQBVDEhRr1AOghPYQXtyyaEBJIgaqjeS/5GzLT1sWPTQMAAAD1PHbffgEw5amfEJZ+Qlz6CXHpJ8SlnxDXO/p5SDmmnAbfzimXlGv96+Bv+f+EuPQT4qrZzy6ddUu5F5zZFc59ypK35/ka7695zpL397bem+9ceu9Wa37rr5rqZ/+5Lcx+xc5wb+tu6f54p2Qv77Qz8+OZuVmRGnkBSfQJ9A==
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="50" type="flag" gid="405" x="7252" y="160" width="32" height="32"/>
-  <object id="53" type="goomba" gid="402" x="729" y="320" width="32" height="32"/>
-  <object id="61" type="koopa" gid="416" x="620" y="320" width="32" height="48"/>
-  <object id="62" type="koopa" gid="416" x="1602" y="320" width="32" height="48"/>
  </objectgroup>
 </map>
