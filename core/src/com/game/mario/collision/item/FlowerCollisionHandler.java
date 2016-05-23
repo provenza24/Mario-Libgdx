@@ -1,6 +1,7 @@
 package com.game.mario.collision.item;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sound.SoundManager;
@@ -14,8 +15,8 @@ public class FlowerCollisionHandler extends AbstractItemCollisionHandler {
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, IScrollingBackground scrollingBackground) {		
-		super.collide(mario, item, camera, scrollingBackground);
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
+		super.collide(mario, item, camera, scrollingBackgrounds);
 		if (mario.getSizeState()==0) {
 			mario.setGrowingUp(true);			
 			mario.setGrowUpAnimation();

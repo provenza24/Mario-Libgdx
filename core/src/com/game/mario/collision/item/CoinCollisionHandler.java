@@ -1,6 +1,7 @@
 package com.game.mario.collision.item;
 
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -17,8 +18,8 @@ public class CoinCollisionHandler extends AbstractItemCollisionHandler {
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, IScrollingBackground scrollingBackground) {		
-		super.collide(mario, item, camera, scrollingBackground);
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
+		super.collide(mario, item, camera, scrollingBackgrounds);
 		GameManager.getGameManager().addCoin();
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);		
 	}

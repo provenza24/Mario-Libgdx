@@ -9,5 +9,7 @@ public interface IScrollingBackground {
 	public void render();	
 	
 	public void changeImage(BackgroundTypeEnum backgroundTypeEnum);
+	
+	public void toggleEnabled();
 		
 }

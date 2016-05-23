@@ -89,7 +89,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage, WallBlock specialWallBlock) {
 		
-		Block wallBlock = new WallBlock(collidingCell.getX(), collidingCell.getY(),collidingCell.getCell().getTile().getId(), tileMap.getBackgroundType());		
+		Block wallBlock = new WallBlock(collidingCell.getX(), collidingCell.getY(),collidingCell.getCell().getTile().getId(), tileMap.getWorldType());		
 		tileMap.getBlocks().add(wallBlock);
 		stage.addActor(wallBlock);
 		float yWallBlock = wallBlock.getY();

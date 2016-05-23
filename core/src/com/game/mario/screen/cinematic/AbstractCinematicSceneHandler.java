@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -26,8 +27,8 @@ public abstract class AbstractCinematicSceneHandler {
 	
 	protected GameCamera camera;
 	
-	protected IScrollingBackground scrollingBackground;
-
+	protected Array<IScrollingBackground> scrollingBackgrounds;
+	
 	protected BitmapFont font;
 
 	protected SpriteBatch spriteBatch;
@@ -39,13 +40,13 @@ public abstract class AbstractCinematicSceneHandler {
 	protected Batch batch;
 	
 	public AbstractCinematicSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
-			IScrollingBackground scrollingBackground, BitmapFont font, SpriteBatch spriteBatch,
+			 Array<IScrollingBackground> backgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
 		super();
 		this.mario = mario;
 		this.tileMap = tileMap;
 		this.camera = camera;
-		this.scrollingBackground = scrollingBackground;
+		this.scrollingBackgrounds = backgrounds;
 		this.font = font;
 		this.spriteBatch = spriteBatch;
 		this.renderer = renderer;
@@ -57,8 +58,11 @@ public abstract class AbstractCinematicSceneHandler {
 	
 	protected void renderCinematicScene(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);		
-		scrollingBackground.render();
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		scrollingBackgrounds.get(0).render();
+		if (scrollingBackgrounds.size>1) {
+			scrollingBackgrounds.get(1).render();
+		}
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		renderMysteryBlocks(delta);

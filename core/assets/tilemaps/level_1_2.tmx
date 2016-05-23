@@ -31,8 +31,9 @@
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
-   <property name="background" value="underground"/>
+   <property name="backgrounds" value="underground"/>
    <property name="music" value="underground-theme"/>
+   <property name="world" value="underground"/>
   </properties>
   <data encoding="base64" compression="zlib">
    eJztlllKxTAUho8+XN2A7kAcwOlR9OqhKuICHHfgvALnjfsrXoixpxma5rbh/PBRmuQkacpHuz5DtK4oBVBipn2mipKKEjPtM1WUVOTKU8a1uKFdScNpD/bQli7TtO4qWOvBHs189sDPoYfp77OxgNTvmtc1TpMm6meZYVI/S4j6WVaY/J6pblxdne98mm6S08/RL66on/FhUj9LSi4/R6R+hoaNq4nZV1cj9bnG1dX5zmePt9HEJYefI1I/zZx4jmPrKrXZNVKfa5y0nu9+zXltSg4LtMkyWAFL1K2ftpuxfm6gbRNsge2E/rLnuHkwZ+FKZV1Dw/T/7OvapBqpTpqjqc41f84sgMVMa1UU//7aZBfsgR3qzs86N2P9rNB2CI7A8RT8DIntpeRpl++dafjfLcnDyT9fSJjCz6Oi7v3khIREcjPGzzPcn4MLcAmuwHUiRznNND9xeSn52cX7Zxq+n5KHUnvTd5Up7DwqKstP82ya3Izx8wb3t+AO3IMH8NgjP329zOlnCQn1s+m7yuT/rm03S/BzcjYuN338tMc8w8UX8ArewDv4SOTnGOwrURz0/CzN/Y1r7mOf007TXG1qQ/lWYnYg+OYLtVkMHw==
@@ -43,10 +44,11 @@
   <object id="47" type="flag" gid="405" x="6580" y="128" width="32" height="32"/>
   <object id="49" type="transferRight" gid="409" x="5304" y="340" width="8" height="8">
    <properties>
-    <property name="background" value="overground"/>
+    <property name="backgrounds" value="clouds"/>
     <property name="mapType" value="0"/>
     <property name="music" value="overground"/>
     <property name="scrollable" value="true"/>
+    <property name="world" value="overground"/>
     <property name="xCamera" value="5968"/>
     <property name="xOutgoing" value="5968"/>
     <property name="yOutgoing" value="96"/>

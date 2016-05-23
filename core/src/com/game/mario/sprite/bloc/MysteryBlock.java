@@ -2,7 +2,7 @@ package com.game.mario.sprite.bloc;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.util.ResourcesLoader;
 
@@ -10,7 +10,7 @@ public class MysteryBlock extends Block {
 		
 	protected static float blocStateTime;
 		
-	public MysteryBlock(int x, int y, int tileId, BackgroundTypeEnum backgroundType) {		
+	public MysteryBlock(int x, int y, int tileId, WorldTypeEnum backgroundType) {		
 		super(x,y, tileId, backgroundType);									
 		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
 	}	

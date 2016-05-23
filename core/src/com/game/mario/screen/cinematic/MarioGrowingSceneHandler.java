@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -15,9 +16,9 @@ public class MarioGrowingSceneHandler extends AbstractCinematicSceneHandler {
 	private float growingDuration = 0;	
 	
 	public MarioGrowingSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
-			IScrollingBackground scrollingBackground, BitmapFont font, SpriteBatch spriteBatch,
+			Array<IScrollingBackground> scrollingBackgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
-		super(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
+		super(mario, tileMap, camera, scrollingBackgrounds, font, spriteBatch, renderer, stage, batch);
 	}
 
 	public void handleScene(float delta) {

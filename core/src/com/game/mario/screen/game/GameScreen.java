@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
@@ -86,11 +87,9 @@ public class GameScreen implements Screen  {
 	private ShapeRenderer shapeRenderer;
 
 	private int jumpTimerMax = 20;
-
-	private IScrollingBackground scrollingBackground;
 	
-	private IScrollingBackground scrollingBackground2;
-
+	private Array<IScrollingBackground> backgrounds;
+	
 	private Stage stage;
 			
 	private AbstractCinematicSceneHandler levelEndingSceneHandler;
@@ -122,8 +121,18 @@ public class GameScreen implements Screen  {
 		camera = new GameCamera();
 		camera.setCameraOffset(mario.getX());
 		
-		scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, tileMap.getBackgroundType(), 16);
-		scrollingBackground2 = new LeftScrollingBackground(mario, spriteBatch, BackgroundTypeEnum.OVERGROUND_2, 32);
+		backgrounds = new Array<IScrollingBackground>();
+		int i=0;
+		for (BackgroundTypeEnum backgroundTypeEnum : tileMap.getBackgroundTypesEnum()) {
+			if (i==0) {
+				IScrollingBackground scrollingBackground_1 = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, 16);
+				backgrounds.add(scrollingBackground_1);
+			} else {
+				IScrollingBackground scrollingBackground_2 = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, 24);
+				backgrounds.add(scrollingBackground_2);
+			}
+			i++;
+		}
 		
 		stage = new Stage();
 					
@@ -140,10 +149,10 @@ public class GameScreen implements Screen  {
 		
 		levelFinished = false;			
 				
-		levelEndingSceneHandler = new LevelEndingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
-		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
-		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
-		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);	
+		levelEndingSceneHandler = new LevelEndingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);	
 						
 		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERGROUND.toString())) {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_OVERWORLD_THEME);	
@@ -193,11 +202,15 @@ public class GameScreen implements Screen  {
 			camera.moveCamera(mario);
 			// Move scrolling background
 			if (Math.floor(camera.getCameraOffset()) == 8) {
-				scrollingBackground.update();
-				scrollingBackground2.update();
+				backgrounds.get(0).update();				
+				if (backgrounds.size>1) {
+					backgrounds.get(1).update();
+				}
 			}
-			scrollingBackground.render();
-			scrollingBackground2.render();
+			backgrounds.get(0).render();
+			if (backgrounds.size>1) {
+				backgrounds.get(1).render();
+			}
 		}
 		
 		// Render tilemap
@@ -275,6 +288,10 @@ public class GameScreen implements Screen  {
 				debugFont.draw(spriteBatch, "x"+i+":" + String.format("%.1f",sprite.getX()), 10, 200 + i*20);
 				i++;
 			}
+			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, 10, 180);
+			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), 10, 160);
+			
+			
 			spriteBatch.end();
 		}
 
@@ -322,7 +339,7 @@ public class GameScreen implements Screen  {
 			item.update(tileMap, camera.getCamera(), deltaTime);
 			boolean collideMario = RectangleUtil.overlaps(mario.getBounds(), item.getBounds());
 			if (collideMario) {
-				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, scrollingBackground);				
+				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, backgrounds);				
 			}
 			if (item.isDeletable()) {				
 				items.remove(i--);
@@ -431,9 +448,14 @@ public class GameScreen implements Screen  {
 	}
 
 	private void handleInput() {
-			
-		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
+							
+		
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+			backgrounds.get(0).toggleEnabled();
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && backgrounds.size>1) {
+			backgrounds.get(1).toggleEnabled();
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
@@ -462,6 +484,10 @@ public class GameScreen implements Screen  {
 		}		
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
 			mario.setY(mario.getY()+8);			
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
 		}
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			

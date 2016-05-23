@@ -9,25 +9,25 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.game.mario.action.ActionFacade;
-import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.util.ResourcesLoader;
 
 public class Goomba extends AbstractEnemy {
 
-	protected static final Map<BackgroundTypeEnum, Texture> TEXTURES = new HashMap<BackgroundTypeEnum, Texture>();
+	protected static final Map<WorldTypeEnum, Texture> TEXTURES = new HashMap<WorldTypeEnum, Texture>();
 	
 	static {
-		TEXTURES.put(BackgroundTypeEnum.OVERGROUND, ResourcesLoader.GOOMBA_OVERWORLD);
-		TEXTURES.put(BackgroundTypeEnum.UNDERGROUND, ResourcesLoader.GOOMBA_UNDERWORLD);
+		TEXTURES.put(WorldTypeEnum.OVERGROUND, ResourcesLoader.GOOMBA_OVERWORLD);
+		TEXTURES.put(WorldTypeEnum.UNDERGROUND, ResourcesLoader.GOOMBA_UNDERWORLD);
 	}
 	
 	private Animation walkAnimation;
 	
 	private Animation bumpAnimation;
 		
-	public Goomba(MapObject mapObject, BackgroundTypeEnum backgroundTypeEnum) {
+	public Goomba(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
 		
 		super(mapObject);								
 		offset.x = 0.2f;
@@ -70,7 +70,7 @@ public class Goomba extends AbstractEnemy {
 		
 	}
 	
-	public void initializeAnimations(BackgroundTypeEnum backgroundTypeEnum) {
+	public void initializeAnimations(WorldTypeEnum backgroundTypeEnum) {
 
 		spriteSheet = TEXTURES.get(backgroundTypeEnum);		
 		

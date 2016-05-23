@@ -3,7 +3,7 @@ package com.game.mario.sprite.bloc;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sprite.AbstractSprite;
@@ -17,7 +17,7 @@ public abstract class Block extends AbstractSprite {
 	
 	protected static final Map<Integer, Integer> REPLACING_TILES_BONUS = new HashMap<Integer, Integer>();
 	
-	protected static final Map<BackgroundTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<BackgroundTypeEnum, Map<Integer, Integer>>();				
+	protected static final Map<WorldTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<WorldTypeEnum, Map<Integer, Integer>>();				
 	
 	protected BlockTypeEnum blocType;
 	
@@ -29,7 +29,7 @@ public abstract class Block extends AbstractSprite {
 	
 	protected int tileId;
 	
-	protected BackgroundTypeEnum backgroundTypeEnum;
+	protected WorldTypeEnum backgroundTypeEnum;
 	
 	static {	
 		REPLACING_TILES_OVERGROUND.put(TileIdConstants.MYSTERY_BLOCK_COIN, TileIdConstants.BLOCK_OVERGROUND);		
@@ -53,9 +53,9 @@ public abstract class Block extends AbstractSprite {
 		REPLACING_TILES_BONUS.put(TileIdConstants.WALL_UNDERGROUND_RED_MUSHROOM, TileIdConstants.BLOCK_UNDERGROUND);
 		REPLACING_TILES_BONUS.put(TileIdConstants.WALL_UNDERGROUND_GREEN_MUSHROOM, TileIdConstants.BLOCK_UNDERGROUND);
 		
-		REPLACING_TILES_LIST.put(BackgroundTypeEnum.OVERGROUND, REPLACING_TILES_OVERGROUND);
-		REPLACING_TILES_LIST.put(BackgroundTypeEnum.UNDERGROUND, REPLACING_TILES_UNDERGROUND);
-		REPLACING_TILES_LIST.put(BackgroundTypeEnum.BONUS, REPLACING_TILES_BONUS);
+		REPLACING_TILES_LIST.put(WorldTypeEnum.OVERGROUND, REPLACING_TILES_OVERGROUND);
+		REPLACING_TILES_LIST.put(WorldTypeEnum.UNDERGROUND, REPLACING_TILES_UNDERGROUND);
+		REPLACING_TILES_LIST.put(WorldTypeEnum.BONUS, REPLACING_TILES_BONUS);
 	}
 	
 	static {		
@@ -72,7 +72,7 @@ public abstract class Block extends AbstractSprite {
 		MAP_ITEMS.put(TileIdConstants.WALL_UNDERGROUND_GREEN_MUSHROOM, ItemEnum.GREEN_MUSHROOM);		
 	}
 			
-	public Block(float x, float y, int tileId, BackgroundTypeEnum backgroundTypeEnum) {
+	public Block(float x, float y, int tileId, WorldTypeEnum backgroundTypeEnum) {
 		super(x, y);	
 		itemEnum = MAP_ITEMS.get(tileId);				
 		this.tileId = tileId;

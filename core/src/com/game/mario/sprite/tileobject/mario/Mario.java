@@ -8,15 +8,19 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
+import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -668,7 +672,7 @@ public class Mario extends AbstractTileObjectSprite {
 		this.inTransfer = inTransfer;
 	}
 	
-	public void transfer(GameCamera camera, IScrollingBackground scrollingBackground) {		
+	public void transfer(TmxMap tilemap, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds, SpriteBatch spriteBatch) {		
 		setAcceleration(new Vector2(0, 0));
 		setDirection(DirectionEnum.RIGHT);
 		setX(transferItem.getTransferPosition().x);
@@ -676,8 +680,23 @@ public class Mario extends AbstractTileObjectSprite {
 		camera.setCameraOffset(2f);
 		camera.getCamera().position.x = transferItem.getTransferPosition().x + 6;						
 		camera.getCamera().update();			
-		camera.setScrollable(transferItem.isScrollableCamera());				
-		scrollingBackground.changeImage(transferItem.getBackgroundTypeEnum());					
+		camera.setScrollable(transferItem.isScrollableCamera());
+		scrollingBackgrounds.get(0).changeImage(transferItem.getBackgroundTypesEnum().get(0));
+		if (transferItem.getBackgroundTypesEnum().size>1) {
+			if (scrollingBackgrounds.size>1) {
+				scrollingBackgrounds.get(1).changeImage(transferItem.getBackgroundTypesEnum().get(1));
+			} else {
+				scrollingBackgrounds.add(new LeftScrollingBackground(this, spriteBatch, transferItem.getBackgroundTypesEnum().get(1), 16));
+			}						
+		} else {
+			if (scrollingBackgrounds.size>1) {
+				scrollingBackgrounds.removeIndex(1);
+			}			
+		}
+		
+		tilemap.setWorldType(transferItem.getWorldTypeEnum());
+		
+		//scrollingBackground.changeImage(transferItem.getBackgroundTypeEnum());					
 		SoundManager.getSoundManager().stopMusic();
 		SoundManager.getSoundManager().setCurrentMusic(transferItem.getMusic());
 		SoundManager.getSoundManager().playMusic(false);

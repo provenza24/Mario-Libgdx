@@ -22,13 +22,14 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 	protected AbstractSprite followedSprite;
 	
 	protected int width;
+	
+	protected boolean enabled;
 		
 	static {
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERGROUND, ResourcesLoader.OVERWORLD);
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERGROUND, ResourcesLoader.UNDERWORLD);
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.BONUS, ResourcesLoader.BONUS_STAGE);
-		
-		BACKGROUND_IMAGES.put(BackgroundTypeEnum.OVERGROUND_2, ResourcesLoader.OVERWORLD_2);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.CLOUDS, ResourcesLoader.OVERGROUND_CLOUDS);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.HILLS, ResourcesLoader.OVERGROUND_HILLS);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.UNDERGROUND, ResourcesLoader.UNDERGROUND);
+		BACKGROUND_IMAGES.put(BackgroundTypeEnum.BONUS, ResourcesLoader.BONUS);				
 	}
 	
 	public void changeImage(BackgroundTypeEnum backgroundTypeEnum) {
@@ -43,11 +44,12 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 		super(BACKGROUND_IMAGES.get(backgroundType));
 		this.batch = batch;
 		this.followedSprite = followedSprite;
-		width = getTexture().getWidth();
+		this.enabled = true;
+		this.width = getTexture().getWidth();
 	}
 	
 	public void update() {
-		
+						
 		float xMarioMove = (followedSprite.getX() - followedSprite.getOldPosition().x);
 		if (xMarioMove>0) {			
 			setX(getX() + xMarioMove * velocity);			
@@ -60,12 +62,18 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 	}
 	
 	public void render() {
-		batch.begin();
-		// draw the first background
-		batch.draw(getTexture(), getX() - width, 0);
-		// draw the second background
-		batch.draw(getTexture(), getX(), 0);
-		batch.end();
+		if (enabled) {
+			batch.begin();
+			// draw the first background
+			batch.draw(getTexture(), getX() - width, 0);
+			// draw the second background
+			batch.draw(getTexture(), getX(), 0);
+			batch.end();
+		}		
+	}
+
+	public void toggleEnabled() {
+		enabled = !enabled;
 	}
 	
 }

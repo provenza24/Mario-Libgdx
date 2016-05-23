@@ -7,11 +7,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.MusicEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.TilemapPropertiesConstants;
 
 public abstract class TransferItem extends AbstractTileObjectSprite {
 
@@ -21,11 +24,13 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 	
 	protected boolean scrollableCamera;
 	
-	protected BackgroundTypeEnum backgroundTypeEnum;
+	protected WorldTypeEnum worldTypeEnum;
 	
 	protected Sound music;
 	
 	protected Sprite pipe;
+	
+	protected Array<BackgroundTypeEnum> backgroundTypesEnum;
 
 	public TransferItem(MapObject mapObject) {		
 		super(mapObject);					
@@ -37,8 +42,13 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		transferPosition = new Vector2(Float.parseFloat((String)mapObject.getProperties().get("xOutgoing"))/32, Float.parseFloat((String)mapObject.getProperties().get("yOutgoing"))/32);		
 		scrollableCamera = ((String)mapObject.getProperties().get("scrollable")).equals("true");		
-		backgroundTypeEnum = BackgroundTypeEnum.valueOf(((String)mapObject.getProperties().get("background")).toUpperCase());		
+		worldTypeEnum = WorldTypeEnum.valueOf(((String)mapObject.getProperties().get(TilemapPropertiesConstants.WORLD)).toUpperCase());		
 		music = SoundManager.getSoundManager().getMusicTheme(MusicEnum.valueOf(((String)mapObject.getProperties().get("music")).toUpperCase()));
+		String backgrounds[] =  ((String)mapObject.getProperties().get(TilemapPropertiesConstants.BACKGROUNDS)).split(",");
+		backgroundTypesEnum = new Array<BackgroundTypeEnum>();
+		for (String background : backgrounds) {
+			backgroundTypesEnum.add(BackgroundTypeEnum.valueOf(background.toUpperCase()));
+		}
 	}
 			
 	@Override
@@ -74,12 +84,12 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 		this.keyToPress = keyToPress;
 	}
 
-	public BackgroundTypeEnum getBackgroundTypeEnum() {
-		return backgroundTypeEnum;
+	public WorldTypeEnum getWorldTypeEnum() {
+		return worldTypeEnum;
 	}
 
-	public void setBackgroundTypeEnum(BackgroundTypeEnum backgroundTypeEnum) {
-		this.backgroundTypeEnum = backgroundTypeEnum;
+	public void setWorldTypeEnum(WorldTypeEnum worldTypeEnum) {
+		this.worldTypeEnum = worldTypeEnum;
 	}
 
 	public Sound getMusic() {
@@ -97,6 +107,15 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 	public void setPipe(Sprite pipe) {
 		this.pipe = pipe;
 	}
-	
+
+	public Array<BackgroundTypeEnum> getBackgroundTypesEnum() {
+		return backgroundTypesEnum;
+	}
+
+	public void setBackgroundTypesEnum(Array<BackgroundTypeEnum> backgroundTypesEnum) {
+		this.backgroundTypesEnum = backgroundTypesEnum;
+	}
+
+
 	
 }

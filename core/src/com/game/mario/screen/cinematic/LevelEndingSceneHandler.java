@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -22,9 +23,9 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 	private int endLevelState = 0;
 		
 	public LevelEndingSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
-			IScrollingBackground scrollingBackground, BitmapFont font, SpriteBatch spriteBatch,
+			 Array<IScrollingBackground> scrollingBbackgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
-		super(mario, tileMap, camera, scrollingBackground, font, spriteBatch, renderer, stage, batch);
+		super(mario, tileMap, camera, scrollingBbackgrounds, font, spriteBatch, renderer, stage, batch);
 	}
 
 	public void handleScene(float delta) {
@@ -74,9 +75,15 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 				camera.moveCamera(mario);
 				// Move scrolling background
 				if (Math.floor(camera.getCameraOffset()) == 8) {
-					scrollingBackground.update();
+					scrollingBackgrounds.get(0).update();					
+					if (scrollingBackgrounds.size>1) {
+						scrollingBackgrounds.get(1).update();
+					}
 				}
-				scrollingBackground.render();
+				scrollingBackgrounds.get(0).render();	
+				if (scrollingBackgrounds.size>1) {
+					scrollingBackgrounds.get(1).render();
+				}
 			}
 		}
 

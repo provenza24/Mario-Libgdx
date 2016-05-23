@@ -2,7 +2,7 @@ package com.game.mario.sprite.bloc;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.util.ResourcesLoader;
@@ -11,7 +11,7 @@ public class WallBlock extends Block {
 
 	private int coins;
 	
-	public WallBlock(int x, int y, int tileId, BackgroundTypeEnum backgroundType) {
+	public WallBlock(int x, int y, int tileId, WorldTypeEnum backgroundType) {
 		
 		super(x,y, tileId, backgroundType);									
 		setBlocType(BlockTypeEnum.WALL_BLOCK);		

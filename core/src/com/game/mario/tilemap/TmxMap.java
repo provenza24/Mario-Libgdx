@@ -12,8 +12,10 @@ import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
@@ -28,6 +30,7 @@ import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.util.TileIdConstants;
+import com.game.mario.util.TilemapPropertiesConstants;
 
 public class TmxMap {
 
@@ -47,22 +50,35 @@ public class TmxMap {
 	
 	private Mario mario;
 		
-	private BackgroundTypeEnum backgroundType;
+	private WorldTypeEnum worldType;
 	
 	private Flag flag;
 	
 	private String musicTheme;
 	
+	private Array<BackgroundTypeEnum> backgroundTypesEnum;
+		
 	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
 		MapProperties properties = tileLayer.getProperties();				
-		backgroundType = BackgroundTypeEnum.valueOf(((String)properties.get("background")).toUpperCase());
+		worldType = WorldTypeEnum.valueOf(((String)properties.get(TilemapPropertiesConstants.WORLD)).toUpperCase());		
 		musicTheme = ((String)properties.get("music")).toUpperCase();		
-		initBlocks(backgroundType);		
+		initBlocks(worldType);		
 		initMapObjects();		
+		initBackgrounds(properties);
+	}
+	
+	private void initBackgrounds(MapProperties properties) {
+				
+		backgroundTypesEnum = new Array<BackgroundTypeEnum>();
+		
+		String backgrounds[] = ((String)properties.get(TilemapPropertiesConstants.BACKGROUNDS)).toUpperCase().split(",");
+		for (String background : backgrounds) {
+			backgroundTypesEnum.add(BackgroundTypeEnum.valueOf(background.toUpperCase()));
+		}
 	}
 
 	private void initMapObjects() {
@@ -81,7 +97,7 @@ public class TmxMap {
 				enemies.add(new PiranhaPlant(mapObject, mario));
 			}
 			if (objectProperty.get("type").toString().equals("goomba")) {				
-				enemies.add(new Goomba(mapObject, backgroundType));
+				enemies.add(new Goomba(mapObject, worldType));
 			}
 			if (objectProperty.get("type").toString().equals("koopa")) {				
 				enemies.add(new Koopa(mapObject));
@@ -102,7 +118,7 @@ public class TmxMap {
 		}
 	}
 
-	private void initBlocks(BackgroundTypeEnum background) {
+	private void initBlocks(WorldTypeEnum background) {
 		
 		blocks = new ArrayList<Block>();
 		wallBlocks = new ArrayList<WallBlock>();
@@ -190,13 +206,7 @@ public class TmxMap {
 		this.blocks = blocks;
 	}
 
-	public BackgroundTypeEnum getBackgroundType() {
-		return backgroundType;
-	}
-
-	public void setBackgroundType(BackgroundTypeEnum backgroundType) {
-		this.backgroundType = backgroundType;
-	}
+	
 
 	public List<AbstractSprite> getItems() {
 		return items;
@@ -236,5 +246,21 @@ public class TmxMap {
 
 	public void setWallBlocks(List<WallBlock> wallBlocks) {
 		this.wallBlocks = wallBlocks;
+	}
+
+	public WorldTypeEnum getWorldType() {
+		return worldType;
+	}
+
+	public void setWorldType(WorldTypeEnum worldType) {
+		this.worldType = worldType;
+	}
+
+	public Array<BackgroundTypeEnum> getBackgroundTypesEnum() {
+		return backgroundTypesEnum;
+	}
+
+	public void setBackgroundTypesEnum(Array<BackgroundTypeEnum> backgroundsTypesEnum) {
+		this.backgroundTypesEnum = backgroundsTypesEnum;
 	}
 }

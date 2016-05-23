@@ -6,11 +6,11 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 
 public class ResourcesLoader {
 
-	public static final Map<BackgroundTypeEnum, Texture> WALL_TEXTURES = new HashMap<BackgroundTypeEnum, Texture>();		
+	public static final Map<WorldTypeEnum, Texture> WALL_TEXTURES = new HashMap<WorldTypeEnum, Texture>();		
 	
 	// Enemies
 	public static final Texture GOOMBA_UNDERWORLD = new Texture(Gdx.files.internal("sprites/enemies/goomba_underworld.png"));
@@ -54,13 +54,13 @@ public class ResourcesLoader {
 	public static final Texture WALL_OVERGROUND = new Texture(Gdx.files.internal("sprites/wall/wall_overground.png"));
 			 
 	// Backgrounds	// overworld-800.gif underworld-800.png	
-	public static final Texture OVERWORLD = new Texture(Gdx.files.internal("backgrounds/overworld.gif"));
+	public static final Texture OVERGROUND_CLOUDS = new Texture(Gdx.files.internal("backgrounds/overworld.gif"));
 	
-	public static final Texture UNDERWORLD = new Texture(Gdx.files.internal("backgrounds/underworld.png"));
+	public static final Texture OVERGROUND_HILLS = new Texture(Gdx.files.internal("backgrounds/hills.png"));
 	
-	public static final Texture BONUS_STAGE = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));
+	public static final Texture UNDERGROUND = new Texture(Gdx.files.internal("backgrounds/underworld.png"));
 	
-	public static final Texture OVERWORLD_2 = new Texture(Gdx.files.internal("backgrounds/background_2.png"));
+	public static final Texture BONUS = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));		
 	
 	// Transparency sprites	
 	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/transparency/pipe_down.png"));
@@ -76,7 +76,7 @@ public class ResourcesLoader {
 	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 		
 	static {
-		WALL_TEXTURES.put(BackgroundTypeEnum.OVERGROUND, WALL_OVERGROUND);		
-		WALL_TEXTURES.put(BackgroundTypeEnum.UNDERGROUND, WALL_UNDERGROUND);				
+		WALL_TEXTURES.put(WorldTypeEnum.OVERGROUND, WALL_OVERGROUND);		
+		WALL_TEXTURES.put(WorldTypeEnum.UNDERGROUND, WALL_UNDERGROUND);				
 	}
 }

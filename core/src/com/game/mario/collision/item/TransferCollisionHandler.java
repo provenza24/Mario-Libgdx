@@ -3,6 +3,7 @@ package com.game.mario.collision.item;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.utils.Array;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
@@ -17,7 +18,7 @@ public class TransferCollisionHandler extends AbstractItemCollisionHandler {
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, IScrollingBackground scrollingBackground) {		
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
 		TransferItem transferItem = (TransferItem)item;
 		if (Gdx.input.isKeyPressed(transferItem.getKeyToPress())) {	
 			
