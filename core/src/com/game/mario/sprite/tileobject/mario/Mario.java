@@ -448,7 +448,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void collideWithTilemap(TmxMap tileMap) {
 
-	
+		boolean onFloorCorrection = false;
 		checkMapCollision(tileMap);
 
 		Vector2 move = new Vector2(getX() - getOldPosition().x, getY() - getOldPosition().y);
@@ -459,6 +459,7 @@ public class Mario extends AbstractTileObjectSprite {
 			setY((int) getY() + 1);
 			oldPosition.y = getY();
 			acceleration.y = 0;
+			onFloorCorrection = true;
 		}
 		
 		move = new Vector2(getX() - getOldPosition().x, getY() - getOldPosition().y);
@@ -471,14 +472,16 @@ public class Mario extends AbstractTileObjectSprite {
 			for (CollisionPoint collisionPoint : getMapCollisionEvent().getCollisionPoints()) {
 				
 				if (move.y==0 && move.x>0) {
-					System.out.println("cas 1: move.y==0 && move.x>0");
-					newPosition.x = (int) getX();
-					acceleration.x = 0;
+					System.out.println("cas 1: move.y<0 && move.x==0");
+					newPosition.x = oldPosition.x;
+					//oldPosition.x = newPosition.x;
+					acceleration.x = 0;							
 				}
 				
 				if (move.y<0 && move.x==0) {
-					System.out.println("cas 2: move.y<0 && move.x==0");
-					newPosition.y = (int) getY() +1;
+					System.out.println("cas 2: move.y<0 && move.x==0");					
+					newPosition.y = (int) getY() +1;					
+					//oldPosition.y = newPosition.y;
 					acceleration.y = 0;
 					state = MarioStateEnum.NO_MOVE;
 					onFloor = true;					
@@ -488,13 +491,15 @@ public class Mario extends AbstractTileObjectSprite {
 					float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
 					float yDelta = collisionPoint.getPoint().y - collisionPoint.getCell().getY();
 					if (xDelta>yDelta) {
-						newPosition.y = (int) getY() + 0.1f;
+						newPosition.y = (int) getY();
+						//oldPosition.y = newPosition.y;
 						acceleration.y = 0;
 						onFloor = true;
 						state = MarioStateEnum.NO_MOVE;
 					} else {
-						newPosition.x = (int) getX() - 0.01f;
-						acceleration.x = 0;										
+						newPosition.x = oldPosition.x;
+						//oldPosition.x = newPosition.x;
+						acceleration.x = 0;					
 					}
 				}
 				
@@ -502,30 +507,26 @@ public class Mario extends AbstractTileObjectSprite {
 					float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
 					float yDelta = (collisionPoint.getCell().getY() + 1) - collisionPoint.getPoint().y;
 					if (xDelta>yDelta) {
-						newPosition.y = (int) getY() + 1.01f;
+						newPosition.y = (int) getY() + 1f;
+						//oldPosition.y = newPosition.y;
 						acceleration.y = 0;
 						onFloor = true;
 						state = MarioStateEnum.NO_MOVE;
 					} else {
-						newPosition.x = (int) getX() - 0.01f;
+						newPosition.x = oldPosition.x;
+						//oldPosition.x = newPosition.x;
 						acceleration.x = 0;										
 					}
-				}
-						
-				
+				}				
 			}
 			
-		} else {
-			if (move.y < 0 && !onFloor) {
+		}  else {
+			if (move.y < 0 && !onFloorCorrection) {				
 				setState(MarioStateEnum.FALLING);
 				onFloor = false;
 			}
 		}
-			
-		
-		
-		
-		
+				
 		setX(newPosition.x);
 		setY(newPosition.y);
 		
