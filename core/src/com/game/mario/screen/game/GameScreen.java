@@ -540,6 +540,7 @@ public class GameScreen implements Screen  {
 			mario.setState(MarioStateEnum.JUMPING);
 			mario.getAcceleration().y = 0.16f;
 			mario.setCanJumpHigher(true);
+			mario.setOnFloor(false);
 			jumpTimerMax = 24 + (int) (mario.getAcceleration().x / 4);
 			Sound soundToPlay = mario.getSizeState()>0 ? SoundManager.SOUND_JUMP_SUPER : SoundManager.SOUND_JUMP_SMALL;
 			SoundManager.getSoundManager().playSound(soundToPlay);

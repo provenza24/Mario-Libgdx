@@ -62,8 +62,8 @@ public class SoundManager {
 	}
 	
 	private SoundManager() {	
-		musicVolume = 0.3f;		
-		soundFxVolume = 1f;
+		/*musicVolume = 0.3f;		
+		soundFxVolume = 1f;*/
 	}
 
 	public static SoundManager getSoundManager() {

@@ -1,7 +1,12 @@
 package com.game.mario.collision;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CollisionEvent {
 
+	private List<CollisionPoint> collisionPoints;
+	
 	boolean collidingLeft;
 
 	boolean collidingRight;
@@ -10,6 +15,10 @@ public class CollisionEvent {
 	
 	boolean collidingBottom;
 
+	public CollisionEvent() {
+		collisionPoints = new ArrayList<>();
+	}
+	
 	public boolean isCollidingLeft() {
 		return collidingLeft;
 	}
@@ -41,4 +50,17 @@ public class CollisionEvent {
 	public void setCollidingBottom(boolean collidingBottom) {
 		this.collidingBottom = collidingBottom;
 	}
+
+	public List<CollisionPoint> getCollisionPoints() {
+		return collisionPoints;
 	}
+
+	public void setCollisionPoints(List<CollisionPoint> collisionPoints) {
+		this.collisionPoints = collisionPoints;
+	}
+	
+	public void reinitCollisionPoints() {
+		this.collisionPoints = new ArrayList<CollisionPoint>();
+	}
+	
+}

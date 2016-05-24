@@ -154,7 +154,7 @@ public class TmxMap {
 		Cell cell = tileLayer.getCell(x, y);
 		if (cell != null) {
 			return cell.getTile().getId() <= 128;
-		}
+		}		
 		return false;
 	}
 	

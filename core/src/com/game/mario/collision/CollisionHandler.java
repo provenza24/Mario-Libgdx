@@ -49,7 +49,7 @@ public class CollisionHandler {
 	}
 
 	public void collideMarioWithUpperBlock(Mario mario, TmxMap tileMap, Stage stage) {		
-		if (mario.getMapCollisionEvent().isCollidingTop()) {
+		/*if (mario.getMapCollisionEvent().isCollidingTop()) {
 			TmxCell collidingCell = null;
 			List<TmxCell> collidingCells = mario.getCollidingCells();
 			collidingCell = collidingCells.get(0);
@@ -63,7 +63,7 @@ public class CollisionHandler {
 			if (collisionHandler!=null) {			
 				collisionHandler.handle(tileMap, collidingCell, stage);
 			}
-		}
+		}*/
 	}
 	
 	public void collideMarioWithItem(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
