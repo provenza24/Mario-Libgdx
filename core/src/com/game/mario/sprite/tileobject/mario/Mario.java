@@ -471,11 +471,13 @@ public class Mario extends AbstractTileObjectSprite {
 			for (CollisionPoint collisionPoint : getMapCollisionEvent().getCollisionPoints()) {
 				
 				if (move.y==0 && move.x>0) {
+					System.out.println("cas 1: move.y==0 && move.x>0");
 					newPosition.x = (int) getX();
 					acceleration.x = 0;
 				}
 				
 				if (move.y<0 && move.x==0) {
+					System.out.println("cas 2: move.y<0 && move.x==0");
 					newPosition.y = (int) getY() +1;
 					acceleration.y = 0;
 					state = MarioStateEnum.NO_MOVE;
@@ -489,6 +491,7 @@ public class Mario extends AbstractTileObjectSprite {
 						newPosition.y = (int) getY() + 0.1f;
 						acceleration.y = 0;
 						onFloor = true;
+						state = MarioStateEnum.NO_MOVE;
 					} else {
 						newPosition.x = (int) getX() - 0.01f;
 						acceleration.x = 0;										
@@ -513,7 +516,7 @@ public class Mario extends AbstractTileObjectSprite {
 			}
 			
 		} else {
-			if (move.y < 0) {
+			if (move.y < 0 && !onFloor) {
 				setState(MarioStateEnum.FALLING);
 				onFloor = false;
 			}

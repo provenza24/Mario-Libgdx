@@ -16,7 +16,7 @@ public class CollisionEvent {
 	boolean collidingBottom;
 
 	public CollisionEvent() {
-		collisionPoints = new ArrayList<>();
+		collisionPoints = new ArrayList<CollisionPoint>();
 	}
 	
 	public boolean isCollidingLeft() {

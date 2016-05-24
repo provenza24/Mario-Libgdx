@@ -1,0 +1,12 @@
+1 - After applying movement, check for and resolve collisions.
+2 - Determine the tiles the player overlaps based on the player's bounding box.
+3 - Iterate through all of those tiles doing the following: (it's usually not very many unless your player is huge compared to your world tiles)
+	1 -If the tile being checked isn't passable:
+		1 - Determine how far on the X and Y axes the player is overlapping the non-passable tile
+		2 - Resolve collision by moving the player out of that tile only on the shallow axis (whichever axis is least penetrated)
+		For example, if Y is the shallow axis and the collision is below, shift the player up to no longer overlap that tile.
+		Something like this: if(abs(overlap.y) < abs(overlap.x)) { position.y += overlap.y; } else { position.x += overlap.x; }
+		3 - Update the bounding box's position based on the player's new position
+		4 - Move on to the next tile...
+	2 -If the tile being checked is passable, do nothing
+4 - If it's possible that resolving a collision could move the player into another collision, you may want to run through the above algorithm a second time. Or redesign your level.
