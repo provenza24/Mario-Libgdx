@@ -21,7 +21,6 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionPoint;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
-import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -32,7 +31,9 @@ import com.game.mario.util.ResourcesLoader;
 
 public class Mario extends AbstractTileObjectSprite {
 
-	private static final float COLLISION_X_CORRECTIF = 0.01f;
+	private static final float COLLISION_X_CORRECTIF = 0.001f;
+	
+	private static final float COLLISION_Y_CORRECTIF = 0.001f;
 	
 	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
@@ -111,7 +112,9 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public Mario(MapObject mapObject) {
 		super(mapObject);
-		setSize(1, 1);
+		offset.x = 0.01f;
+		offset.y = 0.05f;
+		setSize(1 - 2*offset.x, 1 - offset.y);
 		renderingSize = new Vector2(1, 1);
 		stateTime = 0f;
 		jumpTimer = 0;
@@ -122,7 +125,7 @@ public class Mario extends AbstractTileObjectSprite {
 		direction = DirectionEnum.RIGHT;
 		state = MarioStateEnum.NO_MOVE;
 		previousState = MarioStateEnum.NO_MOVE;
-		bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
+		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
 		invincible = false;
@@ -135,13 +138,13 @@ public class Mario extends AbstractTileObjectSprite {
 	public void changeSizeState(int i) {
 		sizeState = i;
 		if (i == 0) {
-			setSize(1, 1);
+			setSize(1 - 2*offset.x, 1 - offset.y);
 			setRenderingSize(1, 1);
 		} else {
-			setSize(1, 2);
+			setSize(1 - 2*offset.x, 2 - offset.y);
 			setRenderingSize(1, 2);
 		}
-		setBounds(getX(), getY(), getWidth(), getHeight());
+		setBounds(getX() + offset.x, getY(), getWidth(), getHeight());
 		marioRunRightAnimation = animations[i][0];
 		marioRunLeftAnimation = animations[i][1];
 		marioSlideRightAnimation = animations[i][2];
@@ -337,9 +340,9 @@ public class Mario extends AbstractTileObjectSprite {
 		
 
 		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight() - getOffset().y);
+		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
 		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() - getOffset().y);
+		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight());
 
 		int x = (int) leftBottomCorner.x;
 		int y = (int) leftBottomCorner.y;
@@ -382,7 +385,7 @@ public class Mario extends AbstractTileObjectSprite {
 		}
 
 		if (sizeState > 0) {
-			Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() / 2 - getOffset().y);
+			Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() / 2);
 			x = (int) rightMiddle.x;
 			y = (int) rightMiddle.y;
 			isCollision = tilemap.isCollisioningTileAt(x, y);
@@ -392,7 +395,7 @@ public class Mario extends AbstractTileObjectSprite {
 						.add(new CollisionPoint(rightMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
 			}
 
-			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight() / 2 - getOffset().y);
+			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight() / 2);
 			x = (int) leftMiddle.x;
 			y = (int) leftMiddle.y;
 			isCollision = tilemap.isCollisioningTileAt(x, y);
@@ -426,13 +429,15 @@ public class Mario extends AbstractTileObjectSprite {
 		checkMapCollision(tileMap);				
 						
 		if (getMapCollisionEvent().getCollisionPoints().size()>0) {
-				
+			
+			int i=0;
+			
 			while (getMapCollisionEvent().getCollisionPoints().size()>0) {
 			
 				for (CollisionPoint collisionPoint : getMapCollisionEvent().getCollisionPoints()) {
 					
-					if (move.y==0 && move.x!=0) {
-						newPosition.x = move.x>0 ? (int) getX() - COLLISION_X_CORRECTIF : (int) getX() + 1 + COLLISION_X_CORRECTIF;						
+					if (move.y==0 && move.x!=0) {						
+						newPosition.x = move.x>0 ? (int) (getX() + offset.x) - COLLISION_X_CORRECTIF : (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;						
 						acceleration.x = 0;	
 						if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
 							state = MarioStateEnum.NO_MOVE;
@@ -447,9 +452,11 @@ public class Mario extends AbstractTileObjectSprite {
 					}
 					
 					if (move.y>0 && move.x==0) {						
-						newPosition.y = (int) getY() - 0.1f;
+						newPosition.y = (int) getY();
 						acceleration.y = 0;
-						state = MarioStateEnum.NO_MOVE;
+						if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
+							state = MarioStateEnum.NO_MOVE;
+						}						
 						onFloor = true;					
 					}
 					
@@ -457,12 +464,14 @@ public class Mario extends AbstractTileObjectSprite {
 						float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
 						float yDelta = collisionPoint.getPoint().y - collisionPoint.getCell().getY();
 						if (xDelta>yDelta) {
-							newPosition.y = (int) getY() -0.1f;
+							newPosition.y = (int) getY();
 							acceleration.y = 0;
 							onFloor = true;
-							state = MarioStateEnum.NO_MOVE;
+							if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
+								state = MarioStateEnum.NO_MOVE;
+							}							
 						} else {
-							newPosition.x = (int) getX() - COLLISION_X_CORRECTIF;						
+							newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
 							acceleration.x = 0;					
 						}
 					}
@@ -476,7 +485,7 @@ public class Mario extends AbstractTileObjectSprite {
 							onFloor = true;
 							state = MarioStateEnum.NO_MOVE;
 						} else {
-							newPosition.x = (int) getX() - COLLISION_X_CORRECTIF;						
+							newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
 							acceleration.x = 0;										
 						}
 					}
@@ -490,7 +499,7 @@ public class Mario extends AbstractTileObjectSprite {
 							onFloor = true;
 							state = MarioStateEnum.NO_MOVE;
 						} else {
-							newPosition.x = (int) getX() + 1 + COLLISION_X_CORRECTIF;					
+							newPosition.x = (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;					
 							acceleration.x = 0;					
 						}
 					}
@@ -499,12 +508,12 @@ public class Mario extends AbstractTileObjectSprite {
 						float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
 						float yDelta = collisionPoint.getPoint().y - (collisionPoint.getCell().getY());
 						if (xDelta>yDelta) {
-							newPosition.y = (int) getY() - 0.1f;
+							newPosition.y = (int) getY();
 							acceleration.y = 0;
 							onFloor = true;
 							state = MarioStateEnum.NO_MOVE;
 						} else {
-							newPosition.x = (int) getX() + 1 + COLLISION_X_CORRECTIF;						
+							newPosition.x = (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;						
 							acceleration.x = 0;					
 						}
 					}
@@ -512,7 +521,11 @@ public class Mario extends AbstractTileObjectSprite {
 				}
 				setX(newPosition.x);
 				setY(newPosition.y);
-				checkMapCollision(tileMap);			
+				checkMapCollision(tileMap);
+				i++;
+				if (i>=10) {
+					System.out.println("Passage debug");
+				}
 			}
 													
 		}  else {
@@ -522,7 +535,7 @@ public class Mario extends AbstractTileObjectSprite {
 			}
 		}				
 
-		bounds.setX(getX());
+		bounds.setX(getX()+offset.x);
 		bounds.setY(getY());
 	}
 

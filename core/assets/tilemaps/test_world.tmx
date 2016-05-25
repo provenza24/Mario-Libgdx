@@ -36,7 +36,7 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmtlKxDAYhTMK8wYKM16LC7ihN6IXweURXN/A/QncX9xTmDIlJk3+JA2tng8+aEO2yeSUZhilCCFdoOHWaK5Wbpv1KvdRdlB8xoT8H7T6nbtQmc9+M/ZIuuVllN6HVswnIV3wzXwS0luYT0L6C/NJXPjOnjyDxhO6dswnIWWRPNuYT0LKIX33YD4JKUPM2cCWz22U7cBduBeQX636lc8luJy5z6Ezdly31ZdYAulnaNaNbZuL2HWz5fMEZafwDJ5H5FOrMv8fcuVwA25G9vkXse2Dof2uY8uY9DkjbZuLlOeamc8L3F/CK3gNb+CtJ6NayfO5hut1uKr8+ZTmkPmc07YHhpLRtoz5Pl9M29T3r2b71PcOM593uL+HD/ARPsHnDvJ5hOtjeKj8+ZTmcAj5nGANpnAl8Pw/EdStsX3/Zj+xGS0x/wpzP09n4/r2eVsWzHJzXub+kc69bp/jXGDWecU83uA7/ICf8Csgn6lWQywUdHE297Zx6zq+erb6oW1yjU25ni51Bn8AIxtMiQ==
+   eJztmllOwzAURV2QugOQWr4Rg8Qk+EHwYTEsgTLsgHkFzBvnVmpEMY7fi+2YVL1HulIGJ3YcHyuuagwhpA0sstX7iTX1mS43zj6OHRRvMSHzgzV/vdOGfnabvhDSLs+99HtYQz8JaYMv+klIZ6GfhHQX+knqkNaeXIPGo+07+klIWZrMbfSTkHI0/fagn4SUIWZt4PNzG8d2kF1kT+GvNeX97NdsEx1LyHLgvHbtWXINGvvO3Tb+x3iJ7Tefnyc4doqcIecRflrT7v+HfM9FR38j+beBbBZqSw58jmneuc+F0r9rpcxrrp8X2B8hl8gVco3cCI5a09zPNWyvI6ummZ+hZ5o3R0MOSv7Nkp8hx6TxEHOtNLdJTF+f+t3h+nmL/TvkHnlAHpGnFvw8wvYxcmj0fmrny1lggD4YIivK9f/AUzbkWN256j6pfuZovwZ3PA8n9UrjPOSCe1zq16Ztr67PsS5wy7ygHa/IG/KOfCCfCj9TM65ioWAWJ20P1VuVkcr5ymuvyVU3w/6si82Qb50yTIk=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
