@@ -252,45 +252,57 @@ public class GameScreen implements Screen  {
 	private void renderDebugMode() {
 
 		if (debugShowText) {
+			
+			int y = 450;
+			
 			// Mario information
 			spriteBatch.begin();
-			debugFont.draw(spriteBatch,
-					"mario.position=" + String.format("%.1f", mario.getX()) + "," + String.format("%.1f", mario.getY()),
-					10, 460);
-			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + ","
-					+ String.format("%.1f", mario.getAcceleration().y), 10, 440);
-			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), 10, 420);
-			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), 10, 400);
-			debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, 380);
-			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, 360);
-			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x) + " camera.offset="
-					+ String.format("%.1f", camera.getCameraOffset()), 10, 340);
+			debugFont.draw(spriteBatch, "mario.position=" + String.format("%.1f", mario.getX()) + "," + String.format("%.1f", mario.getY()), 10, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + "," + String.format("%.1f", mario.getAcceleration().y), 10, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), 10, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), 10, y);
+			y = y -20;
+			//debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), 10, y);
+			//y = y -20;
+			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, y);
+			y = y -20;
+			//debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x) + " camera.offset=" + String.format("%.1f", camera.getCameraOffset()), 10, y);
+			//y = y -20;
 			debugFont.draw(spriteBatch,
 					"tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight() + ", left="
 							+ mario.getMapCollisionEvent().isCollidingLeft() + ", top="
 							+ mario.getMapCollisionEvent().isCollidingTop() + ", bottom="
 							+ mario.getMapCollisionEvent().isCollidingBottom() + ")",
-					10, 320);
-			debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, 300);			
-			int alive = 0;
-			for (AbstractEnemy enemy : tileMap.getEnemies()) {
-				alive += enemy.isAlive() ? 1 : 0;
-			}
-			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", 10, 280);
-			alive = 0;
-			for (AbstractSprite item : tileMap.getItems()) {
-				alive += item.isAlive() ? 1 : 0;
-			}
-			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", 10, 260);
-			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), 10, 240);
-			int i=0;
-			for (AbstractSprite sprite : mario.getFireballs()) {
-				debugFont.draw(spriteBatch, "x"+i+":" + String.format("%.1f",sprite.getX()), 10, 200 + i*20);
-				i++;
-			}
-			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, 10, 180);
-			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), 10, 160);
+					10, y);
+			y = y -20;
+			//debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, y);
+			//y = y -20;
+			//int alive = 0;
+			//for (AbstractEnemy enemy : tileMap.getEnemies()) {
+			//	alive += enemy.isAlive() ? 1 : 0;
+			//}
+			//debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", 10, y);
+			//y = y -20;
+			//alive = 0;
+			//for (AbstractSprite item : tileMap.getItems()) {
+			//	alive += item.isAlive() ? 1 : 0;
+			//}
+			//debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", 10, y);
+			//y = y -20;
+			//debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), 10, y);
+			//y = y -20;			
+			//debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, 10, y);
+			//y = y -20;
+			//debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), 10, y);
 			
+			debugFont.draw(spriteBatch, "move x: " + mario.getMove().x, 10, y);			
+			y = y -20;
+			debugFont.draw(spriteBatch, "move y: " + mario.getMove().y, 10, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "Collinding points: " + mario.getNbCollindingPoints(), 10, y);			
 			
 			spriteBatch.end();
 		}
@@ -307,6 +319,7 @@ public class GameScreen implements Screen  {
 			batch.begin();
 			Gdx.gl.glEnable(GL20.GL_BLEND);
 			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			
 			shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
@@ -323,6 +336,7 @@ public class GameScreen implements Screen  {
 				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
+			
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 			batch.end();

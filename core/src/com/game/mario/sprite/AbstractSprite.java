@@ -164,7 +164,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		oldPosition.x = getX();
 		oldPosition.y = getY();		
 	}
-
+	
 	public void move(float deltaTime) {
 		
 		storeOldPosition();
