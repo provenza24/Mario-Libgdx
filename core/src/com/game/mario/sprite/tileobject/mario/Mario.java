@@ -1,8 +1,12 @@
 package com.game.mario.sprite.tileobject.mario;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -30,11 +34,9 @@ import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
 public class Mario extends AbstractTileObjectSprite {
-
+		
 	private static final float COLLISION_X_CORRECTIF = 0.001f;
-	
-	private static final float COLLISION_Y_CORRECTIF = 0.001f;
-	
+		
 	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
 	private static final float ACCELERATION_MAX_SPEEDUP = 8.5f;
@@ -44,8 +46,6 @@ public class Mario extends AbstractTileObjectSprite {
 	private static final float ACCELERATION_COEF = 0.2f;
 
 	private static final float ACCELERATION_COEF_SPEEDUP = 0.2f;
-
-	private static final float HALF_WIDHT = 0.5f;;
 
 	private Animation animations[][];
 
@@ -106,6 +106,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private float yOldAcceleration;
 	
 	private Vector2 move = new Vector2();
+	
+	private int collisionPoints;
 
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
@@ -133,6 +135,8 @@ public class Mario extends AbstractTileObjectSprite {
 		alive = true;
 		deathNoMoveDuration = 0;
 		fireballs = new ArrayList<AbstractSprite>();
+		
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
 
 	public void changeSizeState(int i) {
@@ -332,12 +336,32 @@ public class Mario extends AbstractTileObjectSprite {
 		}
 	}
 
+	public void checkBottomMapCollision(TmxMap tilemap) {
+		
+		reinitVerticalMapCollisionEvent();
+		getMapCollisionEvent().reinitCollisionPoints();
+		
+		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());		
+		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
+		
+		int x = (int) leftBottomCorner.x;
+		int y = (int) leftBottomCorner.y;
+		boolean isCollision = tilemap.isCollisioningTileAt(x, y);
+		getMapCollisionEvent().setCollidingLeft(isCollision);
+		getMapCollisionEvent().setCollidingBottom(isCollision);
+	
+		x = (int) rightBottomCorner.x;
+		y = (int) rightBottomCorner.y;
+		isCollision = tilemap.isCollisioningTileAt(x, y);
+		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+		getMapCollisionEvent().setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);
+	}
+	
 	public void checkMapCollision(TmxMap tilemap) {
 
 		reinitHorizontalMapCollisionEvent();
 		reinitVerticalMapCollisionEvent();
-		getMapCollisionEvent().reinitCollisionPoints();
-		
+		getMapCollisionEvent().reinitCollisionPoints();		
 
 		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
 		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
@@ -349,9 +373,9 @@ public class Mario extends AbstractTileObjectSprite {
 		boolean isCollision = tilemap.isCollisioningTileAt(x, y);
 		getMapCollisionEvent().setCollidingLeft(isCollision);
 		getMapCollisionEvent().setCollidingBottom(isCollision);
+		getMapCollisionEvent().setCollidingBottomLeft(isCollision);
 		if (isCollision) {
-			getMapCollisionEvent().getCollisionPoints()
-					.add(new CollisionPoint(leftBottomCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+			getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftBottomCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
 		}
 
 		x = (int) leftTopCorner.x;
@@ -359,6 +383,7 @@ public class Mario extends AbstractTileObjectSprite {
 		isCollision = tilemap.isCollisioningTileAt(x, y);
 		getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
 		getMapCollisionEvent().setCollidingTop(isCollision);
+		getMapCollisionEvent().setCollidingTopLeft(isCollision);
 		if (isCollision) {
 			getMapCollisionEvent().getCollisionPoints()
 					.add(new CollisionPoint(leftTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
@@ -369,6 +394,7 @@ public class Mario extends AbstractTileObjectSprite {
 		isCollision = tilemap.isCollisioningTileAt(x, y);
 		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
 		getMapCollisionEvent().setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);
+		getMapCollisionEvent().setCollidingBottomRight(isCollision);
 		if (isCollision) {
 			getMapCollisionEvent().getCollisionPoints()
 					.add(new CollisionPoint(rightBottomCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
@@ -379,6 +405,7 @@ public class Mario extends AbstractTileObjectSprite {
 		isCollision = tilemap.isCollisioningTileAt(x, y);
 		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
 		getMapCollisionEvent().setCollidingTop(getMapCollisionEvent().isCollidingTop() || isCollision);
+		getMapCollisionEvent().setCollidingTopRight(isCollision);
 		if (isCollision) {
 			getMapCollisionEvent().getCollisionPoints()
 					.add(new CollisionPoint(rightTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
@@ -391,8 +418,7 @@ public class Mario extends AbstractTileObjectSprite {
 			isCollision = tilemap.isCollisioningTileAt(x, y);
 			getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
 			if (isCollision) {
-				getMapCollisionEvent().getCollisionPoints()
-						.add(new CollisionPoint(rightMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+				getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
 			}
 
 			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight() / 2);
@@ -401,21 +427,20 @@ public class Mario extends AbstractTileObjectSprite {
 			isCollision = tilemap.isCollisioningTileAt(x, y);
 			getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
 			if (isCollision) {
-				getMapCollisionEvent().getCollisionPoints()
-						.add(new CollisionPoint(leftMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+				getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
 			}
 		}
 	}
 
 	public void collideWithTilemap(TmxMap tileMap) {
-
+				
 		boolean onFloorCorrection = false;
-		checkMapCollision(tileMap);
-
 		move = new Vector2(getX() - getOldPosition().x, getY() - getOldPosition().y);
-
+				
+		checkBottomMapCollision(tileMap);		
+		
 		if (yOldAcceleration == 0 && getMapCollisionEvent().isCollidingBottom()) {
-			// On était sur une plateforme, on y est toujours, on reste dessus
+			// On était sur une plateforme, on y est toujours, on reste dessus			
 			onFloor = true;
 			setY((int) getY() + 1);
 			oldPosition.y = getY();
@@ -427,8 +452,11 @@ public class Mario extends AbstractTileObjectSprite {
 		Vector2 newPosition = new Vector2(getX(), getY());
 		
 		checkMapCollision(tileMap);				
-						
+								
+		
 		if (getMapCollisionEvent().getCollisionPoints().size()>0) {
+											
+			collisionPoints = getMapCollisionEvent().getCollisionPoints().size();
 			
 			int i=0;
 			
@@ -436,7 +464,7 @@ public class Mario extends AbstractTileObjectSprite {
 			
 				for (CollisionPoint collisionPoint : getMapCollisionEvent().getCollisionPoints()) {
 					
-					if (move.y==0 && move.x!=0) {						
+					if (move.y==0 && move.x!=0) {
 						newPosition.x = move.x>0 ? (int) (getX() + offset.x) - COLLISION_X_CORRECTIF : (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;						
 						acceleration.x = 0;	
 						if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
@@ -451,7 +479,8 @@ public class Mario extends AbstractTileObjectSprite {
 						onFloor = true;					
 					}
 					
-					if (move.y>0 && move.x==0) {						
+					if (move.y>0 && move.x==0) {
+						
 						newPosition.y = (int) getY();
 						acceleration.y = 0;
 						if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
@@ -460,62 +489,91 @@ public class Mario extends AbstractTileObjectSprite {
 						onFloor = true;					
 					}
 					
-					if (move.x>0 && move.y>0) {						
-						float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
-						float yDelta = collisionPoint.getPoint().y - collisionPoint.getCell().getY();
-						if (xDelta>yDelta) {
-							newPosition.y = (int) getY();
-							acceleration.y = 0;
-							onFloor = true;
-							if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
+					if (move.x>0 && move.y>0) {
+											
+						if (mapCollisionEvent.isCollidingBottomRight() && mapCollisionEvent.isCollidingTopRight()) {
+							newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
+							acceleration.x = 0;									
+						} else {
+							float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
+							float yDelta = collisionPoint.getPoint().y - collisionPoint.getCell().getY();
+																		
+							if (xDelta>yDelta) {								
+								newPosition.y = (int) getY() + 0.001f;
+								acceleration.y = 0;
+								onFloor = true;
+								if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
+									state = MarioStateEnum.NO_MOVE;
+								}							
+							} else {								
+								newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
+								acceleration.x = 0;					
+							}
+						}						
+						
+					}
+					
+					if (move.x>0 && move.y<0) {
+					
+						if (mapCollisionEvent.isCollidingTopRight() && mapCollisionEvent.isCollidingBottomRight()) {
+							newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
+							acceleration.x = 0;									
+						} else {	
+							float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
+							float yDelta = (collisionPoint.getCell().getY() + 1) - collisionPoint.getPoint().y;
+							if (xDelta>yDelta) {				
+								newPosition.y = (int) getY() + 1f;						
+								acceleration.y = 0;
+								onFloor = true;
 								state = MarioStateEnum.NO_MOVE;
-							}							
-						} else {
-							newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
-							acceleration.x = 0;					
+							} else {
+								newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
+								acceleration.x = 0;										
+							}
 						}
+												
 					}
 					
-					if (move.x>0 && move.y<0) {						
-						float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
-						float yDelta = (collisionPoint.getCell().getY() + 1) - collisionPoint.getPoint().y;
-						if (xDelta>yDelta) {
-							newPosition.y = (int) getY() + 1f;						
-							acceleration.y = 0;
-							onFloor = true;
-							state = MarioStateEnum.NO_MOVE;
-						} else {
-							newPosition.x = (int) (getX() + offset.x) - COLLISION_X_CORRECTIF;						
-							acceleration.x = 0;										
-						}
-					}
-					
-					if (move.x<0 && move.y<0) {						
-						float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
-						float yDelta = (collisionPoint.getCell().getY()+1) - collisionPoint.getPoint().y;
-						if (xDelta>yDelta) {
-							newPosition.y = (int) getY() + 1f;
-							acceleration.y = 0;
-							onFloor = true;
-							state = MarioStateEnum.NO_MOVE;
-						} else {
+					if (move.x<0 && move.y<0) {	
+												
+						if (mapCollisionEvent.isCollidingTopLeft() && mapCollisionEvent.isCollidingBottomLeft()) {						
 							newPosition.x = (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;					
-							acceleration.x = 0;					
-						}
+							acceleration.x = 0;				
+							
+						} else {
+							float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
+							float yDelta = (collisionPoint.getCell().getY()+1) - collisionPoint.getPoint().y;
+							if (xDelta>yDelta) {
+								newPosition.y = (int) getY() + 1f;
+								acceleration.y = 0;
+								onFloor = true;
+								state = MarioStateEnum.NO_MOVE;
+							} else {
+								newPosition.x = (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;					
+								acceleration.x = 0;					
+							}
+						}												
 					}
 					
 					if (move.x<0 && move.y>0) {
-						float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
-						float yDelta = collisionPoint.getPoint().y - (collisionPoint.getCell().getY());
-						if (xDelta>yDelta) {
-							newPosition.y = (int) getY();
-							acceleration.y = 0;
-							onFloor = true;
-							state = MarioStateEnum.NO_MOVE;
-						} else {
+						
+						if (mapCollisionEvent.isCollidingTopLeft() && mapCollisionEvent.isCollidingBottomLeft()) {
 							newPosition.x = (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;						
-							acceleration.x = 0;					
+							acceleration.x = 0;			
+						} else {
+							float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
+							float yDelta = collisionPoint.getPoint().y - (collisionPoint.getCell().getY());
+							if (xDelta>yDelta) {
+								newPosition.y = (int) getY();
+								acceleration.y = 0;
+								onFloor = true;
+								state = MarioStateEnum.NO_MOVE;
+							} else {
+									newPosition.x = (int) (getX() + getWidth() + offset.x) + COLLISION_X_CORRECTIF;						
+								acceleration.x = 0;					
+							}
 						}
+						
 					}
 														
 				}
@@ -523,10 +581,8 @@ public class Mario extends AbstractTileObjectSprite {
 				setY(newPosition.y);
 				checkMapCollision(tileMap);
 				i++;
-				if (i>=10) {
-					System.out.println("Passage debug");
-				}
-			}
+				
+			}			
 													
 		}  else {
 			if (move.y < 0 && !onFloorCorrection) {				
@@ -709,6 +765,14 @@ public class Mario extends AbstractTileObjectSprite {
 		this.growingDown = growingDown;
 	}
 
+	public int getCollisionPoints() {
+		return collisionPoints;
+	}
+
+	public void setCollisionPoints(int collisionPoints) {
+		this.collisionPoints = collisionPoints;
+	}
+
 	public boolean isGrowing() {
 		return isGrowingDown() || isGrowingUp();
 	}
@@ -791,10 +855,13 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setMove(Vector2 move) {
 		this.move = move;
+	}			
+	
+	private String getDate() {
+		DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");		
+		String dateStr = df.format(new Date());
+		return dateStr;
 	}
 	
-	public int getNbCollindingPoints() {
-		return getMapCollisionEvent().getCollisionPoints().size();
-	}
-
+		
 }

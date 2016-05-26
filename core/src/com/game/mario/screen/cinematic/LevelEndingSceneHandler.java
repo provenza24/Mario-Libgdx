@@ -56,7 +56,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			/*tileMap.getFlag().addAction(ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY() - 8.5f, 1f));*/
 			tileMap.getFlag().setGravitating(true);
 			tileMap.getFlag().setCollidableWithTilemap(true);
-		} else if (endLevelState == 2 && mario.getMapCollisionEvent().isCollidingBottom() && timer > 1.5f) {
+		} else if (endLevelState == 2 && mario.getMapCollisionEvent().getCollisionPoints().size()>0 && timer > 1.5f) {
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_STAGE_CLEAR);
 			timer = 0;
 			endLevelState = 3;

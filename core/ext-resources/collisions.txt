@@ -10,3 +10,32 @@
 		4 - Move on to the next tile...
 	2 -If the tile being checked is passable, do nothing
 4 - If it's possible that resolving a collision could move the player into another collision, you may want to run through the above algorithm a second time. Or redesign your level.
+
+
+Collision: ### Starting collision algo ###
+13:06:09.381 - Cas 4 - : move.y>0 && move.x>0
+13:06:09.381 - Cas 4.1 - : xDelta > yDelta -> y = (int) y
+Collision: ### Ending collision algo ###
+Collision: ### Starting collision algo ###
+13:06:09.431 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.432 - Cas 5.1: xDelta > yDelta -> y = y + 1
+13:06:09.432 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.432 - Cas 5.2: xDelta <= yDelta -> x = (int) x
+13:06:09.433 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.433 - Cas 5.1: xDelta > yDelta -> y = y + 1
+13:06:09.434 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.434 - Cas 5.2: xDelta <= yDelta -> x = (int) x
+13:06:09.434 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.435 - Cas 5.2: xDelta <= yDelta -> x = (int) x
+13:06:09.435 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.435 - Cas 5.2: xDelta <= yDelta -> x = (int) x
+13:06:09.436 - Cas 5: move.x>0 && move.y<0
+move.x=: 0.1454525
+13:06:09.436 - Cas 5.1: xDelta > yDelta -> y = y + 1
+Collision: ### Ending collision algo ###

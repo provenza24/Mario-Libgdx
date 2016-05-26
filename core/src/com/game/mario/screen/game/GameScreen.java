@@ -127,9 +127,11 @@ public class GameScreen implements Screen  {
 			if (i==0) {
 				IScrollingBackground scrollingBackground_1 = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, 16);
 				backgrounds.add(scrollingBackground_1);
+				scrollingBackground_1.toggleEnabled();
 			} else {
 				IScrollingBackground scrollingBackground_2 = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, 24);
 				backgrounds.add(scrollingBackground_2);
+				scrollingBackground_2.toggleEnabled();
 			}
 			i++;
 		}
@@ -253,13 +255,13 @@ public class GameScreen implements Screen  {
 
 		if (debugShowText) {
 			
-			int y = 450;
+			int y = 440;
 			
 			// Mario information
 			spriteBatch.begin();
-			debugFont.draw(spriteBatch, "mario.position=" + String.format("%.1f", mario.getX()) + "," + String.format("%.1f", mario.getY()), 10, y);
+			debugFont.draw(spriteBatch, "mario.position=" + String.format("%.1f", mario.getX()) + " | " + String.format("%.1f", mario.getY()), 10, y);
 			y = y -20;
-			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + "," + String.format("%.1f", mario.getAcceleration().y), 10, y);
+			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + " | " + String.format("%.1f", mario.getAcceleration().y), 10, y);
 			y = y -20;
 			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), 10, y);
 			y = y -20;
@@ -270,14 +272,7 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), 10, y);
 			y = y -20;
 			//debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x) + " camera.offset=" + String.format("%.1f", camera.getCameraOffset()), 10, y);
-			//y = y -20;
-			debugFont.draw(spriteBatch,
-					"tile-collision:  (right=" + mario.getMapCollisionEvent().isCollidingRight() + ", left="
-							+ mario.getMapCollisionEvent().isCollidingLeft() + ", top="
-							+ mario.getMapCollisionEvent().isCollidingTop() + ", bottom="
-							+ mario.getMapCollisionEvent().isCollidingBottom() + ")",
-					10, y);
-			y = y -20;
+			//y = y -20;			
 			//debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), 10, y);
 			//y = y -20;
 			//int alive = 0;
@@ -298,11 +293,9 @@ public class GameScreen implements Screen  {
 			//y = y -20;
 			//debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), 10, y);
 			
-			debugFont.draw(spriteBatch, "move x: " + mario.getMove().x, 10, y);			
+			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), 10, y);			
 			y = y -20;
-			debugFont.draw(spriteBatch, "move y: " + mario.getMove().y, 10, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, "Collinding points: " + mario.getNbCollindingPoints(), 10, y);			
+			debugFont.draw(spriteBatch, "Collinding points: " + mario.getCollisionPoints(), 10, y);			
 			
 			spriteBatch.end();
 		}

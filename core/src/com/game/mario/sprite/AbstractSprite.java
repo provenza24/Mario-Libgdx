@@ -272,11 +272,15 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public void reinitHorizontalMapCollisionEvent() {
 		mapCollisionEvent.setCollidingLeft(false);
 		mapCollisionEvent.setCollidingRight(false);
+		mapCollisionEvent.setCollidingTopLeft(false);
+		mapCollisionEvent.setCollidingTopRight(false);
 	}
 
 	public void reinitVerticalMapCollisionEvent() {
 		mapCollisionEvent.setCollidingBottom(false);
 		mapCollisionEvent.setCollidingTop(false);
+		mapCollisionEvent.setCollidingBottomLeft(false);
+		mapCollisionEvent.setCollidingBottomRight(false);
 		collidingCells = new ArrayList<TmxCell>();
 	}
 
