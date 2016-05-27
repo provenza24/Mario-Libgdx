@@ -471,7 +471,7 @@ public class Mario extends AbstractTileObjectSprite {
 						addCollidingCell(collisionPoint.getCell());
 						
 						newPosition.y = (int) getY();
-						acceleration.y = 0;						
+						acceleration.y = 10e-5F;						
 						state = MarioStateEnum.FALLING;
 																						
 					}
@@ -488,7 +488,7 @@ public class Mario extends AbstractTileObjectSprite {
 							if (xDelta>yDelta) {
 								addCollidingCell(collisionPoint.getCell());
 								newPosition.y = (int) getY();
-								acceleration.y = 0;								
+								acceleration.y = 10e-5F;								
 								if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
 									state = MarioStateEnum.NO_MOVE;
 									onFloor = true;
@@ -554,7 +554,7 @@ public class Mario extends AbstractTileObjectSprite {
 							if (xDelta>yDelta) {
 								addCollidingCell(collisionPoint.getCell());
 								newPosition.y = (int) getY();
-								acceleration.y = 0;
+								acceleration.y = 10e-5F;
 								
 								if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
 									state = MarioStateEnum.NO_MOVE;

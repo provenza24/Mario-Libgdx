@@ -9,6 +9,10 @@ import com.game.mario.enums.MusicEnum;
 
 public class SoundManager {
 
+	private static final float VOLUME_SOUND = 0.3f;
+
+	private static final float VOLUME_MUSIC = 0.1f;
+
 	public static Map<MusicEnum, Sound> THEMES = new HashMap<MusicEnum, Sound>();
 	
 	public static Sound SOUND_OVERWORLD_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/overworld.mp3"));
@@ -62,8 +66,8 @@ public class SoundManager {
 	}
 	
 	private SoundManager() {	
-		/*musicVolume = 0.3f;		
-		soundFxVolume = 1f;*/
+		musicVolume = VOLUME_MUSIC;		
+		soundFxVolume = VOLUME_SOUND;
 	}
 
 	public static SoundManager getSoundManager() {

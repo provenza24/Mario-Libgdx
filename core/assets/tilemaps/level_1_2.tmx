@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="91">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="239" height="15" tilewidth="32" tileheight="32" nextobjectid="129">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -29,14 +29,17 @@
  <tileset firstgid="416" name="Turtle" tilewidth="32" tileheight="48">
   <image source="turtle.png" width="32" height="48"/>
  </tileset>
- <layer name="world" width="232" height="15">
+ <tileset firstgid="417" name="RedTurtle" tilewidth="32" tileheight="48">
+  <image source="koopa_red.png" width="256" height="48"/>
+ </tileset>
+ <layer name="world" width="239" height="15">
   <properties>
    <property name="backgrounds" value="underground"/>
-   <property name="music" value="underground-theme"/>
+   <property name="music" value="underground"/>
    <property name="world" value="underground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztlllKxTAUho8+XN2A7kAcwOlR9OqhKuICHHfgvALnjfsrXoixpxma5rbh/PBRmuQkacpHuz5DtK4oBVBipn2mipKKEjPtM1WUVOTKU8a1uKFdScNpD/bQli7TtO4qWOvBHs189sDPoYfp77OxgNTvmtc1TpMm6meZYVI/S4j6WVaY/J6pblxdne98mm6S08/RL66on/FhUj9LSi4/R6R+hoaNq4nZV1cj9bnG1dX5zmePt9HEJYefI1I/zZx4jmPrKrXZNVKfa5y0nu9+zXltSg4LtMkyWAFL1K2ftpuxfm6gbRNsge2E/rLnuHkwZ+FKZV1Dw/T/7OvapBqpTpqjqc41f84sgMVMa1UU//7aZBfsgR3qzs86N2P9rNB2CI7A8RT8DIntpeRpl++dafjfLcnDyT9fSJjCz6Oi7v3khIREcjPGzzPcn4MLcAmuwHUiRznNND9xeSn52cX7Zxq+n5KHUnvTd5Up7DwqKstP82ya3Izx8wb3t+AO3IMH8NgjP329zOlnCQn1s+m7yuT/rm03S/BzcjYuN338tMc8w8UX8ArewDv4SOTnGOwrURz0/CzN/Y1r7mOf007TXG1qQ/lWYnYg+OYLtVkMHw==
+   eJztl1lOw0AMhg0PhQvAC8+IRSqFRwQFK4AKB2C9AfsJ2C+OI4g0MuPMkpm0Cf6lT80ydiaTfIo6nAMYKkoP6FKQbYewQWzC9NdbUVLRpSDbDkHdVfpGW3lOcC1k2yFU7po9eG8lDWczMIem5Ezddc33dJpzNPM14+52PQh+6yOdd/V1jdOkibqr7qKAdN7V1zVOkybq7v9xF8HvnmzjbHW+/TR50qa7g19cUXfzBEHd7VPacncA03M3pKakC+6i8WtinrPVSOdc42x1vv34eI4mLm24OwB11zcTz3HIfqVjvEY65xonXc93vmZfTp+DFk4b9lwj1olVyOsu9zbW3S06NiK2iR0PtzFkkkZNSai7i8QCw5WC/YYG4e9zsR2TaqQ6qUddnat/m1killu6VgHxz69J9oh9YhfyuWvzNtbdgo4dEcfESaC76MHE2M753eXOSg7nfCcQuv+9kxytnl1IEMLXo4D87mJCQiJ5G+PuOe1fEJfEFXFN3Dj8DZ1vVVOSw12Xs5K7Od4NhO67KzkqHa/7HiOErUcB/XLXXJs6b2PcvaX9O+KeeCAeiacM7lb/I1Ygnbu+zrbpbh8S6m7d9xjB/1lzb/vgbrU2Lm993OVjXsjTV+KNeCc+iM8M7lb/I0bwcy9j4kCJ4pCt7aytpTm/sWU/9j556no1qQ2l1GW+I6S4328YqTMU
   </data>
  </layer>
  <objectgroup name="objectsLayer">
@@ -147,5 +150,44 @@
   <object id="88" type="coin" gid="412" x="2786" y="256" width="28" height="32"/>
   <object id="89" type="coin" gid="412" x="2818" y="256" width="28" height="32"/>
   <object id="90" type="coin" gid="412" x="2850" y="256" width="28" height="32"/>
+  <object id="91" type="transferDown" gid="406" x="3324" y="352" width="8" height="8">
+   <properties>
+    <property name="backgrounds" value="bonus"/>
+    <property name="music" value="bonus"/>
+    <property name="scrollable" value="false"/>
+    <property name="world" value="bonus"/>
+    <property name="xOutgoing" value="7168"/>
+    <property name="yOutgoing" value="480"/>
+   </properties>
+  </object>
+  <object id="92" type="transferRight" gid="409" x="7512" y="436" width="8" height="8">
+   <properties>
+    <property name="backgrounds" value="underground"/>
+    <property name="music" value="underground"/>
+    <property name="scrollable" value="true"/>
+    <property name="world" value="underground"/>
+    <property name="xOutgoing" value="3696"/>
+    <property name="yOutgoing" value="96"/>
+   </properties>
+  </object>
+  <object id="93" type="redKoopa" gid="417" x="4672" y="448" width="32" height="48"/>
+  <object id="111" type="coin" gid="412" x="7486" y="316" width="28" height="32"/>
+  <object id="112" type="coin" gid="412" x="7462" y="321" width="28" height="32"/>
+  <object id="113" type="coin" gid="412" x="7423" y="321" width="28" height="32"/>
+  <object id="114" type="coin" gid="412" x="7392" y="320" width="28" height="32"/>
+  <object id="115" type="coin" gid="412" x="7363" y="313" width="28" height="32"/>
+  <object id="116" type="coin" gid="412" x="7326" y="316" width="28" height="32"/>
+  <object id="117" type="coin" gid="412" x="7295" y="316" width="28" height="32"/>
+  <object id="118" type="coin" gid="412" x="7269" y="320" width="28" height="32"/>
+  <object id="119" type="coin" gid="412" x="7236" y="316" width="28" height="32"/>
+  <object id="120" type="coin" gid="412" x="7202" y="446" width="28" height="32"/>
+  <object id="121" type="coin" gid="412" x="7238" y="442" width="28" height="32"/>
+  <object id="122" type="coin" gid="412" x="7267" y="442" width="28" height="32"/>
+  <object id="123" type="coin" gid="412" x="7291" y="442" width="28" height="32"/>
+  <object id="124" type="coin" gid="412" x="7328" y="446" width="28" height="32"/>
+  <object id="125" type="coin" gid="412" x="7367" y="446" width="28" height="32"/>
+  <object id="126" type="coin" gid="412" x="7392" y="446" width="28" height="32"/>
+  <object id="127" type="coin" gid="412" x="7421" y="444" width="28" height="32"/>
+  <object id="128" type="coin" gid="412" x="7452" y="444" width="28" height="32"/>
  </objectgroup>
 </map>

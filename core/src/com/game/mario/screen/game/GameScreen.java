@@ -274,7 +274,7 @@ public class GameScreen implements Screen  {
 			
 			
 			/* ENV VARIABLES */
-			/*x = 300;
+			x = 300;
 			y = 440;
 			
 			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
@@ -299,7 +299,7 @@ public class GameScreen implements Screen  {
 			y = y -20;			
 			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, x, y);
 			y = y -20;
-			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), x, y);*/
+			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), x, y);
 			
 			spriteBatch.end();
 		}

@@ -20,10 +20,13 @@ public class MainMenuScreen extends AbstractMenuScreen {
 		setFontColor(0,0,0);
 	}
 	
-	public void addBackgroundElements() {		
-		backgroundGroup.addActor(new Image(new Texture(Gdx.files.internal("titlescreen_background.png"))));		
+	public void addBackgroundElements() {
 		
-		Image titlescreen = new Image(new Texture(Gdx.files.internal("titlescreen.png")));			
+		Image background = new Image(new Texture(Gdx.files.internal("titlescreen_background.png")));
+		background.setBounds(0, 0, 800, 750);
+		backgroundGroup.addActor(background);		
+		
+		Image titlescreen = new Image(new Texture(Gdx.files.internal("titlescreen.png")));		
 		titlescreen.setPosition(Gdx.graphics.getWidth() / 2 - titlescreen.getWidth() /2, 220);		
 		backgroundGroup.addActor(titlescreen);		
 	}
