@@ -7,14 +7,6 @@ public class CollisionEvent {
 
 	private List<CollisionPoint> collisionPoints;
 	
-	boolean collidingTop;
-	
-	boolean collidingBottom;
-	
-	boolean collidingLeft;
-	
-	boolean collidingRight;
-	
 	boolean collidingBottomLeft;
 
 	boolean collidingBottomRight;
@@ -22,7 +14,11 @@ public class CollisionEvent {
 	boolean collidingTopLeft;
 	
 	boolean collidingTopRight;
-
+	
+	boolean collidingMiddleRight;
+	
+	boolean collidingMiddleLeft;
+		
 	public CollisionEvent() {
 		collisionPoints = new ArrayList<CollisionPoint>();
 	}
@@ -71,36 +67,50 @@ public class CollisionEvent {
 		this.collidingTopRight = collidingTopRight;
 	}
 
+	// Collision TOP, BOTTOM, LEFT, RIGHT
+	
 	public boolean isCollidingTop() {
-		return collidingTop;
-	}
-
-	public void setCollidingTop(boolean collidingTop) {
-		this.collidingTop = collidingTop;
+		return collidingTopLeft || collidingTopRight;
 	}
 
 	public boolean isCollidingBottom() {
-		return collidingBottom;
+		return collidingBottomLeft || collidingBottomRight;
 	}
 
-	public void setCollidingBottom(boolean collidingBottom) {
-		this.collidingBottom = collidingBottom;
-	}
-
+	
 	public boolean isCollidingLeft() {
-		return collidingLeft;
-	}
-
-	public void setCollidingLeft(boolean collidingLeft) {
-		this.collidingLeft = collidingLeft;
+		return collidingTopLeft || collidingBottomLeft;
 	}
 
 	public boolean isCollidingRight() {
-		return collidingRight;
+		return collidingTopRight || collidingBottomRight;
 	}
 
-	public void setCollidingRight(boolean collidingRight) {
-		this.collidingRight = collidingRight;
+	public boolean isCollidingMiddleRight() {
+		return collidingMiddleRight;
+	}
+
+	public void setCollidingMiddleRight(boolean collidingMiddleRight) {
+		this.collidingMiddleRight = collidingMiddleRight;
+	}
+
+	public boolean isCollidingMiddleLeft() {
+		return collidingMiddleLeft;
+	}
+
+	public void setCollidingMiddleLeft(boolean collidingMiddleLeft) {
+		this.collidingMiddleLeft = collidingMiddleLeft;
 	}
 	
+	public boolean isBlockedRight() {
+		return (collidingTopRight && collidingBottomRight) 
+				|| (collidingTopRight && collidingMiddleRight)
+				|| (collidingMiddleRight && collidingBottomRight);				
+	}
+	
+	public boolean isBlockedLeft() {
+		return (collidingTopLeft && collidingBottomLeft) 
+				|| (collidingTopLeft && collidingMiddleLeft)
+				|| (collidingMiddleLeft && collidingBottomLeft);				
+	}
 }

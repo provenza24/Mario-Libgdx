@@ -198,7 +198,7 @@ public class GameScreen implements Screen  {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		if (camera.isScrollable()) {
-			// Move camera
+			// Move camera			
 			camera.moveCamera(mario);
 			// Move scrolling background
 			if (Math.floor(camera.getCameraOffset()) == 8) {
@@ -271,10 +271,10 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), x, y);
 			y = y -20;			
 			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), x, y);			
-			y = y -20;
+			
 			
 			/* ENV VARIABLES */
-			x = 300;
+			/*x = 300;
 			y = 440;
 			
 			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
@@ -299,7 +299,7 @@ public class GameScreen implements Screen  {
 			y = y -20;			
 			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, x, y);
 			y = y -20;
-			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), x, y);
+			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), x, y);*/
 			
 			spriteBatch.end();
 		}
