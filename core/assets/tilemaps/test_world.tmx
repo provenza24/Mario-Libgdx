@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="51">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="53">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -29,6 +29,9 @@
  <tileset firstgid="416" name="turtle" tilewidth="32" tileheight="48">
   <image source="turtle.png" width="32" height="48"/>
  </tileset>
+ <tileset firstgid="417" name="RedKoopa" tilewidth="32" tileheight="48">
+  <image source="koopa_red.png" width="256" height="48"/>
+ </tileset>
  <layer name="world" width="232" height="15">
   <properties>
    <property name="backgrounds" value="clouds,hills"/>
@@ -36,11 +39,13 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmtlKxDAYhTMKfQOFGa/FBdzQG9GL4PIIrm/g/gTuL+4ZmOIQs/xN098Ocz440KZJk2b6hQbGGF0q5f4I+S8ssjX4jTXhTNcbZx9lB+ojpp9kfrDmr3fS0M9+UyVCuuVl0P4e1tBPQrrgm34S0lvoJyH9hX6SEKm9J/eg+Ujnjn4SokuTtY1+EqJH028P+kmIDjl7A5+f2yjbQXaRPYG/1uj7WQWO3TrcN/lZQpYj16V7T825lPzmoXa5bUuRO28+P09QdoqcIecZflrT7f+HfM817765pPzbQDaVxlICn2OS39zngvb63GZdc/28wPklcoVcIzfIbcJRa5r7uYbjdWTVNPMz9kzz5mjMwZR/s+RnzLHU+5DTNrW2pZhu3/a7w/XzDuf3yAPyiDwhzx34eYTjY+TQyP2UrpezwBBzMEJWhPv/oaduzLHQtfo+bf0sMX4J7vs8mvSbes9jLrjlqXltOva6fYl9gVvnFeN4Q96RD+QT+RL42TbjLhYUszgZe6zfuk6qnq++tE2pvhnOZyi2QH4AwwZM9Q==
+   eJztmtlKxDAYhTMK8wYKM16LC7ihN6IXweURHJc3cH8C9xf3DExxiEn+v2kaOvR8cKBNkybN9AsNjDGEkDawyM7gL9aEM19vmkOUHRUfMSH9wZr/3mlDP7vNUAhpl9dB83tYQz8JaYMf+klIZ6GfhHQX+klCSHtP7kHT0c4d/SSkLHXWNvpJSDnqfnvQT0LKkLI38Pm5i7I9ZB85UPhrTXk/h4Fjtw73TX5WkNXIde3es+Rcan7zULvUtrlInTefn2coO0cukMsEP61p9/9Dvufqu28ukn9byHahseTA55jmN/e5UHp9brKuuX5e4XyCXCM3yC1yJzhqTX0/N3C8iayben7GnqlvjsYclPxbJD9jjknvQ0pbaW2TmG/f9LvD9fMe5w/II/KEPCMvLfh5guNT5Njo/dSul4vACHMwRtaU+/+Rp27MsdC16j5N/cwxfg3u+zye9Su95zEX3HJpXuuOvWqfY1/g1nnDON6RD+QT+UK+FX42zbSLpYJZno091m9VR6rnq69tk6tvhvMZis2QX/D/TLk=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
+  <object id="51" type="redKoopa" gid="417" x="3414" y="320" width="32" height="48"/>
+  <object id="52" type="redKoopa" gid="417" x="870" y="320" width="32" height="48"/>
  </objectgroup>
 </map>

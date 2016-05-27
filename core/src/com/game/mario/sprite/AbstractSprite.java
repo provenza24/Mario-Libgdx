@@ -45,6 +45,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected Vector2 oldPosition;
 	
+	protected Vector2 oldAcceleration;
+	
 	protected boolean visible;
 	
 	protected boolean alive;
@@ -78,7 +80,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		renderingSize = new Vector2(1,1);
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		oldPosition = new Vector2(x, y);
-		acceleration = new Vector2(0,0);			
+		acceleration = new Vector2(0,0);
+		oldAcceleration = new Vector2(0,0);
 		
 		mapCollisionEvent = new CollisionEvent();
 		offset = new Vector2(0,0);			
@@ -163,6 +166,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected void storeOldPosition() {
 		oldPosition.x = getX();
 		oldPosition.y = getY();		
+		oldAcceleration.x = acceleration.x;
+		oldAcceleration.y = acceleration.y;
 	}
 	
 	public void move(float deltaTime) {
@@ -487,6 +492,14 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void setBumped(boolean bumped) {
 		this.bumped = bumped;
+	}
+
+	public Vector2 getOldAcceleration() {
+		return oldAcceleration;
+	}
+
+	public void setOldAcceleration(Vector2 oldAcceleration) {
+		this.oldAcceleration = oldAcceleration;
 	}
 	
 }

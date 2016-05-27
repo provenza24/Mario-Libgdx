@@ -19,6 +19,8 @@ public class ResourcesLoader {
 	
 	public static final Texture KOOPA = new Texture(Gdx.files.internal("sprites/enemies/koopa.png"));
 	
+	public static final Texture KOOPA_RED = new Texture(Gdx.files.internal("sprites/enemies/koopa_red.png"));
+	
 	public static final Texture PIRANHA_PLANT = new Texture(Gdx.files.internal("sprites/enemies/piranha_plant.png"));
 	
 	// Items
