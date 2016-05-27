@@ -12,30 +12,22 @@
 4 - If it's possible that resolving a collision could move the player into another collision, you may want to run through the above algorithm a second time. Or redesign your level.
 
 
-Collision: ### Starting collision algo ###
-13:06:09.381 - Cas 4 - : move.y>0 && move.x>0
-13:06:09.381 - Cas 4.1 - : xDelta > yDelta -> y = (int) y
-Collision: ### Ending collision algo ###
-Collision: ### Starting collision algo ###
-13:06:09.431 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.432 - Cas 5.1: xDelta > yDelta -> y = y + 1
-13:06:09.432 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.432 - Cas 5.2: xDelta <= yDelta -> x = (int) x
-13:06:09.433 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.433 - Cas 5.1: xDelta > yDelta -> y = y + 1
-13:06:09.434 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.434 - Cas 5.2: xDelta <= yDelta -> x = (int) x
-13:06:09.434 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.435 - Cas 5.2: xDelta <= yDelta -> x = (int) x
-13:06:09.435 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.435 - Cas 5.2: xDelta <= yDelta -> x = (int) x
-13:06:09.436 - Cas 5: move.x>0 && move.y<0
-move.x=: 0.1454525
-13:06:09.436 - Cas 5.1: xDelta > yDelta -> y = y + 1
-Collision: ### Ending collision algo ###
+if (sizeState > 0) {
+			Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() / 2);
+			x = (int) rightMiddle.x;
+			y = (int) rightMiddle.y;
+			isCollision = tilemap.isCollisioningTileAt(x, y);
+			getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+			if (isCollision) {
+				getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+			}
+
+			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight() / 2);
+			x = (int) leftMiddle.x;
+			y = (int) leftMiddle.y;
+			isCollision = tilemap.isCollisioningTileAt(x, y);
+			getMapCollisionEvent().setCollidingLeft(getMapCollisionEvent().isCollidingLeft() || isCollision);
+			if (isCollision) {
+				getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+			}
+		}

@@ -207,8 +207,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	public void checkHorizontalMapCollision(TmxMap tilemap) {
 
-		reinitHorizontalMapCollisionEvent();
-
+		reinitMapCollisionEvent();
+		
 		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
 		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
 		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
@@ -230,7 +230,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void checkVerticalMapCollision(TmxMap tilemap) {
 
-		reinitVerticalMapCollisionEvent();
+		reinitMapCollisionEvent();
 
 		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
 		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
@@ -269,20 +269,20 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		batch.end();
 	}
 
-	public void reinitHorizontalMapCollisionEvent() {
+	public void reinitMapCollisionEvent() {
+		
 		mapCollisionEvent.setCollidingLeft(false);
 		mapCollisionEvent.setCollidingRight(false);
-		mapCollisionEvent.setCollidingTopLeft(false);
-		mapCollisionEvent.setCollidingTopRight(false);
-	}
-
-	public void reinitVerticalMapCollisionEvent() {
 		mapCollisionEvent.setCollidingBottom(false);
 		mapCollisionEvent.setCollidingTop(false);
+		
+		mapCollisionEvent.setCollidingTopLeft(false);
+		mapCollisionEvent.setCollidingTopRight(false);
+		
 		mapCollisionEvent.setCollidingBottomLeft(false);
 		mapCollisionEvent.setCollidingBottomRight(false);
 		collidingCells = new ArrayList<TmxCell>();
-	}
+	}	
 
 	/** Getters / Setters */
 	public DirectionEnum getDirection() {

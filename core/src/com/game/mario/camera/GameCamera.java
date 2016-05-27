@@ -56,7 +56,7 @@ public class GameCamera {
 				cameraOffset = cameraOffset + move;
 			}
 		}
-		if (mario.getX() < camera.position.x - 8) {
+		if (mario.getX() < camera.position.x - 8) {					
 			mario.setX(mario.getOldPosition().x);
 			mario.getAcceleration().x = 0;
 			cameraOffset = cameraOffset - move;

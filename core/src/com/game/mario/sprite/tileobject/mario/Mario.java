@@ -103,12 +103,10 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private List<AbstractSprite> fireballs;
 
-	private float yOldAcceleration;
+	private Vector2 oldAcceleration;
 	
 	private Vector2 move = new Vector2();
 	
-	private int collisionPoints;
-
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
 
@@ -135,6 +133,7 @@ public class Mario extends AbstractTileObjectSprite {
 		alive = true;
 		deathNoMoveDuration = 0;
 		fireballs = new ArrayList<AbstractSprite>();
+		oldAcceleration = new Vector2();
 		
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 	}
@@ -147,8 +146,9 @@ public class Mario extends AbstractTileObjectSprite {
 		} else {
 			setSize(1 - 2*offset.x, 2 - offset.y);
 			setRenderingSize(1, 2);
-		}
-		setBounds(getX() + offset.x, getY(), getWidth(), getHeight());
+		}		
+		bounds.setX(getX()+offset.x);
+		bounds.setY(getY());
 		marioRunRightAnimation = animations[i][0];
 		marioRunLeftAnimation = animations[i][1];
 		marioSlideRightAnimation = animations[i][2];
@@ -304,7 +304,8 @@ public class Mario extends AbstractTileObjectSprite {
 	public void storeOldPosition() {
 		super.storeOldPosition();
 		previousState = state;
-		yOldAcceleration = acceleration.y;
+		oldAcceleration.x = acceleration.x;
+		oldAcceleration.y = acceleration.y;
 	}
 
 	public void setStateIfNotJumping(MarioStateEnum pstate) {
@@ -338,7 +339,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void checkBottomMapCollision(TmxMap tilemap) {
 		
-		reinitVerticalMapCollisionEvent();
+		reinitMapCollisionEvent();
 		getMapCollisionEvent().reinitCollisionPoints();
 		
 		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());		
@@ -346,21 +347,18 @@ public class Mario extends AbstractTileObjectSprite {
 		
 		int x = (int) leftBottomCorner.x;
 		int y = (int) leftBottomCorner.y;
-		boolean isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingLeft(isCollision);
+		boolean isCollision = tilemap.isCollisioningTileAt(x, y);		
 		getMapCollisionEvent().setCollidingBottom(isCollision);
 	
 		x = (int) rightBottomCorner.x;
 		y = (int) rightBottomCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingRight(getMapCollisionEvent().isCollidingRight() || isCollision);
+		isCollision = tilemap.isCollisioningTileAt(x, y);		
 		getMapCollisionEvent().setCollidingBottom(getMapCollisionEvent().isCollidingBottom() || isCollision);
 	}
 	
 	public void checkMapCollision(TmxMap tilemap) {
-
-		reinitHorizontalMapCollisionEvent();
-		reinitVerticalMapCollisionEvent();
+		
+		reinitMapCollisionEvent();
 		getMapCollisionEvent().reinitCollisionPoints();		
 
 		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
@@ -434,13 +432,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void collideWithTilemap(TmxMap tileMap) {
 				
+		
 		boolean onFloorCorrection = false;
 		move = new Vector2(getX() - getOldPosition().x, getY() - getOldPosition().y);
 				
 		checkBottomMapCollision(tileMap);		
 		
-		if (yOldAcceleration == 0 && getMapCollisionEvent().isCollidingBottom()) {
-			// On était sur une plateforme, on y est toujours, on reste dessus			
+		if (oldAcceleration.y == 0 && getMapCollisionEvent().isCollidingBottom()) {
+			// Mario is on a plateform and is still on it
 			onFloor = true;
 			setY((int) getY() + 1);
 			oldPosition.y = getY();
@@ -455,9 +454,7 @@ public class Mario extends AbstractTileObjectSprite {
 								
 		
 		if (getMapCollisionEvent().getCollisionPoints().size()>0) {
-											
-			collisionPoints = getMapCollisionEvent().getCollisionPoints().size();
-			
+												
 			int i=0;
 			
 			while (getMapCollisionEvent().getCollisionPoints().size()>0) {
@@ -581,16 +578,56 @@ public class Mario extends AbstractTileObjectSprite {
 				setY(newPosition.y);
 				checkMapCollision(tileMap);
 				i++;
+				if (i>10) {
+					System.out.println("Erreur de collision ?"+i);
+				}
 				
-			}			
-													
+			}	
+			// The collision has been handled, now fix player acceleration
+			if (move.x<0) {
+				Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x - 1, getY());
+				Vector2 leftTopCorner = new Vector2(getX() + getOffset().x - 1, getY() + getHeight());				
+				int x = (int) leftBottomCorner.x;
+				int y = (int) leftBottomCorner.y;
+				boolean isCollision = tileMap.isCollisioningTileAt(x, y);
+				if (!isCollision) {
+					x = (int) leftTopCorner.x;
+					y = (int) leftTopCorner.y;
+					isCollision = tileMap.isCollisioningTileAt(x, y);
+					if (!isCollision && sizeState>0) {
+						Vector2 leftMiddle = new Vector2(getX() + getOffset().x - 1, getY() + getHeight() / 2);
+						x = (int) leftMiddle.x;
+						y = (int) leftMiddle.y;
+						isCollision = tileMap.isCollisioningTileAt(x, y);
+					}
+				}				
+				acceleration.x = isCollision ? 0 : oldAcceleration.x;
+			} else {
+				Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x + 1, getY());
+				Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x + 1, getY() + getHeight());			
+				int x = (int) rightBottomCorner.x;
+				int y = (int) rightBottomCorner.y;
+				boolean isCollision = tileMap.isCollisioningTileAt(x, y);
+				if (!isCollision) {
+					x = (int) rightTopCorner.x;
+					y = (int) rightTopCorner.y;
+					isCollision = tileMap.isCollisioningTileAt(x, y);
+					if (!isCollision && sizeState>0) {
+						Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x + 1, getY() + getHeight() / 2);
+						x = (int) rightMiddle.x;
+						y = (int) rightMiddle.y;
+						isCollision = tileMap.isCollisioningTileAt(x, y);
+					}
+				}				
+				acceleration.x = isCollision ? 0 : oldAcceleration.x;
+			}										
 		}  else {
 			if (move.y < 0 && !onFloorCorrection) {				
 				setState(MarioStateEnum.FALLING);
 				onFloor = false;
 			}
-		}				
-
+		}						
+		
 		bounds.setX(getX()+offset.x);
 		bounds.setY(getY());
 	}
@@ -763,14 +800,6 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setGrowingDown(boolean growingDown) {
 		this.growingDown = growingDown;
-	}
-
-	public int getCollisionPoints() {
-		return collisionPoints;
-	}
-
-	public void setCollisionPoints(int collisionPoints) {
-		this.collisionPoints = collisionPoints;
 	}
 
 	public boolean isGrowing() {
