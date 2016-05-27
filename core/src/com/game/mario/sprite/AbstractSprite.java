@@ -15,7 +15,6 @@ import com.game.mario.collision.CollisionEvent;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.MarioStateEnum;
 import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -182,6 +181,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 								
 		checkVerticalMapCollision(tileMap);
 		
+		onFloor = getMapCollisionEvent().isCollidingBottom();
+		
 		float yMove = getY() - getOldPosition().y;
 		if (yMove <= 0) {			
 			if (getMapCollisionEvent().isCollidingBottom()) {				
@@ -204,7 +205,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			getAcceleration().x = -getAcceleration().x;
 		}
 
-		onFloor = getMapCollisionEvent().isCollidingBottom();					
+							
 	}	
 	
 	public void checkHorizontalMapCollision(TmxMap tilemap) {
@@ -275,8 +276,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		mapCollisionEvent.setCollidingBottomLeft(false);
 		mapCollisionEvent.setCollidingBottomRight(false);
 		mapCollisionEvent.setCollidingMiddleLeft(false);
-		mapCollisionEvent.setCollidingMiddleRight(false);
-		collidingCells = new ArrayList<TmxCell>();
+		mapCollisionEvent.setCollidingMiddleRight(false);		
 	}	
 
 	/** Getters / Setters */
@@ -408,6 +408,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void setCollidingCells(List<TmxCell> collidingCells) {
 		this.collidingCells = collidingCells;
+	}
+	
+	public void addCollidingCell(TmxCell tmxCell) {
+		collidingCells.add(tmxCell);
 	}
 
 	public void setGravitating(boolean gravitating) {
