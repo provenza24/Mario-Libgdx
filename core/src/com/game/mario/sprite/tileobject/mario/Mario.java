@@ -427,6 +427,9 @@ public class Mario extends AbstractTileObjectSprite {
 		
 		if (oldAcceleration.y == 0 && getMapCollisionEvent().isCollidingBottom()) {
 			// Mario is on a plateform and is still on it
+			if (state==MarioStateEnum.FALLING) {
+				state=MarioStateEnum.NO_MOVE;
+			}
 			onFloor = true;
 			setY((int) getY() + 1);
 			oldPosition.y = getY();
