@@ -11,6 +11,7 @@ import com.game.mario.screen.menu.AbstractMenuScreen;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.menu.MushroomSelector;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.WinConstants;
 
 public class MainMenuScreen extends AbstractMenuScreen {
 
@@ -23,11 +24,12 @@ public class MainMenuScreen extends AbstractMenuScreen {
 	public void addBackgroundElements() {
 		
 		Image background = new Image(new Texture(Gdx.files.internal("titlescreen_background.png")));
-		background.setBounds(0, 0, 800, 750);
+		background.setBounds(0, 0, WinConstants.WIDTH, WinConstants.HEIGHT);
 		backgroundGroup.addActor(background);		
-		
-		Image titlescreen = new Image(new Texture(Gdx.files.internal("titlescreen.png")));		
-		titlescreen.setPosition(Gdx.graphics.getWidth() / 2 - titlescreen.getWidth() /2, 220);		
+				
+		Image titlescreen = new Image(new Texture(Gdx.files.internal("titlescreen.png")));
+		titlescreen.setBounds(0, 0, 342 * WinConstants.HEIGHT / 512, 171 * WinConstants.WIDTH / 480);
+		titlescreen.setPosition(Gdx.graphics.getWidth() / 2 - titlescreen.getWidth() /2, Gdx.graphics.getHeight() - titlescreen.getHeight() - 80);		
 		backgroundGroup.addActor(titlescreen);		
 	}
 

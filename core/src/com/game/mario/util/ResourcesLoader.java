@@ -56,13 +56,13 @@ public class ResourcesLoader {
 	public static final Texture WALL_OVERGROUND = new Texture(Gdx.files.internal("sprites/wall/wall_overground.png"));
 			 
 	// Backgrounds	// overworld-800.gif underworld-800.png	
-	public static final Texture OVERGROUND_CLOUDS = new Texture(Gdx.files.internal("backgrounds/overworld-800.gif"));
+	public static final Texture OVERGROUND_CLOUDS = new Texture(Gdx.files.internal("backgrounds/overworld-"+WinConstants.WIDTH+".gif"));
+			
+	public static final Texture UNDERGROUND = new Texture(Gdx.files.internal("backgrounds/underworld-"+WinConstants.WIDTH+".png"));
+	
+	public static final Texture WATERFALL = new Texture(Gdx.files.internal("backgrounds/waterfall-"+WinConstants.WIDTH+".png"));
 	
 	public static final Texture OVERGROUND_HILLS = new Texture(Gdx.files.internal("backgrounds/hills.png"));
-	
-	public static final Texture UNDERGROUND = new Texture(Gdx.files.internal("backgrounds/underworld-800.png"));
-	
-	public static final Texture WATERFALL = new Texture(Gdx.files.internal("backgrounds/waterfall-800.png"));
 	
 	public static final Texture BONUS = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));		
 	
