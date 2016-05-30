@@ -577,9 +577,9 @@ public class Mario extends AbstractTileObjectSprite {
 				
 			}	
 			// The collision has been handled, now fix player acceleration
-			if (move.x<0) {
-				Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x - 1, getY());
-				Vector2 leftTopCorner = new Vector2(getX() + getOffset().x - 1, getY() + getHeight());				
+			if (move.x<0 || (move.x==0 && direction==DirectionEnum.LEFT)) {
+				Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x - 2*COLLISION_X_CORRECTIF, getY());
+				Vector2 leftTopCorner = new Vector2(getX() + getOffset().x - 2*COLLISION_X_CORRECTIF, getY() + getHeight());				
 				int x = (int) leftBottomCorner.x;
 				int y = (int) leftBottomCorner.y;
 				boolean isCollision = tileMap.isCollisioningTileAt(x, y);
@@ -588,7 +588,7 @@ public class Mario extends AbstractTileObjectSprite {
 					y = (int) leftTopCorner.y;
 					isCollision = tileMap.isCollisioningTileAt(x, y);
 					if (!isCollision && sizeState>0) {
-						Vector2 leftMiddle = new Vector2(getX() + getOffset().x - 1, getY() + getHeight() / 2);
+						Vector2 leftMiddle = new Vector2(getX() + getOffset().x - 2*COLLISION_X_CORRECTIF, getY() + getHeight() / 2);
 						x = (int) leftMiddle.x;
 						y = (int) leftMiddle.y;
 						isCollision = tileMap.isCollisioningTileAt(x, y);
@@ -596,8 +596,8 @@ public class Mario extends AbstractTileObjectSprite {
 				}				
 				acceleration.x = isCollision ? 0 : oldAcceleration.x;
 			} else {
-				Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x + 1, getY());
-				Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x + 1, getY() + getHeight());			
+				Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x + 2*COLLISION_X_CORRECTIF, getY());
+				Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x + 2*COLLISION_X_CORRECTIF, getY() + getHeight());			
 				int x = (int) rightBottomCorner.x;
 				int y = (int) rightBottomCorner.y;
 				boolean isCollision = tileMap.isCollisioningTileAt(x, y);
@@ -606,7 +606,7 @@ public class Mario extends AbstractTileObjectSprite {
 					y = (int) rightTopCorner.y;
 					isCollision = tileMap.isCollisioningTileAt(x, y);
 					if (!isCollision && sizeState>0) {
-						Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x + 1, getY() + getHeight() / 2);
+						Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x + 2*COLLISION_X_CORRECTIF, getY() + getHeight() / 2);
 						x = (int) rightMiddle.x;
 						y = (int) rightMiddle.y;
 						isCollision = tileMap.isCollisioningTileAt(x, y);
