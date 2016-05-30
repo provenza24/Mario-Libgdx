@@ -2,5 +2,5 @@ package com.game.mario.enums;
 
 public enum WorldTypeEnum {
 
-	UNDERGROUND, OVERGROUND, BONUS;
+	UNDERGROUND, OVERGROUND, BONUS, CASTLE;
 }

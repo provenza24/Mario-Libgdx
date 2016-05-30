@@ -21,6 +21,8 @@ public class TileIdConstants {
 	public static final int WALL_UNDERGROUND = 64;	
 	public static final int BLOCK_UNDERGROUND = 65;
 	
+	public static final int BLOCK_CASTLE = 105;
+	
 	public static final int WALL_OVERGROUND_10_COINS = 11;
 	public static final int WALL_OVERGROUND_RED_MUSHROOM = 12;
 	public static final int WALL_OVERGROUND_GREEN_MUSHROOM = 13;

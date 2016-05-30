@@ -33,10 +33,10 @@
   <properties>
    <property name="backgrounds" value="castle"/>
    <property name="music" value="overground"/>
-   <property name="world" value="overground"/>
+   <property name="world" value="castle"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztV1sOgjAQXA/EsdCg8qN+K2dQDyx8NNk0BXe3D6rMJBMS6G4ns2PBZkfUgCAIboAHItoTrriWvebqbUFbiScS/W3kc7cmpX+afaxIpS/HzCSeh7B21jT6u8jnFLm/Bin7t5H1OWHV9Uvn3VZRsz+S33qKOs36pbVWvYAdt7UFAJvElZA9oDwutH72jiNPFfEc0Bj7P+If3uVuTiF/tLDMQpoTX99U1wXu30e+KuJD4Uup3H8Dn0nI99j+E9ycBmM9h3QOfC9pTnx9ru49cx+0z5V76Nf7/lr68z7Weg6pFzwr0pzM5Qu5Q+4sXuC8y0vLe75fqO+9/v5cpHBzSvEdkjN30vPuqdABxnMgG1KeDx+ZYRmx
+   eJztV8sOgjAQXG/+DJ+FBpWLeka+Qf1g4dCkaQruo4UqM8mkSeluN7NDC9WOqAJBENwAj0R0IIwYlx1z5dagLkQTTv218blbk1I/yT5apKovR884msewttck9TfG52TcX4KU+WtjfE5o6/ql826rKFmfuXd9r4yzrp9bK90XsOO+dgHAJnEjeA9YHlda33ungeeCeInUaP2P+Ie73PUppo8Uml5wfRLWN8Y1kflu4KsgPgS6LOX7b/B7EtPdmn+E61OvjPfB7YO/F9cnYX0u7j0xD+r76msYxof6avL7ebTxPrha+F7h+mTKX/AdfKfRAuddXmru+XYmvg3yh33hwvUpxXdITt9xz7unoA7Qzp50SHk+fABHsBm5
   </data>
  </layer>
  <objectgroup name="objectsLayer">
