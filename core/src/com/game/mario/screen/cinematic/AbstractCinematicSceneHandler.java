@@ -66,17 +66,20 @@ public abstract class AbstractCinematicSceneHandler {
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		renderMysteryBlocks(delta);
-		for (AbstractSprite enemy : tileMap.getEnemies()) {
-			if (enemy.isVisible()) {
-				enemy.render(renderer.getBatch());
-			}				
-		}						
+							
 		for (AbstractSprite item : tileMap.getItems()) {
 			if (item.isVisible()) {
 				item.update(tileMap, camera.getCamera(), delta);
 				item.render(renderer.getBatch());
 			}				
 		}
+		
+		for (AbstractSprite enemy : tileMap.getEnemies()) {
+			if (enemy.isVisible()) {
+				enemy.render(renderer.getBatch());
+			}				
+		}
+		
 		renderStatusBar();
 		mario.render(renderer.getBatch());
 		stage.act();

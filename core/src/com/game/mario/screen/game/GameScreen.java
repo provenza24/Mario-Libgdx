@@ -217,11 +217,11 @@ public class GameScreen implements Screen  {
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		// Render mystery blocks
-		renderMysteryBlocks(delta);
-		// Render enemies
-		handleEnemies(delta);
+		renderMysteryBlocks(delta);		
 		//handleItems
 		handleItems(delta);
+		// Render enemies
+		handleEnemies(delta);
 		
 		// Fireballs
 		handleFireballs(delta);

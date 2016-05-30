@@ -62,6 +62,8 @@ public class ResourcesLoader {
 	
 	public static final Texture UNDERGROUND = new Texture(Gdx.files.internal("backgrounds/underworld-800.png"));
 	
+	public static final Texture WATERFALL = new Texture(Gdx.files.internal("backgrounds/waterfall-800.png"));
+	
 	public static final Texture BONUS = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));		
 	
 	// Transparency sprites	

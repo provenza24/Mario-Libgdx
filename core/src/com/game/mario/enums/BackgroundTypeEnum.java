@@ -6,6 +6,8 @@ public enum BackgroundTypeEnum {
 	
 	HILLS,
 	
+	WATERFALL, 
+	
 	UNDERGROUND,
 	
 	BONUS;

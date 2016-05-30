@@ -6,7 +6,7 @@
 	
 	<target name="copy_ext_files">
 		<copy todir="${ext_files_dest}" >  
-		        <fileset dir="${ext_files_src}" includes="**"/>  
+		        <fileset dir="${ext_files_src}" includes="*.tmx"/>  
 		 </copy>		
 	</target>
 

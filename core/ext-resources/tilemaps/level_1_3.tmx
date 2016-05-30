@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="170" height="15" tilewidth="32" tileheight="32" nextobjectid="61">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+  <image source="tileset.png" width="640" height="640"/>
+  <tile id="6">
+   <properties>
+    <property name="item" value="coin"/>
+   </properties>
+  </tile>
+ </tileset>
+ <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
+  <image source="mario_jump_right.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="402" name="Goomba" tilewidth="32" tileheight="32">
+  <image source="goomba.png" width="96" height="32"/>
+ </tileset>
+ <tileset firstgid="405" name="Flag" tilewidth="32" tileheight="32">
+  <image source="flag.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="406" name="Transfer" tilewidth="8" tileheight="8">
+  <image source="transfer.png" width="32" height="8"/>
+ </tileset>
+ <tileset firstgid="410" name="Coin" tilewidth="28" tileheight="32">
+  <image source="coin.png" width="112" height="32"/>
+ </tileset>
+ <tileset firstgid="414" name="piranah" tilewidth="32" tileheight="50">
+  <image source="plant_piranha.png" width="64" height="50"/>
+ </tileset>
+ <tileset firstgid="416" name="turtle" tilewidth="32" tileheight="48">
+  <image source="turtle.png" width="32" height="48"/>
+ </tileset>
+ <tileset firstgid="417" name="Red-Turtle" tilewidth="32" tileheight="48">
+  <image source="koopa_red.png" width="256" height="48"/>
+ </tileset>
+ <layer name="world" width="170" height="15">
+  <properties>
+   <property name="backgrounds" value="clouds,waterfall"/>
+   <property name="music" value="overground"/>
+   <property name="world" value="overground"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJztl1tuwjAQRSlIiEUA3QEtXQKv/xaVFnZAea0AaOnGe5GKZA12YnvsJIa50vmJwZmYwzDUahKJRCKRSFLJ7qHsCiSS/PyKp5IEck+evoI3DdMyi5JYJTVPqWuujnXwvF2FR8bzq7WI635p/pOX1Dw9p8NwLKSnl/1899D193vzXTzNfm8VPKX1cGvJimnmKeu70STkJYSnPezxBJ5BH7xEdt/GU9N8UIanl1p0PhTlKb1XUfc0JYSnrt4NsD4EIzAGkwjP7tMPdD6H8rSl7GezR9vwmqp6apq9uTM59ZPjqYt371ibgQ/wCeZgEem8XftBTE/V/arkaZZHPuenW+fMOqE8dfVuibUvsAJrsAFb8fQqRfbTLL9uxVNX7/ZYO4Aj+AY/4MQ4b04/oHOgr6c2v22m+dd0PQVPdedXFU/pa1y9qwegQfbk9APVB04/tfksTP/ndNdT8JTW6erp+VIIH2LwB5kvTjU=
+  </data>
+ </layer>
+ <objectgroup name="objectsLayer">
+  <object id="1" type="mario" gid="401" x="80" y="448" width="32" height="32"/>
+  <object id="20" type="flag" gid="405" x="4944" y="132" width="32" height="32"/>
+  <object id="49" type="redKoopa" gid="417" x="1024" y="192" width="32" height="48"/>
+  <object id="50" type="coin" gid="412" x="928" y="192" width="28" height="32"/>
+  <object id="51" type="coin" gid="412" x="960" y="192" width="28" height="32"/>
+  <object id="52" type="coin" gid="412" x="992" y="192" width="28" height="32"/>
+  <object id="54" type="goomba" gid="402" x="1568" y="160" width="32" height="32"/>
+  <object id="55" type="goomba" gid="402" x="1504" y="160" width="32" height="32"/>
+  <object id="56" type="coin" gid="412" x="1312" y="128" width="28" height="32"/>
+  <object id="57" type="coin" gid="412" x="1280" y="128" width="28" height="32"/>
+  <object id="58" type="goomba" gid="402" x="2656" y="224" width="32" height="32"/>
+  <object id="59" type="redKoopa" gid="417" x="3584" y="256" width="32" height="48"/>
+  <object id="60" type="redKoopa" gid="417" x="4320" y="448" width="32" height="48"/>
+ </objectgroup>
+</map>
