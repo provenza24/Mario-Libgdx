@@ -9,6 +9,8 @@ public class TileIdConstants {
 	
 	public static final Map<Integer, BlockTypeEnum> SPECIAL_BLOCK_TYPES = new HashMap<Integer, BlockTypeEnum>();
 	
+	public static final int INVISIBLE_BLOCK = 20;
+	
 	public static final int MYSTERY_BLOCK_COIN = 7;	
 	public static final int MYSTERY_BLOCK_RED_MUSHROOM = 8;
 	public static final int MYSTERY_BLOCK_GREEN_MUSHROOM = 9;

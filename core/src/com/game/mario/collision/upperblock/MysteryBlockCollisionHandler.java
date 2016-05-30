@@ -9,6 +9,7 @@ import com.game.mario.action.ReplaceWallAction;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.TileIdConstants;
 
 public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
@@ -21,7 +22,7 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 		if (block!=null) {
 			float yWallBlock = block.getY();
 			SequenceAction sequenceAction = new SequenceAction(
-					new ChangeCellValueAction(tileMap, (int)block.getX(), (int)yWallBlock, 128),
+					new ChangeCellValueAction(tileMap, (int)block.getX(), (int)yWallBlock, TileIdConstants.INVISIBLE_BLOCK),
 					ActionFacade.createMoveAction(block.getX(), yWallBlock + 0.4f, 0.08f),
 					ActionFacade.createMoveAction(block.getX(), yWallBlock, 0.08f),
 					new ReplaceWallAction(tileMap, block));

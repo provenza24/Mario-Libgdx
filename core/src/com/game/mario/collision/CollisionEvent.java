@@ -113,4 +113,8 @@ public class CollisionEvent {
 				|| (collidingTopLeft && collidingMiddleLeft)
 				|| (collidingMiddleLeft && collidingBottomLeft);				
 	}
+	
+	public boolean isBlockedTop() {
+		return (collidingTopLeft && collidingTopRight);						
+	}
 }

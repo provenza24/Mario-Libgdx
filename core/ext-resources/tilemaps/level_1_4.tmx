@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="49">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="158" height="15" tilewidth="32" tileheight="32" nextobjectid="50">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -29,18 +29,18 @@
  <tileset firstgid="416" name="turtle" tilewidth="32" tileheight="48">
   <image source="turtle.png" width="32" height="48"/>
  </tileset>
- <layer name="world" width="232" height="15">
+ <layer name="world" width="158" height="15">
   <properties>
    <property name="backgrounds" value="castle"/>
    <property name="music" value="overground"/>
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmEEOwiAQRfFAPVY1VbtR19ozqAcWFyaEQB2gFEjfS36atAydDPMLabdTqkObErRD6V5B+BP8HLT2XDd1hXaoqQf6jPksnX+f+Pw3Zg0Pud4DbZCjtyW96aK0J0PyHxKfq8T3h5B7fmiL2PVvaf8EaBXJ3rFEXMj4ubGx+QLk5lY6AQDwclV4FKBWLqq8R49ap4p0duSY+j+IMzTEENOzUj/Zff6NGxz371qvivQIqMta34d/mGviqnvq/FAGab9ORozUT2aMGff23Efuukkwa2jH2/WNmR/KIO0Z01NSP/l8iD/xJ8iI6Rn2z7yKOV+PM/GjNb+9LlAvOf0p3T+fAXmgdE0KWuEDqzDlJA==
+   eJztV1sOgjAQXA/EsdCg8qN+K2dQDyx8NNk0BXe3D6rMJBMS6G4ns2PBZkfUgCAIboAHItoTrriWvebqbUFbiScS/W3kc7cmpX+afaxIpS/HzCSeh7B21jT6u8jnFLm/Bin7t5H1OWHV9Uvn3VZRsz+S33qKOs36pbVWvYAdt7UFAJvElZA9oDwutH72jiNPFfEc0Bj7P+If3uVuTiF/tLDMQpoTX99U1wXu30e+KuJD4Uup3H8Dn0nI99j+E9ycBmM9h3QOfC9pTnx9ru49cx+0z5V76Nf7/lr68z7Weg6pFzwr0pzM5Qu5Q+4sXuC8y0vLe75fqO+9/v5cpHBzSvEdkjN30vPuqdABxnMgG1KeDx+ZYRmx
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="0" y="224" width="32" height="32"/>
-  <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
+  <object id="49" type="flag" gid="405" x="4946" y="246" width="32" height="32"/>
  </objectgroup>
 </map>

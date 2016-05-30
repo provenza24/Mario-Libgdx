@@ -47,6 +47,7 @@ import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.KeysConstants;
 import com.game.mario.util.RectangleUtil;
+import com.game.mario.util.WinConstants;
 
 public class GameScreen implements Screen  {
 		
@@ -253,8 +254,8 @@ public class GameScreen implements Screen  {
 
 		if (debugShowText) {
 			
-			int x = 10;
-			int y = 440;
+			int x = 200;
+			int y = WinConstants.HEIGHT - 10;
 			
 			/* MARIO VARIABLES */
 			spriteBatch.begin();
@@ -274,8 +275,8 @@ public class GameScreen implements Screen  {
 			
 			
 			/* ENV VARIABLES */
-			x = 300;
-			y = 440;
+			x = 500;
+			y = WinConstants.HEIGHT - 10;
 			
 			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
 			y = y -20;

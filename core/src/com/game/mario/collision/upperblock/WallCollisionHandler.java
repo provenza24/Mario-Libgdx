@@ -21,6 +21,7 @@ import com.game.mario.sprite.item.wallpiece.TopRightWallPiece;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.TileIdConstants;
 
 public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
@@ -93,7 +94,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		tileMap.getBlocks().add(wallBlock);
 		stage.addActor(wallBlock);
 		float yWallBlock = wallBlock.getY();
-		ChangeCellValueAction changeCellValueAction = new ChangeCellValueAction(tileMap, collidingCell.getX(), collidingCell.getY(), 128);
+		ChangeCellValueAction changeCellValueAction = new ChangeCellValueAction(tileMap, collidingCell.getX(), collidingCell.getY(), TileIdConstants.INVISIBLE_BLOCK);
 		Action moveUpAction1 = ActionFacade.createMoveAction(wallBlock.getX(), yWallBlock + 0.1f, 0f);
 		Action moveUpAction2 = ActionFacade.createMoveAction(wallBlock.getX(), yWallBlock + 0.4f, 0.08f);
 		Action moveDownAction = ActionFacade.createMoveAction(wallBlock.getX(), yWallBlock, 0.08f);
