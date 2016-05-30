@@ -20,7 +20,7 @@ import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionPoint;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -77,9 +77,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private Animation marioVictoryAnimation;
 
-	private MarioStateEnum state;
-
-	private MarioStateEnum previousState;
+	private SpriteStateEnum previousState;
 
 	private int jumpTimer;
 
@@ -121,8 +119,8 @@ public class Mario extends AbstractTileObjectSprite {
 		canJumpHigher = true;
 		gravitating = true;
 		direction = DirectionEnum.RIGHT;
-		state = MarioStateEnum.NO_MOVE;
-		previousState = MarioStateEnum.NO_MOVE;
+		state = SpriteStateEnum.NO_MOVE;
+		previousState = SpriteStateEnum.NO_MOVE;
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
@@ -304,8 +302,8 @@ public class Mario extends AbstractTileObjectSprite {
 		previousState = state;		
 	}
 
-	public void setStateIfNotJumping(MarioStateEnum pstate) {
-		if (state != MarioStateEnum.FALLING && state != MarioStateEnum.JUMPING) {
+	public void setStateIfNotJumping(SpriteStateEnum pstate) {
+		if (state != SpriteStateEnum.FALLING && state != SpriteStateEnum.JUMPING) {
 			this.state = pstate;
 		}
 	}
@@ -427,8 +425,8 @@ public class Mario extends AbstractTileObjectSprite {
 		
 		if (oldAcceleration.y == 0 && getMapCollisionEvent().isCollidingBottom()) {
 			// Mario is on a plateform and is still on it
-			if (state==MarioStateEnum.FALLING) {
-				state=MarioStateEnum.NO_MOVE;
+			if (state==SpriteStateEnum.FALLING) {
+				state=SpriteStateEnum.NO_MOVE;
 			}
 			onFloor = true;
 			setY((int) getY() + 1);
@@ -454,15 +452,15 @@ public class Mario extends AbstractTileObjectSprite {
 					if (move.y==0 && move.x!=0) {
 						newPosition.x = move.x>0 ? (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF : (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;						
 						acceleration.x = 0;	
-						if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
-							state = MarioStateEnum.NO_MOVE;
+						if (state!=SpriteStateEnum.FALLING && state!=SpriteStateEnum.JUMPING) {
+							state = SpriteStateEnum.NO_MOVE;
 						}
 					}
 					
 					if (move.y<0 && move.x==0) {						
 						newPosition.y = (int) getY() + 1f;
 						acceleration.y = 0;
-						state = MarioStateEnum.NO_MOVE;
+						state = SpriteStateEnum.NO_MOVE;
 						onFloor = true;					
 					}
 					
@@ -472,7 +470,7 @@ public class Mario extends AbstractTileObjectSprite {
 						
 						newPosition.y = (int) getY();
 						acceleration.y = 10e-5F;						
-						state = MarioStateEnum.FALLING;
+						state = SpriteStateEnum.FALLING;
 																						
 					}
 					
@@ -489,8 +487,8 @@ public class Mario extends AbstractTileObjectSprite {
 								addCollidingCell(collisionPoint.getCell());
 								newPosition.y = (int) getY();
 								acceleration.y = 10e-5F;								
-								if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
-									state = MarioStateEnum.NO_MOVE;
+								if (state!=SpriteStateEnum.FALLING && state!=SpriteStateEnum.JUMPING) {
+									state = SpriteStateEnum.NO_MOVE;
 									onFloor = true;
 								}							
 							} else {								
@@ -513,7 +511,7 @@ public class Mario extends AbstractTileObjectSprite {
 								newPosition.y = (int) getY() + 1f;						
 								acceleration.y = 0;
 								onFloor = true;
-								state = MarioStateEnum.NO_MOVE;
+								state = SpriteStateEnum.NO_MOVE;
 							} else {
 								newPosition.x = (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF;						
 								acceleration.x = 0;										
@@ -535,7 +533,7 @@ public class Mario extends AbstractTileObjectSprite {
 								newPosition.y = (int) getY() + 1f;
 								acceleration.y = 0;
 								onFloor = true;
-								state = MarioStateEnum.NO_MOVE;
+								state = SpriteStateEnum.NO_MOVE;
 							} else {
 								newPosition.x = (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;					
 								acceleration.x = 0;					
@@ -556,8 +554,8 @@ public class Mario extends AbstractTileObjectSprite {
 								newPosition.y = (int) getY();
 								acceleration.y = 10e-5F;
 								
-								if (state!=MarioStateEnum.FALLING && state!=MarioStateEnum.JUMPING) {
-									state = MarioStateEnum.NO_MOVE;
+								if (state!=SpriteStateEnum.FALLING && state!=SpriteStateEnum.JUMPING) {
+									state = SpriteStateEnum.NO_MOVE;
 									onFloor = true;
 								}
 							} else {
@@ -618,7 +616,7 @@ public class Mario extends AbstractTileObjectSprite {
 			}										
 		}  else {
 			if (move.y < 0 && !onFloorCorrection) {				
-				setState(MarioStateEnum.FALLING);
+				setState(SpriteStateEnum.FALLING);
 				onFloor = false;
 			}
 		}										
@@ -663,21 +661,21 @@ public class Mario extends AbstractTileObjectSprite {
 
 		float xMove = getX() - getOldPosition().x;
 
-		if (getState() != MarioStateEnum.JUMPING && getState() != MarioStateEnum.FALLING) {
+		if (getState() != SpriteStateEnum.JUMPING && getState() != SpriteStateEnum.FALLING) {
 			if (xMove == 0) {
-				if (getState() == MarioStateEnum.SLIDING_LEFT) {
+				if (getState() == SpriteStateEnum.SLIDING_LEFT) {
 					setDirection(DirectionEnum.RIGHT);
-				} else if (getState() == MarioStateEnum.SLIDING_RIGHT) {
+				} else if (getState() == SpriteStateEnum.SLIDING_RIGHT) {
 					setDirection(DirectionEnum.LEFT);
 				}
-				setState(MarioStateEnum.NO_MOVE);
+				setState(SpriteStateEnum.NO_MOVE);
 				currentAnimation = direction == DirectionEnum.RIGHT ? marioRunRightAnimation : marioRunLeftAnimation;
 				currentFrame = currentAnimation.getKeyFrame(0, false);
 			} else {
-				currentAnimation = state == MarioStateEnum.RUNNING_LEFT ? marioRunLeftAnimation
-						: state == MarioStateEnum.RUNNING_RIGHT ? marioRunRightAnimation
-								: state == MarioStateEnum.SLIDING_LEFT ? marioSlideLeftAnimation
-										: state == MarioStateEnum.SLIDING_RIGHT ? marioSlideRightAnimation
+				currentAnimation = state == SpriteStateEnum.RUNNING_LEFT ? marioRunLeftAnimation
+						: state == SpriteStateEnum.RUNNING_RIGHT ? marioRunRightAnimation
+								: state == SpriteStateEnum.SLIDING_LEFT ? marioSlideLeftAnimation
+										: state == SpriteStateEnum.SLIDING_RIGHT ? marioSlideRightAnimation
 												: direction == DirectionEnum.RIGHT ? marioRunRightAnimation
 														: marioRunLeftAnimation;
 				currentFrame = currentAnimation.getKeyFrame(stateTime, true);
@@ -706,11 +704,11 @@ public class Mario extends AbstractTileObjectSprite {
 		this.canJumpHigher = canJumpHigher;
 	}
 
-	public MarioStateEnum getState() {
+	public SpriteStateEnum getState() {
 		return state;
 	}
 
-	public void setState(MarioStateEnum pstate) {
+	public void setState(SpriteStateEnum pstate) {
 		this.state = pstate;
 	}
 
@@ -734,11 +732,11 @@ public class Mario extends AbstractTileObjectSprite {
 		this.marioRunRightAnimation = marioRunRightAnimation;
 	}
 
-	public MarioStateEnum getPreviousState() {
+	public SpriteStateEnum getPreviousState() {
 		return previousState;
 	}
 
-	public void setPreviousState(MarioStateEnum previousState) {
+	public void setPreviousState(SpriteStateEnum previousState) {
 		this.previousState = previousState;
 	}
 
@@ -836,7 +834,7 @@ public class Mario extends AbstractTileObjectSprite {
 	public void transfer(TmxMap tilemap, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds,
 			SpriteBatch spriteBatch) {
 		setOnFloor(true);
-		setState(MarioStateEnum.NO_MOVE);
+		setState(SpriteStateEnum.NO_MOVE);
 		setAcceleration(new Vector2(0, 0));
 		setDirection(DirectionEnum.RIGHT);
 		setX(transferItem.getTransferPosition().x);

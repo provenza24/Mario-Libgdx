@@ -12,15 +12,23 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.game.mario.collision.CollisionEvent;
+import com.game.mario.collision.CollisionPoint;
+import com.game.mario.collision.tilemap.BasicCollisionHandler;
+import com.game.mario.collision.tilemap.ITilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.MarioStateEnum;
+import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 
 public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
 
+	protected SpriteStateEnum state;
+	
+	private ITilemapCollisionHandler tilemapCollisionHandler;
+	
 	private static final float GRAVITY_COEF = 0.01f;
 
 	protected DirectionEnum direction;
@@ -100,6 +108,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		xAlive = getX() - 16 ;
 		
 		initializeAnimations();
+		
+		tilemapCollisionHandler = new BasicCollisionHandler();
 	}
 		
 	public Rectangle getBounds() {
@@ -124,7 +134,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 				}
 				if (isCollidableWithTilemap()) {
 					// if sprite collides with tilemap, collide it
-					collideWithTilemap(tileMap);
+					tilemapCollisionHandler.collideWithTilemap(tileMap, this);
 				}				
 			}
 			// Update sprite bounds (for future collisions)
@@ -180,92 +190,6 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 		applyGravity();
 		setY(getY() + acceleration.y);		
-	}
-			
-	protected void collideWithTilemap(TmxMap tileMap) {
-								
-		checkVerticalMapCollision(tileMap);
-		
-		onFloor = getMapCollisionEvent().isCollidingBottom();
-		
-		float yMove = getY() - getOldPosition().y;
-		if (yMove <= 0) {			
-			if (getMapCollisionEvent().isCollidingBottom()) {				
-				setY((int) getY() + 1);
-				getAcceleration().y = 0;
-				
-			}
-		} else if (yMove > 0) {
-			if (getMapCollisionEvent().isCollidingTop()) {
-				setY((int) getY());
-				getAcceleration().y = 0;			
-			}
-		}		
-		
-		checkHorizontalMapCollision(tileMap);
-		
-		float xMove = getX() - getOldPosition().x;
-		if (xMove > 0 && getMapCollisionEvent().isCollidingRight() || xMove < 0 && getMapCollisionEvent().isCollidingLeft()) {			
-			setX(getOldPosition().x);			
-			getAcceleration().x = -getAcceleration().x;
-		}
-
-							
-	}	
-	
-	public void checkHorizontalMapCollision(TmxMap tilemap) {
-
-		reinitMapCollisionEvent();
-		
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight());
-
-		boolean isCollision = tilemap.isCollisioningTileAt((int) leftBottomCorner.x, (int) leftBottomCorner.y);
-		getMapCollisionEvent().setCollidingBottomLeft(isCollision);
-
-		isCollision = tilemap.isCollisioningTileAt((int) leftTopCorner.x, (int) leftTopCorner.y);
-		getMapCollisionEvent().setCollidingTopLeft(isCollision);
-
-		isCollision = tilemap.isCollisioningTileAt((int) rightBottomCorner.x, (int) rightBottomCorner.y);
-		getMapCollisionEvent().setCollidingBottomRight(isCollision);
-
-		isCollision = tilemap.isCollisioningTileAt((int) rightTopCorner.x, (int) rightTopCorner.y);
-		getMapCollisionEvent().setCollidingTopRight(isCollision);
-
-	}
-
-	public void checkVerticalMapCollision(TmxMap tilemap) {
-
-		reinitMapCollisionEvent();
-
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight());
-
-		int x = (int) leftBottomCorner.x;
-		int y = (int) leftBottomCorner.y;
-		boolean isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingBottomLeft(isCollision);
-
-		x = (int) leftTopCorner.x;
-		y = (int) leftTopCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x ,y);		
-		getMapCollisionEvent().setCollidingTopLeft(isCollision);
-	
-		x = (int) rightBottomCorner.x;
-		y = (int) rightBottomCorner.y;
-		
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingBottomRight( isCollision);
-		
-		x = (int) rightTopCorner.x;
-		y = (int) rightTopCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingTopRight(isCollision);	
-
 	}
 	
 	public void render(Batch batch) {
@@ -378,7 +302,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	}
 	
 	public boolean collideMario(Mario mario) {
-		boolean isEnemyHit = mario.getY() > getY() && mario.getState() == MarioStateEnum.FALLING;
+		boolean isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
 		if (isEnemyHit) {
 			kill();
 			mario.getAcceleration().y = 0.15f;
@@ -500,6 +424,14 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void setOldAcceleration(Vector2 oldAcceleration) {
 		this.oldAcceleration = oldAcceleration;
+	}
+
+	public SpriteStateEnum getState() {
+		return state;
+	}
+
+	public void setState(SpriteStateEnum state) {
+		this.state = state;
 	}
 	
 }

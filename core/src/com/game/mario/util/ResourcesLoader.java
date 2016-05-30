@@ -64,7 +64,9 @@ public class ResourcesLoader {
 	
 	public static final Texture OVERGROUND_HILLS = new Texture(Gdx.files.internal("backgrounds/hills.png"));
 	
-	public static final Texture BONUS = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));		
+	public static final Texture BONUS = new Texture(Gdx.files.internal("backgrounds/bonus_stage.png"));
+	
+	public static final Texture CASTLE = new Texture(Gdx.files.internal("backgrounds/castle-"+WinConstants.WIDTH+".png"));;
 	
 	// Transparency sprites	
 	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/transparency/pipe_down.png"));

@@ -10,6 +10,8 @@ public enum BackgroundTypeEnum {
 	
 	UNDERGROUND,
 	
+	CASTLE,
+	
 	BONUS;
 	
 }
