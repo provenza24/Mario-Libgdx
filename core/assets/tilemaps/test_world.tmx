@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="53">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="59">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -39,13 +39,13 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmtlKxDAYhTMK8wYKM16LC7ihN6IXweURHJc3cH8C9xf3DExxiEn+v2kaOvR8cKBNkybN9AsNjDGEkDawyM7gL9aEM19vmkOUHRUfMSH9wZr/3mlDP7vNUAhpl9dB83tYQz8JaYMf+klIZ6GfhHQX+klCSHtP7kHT0c4d/SSkLHXWNvpJSDnqfnvQT0LKkLI38Pm5i7I9ZB85UPhrTXk/h4Fjtw73TX5WkNXIde3es+Rcan7zULvUtrlInTefn2coO0cukMsEP61p9/9Dvufqu28ukn9byHahseTA55jmN/e5UHp9brKuuX5e4XyCXCM3yC1yJzhqTX0/N3C8iayben7GnqlvjsYclPxbJD9jjknvQ0pbaW2TmG/f9LvD9fMe5w/II/KEPCMvLfh5guNT5Njo/dSul4vACHMwRtaU+/+Rp27MsdC16j5N/cwxfg3u+zye9Su95zEX3HJpXuuOvWqfY1/g1nnDON6RD+QT+UK+FX42zbSLpYJZno091m9VR6rnq69tk6tvhvMZis2QX/D/TLk=
+   eJztmtlKw0AUhk+1Sn0Aheq1WAU39Eb0YrD6CK5v4P4E7i/uX+jQOJ3MloXR/h98kExOkukhf8hARQghTaDgdmeiknKLdSMPMHbY+owJmR2UTOcuVOYzHxYNXTWp55M4XjrVr6GE+SSkCb6ZT0KyhfkkJF9yzWe34JKx37XUFMc15nrItj7yHZ8lfL+/6nEyIbRHueaTtE9M9kLqiJ2YHjGfRBObTV89mSb2G4P5JJqUbLoySn6Tsoay5XMHY7twD+4H5FdJvfnUa8me2NebLkKfJz4/fmJ6yX66Se2ZLZ+nGBvCM3iekE8l/P8QIZoq7zQznxfYv4RX8BrewFtPRpXE53MD2wO4Lswn+V8sw5XxdtVvDjOfd9i/hw/wET7B5wbyeYztE3gk6fn8y99UffRgFa4Frv/7AbULCdcJOafsOnXPP1di574Jt6SeNYFZ84p5vMF3+AE/4VdAPqs6usVci86P5+66r67x1dnqQ8+p696U/SxT1eAPS95KAw==
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
-  <object id="51" type="redKoopa" gid="417" x="3414" y="320" width="32" height="48"/>
-  <object id="52" type="redKoopa" gid="417" x="870" y="320" width="32" height="48"/>
+  <object id="56" type="redKoopa" gid="417" x="864" y="320" width="32" height="48"/>
+  <object id="58" type="koopa" gid="416" x="1120" y="192" width="32" height="48"/>
  </objectgroup>
 </map>

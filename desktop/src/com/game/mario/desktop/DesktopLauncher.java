@@ -7,11 +7,11 @@ import com.game.mario.util.WinConstants;
 
 public class DesktopLauncher {
 		
-	//public static int WIDTH = 512;		
-	//public static int HEIGHT = 480;
+	public static int WIDTH = 512;		
+	public static int HEIGHT = 480;
 	
-	public static int WIDTH = 800;	
-	public static int HEIGHT = 750;
+	//public static int WIDTH = 800;	
+	//public static int HEIGHT = 750;
 	
 	public static void main (String[] arg) {
 		

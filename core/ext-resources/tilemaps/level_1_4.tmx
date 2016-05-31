@@ -36,7 +36,7 @@
    <property name="world" value="castle"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztV8sOgjAQXG/+DJ+FBpWLeka+Qf1g4dCkaQruo4UqM8mkSeluN7NDC9WOqAJBENwAj0R0IIwYlx1z5dagLkQTTv218blbk1I/yT5apKovR884msewttck9TfG52TcX4KU+WtjfE5o6/ql826rKFmfuXd9r4yzrp9bK90XsOO+dgHAJnEjeA9YHlda33ungeeCeInUaP2P+Ie73PUppo8Uml5wfRLWN8Y1kflu4KsgPgS6LOX7b/B7EtPdmn+E61OvjPfB7YO/F9cnYX0u7j0xD+r76msYxof6avL7ebTxPrha+F7h+mTKX/AdfKfRAuddXmru+XYmvg3yh33hwvUpxXdITt9xz7unoA7Qzp50SHk+fABHsBm5
+   eJztl0sOwjAMRM2Oy/RYBZVPNxXbwtFpF5EiKxTHTpNA5kmjSDR2rLH7oTsQdRAEQQ3oTEQnwoo177pXbg19JZ5I6u+N192elP7FnKMlVX179EzieYjSsxZT/2C8TsbzY0iZvzfG74m2rl963rVKzf5s3etHZZx1/9be2HOBnUfpAkCTTITZA/mZqPzsXRZdK9ItUKP1f8Q/vMtdn0L+xKLphXROeH1r3BD4fV70rEj3CF9yzf03/J6EfLfmX3F9einjfaS98M+Szgmv71Pdtc1daXF/JPge8njurya/n0cb74O5q0/cHwmYO8ydVZr3/LgRP7L83H8prk8pvkMwd+2J+y8lZZ/eRo72LA==
   </data>
  </layer>
  <objectgroup name="objectsLayer">

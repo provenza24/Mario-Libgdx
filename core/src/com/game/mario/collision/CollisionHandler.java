@@ -37,7 +37,7 @@ public class CollisionHandler {
 			}
 			
 			if (!isKoopaSliding) {
-				enemy1.setOldPosition(enemy2.getOldPosition());
+				enemy1.setOldPosition(enemy1.getOldPosition());				
 				enemy1.getAcceleration().x = -enemy1.getAcceleration().x;
 				enemy2.getAcceleration().x = -enemy2.getAcceleration().x;
 			}

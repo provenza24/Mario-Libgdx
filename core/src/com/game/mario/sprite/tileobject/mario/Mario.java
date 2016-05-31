@@ -18,25 +18,28 @@ import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
-import com.game.mario.collision.CollisionPoint;
+import com.game.mario.collision.tilemap.MarioTilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.sprite.tileobject.item.TransferItem;
-import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
+/**
+ * sizeState values : 0=small, 1=big, 2=flowered
+ * 
+ * 
+ *
+ */
 public class Mario extends AbstractTileObjectSprite {
-		
+			
 	private static final float X_OFFSET = 0.05f;
 	
 	private static final float Y_OFFSET = 0.1f;
 	
-	private static final float COLLISION_X_CORRECTIF = 10e-5F;
-		
 	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
 	private static final float ACCELERATION_MAX_SPEEDUP = 8.5f;
@@ -99,12 +102,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private TransferItem transferItem;
 
-	private List<AbstractSprite> fireballs;
-	
-	private Vector2 move = new Vector2();	
-	
-	/** 0=small, 1=big, 2=flowered */
-	private int sizeState;
+	private List<AbstractSprite> fireballs;				
 
 	public Mario(MapObject mapObject) {
 		super(mapObject);
@@ -128,7 +126,8 @@ public class Mario extends AbstractTileObjectSprite {
 		invincibleDuration = 0;
 		alive = true;
 		deathNoMoveDuration = 0;
-		fireballs = new ArrayList<AbstractSprite>();			
+		fireballs = new ArrayList<AbstractSprite>();	
+		tilemapCollisionHandler = new MarioTilemapCollisionHandler();
 	}
 
 	public void changeSizeState(int i) {
@@ -307,12 +306,11 @@ public class Mario extends AbstractTileObjectSprite {
 			this.state = pstate;
 		}
 	}
-
 	
-
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
-		move(deltaTime);
-		collideWithTilemap(tileMap);
+		move(deltaTime);		
+		tilemapCollisionHandler.collideWithTilemap(tileMap, this);
+		updateBounds();
 		updateAnimation(deltaTime);
 		updateInvincibleStatus(deltaTime);
 		updateAliveStatus();
@@ -330,300 +328,6 @@ public class Mario extends AbstractTileObjectSprite {
 			invincibleDuration = 0;
 		}
 	}		
-
-	public void checkBottomMapCollision(TmxMap tilemap) {
-		
-		reinitMapCollisionEvent();
-		getMapCollisionEvent().reinitCollisionPoints();
-		
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());		
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
-		
-		int x = (int) leftBottomCorner.x;
-		int y = (int) leftBottomCorner.y;
-		boolean isCollision = tilemap.isCollisioningTileAt(x, y);		
-		getMapCollisionEvent().setCollidingBottomLeft(isCollision);
-	
-		x = (int) rightBottomCorner.x;
-		y = (int) rightBottomCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);		
-		getMapCollisionEvent().setCollidingBottomRight(getMapCollisionEvent().isCollidingBottom() || isCollision);
-	}
-	
-	public void checkMapCollision(TmxMap tilemap) {
-		
-		reinitMapCollisionEvent();
-		getMapCollisionEvent().reinitCollisionPoints();		
-
-		Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x, getY());
-		Vector2 leftTopCorner = new Vector2(getX() + getOffset().x, getY() + getHeight());
-		Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x, getY());
-		Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight());
-
-		int x = (int) leftBottomCorner.x;
-		int y = (int) leftBottomCorner.y;
-		boolean isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingBottomLeft(isCollision);
-		if (isCollision) {
-			getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftBottomCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-		}
-
-		x = (int) leftTopCorner.x;
-		y = (int) leftTopCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingTopLeft(isCollision);
-		if (isCollision) {
-			getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-		}
-
-		x = (int) rightBottomCorner.x;
-		y = (int) rightBottomCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingBottomRight(isCollision);
-		if (isCollision) {
-			getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightBottomCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-		}
-
-		x = (int) rightTopCorner.x;
-		y = (int) rightTopCorner.y;
-		isCollision = tilemap.isCollisioningTileAt(x, y);
-		getMapCollisionEvent().setCollidingTopRight(isCollision);
-		if (isCollision) {
-			getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-		}
-
-		if (sizeState > 0) {
-			Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x, getY() + getHeight() / 2);
-			x = (int) rightMiddle.x;
-			y = (int) rightMiddle.y;
-			isCollision = tilemap.isCollisioningTileAt(x, y);
-			getMapCollisionEvent().setCollidingMiddleRight(isCollision);
-			if (isCollision) {
-				getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-			}
-
-			Vector2 leftMiddle = new Vector2(getX() + getOffset().x, getY() + getHeight() / 2);
-			x = (int) leftMiddle.x;
-			y = (int) leftMiddle.y;
-			isCollision = tilemap.isCollisioningTileAt(x, y);
-			getMapCollisionEvent().setCollidingMiddleLeft(isCollision);
-			if (isCollision) {
-				getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-			}
-		}
-	}
-
-	public void collideWithTilemap(TmxMap tileMap) {
-				
-		
-		collidingCells = new ArrayList<TmxCell>();
-		
-		boolean onFloorCorrection = false;
-		move = new Vector2(getX() - getOldPosition().x, getY() - getOldPosition().y);
-				
-		checkBottomMapCollision(tileMap);		
-		
-		if (oldAcceleration.y == 0 && getMapCollisionEvent().isCollidingBottom()) {
-			// Mario is on a plateform and is still on it
-			if (state==SpriteStateEnum.FALLING) {
-				state=SpriteStateEnum.NO_MOVE;
-			}
-			onFloor = true;
-			setY((int) getY() + 1);
-			oldPosition.y = getY();
-			acceleration.y = 0;
-			onFloorCorrection = true;
-		}
-		
-		move = new Vector2(getX() - getOldPosition().x, getY() - getOldPosition().y);		
-		Vector2 newPosition = new Vector2(getX(), getY());
-		
-		checkMapCollision(tileMap);				
-								
-		
-		if (getMapCollisionEvent().getCollisionPoints().size()>0) {
-												
-			int i=0;
-			
-			while (getMapCollisionEvent().getCollisionPoints().size()>0) {
-			
-				for (CollisionPoint collisionPoint : getMapCollisionEvent().getCollisionPoints()) {
-					
-					if (move.y==0 && move.x!=0) {
-						newPosition.x = move.x>0 ? (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF : (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;						
-						acceleration.x = 0;	
-						if (state!=SpriteStateEnum.FALLING && state!=SpriteStateEnum.JUMPING) {
-							state = SpriteStateEnum.NO_MOVE;
-						}
-					}
-					
-					if (move.y<0 && move.x==0) {						
-						newPosition.y = (int) getY() + 1f;
-						acceleration.y = 0;
-						state = SpriteStateEnum.NO_MOVE;
-						onFloor = true;					
-					}
-					
-					if (move.y>0 && move.x==0) {
-						
-						addCollidingCell(collisionPoint.getCell());
-						
-						newPosition.y = (int) getY();
-						acceleration.y = 10e-5F;						
-						state = SpriteStateEnum.FALLING;
-																						
-					}
-					
-					if (move.x>0 && move.y>0) {
-											
-						if (mapCollisionEvent.isBlockedRight()) {
-							newPosition.x = (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF;						
-							acceleration.x = 0;									
-						} else {
-							float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
-							float yDelta = collisionPoint.getPoint().y - collisionPoint.getCell().getY();
-																		
-							if (xDelta>yDelta) {
-								addCollidingCell(collisionPoint.getCell());
-								newPosition.y = (int) getY();
-								acceleration.y = 10e-5F;								
-								if (state!=SpriteStateEnum.FALLING && state!=SpriteStateEnum.JUMPING) {
-									state = SpriteStateEnum.NO_MOVE;
-									onFloor = true;
-								}							
-							} else {								
-								newPosition.x = (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF;						
-								acceleration.x = 0;					
-							}
-						}						
-						
-					}
-					
-					if (move.x>0 && move.y<0) {
-					
-						if (mapCollisionEvent.isBlockedRight()) {
-							newPosition.x = (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF;						
-							acceleration.x = 0;									
-						} else {	
-							float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
-							float yDelta = (collisionPoint.getCell().getY() + 1) - collisionPoint.getPoint().y;
-							if (xDelta>yDelta) {				
-								newPosition.y = (int) getY() + 1f;						
-								acceleration.y = 0;
-								onFloor = true;
-								state = SpriteStateEnum.NO_MOVE;
-							} else {
-								newPosition.x = (int) (getX() + offset.x) + offset.x - COLLISION_X_CORRECTIF;						
-								acceleration.x = 0;										
-							}
-						}
-												
-					}
-					
-					if (move.x<0 && move.y<0) {	
-												
-						if (mapCollisionEvent.isBlockedLeft()) {						
-							newPosition.x = (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;					
-							acceleration.x = 0;				
-							
-						} else {
-							float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
-							float yDelta = (collisionPoint.getCell().getY()+1) - collisionPoint.getPoint().y;
-							if (xDelta>yDelta) {
-								newPosition.y = (int) getY() + 1f;
-								acceleration.y = 0;
-								onFloor = true;
-								state = SpriteStateEnum.NO_MOVE;
-							} else {
-								newPosition.x = (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;					
-								acceleration.x = 0;					
-							}
-						}												
-					}
-					
-					if (move.x<0 && move.y>0) {
-						
-						if (mapCollisionEvent.isBlockedLeft()) {
-							newPosition.x = (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;						
-							acceleration.x = 0;			
-						} else {
-							float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
-							float yDelta = collisionPoint.getPoint().y - (collisionPoint.getCell().getY());
-							if (xDelta>yDelta) {
-								addCollidingCell(collisionPoint.getCell());
-								newPosition.y = (int) getY();
-								acceleration.y = 10e-5F;
-								
-								if (state!=SpriteStateEnum.FALLING && state!=SpriteStateEnum.JUMPING) {
-									state = SpriteStateEnum.NO_MOVE;
-									onFloor = true;
-								}
-							} else {
-									newPosition.x = (int) (getX() + getWidth() + offset.x) - offset.x + COLLISION_X_CORRECTIF;						
-								acceleration.x = 0;					
-							}
-						}
-						
-					}
-														
-				}
-				setX(newPosition.x);
-				setY(newPosition.y);
-				checkMapCollision(tileMap);
-				i++;
-				if (i>10) {
-					System.out.println("Erreur de collision ?"+i);
-				}
-				
-			}	
-			// The collision has been handled, now fix player acceleration
-			if (move.x<0 || (move.x==0 && direction==DirectionEnum.LEFT)) {
-				Vector2 leftBottomCorner = new Vector2(getX() + getOffset().x - 2*COLLISION_X_CORRECTIF, getY());
-				Vector2 leftTopCorner = new Vector2(getX() + getOffset().x - 2*COLLISION_X_CORRECTIF, getY() + getHeight());				
-				int x = (int) leftBottomCorner.x;
-				int y = (int) leftBottomCorner.y;
-				boolean isCollision = tileMap.isCollisioningTileAt(x, y);
-				if (!isCollision) {
-					x = (int) leftTopCorner.x;
-					y = (int) leftTopCorner.y;
-					isCollision = tileMap.isCollisioningTileAt(x, y);
-					if (!isCollision && sizeState>0) {
-						Vector2 leftMiddle = new Vector2(getX() + getOffset().x - 2*COLLISION_X_CORRECTIF, getY() + getHeight() / 2);
-						x = (int) leftMiddle.x;
-						y = (int) leftMiddle.y;
-						isCollision = tileMap.isCollisioningTileAt(x, y);
-					}
-				}				
-				acceleration.x = isCollision ? 0 : oldAcceleration.x;
-			} else {
-				Vector2 rightBottomCorner = new Vector2(getX() + getWidth() + getOffset().x + 2*COLLISION_X_CORRECTIF, getY());
-				Vector2 rightTopCorner = new Vector2(getX() + getWidth() + getOffset().x + 2*COLLISION_X_CORRECTIF, getY() + getHeight());			
-				int x = (int) rightBottomCorner.x;
-				int y = (int) rightBottomCorner.y;
-				boolean isCollision = tileMap.isCollisioningTileAt(x, y);
-				if (!isCollision) {
-					x = (int) rightTopCorner.x;
-					y = (int) rightTopCorner.y;
-					isCollision = tileMap.isCollisioningTileAt(x, y);
-					if (!isCollision && sizeState>0) {
-						Vector2 rightMiddle = new Vector2(getX() + getWidth() + getOffset().x + 2*COLLISION_X_CORRECTIF, getY() + getHeight() / 2);
-						x = (int) rightMiddle.x;
-						y = (int) rightMiddle.y;
-						isCollision = tileMap.isCollisioningTileAt(x, y);
-					}
-				}				
-				acceleration.x = isCollision ? 0 : oldAcceleration.x;
-			}										
-		}  else {
-			if (move.y < 0 && !onFloorCorrection) {				
-				setState(SpriteStateEnum.FALLING);
-				onFloor = false;
-			}
-		}										
-		
-		bounds.setX(getX()+offset.x);
-		bounds.setY(getY());
-	}
 
 	public Animation getMarioVictoryAnimation() {
 		return marioVictoryAnimation;
@@ -738,14 +442,6 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setPreviousState(SpriteStateEnum previousState) {
 		this.previousState = previousState;
-	}
-
-	public int getSizeState() {
-		return sizeState;
-	}
-
-	public void setSizeState(int sizeState) {
-		this.sizeState = sizeState;
 	}
 
 	public boolean isInvincible() {
@@ -870,14 +566,5 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setTransferItem(TransferItem transferItem) {
 		this.transferItem = transferItem;
-	}
-
-	public Vector2 getMove() {
-		return move;
-	}
-
-	public void setMove(Vector2 move) {
-		this.move = move;
-	}			
-		
+	}	
 }

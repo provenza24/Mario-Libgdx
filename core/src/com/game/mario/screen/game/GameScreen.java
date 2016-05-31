@@ -254,8 +254,8 @@ public class GameScreen implements Screen  {
 
 		if (debugShowText) {
 			
-			int x = 200;
-			int y = WinConstants.HEIGHT - 10;
+			int x = WinConstants.WIDTH - 400;
+			int y = WinConstants.HEIGHT - 30;
 			
 			/* MARIO VARIABLES */
 			spriteBatch.begin();
@@ -275,8 +275,8 @@ public class GameScreen implements Screen  {
 			
 			
 			/* ENV VARIABLES */
-			x = 500;
-			y = WinConstants.HEIGHT - 10;
+			x = WinConstants.WIDTH - 200;
+			y = WinConstants.HEIGHT - 30;
 			
 			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
 			y = y -20;
@@ -290,6 +290,12 @@ public class GameScreen implements Screen  {
 			}
 			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", x, y);
 			y = y -20;
+			alive = 0;
+			for (AbstractEnemy enemy : tileMap.getEnemies()) {
+				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + (enemy.isDeletable() ? "deletable - " : "") + " - " + enemy.getState() , x, y);
+				y = y -20;
+				alive++;
+			}			
 			alive = 0;
 			for (AbstractSprite item : tileMap.getItems()) {
 				alive += item.isAlive() ? 1 : 0;

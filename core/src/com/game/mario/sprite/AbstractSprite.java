@@ -12,22 +12,22 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.game.mario.collision.CollisionEvent;
-import com.game.mario.collision.CollisionPoint;
-import com.game.mario.collision.tilemap.BasicCollisionHandler;
+import com.game.mario.collision.tilemap.BasicTilemapCollisionHandler;
 import com.game.mario.collision.tilemap.ITilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 
 public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
-
+	
+	protected int sizeState;
+	
 	protected SpriteStateEnum state;
 	
-	private ITilemapCollisionHandler tilemapCollisionHandler;
+	protected ITilemapCollisionHandler tilemapCollisionHandler;
 	
 	private static final float GRAVITY_COEF = 0.01f;
 
@@ -80,6 +80,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected Vector2 renderingSize;
 	
 	protected String image;
+	
+	protected Vector2 move = new Vector2();
 
 	public AbstractSprite(float x, float y) {
 		
@@ -109,7 +111,12 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		
 		initializeAnimations();
 		
-		tilemapCollisionHandler = new BasicCollisionHandler();
+		tilemapCollisionHandler = new BasicTilemapCollisionHandler();
+	}
+	
+	public AbstractSprite(float x, float y,ITilemapCollisionHandler tilemapCollisionHandler) {
+		this(x ,y);
+		this.tilemapCollisionHandler = tilemapCollisionHandler;
 	}
 		
 	public Rectangle getBounds() {
@@ -157,6 +164,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		}				
 	}
 
+	public void collideWithTilemap(TmxMap tilemap) {
+		tilemapCollisionHandler.collideWithTilemap(tilemap, this);
+	}
+	
 	protected void updateBounds() {
 		bounds.setX(getX()+offset.x);
 		bounds.setY(getY());
@@ -432,6 +443,22 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void setState(SpriteStateEnum state) {
 		this.state = state;
+	}
+
+	public Vector2 getMove() {
+		return move;
+	}
+
+	public void setMove(Vector2 move) {
+		this.move = move;
+	}
+
+	public int getSizeState() {
+		return sizeState;
+	}
+
+	public void setSizeState(int sizeState) {
+		this.sizeState = sizeState;
 	}
 	
 }

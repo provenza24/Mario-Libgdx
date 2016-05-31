@@ -2,17 +2,12 @@ package com.game.mario.sprite.item;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.action.ActionFacade;
-import com.game.mario.sprite.AbstractItem;
 import com.game.mario.util.ResourcesLoader;
 
-public class RedMushroom extends AbstractItem {
+public class RedMushroom extends AbstractMushroom {
 
 	public RedMushroom(float x, float y) {
-		super(x, y);
-		offset.x = 0.2f;		
-		setSize(1 - 2*offset.x, 1f - offset.y);
-		acceleration.x = 3f;		
+		super(x, y);			
 	}
 
 	@Override
@@ -22,11 +17,6 @@ public class RedMushroom extends AbstractItem {
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
 		currentAnimation = new Animation(0, animationFrames);
-	}
-
-	@Override
-	public void addAppearAction() {
-		addAction(ActionFacade.createMoveAction(getX(), getY()+0.9f, 0.5f));
 	}
 		
 }

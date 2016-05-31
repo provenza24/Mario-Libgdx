@@ -35,7 +35,8 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 		currentAnimation = walkLeftAnimation;
 		acceleration.x = -1.9f;		
 		gravitating = true;
-		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());				
+		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());	
+		onFloor = true;
 	}
 	
 	@Override
@@ -63,10 +64,7 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 				bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
 				state = SpriteStateEnum.WALKING;
 			} 
-		}
-		if (isAlive() && camera.position.x < tileMap.getFlag().getX()) {
-			deletable = camera.position.x+8<getX();
-		} 
+		}				
 	}
 	
 	@Override
@@ -99,9 +97,9 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 				mario.setY(getY()+1);
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
 			}	
-		} else if (state == SpriteStateEnum.NO_MOVE) {
+		} else if (state == SpriteStateEnum.NO_MOVE) {			
 			isEnemyHit = true;
-			acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 10 : -10;
+			acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 12 : -12;
 			setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
 			state = SpriteStateEnum.SLIDING;
 			currentAnimation = slideAnimation;			
