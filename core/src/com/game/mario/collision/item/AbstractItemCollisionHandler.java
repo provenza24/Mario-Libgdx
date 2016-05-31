@@ -12,6 +12,7 @@ import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.GreenMushroom;
 import com.game.mario.sprite.item.RedMushroom;
 import com.game.mario.sprite.tileobject.item.Coin;
+import com.game.mario.sprite.tileobject.item.MetalPlateform;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -28,6 +29,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
 		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
 		handlers.put(Coin.class, new CoinCollisionHandler());
+		handlers.put(MetalPlateform.class, new MetalPlateformCollisionHandler());
 	}
 
 	public static IItemCollisionHandler getHandler(AbstractSprite sprite) {		

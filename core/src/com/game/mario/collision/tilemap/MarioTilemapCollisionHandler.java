@@ -27,13 +27,13 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 				
 		checkBottomMapCollision(tileMap, sprite);		
 		
-		if (sprite.getOldPosition().y == 0 && sprite.getMapCollisionEvent().isCollidingBottom()) {
+		if (sprite.getOldAcceleration().y == 0 && sprite.getMapCollisionEvent().isCollidingBottom()) {
 			// Mario is on a plateform and is still on it
 			if (sprite.getState()==SpriteStateEnum.FALLING) {
 				sprite.setState(SpriteStateEnum.NO_MOVE);
 			}
 			sprite.setOnFloor(true);			
-			sprite.setY((int) sprite.getY() + 1);
+			sprite.setY((int) sprite.getY() + 1 + COLLISION_X_CORRECTIF);
 			sprite.getOldPosition().y = sprite.getY();
 			sprite.getAcceleration().y = 0;
 			onFloorCorrection = true;
@@ -43,10 +43,9 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 		Vector2 newPosition = new Vector2(sprite.getX(), sprite.getY());
 		
 		checkMapCollision(tileMap, sprite);				
-								
-		
-		if (sprite.getMapCollisionEvent().getCollisionPoints().size()>0) {
-												
+										
+		if (sprite.getMapCollisionEvent().getCollisionPoints().size()>0) {						
+							
 			int i=0;
 			
 			while (sprite.getMapCollisionEvent().getCollisionPoints().size()>0) {
@@ -216,11 +215,12 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 				sprite.getAcceleration().x = isCollision ? 0 : sprite.getOldAcceleration().x;
 			}										
 		}  else {
-			if (sprite.getMove().y < 0 && !onFloorCorrection) {				
+			if (sprite.getMove().y < 0 && !onFloorCorrection) {						
 				sprite.setState(SpriteStateEnum.FALLING);
 				sprite.setOnFloor(false);
 			}
-		}										
+		}		
+				
 
 	}
 	

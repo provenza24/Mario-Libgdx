@@ -27,6 +27,7 @@ import com.game.mario.sprite.tileobject.enemy.PiranhaPlant;
 import com.game.mario.sprite.tileobject.enemy.RedKoopa;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
+import com.game.mario.sprite.tileobject.item.MetalPlateform;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -118,6 +119,10 @@ public class TmxMap {
 			if (objectProperty.get("type").toString().equals("flag")) {
 				flag = new Flag(mapObject);
 				items.add(flag);
+			}
+			
+			if (objectProperty.get("type").toString().equals("metalPlateform")) {
+				items.add(new MetalPlateform(mapObject));		
 			}
 		}
 	}

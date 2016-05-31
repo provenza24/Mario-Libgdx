@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="59">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="61">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -32,6 +32,9 @@
  <tileset firstgid="417" name="RedKoopa" tilewidth="32" tileheight="48">
   <image source="koopa_red.png" width="256" height="48"/>
  </tileset>
+ <tileset firstgid="425" name="metalPlateform" tilewidth="96" tileheight="16">
+  <image source="metal-plateform.png" width="96" height="16"/>
+ </tileset>
  <layer name="world" width="232" height="15">
   <properties>
    <property name="backgrounds" value="clouds,hills"/>
@@ -39,13 +42,12 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmtlKw0AUhk+1Sn0Aheq1WAU39Eb0YrD6CK5v4P4E7i/uX+jQOJ3MloXR/h98kExOkukhf8hARQghTaDgdmeiknKLdSMPMHbY+owJmR2UTOcuVOYzHxYNXTWp55M4XjrVr6GE+SSkCb6ZT0KyhfkkJF9yzWe34JKx37XUFMc15nrItj7yHZ8lfL+/6nEyIbRHueaTtE9M9kLqiJ2YHjGfRBObTV89mSb2G4P5JJqUbLoySn6Tsoay5XMHY7twD+4H5FdJvfnUa8me2NebLkKfJz4/fmJ6yX66Se2ZLZ+nGBvCM3iekE8l/P8QIZoq7zQznxfYv4RX8BrewFtPRpXE53MD2wO4Lswn+V8sw5XxdtVvDjOfd9i/hw/wET7B5wbyeYztE3gk6fn8y99UffRgFa4Frv/7AbULCdcJOafsOnXPP1di574Jt6SeNYFZ84p5vMF3+AE/4VdAPqs6usVci86P5+66r67x1dnqQ8+p696U/SxT1eAPS95KAw==
+   eJztmttKw0AURU8t+gcK1WexFWwVfRF9GLT9BG/9g17UL/D+4+5Ch+o0yZyZSUpo94IFaTxJhoGlDShCCKkCA08aC43k+3du5jnOXax8xYRsDkaWu9PKPuvDjmPRTOz1JIzXRvo9jLBPQqrgh30SUlvYJyH1hX0Si+/9MfXnZIF2j9gnsYS0p5kj2YTsEfskltA2ffNkmdDvGOyTWGLaLGqU/Eezby5ZfXZxrgdP4ZmiXyPscx3Rtsm/l35i9yyrzxucu4V9OIjo0wj/f4gQS8rvNLfPO3y+hw/wET7BoadRI+F9HuG4DQ+FfZL1YhfuzY9Tv3O4fY7weQwncAqf4UsFfV7h+Bpeymb22cIe7MMD5ft/SzG7HXEfzTV59yl7/XUldO0deCzlvBO4M29Yxzv8gJ/wC34r+kx19oitFdqcr73ouXbGN5c1r72mrGdT7meepgR/Ab+8SQg=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
-  <object id="56" type="redKoopa" gid="417" x="864" y="320" width="32" height="48"/>
-  <object id="58" type="koopa" gid="416" x="1120" y="192" width="32" height="48"/>
+  <object id="60" type="metalPlateform" gid="425" x="300" y="288" width="96" height="16"/>
  </objectgroup>
 </map>

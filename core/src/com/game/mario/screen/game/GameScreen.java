@@ -354,7 +354,7 @@ public class GameScreen implements Screen  {
 		}
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
-			item.update(tileMap, camera.getCamera(), deltaTime);
+			item.update(tileMap, camera.getCamera(), deltaTime);			
 			boolean collideMario = RectangleUtil.overlaps(mario.getBounds(), item.getBounds());
 			if (collideMario) {
 				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, backgrounds);				
