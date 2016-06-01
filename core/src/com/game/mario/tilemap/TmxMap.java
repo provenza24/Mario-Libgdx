@@ -27,9 +27,10 @@ import com.game.mario.sprite.tileobject.enemy.PiranhaPlant;
 import com.game.mario.sprite.tileobject.enemy.RedKoopa;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
-import com.game.mario.sprite.tileobject.item.MetalPlateform;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
+import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
+import com.game.mario.sprite.tileobject.item.plateform.DescendingMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.util.TileIdConstants;
 import com.game.mario.util.TilemapPropertiesConstants;
@@ -122,7 +123,12 @@ public class TmxMap {
 			}
 			
 			if (objectProperty.get("type").toString().equals("metalPlateform")) {
-				items.add(new MetalPlateform(mapObject));		
+				if (objectProperty.get("mode").toString().equals("ascending")) {
+					items.add(new AscendingMetalPlateform(mapObject));		
+				} else if (objectProperty.get("mode").toString().equals("descending")) {
+					items.add(new DescendingMetalPlateform(mapObject));		
+				}				
+				
 			}
 		}
 	}
@@ -272,4 +278,5 @@ public class TmxMap {
 	public void setBackgroundTypesEnum(Array<BackgroundTypeEnum> backgroundsTypesEnum) {
 		this.backgroundTypesEnum = backgroundsTypesEnum;
 	}
+
 }

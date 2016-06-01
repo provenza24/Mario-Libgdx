@@ -1,4 +1,4 @@
-package com.game.mario.sprite.tileobject.item;
+package com.game.mario.sprite.tileobject.item.plateform;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -9,15 +9,14 @@ import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
-public class MetalPlateform extends AbstractTileObjectSprite {
+public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 
-	public MetalPlateform(MapObject mapObject) {
+	public AbstractMetalPlateform(MapObject mapObject) {
 		super(mapObject);
 		setSize(3, 0.5f);
 		setRenderingSize(3, 0.5f);
 		gravitating = false;
-		collidableWithTilemap = false;
-		acceleration.y = 0.05f;
+		collidableWithTilemap = false;		
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 	}	
 	
@@ -30,17 +29,27 @@ public class MetalPlateform extends AbstractTileObjectSprite {
 		animationFrames[0] = tmp[0][0];
 		currentAnimation = new Animation(0, animationFrames);						
 	}
-
-
-
-
+	
 	@Override
-	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
-		super.update(tileMap, camera, deltaTime);		
-		if (getY() >= 15) {
-			setY(-1);
+	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
+		
+		if (alive) {
+			// The sprite is alive, we first update its animation
+			updateAnimation(deltaTime);
+			move(deltaTime);						
 			updateBounds();
-		}
+			if (getX()<camera.position.x-9) {
+				// Sprite is left out of screen, or has felt out of down screen
+				deletable = true;				
+			} else {
+				// Check if sprite is visible
+				visible = getX() < camera.position.x+8;				
+			}						
+		} else {			
+			if (camera.position.x < tileMap.getFlag().getX()) {				
+				alive = camera.position.x-8>xAlive;
+			}							
+		}				
 	}
 
 }

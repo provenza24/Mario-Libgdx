@@ -189,8 +189,10 @@ public class GameScreen implements Screen  {
 	}
 		
 	private void handleMarioAlive(float delta) {
+		
 		// Listen to keyboard actions and update Mario status
 		handleInput();
+		
 		mario.update(tileMap, camera.getCamera(), delta);
 		
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);

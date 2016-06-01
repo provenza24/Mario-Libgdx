@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="239" height="15" tilewidth="32" tileheight="32" nextobjectid="132">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="239" height="15" tilewidth="32" tileheight="32" nextobjectid="135">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -174,25 +174,43 @@
    </properties>
   </object>
   <object id="93" type="redKoopa" gid="440" x="4672" y="448" width="32" height="48"/>
-  <object id="111" type="coin" gid="428" x="7486" y="316" width="28" height="32"/>
-  <object id="112" type="coin" gid="428" x="7462" y="321" width="28" height="32"/>
-  <object id="113" type="coin" gid="428" x="7423" y="321" width="28" height="32"/>
+  <object id="111" type="coin" gid="428" x="7488" y="320" width="28" height="32"/>
+  <object id="112" type="coin" gid="428" x="7456" y="320" width="28" height="32"/>
+  <object id="113" type="coin" gid="428" x="7424" y="320" width="28" height="32"/>
   <object id="114" type="coin" gid="428" x="7392" y="320" width="28" height="32"/>
-  <object id="115" type="coin" gid="428" x="7363" y="313" width="28" height="32"/>
-  <object id="116" type="coin" gid="428" x="7326" y="316" width="28" height="32"/>
-  <object id="117" type="coin" gid="428" x="7295" y="316" width="28" height="32"/>
-  <object id="118" type="coin" gid="428" x="7269" y="320" width="28" height="32"/>
-  <object id="119" type="coin" gid="428" x="7236" y="316" width="28" height="32"/>
-  <object id="120" type="coin" gid="428" x="7202" y="446" width="28" height="32"/>
-  <object id="121" type="coin" gid="428" x="7238" y="442" width="28" height="32"/>
-  <object id="122" type="coin" gid="428" x="7267" y="442" width="28" height="32"/>
-  <object id="123" type="coin" gid="428" x="7291" y="442" width="28" height="32"/>
-  <object id="124" type="coin" gid="428" x="7328" y="446" width="28" height="32"/>
-  <object id="125" type="coin" gid="428" x="7367" y="446" width="28" height="32"/>
-  <object id="126" type="coin" gid="428" x="7392" y="446" width="28" height="32"/>
-  <object id="127" type="coin" gid="428" x="7421" y="444" width="28" height="32"/>
-  <object id="128" type="coin" gid="428" x="7452" y="444" width="28" height="32"/>
-  <object id="129" type="metalPlateform" gid="448" x="4960" y="432" width="96" height="16"/>
-  <object id="130" type="metalPlateform" gid="448" x="4960" y="152" width="96" height="16"/>
+  <object id="115" type="coin" gid="428" x="7360" y="320" width="28" height="32"/>
+  <object id="116" type="coin" gid="428" x="7328" y="320" width="28" height="32"/>
+  <object id="117" type="coin" gid="428" x="7296" y="320" width="28" height="32"/>
+  <object id="118" type="coin" gid="428" x="7264" y="320" width="28" height="32"/>
+  <object id="119" type="coin" gid="428" x="7232" y="320" width="28" height="32"/>
+  <object id="120" type="coin" gid="428" x="7200" y="448" width="28" height="32"/>
+  <object id="121" type="coin" gid="428" x="7232" y="448" width="28" height="32"/>
+  <object id="122" type="coin" gid="428" x="7264" y="448" width="28" height="32"/>
+  <object id="123" type="coin" gid="428" x="7296" y="448" width="28" height="32"/>
+  <object id="124" type="coin" gid="428" x="7328" y="448" width="28" height="32"/>
+  <object id="125" type="coin" gid="428" x="7360" y="448" width="28" height="32"/>
+  <object id="126" type="coin" gid="428" x="7392" y="448" width="28" height="32"/>
+  <object id="127" type="coin" gid="428" x="7424" y="448" width="28" height="32"/>
+  <object id="128" type="coin" gid="428" x="7456" y="448" width="28" height="32"/>
+  <object id="129" type="metalPlateform" gid="448" x="4960" y="432" width="96" height="16">
+   <properties>
+    <property name="mode" value="ascending"/>
+   </properties>
+  </object>
+  <object id="130" type="metalPlateform" gid="448" x="4960" y="152" width="96" height="16">
+   <properties>
+    <property name="mode" value="ascending"/>
+   </properties>
+  </object>
+  <object id="132" type="metalPlateform" gid="448" x="4480" y="408" width="96" height="16">
+   <properties>
+    <property name="mode" value="descending"/>
+   </properties>
+  </object>
+  <object id="134" type="metalPlateform" gid="448" x="4480" y="216" width="96" height="16">
+   <properties>
+    <property name="mode" value="descending"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

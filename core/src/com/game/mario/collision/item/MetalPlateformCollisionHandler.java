@@ -14,7 +14,7 @@ public class MetalPlateformCollisionHandler extends AbstractItemCollisionHandler
 
 	@Override
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
-		if (mario.getMove().y<=0) {
+
 			mario.setOnFloor(true);
 			mario.getAcceleration().y = 0;
 			mario.setY(item.getY()+item.getHeight());
@@ -22,7 +22,7 @@ public class MetalPlateformCollisionHandler extends AbstractItemCollisionHandler
 				mario.setState(SpriteStateEnum.NO_MOVE);
 			}
 			mario.updateAnimation(0);
-		}
-				
+		
+			
 	}
 }
