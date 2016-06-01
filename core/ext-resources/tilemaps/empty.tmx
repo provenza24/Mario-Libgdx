@@ -12,7 +12,7 @@
   <image source="../sprites/mario/mario.gif" width="448" height="32"/>
  </tileset>
  <tileset firstgid="415" name="Goomba" tilewidth="32" tileheight="32">
-  <image source="../sprites/enemies/goomba_overworld.png" width="128" height="32"/>
+  <image source="../sprites/enemies/goomba_underworld.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="419" name="Flag" tilewidth="32" tileheight="32">
   <image source="../sprites/items/flag.png" width="96" height="32"/>
@@ -48,11 +48,5 @@
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="66" type="flag" gid="419" x="7219" y="160" width="32" height="32"/>
-  <object id="71" type="goomba" gid="415" x="222" y="432" width="32" height="32"/>
-  <object id="72" type="coin" gid="428" x="454" y="383" width="28" height="32"/>
-  <object id="73" type="piranha" gid="430" x="597" y="439" width="32" height="48"/>
-  <object id="74" type="koopa" gid="432" x="746" y="443" width="32" height="48"/>
-  <object id="76" type="redKoopa" gid="440" x="856" y="445" width="32" height="48"/>
-  <object id="77" type="metalPlateform" gid="448" x="1030" y="300" width="96" height="16"/>
  </objectgroup>
 </map>

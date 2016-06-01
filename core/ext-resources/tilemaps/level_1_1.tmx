@@ -9,25 +9,25 @@
   </tile>
  </tileset>
  <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
-  <image source="mario_jump_right.png" width="32" height="32"/>
+  <image source="../sprites/mario/mario.gif" width="448" height="32"/>
  </tileset>
- <tileset firstgid="402" name="Goomba" tilewidth="32" tileheight="32">
-  <image source="goomba.png" width="96" height="32"/>
+ <tileset firstgid="415" name="Goomba" tilewidth="32" tileheight="32">
+  <image source="../sprites/enemies/goomba_overworld.png" width="128" height="32"/>
  </tileset>
- <tileset firstgid="405" name="Flag" tilewidth="32" tileheight="32">
-  <image source="flag.png" width="32" height="32"/>
+ <tileset firstgid="419" name="Flag" tilewidth="32" tileheight="32">
+   <image source="../sprites/items/flag.png" width="96" height="32"/>
  </tileset>
- <tileset firstgid="406" name="Transfer" tilewidth="8" tileheight="8">
-  <image source="transfer.png" width="32" height="8"/>
+ <tileset firstgid="422" name="Transfer" tilewidth="8" tileheight="8">
+   <image source="../sprites/items/transfer.png" width="32" height="8"/>
  </tileset>
- <tileset firstgid="410" name="Coin" tilewidth="28" tileheight="32">
-  <image source="coin.png" width="112" height="32"/>
+ <tileset firstgid="426" name="Coin" tilewidth="28" tileheight="32">
+    <image source="../sprites/items/coin.png" width="112" height="32"/>
  </tileset>
- <tileset firstgid="414" name="piranah" tilewidth="32" tileheight="50">
-  <image source="plant_piranha.png" width="64" height="50"/>
+ <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48">
+  <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="416" name="turtle" tilewidth="32" tileheight="48">
-  <image source="turtle.png" width="32" height="48"/>
+ <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48">
+  <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
@@ -41,80 +41,80 @@
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
-  <object id="2" type="goomba" gid="402" x="704" y="448" width="32" height="32"/>
-  <object id="3" type="goomba" gid="402" x="1280" y="448" width="32" height="32"/>
-  <object id="4" type="goomba" gid="402" x="1632" y="448" width="32" height="32">
+  <object id="2" type="goomba" gid="415" x="704" y="448" width="32" height="32"/>
+  <object id="3" type="goomba" gid="415" x="1280" y="448" width="32" height="32"/>
+  <object id="4" type="goomba" gid="415" x="1632" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="1080"/>
    </properties>
   </object>
-  <object id="5" type="goomba" gid="402" x="1680" y="448" width="32" height="32">
+  <object id="5" type="goomba" gid="415" x="1680" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="1080"/>
    </properties>
   </object>
-  <object id="6" type="goomba" gid="402" x="2560" y="192" width="32" height="32">
+  <object id="6" type="goomba" gid="415" x="2560" y="192" width="32" height="32">
    <properties>
     <property name="xAlive" value="2008"/>
    </properties>
   </object>
-  <object id="7" type="goomba" gid="402" x="2624" y="192" width="32" height="32">
+  <object id="7" type="goomba" gid="415" x="2624" y="192" width="32" height="32">
    <properties>
     <property name="xAlive" value="2008"/>
    </properties>
   </object>
-  <object id="8" type="goomba" gid="402" x="3104" y="448" width="32" height="32">
+  <object id="8" type="goomba" gid="415" x="3104" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="2552"/>
    </properties>
   </object>
-  <object id="9" type="goomba" gid="402" x="3152" y="448" width="32" height="32">
+  <object id="9" type="goomba" gid="415" x="3152" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="2552"/>
    </properties>
   </object>
-  <object id="11" type="goomba" gid="402" x="3648" y="448" width="32" height="32">
+  <object id="11" type="goomba" gid="415" x="3648" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3096"/>
    </properties>
   </object>
-  <object id="12" type="goomba" gid="402" x="3696" y="448" width="32" height="32">
+  <object id="12" type="goomba" gid="415" x="3696" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3096"/>
    </properties>
   </object>
-  <object id="13" type="goomba" gid="402" x="3968" y="448" width="32" height="32">
+  <object id="13" type="goomba" gid="415" x="3968" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3416"/>
    </properties>
   </object>
-  <object id="14" type="goomba" gid="402" x="4016" y="448" width="32" height="32">
+  <object id="14" type="goomba" gid="415" x="4016" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3416"/>
    </properties>
   </object>
-  <object id="15" type="goomba" gid="402" x="4096" y="448" width="32" height="32">
+  <object id="15" type="goomba" gid="415" x="4096" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3544"/>
    </properties>
   </object>
-  <object id="16" type="goomba" gid="402" x="4144" y="448" width="32" height="32">
+  <object id="16" type="goomba" gid="415" x="4144" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3544"/>
    </properties>
   </object>
-  <object id="17" type="goomba" gid="402" x="5568" y="448" width="32" height="32">
+  <object id="17" type="goomba" gid="415" x="5568" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="5016"/>
    </properties>
   </object>
-  <object id="18" type="goomba" gid="402" x="5616" y="448" width="32" height="32">
+  <object id="18" type="goomba" gid="415" x="5616" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="5016"/>
    </properties>
   </object>
-  <object id="20" type="flag" gid="405" x="6356" y="132" width="32" height="32"/>
-  <object id="25" type="transferDown" gid="406" x="1852" y="320" width="8" height="8">
+  <object id="20" type="flag" gid="419" x="6356" y="132" width="32" height="32"/>
+  <object id="25" type="transferDown" gid="422" x="1852" y="320" width="8" height="8">
    <properties>
     <property name="backgrounds" value="bonus"/>
     <property name="music" value="bonus"/>
@@ -124,25 +124,25 @@
     <property name="yOutgoing" value="480"/>
    </properties>
   </object>
-  <object id="26" type="coin" gid="412" x="7008" y="320" width="28" height="32"/>
-  <object id="27" type="coin" gid="412" x="7040" y="320" width="28" height="32"/>
-  <object id="28" type="coin" gid="412" x="7072" y="320" width="28" height="32"/>
-  <object id="29" type="coin" gid="412" x="7104" y="320" width="28" height="32"/>
-  <object id="30" type="coin" gid="412" x="7136" y="320" width="28" height="32"/>
-  <object id="31" type="coin" gid="412" x="7168" y="320" width="28" height="32"/>
-  <object id="32" type="coin" gid="412" x="7200" y="320" width="28" height="32"/>
-  <object id="33" type="coin" gid="412" x="7008" y="256" width="28" height="32"/>
-  <object id="34" type="coin" gid="412" x="7040" y="256" width="28" height="32"/>
-  <object id="35" type="coin" gid="412" x="7072" y="256" width="28" height="32"/>
-  <object id="36" type="coin" gid="412" x="7104" y="256" width="28" height="32"/>
-  <object id="37" type="coin" gid="412" x="7136" y="256" width="28" height="32"/>
-  <object id="38" type="coin" gid="412" x="7168" y="256" width="28" height="32"/>
-  <object id="39" type="coin" gid="412" x="7200" y="256" width="28" height="32"/>
-  <object id="40" type="coin" gid="412" x="7040" y="192" width="28" height="32"/>
-  <object id="41" type="coin" gid="412" x="7072" y="192" width="28" height="32"/>
-  <object id="42" type="coin" gid="412" x="7104" y="192" width="28" height="32"/>
-  <object id="43" type="coin" gid="412" x="7136" y="192" width="28" height="32"/>
-  <object id="44" type="coin" gid="412" x="7168" y="192" width="28" height="32"/>
+  <object id="26" type="coin" gid="428" x="7008" y="320" width="28" height="32"/>
+  <object id="27" type="coin" gid="428" x="7040" y="320" width="28" height="32"/>
+  <object id="28" type="coin" gid="428" x="7072" y="320" width="28" height="32"/>
+  <object id="29" type="coin" gid="428" x="7104" y="320" width="28" height="32"/>
+  <object id="30" type="coin" gid="428" x="7136" y="320" width="28" height="32"/>
+  <object id="31" type="coin" gid="428" x="7168" y="320" width="28" height="32"/>
+  <object id="32" type="coin" gid="428" x="7200" y="320" width="28" height="32"/>
+  <object id="33" type="coin" gid="428" x="7008" y="256" width="28" height="32"/>
+  <object id="34" type="coin" gid="428" x="7040" y="256" width="28" height="32"/>
+  <object id="35" type="coin" gid="428" x="7072" y="256" width="28" height="32"/>
+  <object id="36" type="coin" gid="428" x="7104" y="256" width="28" height="32"/>
+  <object id="37" type="coin" gid="428" x="7136" y="256" width="28" height="32"/>
+  <object id="38" type="coin" gid="428" x="7168" y="256" width="28" height="32"/>
+  <object id="39" type="coin" gid="428" x="7200" y="256" width="28" height="32"/>
+  <object id="40" type="coin" gid="428" x="7040" y="192" width="28" height="32"/>
+  <object id="41" type="coin" gid="428" x="7072" y="192" width="28" height="32"/>
+  <object id="42" type="coin" gid="428" x="7104" y="192" width="28" height="32"/>
+  <object id="43" type="coin" gid="428" x="7136" y="192" width="28" height="32"/>
+  <object id="44" type="coin" gid="428" x="7168" y="192" width="28" height="32"/>
   <object id="46" type="transferRight" gid="409" x="7288" y="402" width="8" height="8">
    <properties>
     <property name="backgrounds" value="clouds,hills"/>
@@ -153,6 +153,6 @@
     <property name="yOutgoing" value="96"/>
    </properties>
   </object>
-  <object id="48" type="koopa" gid="416" x="3424" y="448" width="32" height="48"/>
+  <object id="48" type="koopa" gid="432" x="3424" y="448" width="32" height="48"/>
  </objectgroup>
 </map>
