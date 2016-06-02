@@ -24,9 +24,9 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
+import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.screen.cinematic.LevelEndingSceneHandler;
 import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
@@ -46,7 +46,6 @@ import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.KeysConstants;
-import com.game.mario.util.RectangleUtil;
 import com.game.mario.util.WinConstants;
 
 public class GameScreen implements Screen  {
@@ -294,7 +293,7 @@ public class GameScreen implements Screen  {
 			y = y -20;
 			alive = 0;
 			for (AbstractEnemy enemy : tileMap.getEnemies()) {
-				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + (enemy.isDeletable() ? "deletable - " : "") + " - " + enemy.getState() , x, y);
+				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() , x, y);
 				y = y -20;
 				alive++;
 			}			
@@ -302,6 +301,12 @@ public class GameScreen implements Screen  {
 			for (AbstractSprite item : tileMap.getItems()) {
 				alive += item.isAlive() ? 1 : 0;
 			}
+			alive = 0;
+			for (AbstractSprite item : tileMap.getItems()) {
+				debugFont.draw(spriteBatch, "Item #" + alive + " - " + (item.isAlive() ? " alive - " : "") + (item.isVisible() ? " visible - " : "") , x, y);
+				y = y -20;
+				alive++;
+			}	
 			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", x, y);
 			y = y -20;
 			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), x, y);
@@ -356,8 +361,9 @@ public class GameScreen implements Screen  {
 		}
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
-			item.update(tileMap, camera.getCamera(), deltaTime);			
-			boolean collideMario = RectangleUtil.overlaps(mario.getBounds(), item.getBounds());
+			item.update(tileMap, camera.getCamera(), deltaTime);
+			boolean collideMario = item.overlaps(mario);			
+			
 			if (collideMario) {
 				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, backgrounds);				
 			}
@@ -477,21 +483,25 @@ public class GameScreen implements Screen  {
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && backgrounds.size>1) {
 			backgrounds.get(1).toggleEnabled();
 		}
-		
-		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.changeSizeState(mario.getSizeState()==0 ? 1 : mario.getSizeState()==1 ? 2 : 0);
-		}
-		
+						
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
 			debugShowText = !debugShowText;
 		}
-
+				
 		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
 			debugShowFps = !debugShowFps;
 		}
 
 		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
 			debugShowBounds = !debugShowBounds;
+		}				
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
+			mario.changeSizeState(mario.getSizeState()==0 ? 1 : mario.getSizeState()==1 ? 2 : 0);
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
+			debugFont.setColor(0, 1, 0, 1);
 		}
 						
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="78">
- <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="80">
+ <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
    <properties>
@@ -8,32 +8,35 @@
    </properties>
   </tile>
  </tileset>
- <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
-  <image source="../sprites/mario/mario.gif" width="448" height="32"/>
+ <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32" tilecount="14" columns="14">
+  <image source="../sprites/mario/mario.png" width="448" height="32"/>
  </tileset>
- <tileset firstgid="415" name="Goomba" tilewidth="32" tileheight="32">
+ <tileset firstgid="415" name="Goomba" tilewidth="32" tileheight="32" tilecount="4" columns="4">
   <image source="../sprites/enemies/goomba_overworld.png" width="128" height="32"/>
  </tileset>
- <tileset firstgid="419" name="Flag" tilewidth="32" tileheight="32">
+ <tileset firstgid="419" name="Flag" tilewidth="32" tileheight="32" tilecount="3" columns="3">
   <image source="../sprites/items/flag.png" width="96" height="32"/>
  </tileset>
- <tileset firstgid="422" name="Transfer" tilewidth="8" tileheight="8">
+ <tileset firstgid="422" name="Transfer" tilewidth="8" tileheight="8" tilecount="4" columns="4">
   <image source="../sprites/items/transfer.png" width="32" height="8"/>
  </tileset>
- <tileset firstgid="426" name="Coin" tilewidth="28" tileheight="32">
+ <tileset firstgid="426" name="Coin" tilewidth="28" tileheight="32" tilecount="4" columns="4">
   <image source="../sprites/items/coin.png" width="112" height="32"/>
  </tileset>
- <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48">
+ <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48" tilecount="2" columns="2">
   <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48">
+ <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="8" columns="8">
   <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
  </tileset>
- <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48">
+ <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="8" columns="8">
   <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
  </tileset>
- <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16">
+ <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform.png" width="96" height="16"/>
+ </tileset>
+ <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
+  <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
@@ -42,17 +45,22 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt07ENgDAQBEFDQLsU4caRC4AIyRvMSBd98smOAQAAAP+4j90fAG+mPiFLn9ClT+jSJ3TpE7r0CV36hC59Qpc+oev6uK10TzNL7gGMFAbq
+   eJzt08EJgEAQBEEVNF2DMHExgROEw35UwbyWffayjO0vd+A/+oQufUKXPmGuc/3+q0+Y69InZOkTuvQJXfqELn1Clz6hS5/QpU/o0id0HYPbk+5mZsnd8KwHMA==
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
-  <object id="66" type="flag" gid="419" x="7219" y="160" width="32" height="32"/>
-  <object id="71" type="goomba" gid="415" x="222" y="432" width="32" height="32"/>
-  <object id="72" type="coin" gid="428" x="454" y="383" width="28" height="32"/>
-  <object id="73" type="piranha" gid="430" x="597" y="439" width="32" height="48"/>
-  <object id="74" type="koopa" gid="432" x="746" y="443" width="32" height="48"/>
-  <object id="76" type="redKoopa" gid="440" x="856" y="445" width="32" height="48"/>
-  <object id="77" type="metalPlateform" gid="448" x="1030" y="300" width="96" height="16"/>
+  <object id="66" type="flag" gid="419" x="288" y="160" width="32" height="32"/>
+  <object id="78" type="transferDown" gid="422" x="276" y="352" width="8" height="8">
+   <properties>
+    <property name="backgrounds" value="castle"/>
+    <property name="music" value="overground"/>
+    <property name="scrollable" value="true"/>
+    <property name="world" value="overground"/>
+    <property name="xOutgoing" value="100"/>
+    <property name="yOutgoing" value="100"/>
+   </properties>
+  </object>
+  <object id="79" type="castleFirebar" gid="449" x="331" y="352" width="96" height="16"/>
  </objectgroup>
 </map>

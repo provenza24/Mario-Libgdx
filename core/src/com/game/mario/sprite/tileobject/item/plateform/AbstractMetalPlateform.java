@@ -14,6 +14,7 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 	public AbstractMetalPlateform(MapObject mapObject) {
 		super(mapObject);
 		setSize(3, 0.5f);
+		setY(getY()-1+getHeight());
 		setRenderingSize(3, 0.5f);
 		gravitating = false;
 		collidableWithTilemap = false;		

@@ -25,6 +25,7 @@ import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.enemy.Koopa;
 import com.game.mario.sprite.tileobject.enemy.PiranhaPlant;
 import com.game.mario.sprite.tileobject.enemy.RedKoopa;
+import com.game.mario.sprite.tileobject.item.CastleFirebar;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
@@ -129,6 +130,10 @@ public class TmxMap {
 					items.add(new DescendingMetalPlateform(mapObject));		
 				}				
 				
+			}
+			
+			if (objectProperty.get("type").toString().equals("castleFirebar")) {
+				items.add(new CastleFirebar(mapObject));		
 			}
 		}
 	}

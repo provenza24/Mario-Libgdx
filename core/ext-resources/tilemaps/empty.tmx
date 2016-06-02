@@ -9,7 +9,7 @@
   </tile>
  </tileset>
  <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
-  <image source="../sprites/mario/mario.gif" width="448" height="32"/>
+  <image source="../sprites/mario/mario.png" width="448" height="32"/>
  </tileset>
  <tileset firstgid="415" name="Goomba" tilewidth="32" tileheight="32">
   <image source="../sprites/enemies/goomba_underworld.png" width="128" height="32"/>
@@ -34,6 +34,9 @@
  </tileset>
  <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16">
   <image source="../sprites/items/metal-plateform.png" width="96" height="16"/>
+ </tileset>
+  <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
+  <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>

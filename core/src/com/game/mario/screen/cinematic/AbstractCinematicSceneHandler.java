@@ -68,8 +68,7 @@ public abstract class AbstractCinematicSceneHandler {
 		renderMysteryBlocks(delta);
 							
 		for (AbstractSprite item : tileMap.getItems()) {
-			if (item.isVisible()) {
-				item.update(tileMap, camera.getCamera(), delta);
+			if (item.isVisible()) {				
 				item.render(renderer.getBatch());
 			}				
 		}

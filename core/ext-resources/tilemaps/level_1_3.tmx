@@ -9,7 +9,7 @@
   </tile>
  </tileset>
   <tileset firstgid="401" name="Mario" tilewidth="32" tileheight="32">
-  <image source="../sprites/mario/mario.gif" width="448" height="32"/>
+  <image source="../sprites/mario/mario.png" width="448" height="32"/>
  </tileset>
  <tileset firstgid="415" name="Goomba" tilewidth="32" tileheight="32">
   <image source="../sprites/enemies/goomba_overworld.png" width="128" height="32"/>

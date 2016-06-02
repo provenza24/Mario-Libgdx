@@ -42,8 +42,10 @@ public class ResourcesLoader {
 	
 	public static final Texture METAL_PLATEFORM = new Texture(Gdx.files.internal("sprites/items/metal-plateform.png"));
 	
+	public static final Texture CASTLE_FIREBAR = new Texture(Gdx.files.internal("sprites/items/castle-firebar.png"));
+	
 	// Mario
-	public static final Texture MARIO_SMALL = new Texture(Gdx.files.internal("sprites/mario/mario.gif"));
+	public static final Texture MARIO_SMALL = new Texture(Gdx.files.internal("sprites/mario/mario.png"));
 	
 	public static final Texture MARIO_BIG = new Texture(Gdx.files.internal("sprites/mario/mario-big.png"));
 	

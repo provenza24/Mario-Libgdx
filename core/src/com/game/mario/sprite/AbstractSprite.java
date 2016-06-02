@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -20,6 +21,7 @@ import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.RectangleUtil;
 
 public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
 	
@@ -66,6 +68,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected Vector2 offset;
 	
 	protected Rectangle bounds;
+	
+	protected Polygon polygonBounds;
 	
 	protected List<TmxCell> collidingCells;
 	
@@ -459,6 +463,18 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void setSizeState(int sizeState) {
 		this.sizeState = sizeState;
+	}
+
+	public Polygon getPolygonBounds() {
+		return polygonBounds;
+	}
+
+	public void setPolygonBounds(Polygon polygonBounds) {
+		this.polygonBounds = polygonBounds;
+	}
+	
+	public boolean overlaps(AbstractSprite sprite) {
+		return RectangleUtil.overlaps(this.getBounds(), sprite.getBounds());	
 	}
 	
 }
