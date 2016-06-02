@@ -23,10 +23,14 @@ public class ResourcesLoader {
 	
 	public static final Texture PIRANHA_PLANT = new Texture(Gdx.files.internal("sprites/enemies/piranha_plant.png"));
 	
+	public static final Texture BOWSER = new Texture(Gdx.files.internal("sprites/enemies/bowser.png"));
+	
 	// Items
 	public static final Texture COIN = new Texture(Gdx.files.internal("sprites/items/coin.png"));	
 	
 	public static final Texture FLAG = new Texture(Gdx.files.internal("sprites/items/flag.png"));
+	
+	public static final Texture HAWK = new Texture(Gdx.files.internal("sprites/items/hawk.png"));
 	
 	public static final Texture COIN_BLOC = new Texture(Gdx.files.internal("sprites/items/coin-from-bloc.png"));
 	

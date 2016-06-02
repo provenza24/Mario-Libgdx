@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="158" height="15" tilewidth="32" tileheight="32" nextobjectid="60">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="158" height="15" tilewidth="32" tileheight="32" nextobjectid="63">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -38,6 +38,12 @@
  <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
   <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
+ <tileset firstgid="452" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+  <image source="../sprites/items/hawk.png" width="96" height="32"/>
+ </tileset>
+ <tileset firstgid="455" name="bowser" tilewidth="64" tileheight="76" tilecount="3" columns="3">
+  <image source="../sprites/enemies/bowser.png" width="192" height="76"/>
+ </tileset>
  <layer name="world" width="158" height="15">
   <properties>
    <property name="backgrounds" value="castle"/>
@@ -45,12 +51,11 @@
    <property name="world" value="castle"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztl0sOwjAMRM2Oy/RYBZVPNxXbwtFpF5EiKxTHTpNA5kmjSDR2rLH7oTsQdRAEQQ3oTEQnwoo177pXbg19JZ5I6u+N192elP7FnKMlVX179EzieYjSsxZT/2C8TsbzY0iZvzfG74m2rl963rVKzf5s3etHZZx1/9be2HOBnUfpAkCTTITZA/mZqPzsXRZdK9ItUKP1f8Q/vMtdn0L+xKLphXROeH1r3BD4fV70rEj3CF9yzf03/J6EfLfmX3F9einjfaS98M+Szgmv71Pdtc1daXF/JPge8njurya/n0cb74O5q0/cHwmYO8ydVZr3/LgRP7L83H8prk8pvkMwd+2J+y8lZZ/eRo72LA==
+   eJztV8sOwjAMCzd+Zp810HjsMrEj8OmMQ6UqKiNN2rVQW7IqsSa1HO9BtyPqQBAEG+CRiA6EFeu2a67eGvSVeCLR3xuvuz0p/Ys5R4tU+nLMTOJ5CKWzFqN/MF4n4/kxSNm/N9bnhFbXLz3vWkXN/qzd63tlnXX/2t7YcwE7bqUFAE1iImQP2B4Tlc/eaeG5Il4CGq3/I/7hXe7mFPInFppZSHPC9b3rhsDv94WPiniN8GWr3H+DP5OQ77z/rKCb01Ohj0M6C/8saU64vk+6a8tdaXJ/JPA95PXcX01/v4+23gdyVx+5PxIgd8idlZr3/LhSP7L+3H8p3JxSfIcgd+2R+y9Fyjm9AOWR/Co=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="0" y="224" width="32" height="32"/>
-  <object id="49" type="flag" gid="419" x="4946" y="246" width="32" height="32"/>
   <object id="50" type="castleFirebar" gid="449" x="914" y="352" width="96" height="16">
    <properties>
     <property name="angle" value="90"/>
@@ -86,5 +91,7 @@
     <property name="angle" value="0"/>
    </properties>
   </object>
+  <object id="60" type="flag" gid="452" x="4448" y="288" width="32" height="32"/>
+  <object id="61" type="bowser" gid="455" x="4370" y="320" width="64" height="76"/>
  </objectgroup>
 </map>

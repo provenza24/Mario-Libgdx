@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
@@ -34,6 +36,33 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			endLevelState = 4;
 			timer = 4;
 		}
+		
+		if (tileMap.getWorldType()==WorldTypeEnum.UNDERGROUND) {
+			handleUnderground(delta);
+		} else if (tileMap.getWorldType()==WorldTypeEnum.CASTLE) {
+			
+			timer += delta;
+			
+			if (timer>3) {
+				GameManager.getGameManager().setSizeState(mario.getSizeState());
+				GameManager.getGameManager().nextLevel();
+			} else {												
+				if (mario.isOnFloor() && endLevelState==0) {
+					endLevelState = 1;
+					mario.getAcceleration().x=0;
+					mario.setState(SpriteStateEnum.NO_MOVE);
+					mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
+				}				
+				mario.move(delta);
+				mario.collideWithTilemap(tileMap);
+				mario.updateCinematicAnimation(delta);
+				renderCinematicScene(delta);
+			}						
+		}		
+		
+	}
+
+	private void handleUnderground(float delta) {
 		
 		timer += delta;
 

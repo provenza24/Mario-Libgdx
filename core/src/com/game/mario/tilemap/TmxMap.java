@@ -21,6 +21,7 @@ import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
+import com.game.mario.sprite.tileobject.enemy.Bowser;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.enemy.Koopa;
 import com.game.mario.sprite.tileobject.enemy.PiranhaPlant;
@@ -109,6 +110,9 @@ public class TmxMap {
 			if (objectProperty.get("type").toString().equals("redKoopa")) {				
 				enemies.add(new RedKoopa(mapObject));
 			}
+			if (objectProperty.get("type").toString().equals("bowser")) {				
+				enemies.add(new Bowser(mapObject));
+			}
 			if (objectProperty.get("type").toString().equals("transferDown")) {				
 				items.add(new TransferItemDown(mapObject));
 			}
@@ -119,7 +123,7 @@ public class TmxMap {
 				items.add(new Coin(mapObject));
 			}
 			if (objectProperty.get("type").toString().equals("flag")) {
-				flag = new Flag(mapObject);
+				flag = new Flag(mapObject, worldType);
 				items.add(flag);
 			}
 			

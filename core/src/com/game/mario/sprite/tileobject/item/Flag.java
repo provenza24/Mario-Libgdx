@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
 
@@ -11,18 +12,19 @@ public class Flag extends AbstractTileObjectSprite {
 
 	private float flagTargetPosition;
 	
-	public Flag(MapObject mapObject) {
+	public Flag(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
 		
 		super(mapObject);	
 		collidableWithTilemap = false;
 		gravitating = false;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		flagTargetPosition = getX() - getWidth() /2;
+		
+		initializeAnimations(backgroundTypeEnum);
 	}
-			
-	@Override
-	public void initializeAnimations()  {		
-		spriteSheet = ResourcesLoader.FLAG;			
+				
+	public void initializeAnimations(WorldTypeEnum backgroundTypeEnum)  {		
+		spriteSheet = backgroundTypeEnum.equals(WorldTypeEnum.CASTLE) ?  ResourcesLoader.HAWK : ResourcesLoader.FLAG;			
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);				
 		TextureRegion[] flagFrames = new TextureRegion[3];
 		flagFrames[0] = tmp[0][0];
@@ -33,5 +35,10 @@ public class Flag extends AbstractTileObjectSprite {
 
 	public float getFlagTargetPosition() {
 		return flagTargetPosition;
+	}
+	
+	@Override
+	public void initializeAnimations()  {		
+	
 	}
 }

@@ -31,7 +31,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected ITilemapCollisionHandler tilemapCollisionHandler;
 	
-	private static final float GRAVITY_COEF = 0.01f;
+	protected float GRAVITY_COEF = 0.01f;
 
 	protected DirectionEnum direction;
 
