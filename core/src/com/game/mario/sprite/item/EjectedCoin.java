@@ -36,7 +36,7 @@ public class EjectedCoin extends AbstractItem {
 	
 	@Override
 	protected void updateAnimation(float delta) {
-		// Ovverided because the coin animation must be played only one time
+		// Override because the coin animation must be played only one time
 		stateTime = stateTime + delta;
 		currentFrame = currentAnimation.getKeyFrame(stateTime, false);		
 	}

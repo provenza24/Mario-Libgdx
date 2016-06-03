@@ -113,34 +113,11 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 												
 					}
 					
-					if (move.x>0 && move.y<0) {
-					
-						if (sprite.getMapCollisionEvent().isBlockedRight()) {
-							newPosition.x = (int) (sprite.getX() + sprite.getOffset().x) + sprite.getOffset().x - COLLISION_X_CORRECTIF;						
-							reverseAcceleration = true;									
-						} else {	
-							float xDelta = collisionPoint.getPoint().x - collisionPoint.getCell().getX();
-							float yDelta = (collisionPoint.getCell().getY() + 1) - collisionPoint.getPoint().y;
-							if (xDelta>yDelta) {				
-								newPosition.y = (int) sprite.getY() + 1f;						
-								sprite.getAcceleration().y = 0;
-								sprite.setOnFloor(true);
-								if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
-									sprite.setState(SpriteStateEnum.WALKING);
-								}
-							} else {
-								newPosition.x = (int) (sprite.getX() + sprite.getOffset().x) + sprite.getOffset().x - COLLISION_X_CORRECTIF;								
-							}
-						}
-												
-					}
-					
 					if (move.x<0 && move.y<0) {	
-												
+						
 						if (sprite.getMapCollisionEvent().isBlockedLeft()) {						
 							newPosition.x = (int) (sprite.getX() + sprite.getWidth() + sprite.getOffset().x) - sprite.getOffset().x + COLLISION_X_CORRECTIF;					
-							reverseAcceleration = true;		
-							
+							reverseAcceleration = true;									
 						} else {
 							float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
 							float yDelta = (collisionPoint.getCell().getY()+1) - collisionPoint.getPoint().y;
@@ -156,6 +133,27 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 							}
 						}												
 					}
+					
+					if (move.x<0 && move.y>0) {
+					
+						if (sprite.getMapCollisionEvent().isBlockedLeft()) {
+							newPosition.x = (int) (sprite.getX() + sprite.getWidth() + sprite.getOffset().x) - sprite.getOffset().x + COLLISION_X_CORRECTIF;							
+							reverseAcceleration = true;
+						} else {
+							float xDelta = (collisionPoint.getCell().getX()+1) - collisionPoint.getPoint().x;
+							float yDelta = collisionPoint.getPoint().y - (collisionPoint.getCell().getY());
+							if (xDelta>yDelta) {
+								newPosition.y = (int) sprite.getY();
+								sprite.getAcceleration().y = 10e-5F;
+								if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
+									sprite.setState(SpriteStateEnum.WALKING);
+								}
+							} else {
+								newPosition.x = (int) (sprite.getX() + sprite.getWidth() + sprite.getOffset().x) - sprite.getOffset().x + COLLISION_X_CORRECTIF;																
+							}
+						}
+												
+					}									
 														
 				}
 				sprite.setX(newPosition.x);

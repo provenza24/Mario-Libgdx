@@ -8,6 +8,7 @@ import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.item.FireFlame;
 import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.GreenMushroom;
 import com.game.mario.sprite.item.RedMushroom;
@@ -33,7 +34,8 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(Coin.class, new CoinCollisionHandler());
 		handlers.put(AscendingMetalPlateform.class, new MetalPlateformCollisionHandler());
 		handlers.put(DescendingMetalPlateform.class, new MetalPlateformCollisionHandler());
-		handlers.put(CastleFirebar.class, new CastleFirebarCollisionHandler());
+		handlers.put(CastleFirebar.class, new CastleFirebarCollisionHandler());		
+		handlers.put(FireFlame.class, new CastleFirebarCollisionHandler());
 	}
 
 	public static IItemCollisionHandler getHandler(AbstractSprite sprite) {		

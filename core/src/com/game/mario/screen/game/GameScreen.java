@@ -160,10 +160,10 @@ public class GameScreen implements Screen  {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
 		}		
 		
-		/*mario.setX(56);
-		mario.setY(8);
+		/*mario.setX(188);
+		mario.setY(9);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 62;						
+		camera.getCamera().position.x = 194;						
 		camera.getCamera().update();*/
 	}
 		
@@ -198,21 +198,32 @@ public class GameScreen implements Screen  {
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+										
 		if (camera.isScrollable()) {
-			// Move camera			
-			camera.moveCamera(mario);
-			// Move scrolling background
-			if (Math.floor(camera.getCameraOffset()) == 8) {
-				backgrounds.get(0).update();				
-				if (backgrounds.size>1) {
-					backgrounds.get(1).update();
+			
+			
+			// @TODO refactor this in camera.move method
+			if (camera.getCamera().position.x < tileMap.getScrollMaxValue()) {
+				// Move camera			
+				camera.moveCamera(mario);
+				// Move scrolling background
+				if (Math.floor(camera.getCameraOffset()) == 8) {
+					backgrounds.get(0).update();				
+					if (backgrounds.size>1) {
+						backgrounds.get(1).update();
+					}
 				}
-			}
-			backgrounds.get(0).render();
-			if (backgrounds.size>1) {
-				backgrounds.get(1).render();
-			}
+			} else {				
+				if (mario.getX() < camera.getCamera().position.x - 8) {					
+					mario.setX(mario.getOldPosition().x);
+					mario.getAcceleration().x = 0;
+				}
+			}			
+						
+		}
+		backgrounds.get(0).render();
+		if (backgrounds.size>1) {
+			backgrounds.get(1).render();
 		}
 		
 		// Render tilemap
@@ -340,7 +351,7 @@ public class GameScreen implements Screen  {
 						sprite.getHeight());
 			}
 			for (AbstractSprite sprite : tileMap.getItems()) {
-				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY() + sprite.getOffset().y, sprite.getWidth(),
 						sprite.getHeight());
 			}
 			for (AbstractSprite sprite : mario.getFireballs()) {

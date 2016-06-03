@@ -17,6 +17,7 @@ import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.ResourcesLoader;
 
 public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 
@@ -37,8 +38,8 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			timer = 4;
 		}
 		
-		if (tileMap.getWorldType()==WorldTypeEnum.UNDERGROUND) {
-			handleUnderground(delta);
+		if (tileMap.getWorldType()==WorldTypeEnum.OVERGROUND) {
+			handleOverground(delta);
 		} else if (tileMap.getWorldType()==WorldTypeEnum.CASTLE) {
 			
 			timer += delta;
@@ -62,8 +63,8 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		
 	}
 
-	private void handleUnderground(float delta) {
-		
+	private void handleOverground(float delta) {
+						
 		timer += delta;
 
 		if (endLevelState == 0) {
@@ -85,7 +86,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			/*tileMap.getFlag().addAction(ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY() - 8.5f, 1f));*/
 			tileMap.getFlag().setGravitating(true);
 			tileMap.getFlag().setCollidableWithTilemap(true);
-		} else if (endLevelState == 2 && mario.getY()<=2 && timer > 1.5f) {
+		} else if (endLevelState == 2 && mario.isOnFloor() && timer > 1.5f) {
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_STAGE_CLEAR);
 			timer = 0;
 			endLevelState = 3;
@@ -95,7 +96,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		}
 
 		if (endLevelState == 3) {
-			if (mario.getX() > tileMap.getFlagTargetPosition() + 6.5f) {
+			if (mario.getX() > tileMap.getFlagTargetPosition() + 6.35f) {
 				mario.setAcceleration(new Vector2());
 				endLevelState = 4;
 				timer = 0;
@@ -117,6 +118,17 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		}
 
 		if (endLevelState == 4 && timer > 3) {
+			mario.setAcceleration(new Vector2(2f, 0));
+			mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
+			if (mario.getX() > tileMap.getFlagTargetPosition() + 7.5f) {
+				mario.setAcceleration(new Vector2(0, 0));
+				mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
+				endLevelState = 5;
+				timer=0;
+			}						
+		}
+				
+		if (endLevelState == 5 && timer > 3) {
 			GameManager.getGameManager().setSizeState(mario.getSizeState());
 			GameManager.getGameManager().nextLevel();
 		} else {
@@ -124,7 +136,13 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			mario.collideWithTilemap(tileMap);
 			mario.updateCinematicAnimation(delta);
 			renderCinematicScene(delta);
-		}
+			if (endLevelState>=4) {
+				renderer.getBatch().begin();				
+				renderer.getBatch().draw(ResourcesLoader.CASTLE_DOOR,(int)tileMap.getFlagTargetPosition() + 7, mario.getY(), 2,2);	
+				renderer.getBatch().end();
+			}
+
+		}				
 	}
 	
 }

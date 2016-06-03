@@ -69,6 +69,7 @@ public abstract class AbstractCinematicSceneHandler {
 							
 		for (AbstractSprite item : tileMap.getItems()) {
 			if (item.isVisible()) {				
+				//item.update(tileMap, camera.getCamera(), delta);
 				item.render(renderer.getBatch());
 			}				
 		}

@@ -48,6 +48,8 @@ public class ResourcesLoader {
 	
 	public static final Texture CASTLE_FIREBAR = new Texture(Gdx.files.internal("sprites/items/castle-firebar.png"));
 	
+	public static final Texture FIREFLAME = new Texture(Gdx.files.internal("sprites/items/fire-flame.png"));
+	
 	// Mario
 	public static final Texture MARIO_SMALL = new Texture(Gdx.files.internal("sprites/mario/mario.png"));
 	
@@ -80,6 +82,8 @@ public class ResourcesLoader {
 	public static final Texture PIPE_DOWN = new Texture(Gdx.files.internal("sprites/transparency/pipe_down.png"));
 	
 	public static final Texture PIPE_LEFT = new Texture(Gdx.files.internal("sprites/transparency/pipe_left.png"));
+	
+	public static final Texture CASTLE_DOOR = new Texture(Gdx.files.internal("sprites/transparency/castle_door.png"));
 	
 	// Miscelleanous
 	public static final Texture FIREBALL_EXPLOSION = new Texture(Gdx.files.internal("sprites/misc/fireball_explosion.png"));

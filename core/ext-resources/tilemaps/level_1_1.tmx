@@ -41,8 +41,8 @@
  <tileset firstgid="452" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
   <image source="../sprites/items/hawk.png" width="96" height="32"/>
  </tileset>
- <tileset firstgid="455" name="bowser" tilewidth="64" tileheight="76" tilecount="3" columns="3">
-  <image source="../sprites/enemies/bowser.png" width="192" height="76"/>
+ <tileset firstgid="455" name="bowser" tilewidth="64" tileheight="76" tilecount="4" columns="4">
+  <image source="../sprites/enemies/bowser.png" width="256" height="76"/>
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>

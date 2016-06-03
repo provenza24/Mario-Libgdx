@@ -62,6 +62,8 @@ public class TmxMap {
 	private String musicTheme;
 	
 	private Array<BackgroundTypeEnum> backgroundTypesEnum;
+	
+	private float scrollMaxValue;
 		
 	public TmxMap(String levelName) {
 		
@@ -70,8 +72,10 @@ public class TmxMap {
 		objectsLayer = map.getLayers().get(1);
 		MapProperties properties = tileLayer.getProperties();				
 		worldType = WorldTypeEnum.valueOf(((String)properties.get(TilemapPropertiesConstants.WORLD)).toUpperCase());		
-		musicTheme = ((String)properties.get("music")).toUpperCase();		
-		initBlocks(worldType);		
+		musicTheme = ((String)properties.get("music")).toUpperCase();
+		String sScrollableTo = (String)properties.get("scrollableTo");
+		scrollMaxValue = sScrollableTo!=null && !sScrollableTo.equals("") ? Float.parseFloat(sScrollableTo) : 1000;
+ 		initBlocks(worldType);		
 		initMapObjects();		
 		initBackgrounds(properties);
 	}
@@ -286,6 +290,14 @@ public class TmxMap {
 
 	public void setBackgroundTypesEnum(Array<BackgroundTypeEnum> backgroundsTypesEnum) {
 		this.backgroundTypesEnum = backgroundsTypesEnum;
+	}
+
+	public float getScrollMaxValue() {
+		return scrollMaxValue;
+	}
+
+	public void setScrollMaxValue(float scrollMaxValue) {
+		this.scrollMaxValue = scrollMaxValue;
 	}
 
 }

@@ -83,7 +83,9 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 	
 	@Override
 	public boolean collideMario(Mario mario) {
+				
 		boolean isEnemyHit = false;
+		
 		if (state == SpriteStateEnum.WALKING) {
 			isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
 			if (isEnemyHit) {
