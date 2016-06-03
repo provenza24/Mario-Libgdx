@@ -18,7 +18,7 @@
   <image source="../sprites/items/flag.png" width="96" height="32"/>
  </tileset>
  <tileset firstgid="422" name="Transfer" tilewidth="8" tileheight="8" tilecount="4" columns="4">
-  <image source="../sprites/items/transfer.png" width="32" height="8"/>
+  <image source="transfer.png" width="32" height="8"/>
  </tileset>
  <tileset firstgid="426" name="Coin" tilewidth="28" tileheight="32" tilecount="4" columns="4">
   <image source="../sprites/items/coin.png" width="112" height="32"/>
@@ -28,6 +28,21 @@
  </tileset>
  <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="8" columns="8">
   <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
+ </tileset>
+ <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="8" columns="8">
+  <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
+ </tileset>
+ <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
+  <image source="../sprites/items/metal-plateform.png" width="96" height="16"/>
+ </tileset>
+ <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
+  <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
+ </tileset>
+ <tileset firstgid="452" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+  <image source="../sprites/items/hawk.png" width="96" height="32"/>
+ </tileset>
+ <tileset firstgid="455" name="bowser" tilewidth="64" tileheight="76" tilecount="3" columns="3">
+  <image source="../sprites/enemies/bowser.png" width="192" height="76"/>
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
@@ -143,7 +158,7 @@
   <object id="42" type="coin" gid="428" x="7104" y="192" width="28" height="32"/>
   <object id="43" type="coin" gid="428" x="7136" y="192" width="28" height="32"/>
   <object id="44" type="coin" gid="428" x="7168" y="192" width="28" height="32"/>
-  <object id="46" type="transferRight" gid="425" x="7288" y="402" width="8" height="8">
+  <object id="46" type="transferRight" gid="422" x="7288" y="402" width="8" height="8">
    <properties>
     <property name="backgrounds" value="clouds,hills"/>
     <property name="music" value="overground"/>
