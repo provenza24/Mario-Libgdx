@@ -8,6 +8,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.tilemap.TmxMap;
@@ -18,9 +19,7 @@ public class CastleFirebar extends AbstractTileObjectSprite {
 	private Polygon polygon;
 	
 	public CastleFirebar(MapObject mapObject) {
-		super(mapObject);		
-		setSize(3, 0.5f);
-		setY(getY()-1+getHeight());
+		super(mapObject, new Vector2());		
 		setRenderingSize(3, 0.5f);
 		setOrigin(0, 0.25f);
 		bounds=new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="239" height="15" tilewidth="32" tileheight="32" nextobjectid="135">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="239" height="15" tilewidth="32" tileheight="32" nextobjectid="137">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -75,9 +75,9 @@
     <property name="xAlive" value="376"/>
    </properties>
   </object>
-  <object id="55" type="piranha" gid="430" x="3312" y="398" width="32" height="50"/>
-  <object id="56" type="piranha" gid="430" x="3504" y="366" width="32" height="50"/>
-  <object id="57" type="piranha" gid="430" x="3696" y="430" width="32" height="50"/>
+  <object id="55" type="piranha" gid="430" x="3312" y="412" width="32" height="50"/>
+  <object id="56" type="piranha" gid="430" x="3504" y="380" width="32" height="50"/>
+  <object id="57" type="piranha" gid="430" x="3696" y="444" width="32" height="50"/>
   <object id="58" type="coin" gid="428" x="1282" y="320" width="28" height="32"/>
   <object id="59" type="coin" gid="428" x="1442" y="320" width="28" height="32"/>
   <object id="60" type="coin" gid="428" x="1314" y="224" width="28" height="32"/>
@@ -212,5 +212,6 @@
     <property name="mode" value="descending"/>
    </properties>
   </object>
+  <object id="135" type="piranha" gid="430" x="5968" y="443" width="32" height="48"/>
  </objectgroup>
 </map>

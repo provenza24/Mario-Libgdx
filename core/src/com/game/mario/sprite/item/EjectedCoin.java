@@ -12,7 +12,8 @@ import com.game.mario.util.ResourcesLoader;
 public class EjectedCoin extends AbstractItem {
 
 	public EjectedCoin(float x, float y) {
-		super(x, y);			
+		super(x, y);		
+		collidableWithTilemap = false;
 	}
 
 	@Override

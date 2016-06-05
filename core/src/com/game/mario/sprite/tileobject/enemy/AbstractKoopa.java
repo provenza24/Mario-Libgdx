@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
@@ -27,11 +28,8 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 	protected float noMoveTime;
 	
 	public AbstractKoopa(MapObject mapObject) {
-		super(mapObject);		
-		offset.x = 0.2f;
-		offset.y = 0.1f;
+		super(mapObject, new Vector2(0.2f, 0.1f));				
 		setSize(1 - offset.x * 2, 1 - offset.y);
-		renderingSize.y = 1.5f;
 		currentAnimation = walkLeftAnimation;
 		acceleration.x = -1.9f;		
 		gravitating = true;
@@ -49,22 +47,26 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 	
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
+		
 		super.update(tileMap, camera, deltaTime);
-		if (!bumped && state==SpriteStateEnum.NO_MOVE) {									
-			noMoveTime = noMoveTime + deltaTime;
-			if (noMoveTime<5) {
-				// nothing to do
-			} else if (noMoveTime>=5 && noMoveTime<=8) {
-				currentAnimation = wakeUpAnimation;
-			} else {
-				setSize(1 - offset.x * 2, 1);
-				renderingSize.y = 1.5f;
-				currentAnimation = walkLeftAnimation;
-				acceleration.x = -1.9f;		
-				bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
-				state = SpriteStateEnum.WALKING;
-			} 
-		}				
+		
+		if (isAlive()) {
+			if (!bumped && state==SpriteStateEnum.NO_MOVE) {									
+				noMoveTime = noMoveTime + deltaTime;
+				if (noMoveTime<5) {
+					// nothing to do
+				} else if (noMoveTime>=5 && noMoveTime<=8) {
+					currentAnimation = wakeUpAnimation;
+				} else {
+					setSize(1 - offset.x * 2, 1);
+					renderingSize.y = 1.5f;
+					currentAnimation = walkLeftAnimation;
+					acceleration.x = -1.9f;		
+					bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
+					state = SpriteStateEnum.WALKING;
+				} 
+			}			
+		}			
 	}
 	
 	@Override
@@ -101,7 +103,7 @@ public abstract class AbstractKoopa extends AbstractEnemy {
 			}	
 		} else if (state == SpriteStateEnum.NO_MOVE) {			
 			isEnemyHit = true;
-			acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 12 : -12;
+			acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 10 : -10;
 			setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
 			state = SpriteStateEnum.SLIDING;
 			currentAnimation = slideAnimation;			

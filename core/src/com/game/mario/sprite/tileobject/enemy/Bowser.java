@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.BowserTilemapCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
@@ -52,12 +53,8 @@ public class Bowser extends AbstractEnemy {
 	
 	public Bowser(MapObject mapObject) {
 
-		super(mapObject);
-		offset.x = 0.2f;
-		offset.y = 0.1f;
-		setSize(2 - 2*offset.x, 2.375f - offset.y);
-		setRenderingSize(2, 2.375f);
-		setY(getY()-1+getHeight());
+		super(mapObject, new Vector2(0.2f, 0.1f));
+		
 		gravitating = true;
 		collidableWithTilemap = true;
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());

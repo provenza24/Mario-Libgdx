@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.EnemyTypeEnum;
@@ -29,10 +30,7 @@ public class Goomba extends AbstractEnemy {
 		
 	public Goomba(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
 		
-		super(mapObject);								
-		offset.x = 0.2f;
-		offset.y = 0.1f;
-		setSize(1 - 2*offset.x, 1f - offset.y);
+		super(mapObject, new Vector2(0.2f, 0.1f));								
 							
 		acceleration.x = -1.9f; 
 		gravitating = true;		

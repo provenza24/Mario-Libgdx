@@ -105,10 +105,7 @@ public class Mario extends AbstractTileObjectSprite {
 	private List<AbstractSprite> fireballs;				
 
 	public Mario(MapObject mapObject) {
-		super(mapObject);
-		offset.x = X_OFFSET;
-		offset.y = Y_OFFSET;
-		setSize(1 - 2*offset.x, 1 - offset.y);
+		super(mapObject, new Vector2(X_OFFSET, Y_OFFSET));
 		renderingSize = new Vector2(1, 1);
 		stateTime = 0f;
 		jumpTimer = 0;

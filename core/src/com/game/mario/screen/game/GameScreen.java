@@ -303,21 +303,21 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", x, y);
 			y = y -20;
 			alive = 0;
-			for (AbstractEnemy enemy : tileMap.getEnemies()) {
+			/*for (AbstractEnemy enemy : tileMap.getEnemies()) {
 				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() , x, y);
 				y = y -20;
 				alive++;
-			}			
+			}*/			
 			alive = 0;
 			for (AbstractSprite item : tileMap.getItems()) {
 				alive += item.isAlive() ? 1 : 0;
 			}
 			alive = 0;
-			for (AbstractSprite item : tileMap.getItems()) {
+			/*for (AbstractSprite item : tileMap.getItems()) {
 				debugFont.draw(spriteBatch, "Item #" + alive + " - " + (item.isAlive() ? " alive - " : "") + (item.isVisible() ? " visible - " : "") , x, y);
 				y = y -20;
 				alive++;
-			}	
+			}*/	
 			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", x, y);
 			y = y -20;
 			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), x, y);

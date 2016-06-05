@@ -33,10 +33,8 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 	protected Array<BackgroundTypeEnum> backgroundTypesEnum;
 
 	public TransferItem(MapObject mapObject) {		
-		super(mapObject);					
-		setSize((float)spriteSheet.getWidth()/32, (float)spriteSheet.getHeight()/32);
+		super(mapObject, new Vector2());					
 		setRenderingSize((float)spriteSheet.getWidth()/32, (float)spriteSheet.getHeight()/32);
-		setY(getY()-1+getHeight());
 		gravitating = false;
 		collidableWithTilemap= false;
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());

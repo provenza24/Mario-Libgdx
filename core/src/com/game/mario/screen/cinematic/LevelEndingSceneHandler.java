@@ -15,6 +15,7 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
@@ -34,7 +35,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 	public void handleScene(float delta) {
 
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-			endLevelState = 4;
+			endLevelState = 5;
 			timer = 4;
 		}
 		

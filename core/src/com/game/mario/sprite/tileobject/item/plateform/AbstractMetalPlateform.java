@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
@@ -12,9 +13,7 @@ import com.game.mario.util.ResourcesLoader;
 public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 
 	public AbstractMetalPlateform(MapObject mapObject) {
-		super(mapObject);
-		setSize(3, 0.5f);
-		setY(getY()-1+getHeight());
+		super(mapObject, new Vector2());
 		setRenderingSize(3, 0.5f);
 		gravitating = false;
 		collidableWithTilemap = false;		

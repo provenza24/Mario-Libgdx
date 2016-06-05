@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -40,6 +41,14 @@ public class MarioDeathSceneHandler extends AbstractCinematicSceneHandler {
 			GameManager.getGameManager().restartLevel();
 		}
 
+	}
+	
+	protected void renderItems(float delta) {
+		for (AbstractSprite item : tileMap.getItems()) {
+			if (item.isVisible()) {							
+				item.render(renderer.getBatch());
+			}				
+		}
 	}
 	
 }

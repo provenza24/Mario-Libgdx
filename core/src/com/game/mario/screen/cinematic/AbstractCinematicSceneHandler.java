@@ -67,12 +67,7 @@ public abstract class AbstractCinematicSceneHandler {
 		renderer.render();
 		renderMysteryBlocks(delta);
 							
-		for (AbstractSprite item : tileMap.getItems()) {
-			if (item.isVisible()) {				
-				//item.update(tileMap, camera.getCamera(), delta);
-				item.render(renderer.getBatch());
-			}				
-		}
+		renderItems(delta);
 		
 		for (AbstractSprite enemy : tileMap.getEnemies()) {
 			if (enemy.isVisible()) {
@@ -84,6 +79,15 @@ public abstract class AbstractCinematicSceneHandler {
 		mario.render(renderer.getBatch());
 		stage.act();
 		stage.draw();
+	}
+
+	protected void renderItems(float delta) {
+		for (AbstractSprite item : tileMap.getItems()) {
+			if (item.isVisible()) {				
+				item.update(tileMap, camera.getCamera(), delta);
+				item.render(renderer.getBatch());
+			}				
+		}
 	}
 	
 	protected void renderStatusBar() {

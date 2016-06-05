@@ -1,6 +1,7 @@
 package com.game.mario.sprite.tileobject.enemy;
 
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sprite.AbstractSprite;
@@ -8,8 +9,8 @@ import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 
 public abstract class AbstractEnemy extends AbstractTileObjectSprite {
 			
-	public AbstractEnemy(MapObject mapObject) {
-		super(mapObject);
+	public AbstractEnemy(MapObject mapObject, Vector2 offset) {
+		super(mapObject, offset);
 		state = SpriteStateEnum.WALKING;
 	}
 	

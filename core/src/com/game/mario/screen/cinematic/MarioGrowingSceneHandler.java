@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -21,6 +22,14 @@ public class MarioGrowingSceneHandler extends AbstractCinematicSceneHandler {
 		super(mario, tileMap, camera, scrollingBackgrounds, font, spriteBatch, renderer, stage, batch);
 	}
 
+	protected void renderItems(float delta) {
+		for (AbstractSprite item : tileMap.getItems()) {
+			if (item.isVisible()) {								
+				item.render(renderer.getBatch());
+			}				
+		}
+	}
+	
 	public void handleScene(float delta) {
 
 		growingDuration = growingDuration + delta;

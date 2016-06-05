@@ -8,6 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -38,6 +39,15 @@ public class TransferSceneHandler extends AbstractCinematicSceneHandler {
 			mario.setInTransfer(false);
 			mario.transfer(tileMap, camera, scrollingBackgrounds, spriteBatch);
 			timer = 0;			
+		}
+	}
+	
+	protected void renderItems(float delta) {
+		for (AbstractSprite item : tileMap.getItems()) {
+			if (item.isVisible()) {				
+				item.update(tileMap, camera.getCamera(), delta);
+				item.render(renderer.getBatch());
+			}				
 		}
 	}
 	
