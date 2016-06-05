@@ -27,6 +27,8 @@ public class TileIdConstants {
 	public static final int WALL_OVERGROUND_RED_MUSHROOM = 12;
 	public static final int WALL_OVERGROUND_GREEN_MUSHROOM = 13;
 	
+	public static final int MYSTERY_BLOCK_INVIBLE_COIN = 14;
+	
 	public static final int WALL_UNDERGROUND_10_COINS = 71;
 	public static final int WALL_UNDERGROUND_RED_MUSHROOM = 72;
 	public static final int WALL_UNDERGROUND_GREEN_MUSHROOM = 73;

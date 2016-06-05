@@ -159,7 +159,7 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 									sprite.setOnFloor(true);
 								}
 							} else {
-									newPosition.x = (int) (sprite.getX() + sprite.getWidth() + sprite.getOffset().x) - sprite.getOffset().x + COLLISION_X_CORRECTIF;						
+								newPosition.x = (int) (sprite.getX() + sprite.getWidth() + sprite.getOffset().x) - sprite.getOffset().x + COLLISION_X_CORRECTIF;						
 								sprite.getAcceleration().x = 0;					
 							}
 						}
@@ -215,9 +215,17 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 				sprite.getAcceleration().x = isCollision ? 0 : sprite.getOldAcceleration().x;
 			}										
 		}  else {
+			
 			if (sprite.getMove().y < 0 && !onFloorCorrection) {						
 				sprite.setState(SpriteStateEnum.FALLING);
 				sprite.setOnFloor(false);
+			} else {
+				checkUpperMapCollision(tileMap, sprite);
+				if (sprite.getMapCollisionEvent().isCollidingTop()) {
+					sprite.addCollidingCell(sprite.getMapCollisionEvent().getCollisionPoints().get(0).getCell());
+					newPosition.y = (int) sprite.getY();
+					sprite.getAcceleration().y = 10e-5F;
+				}
 			}
 		}		
 				

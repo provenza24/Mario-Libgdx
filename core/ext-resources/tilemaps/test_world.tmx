@@ -45,22 +45,11 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt08EJgEAQBEEVNF2DMHExgROEw35UwbyWffayjO0vd+A/+oQufUKXPmGuc/3+q0+Y69InZOkTuvQJXfqELn1Clz6hS5/QpU/o0id0HYPbk+5mZsnd8KwHMA==
+   eJzt07ENgDAQBEFDQLsU4caRC4AIyRvMSBd98smOAQAAAP+4j90fAG+mPiFLn9ClT+jSJ3TpE7r0CV36hC59Qpc+oev6uK10TzNL7gGMFAbq
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
-  <object id="66" type="flag" gid="419" x="288" y="160" width="32" height="32"/>
-  <object id="78" type="transferDown" gid="422" x="276" y="352" width="8" height="8">
-   <properties>
-    <property name="backgrounds" value="castle"/>
-    <property name="music" value="overground"/>
-    <property name="scrollable" value="true"/>
-    <property name="world" value="overground"/>
-    <property name="xOutgoing" value="100"/>
-    <property name="yOutgoing" value="100"/>
-   </properties>
-  </object>
-  <object id="79" type="castleFirebar" gid="449" x="331" y="352" width="96" height="16"/>
+  <object id="66" type="flag" gid="419" x="1083" y="157" width="32" height="32"/>
  </objectgroup>
 </map>
