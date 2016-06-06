@@ -413,7 +413,7 @@ public class GameScreen implements Screen  {
 					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
 				}	
 				for (int k = 0; k < mario.getFireballs().size(); k++) {
-					AbstractSprite fireball = mario.getFireballs().get(k);
+					AbstractSprite fireball = mario.getFireballs().get(k);					
 					boolean collideFireball = fireball.getBounds().overlaps(enemy.getBounds());
 					if (collideFireball) {
 						enemy.killByFireball(fireball);
@@ -422,7 +422,7 @@ public class GameScreen implements Screen  {
 					}
 				}
 				if (!enemy.isKilled()) {					
-					boolean collideMario = mario.getBounds().overlaps(enemy.getBounds());
+					boolean collideMario = enemy.overlaps(mario);
 					if (collideMario) {
 						boolean isEnemyHit = enemy.collideMario(mario);
 						if (!isEnemyHit) {

@@ -86,6 +86,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected String image;
 	
 	protected Vector2 move = new Vector2();
+	
+	protected int frame;
 
 	public AbstractSprite(float x, float y) {
 		
@@ -475,6 +477,14 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	public boolean overlaps(AbstractSprite sprite) {
 		return RectangleUtil.overlaps(this.getBounds(), sprite.getBounds());	
+	}
+
+	public int getFrame() {
+		return frame;
+	}
+
+	public void setFrame(int frame) {
+		this.frame = frame;
 	}
 	
 }

@@ -18,8 +18,7 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 	}
 	
 	public void collideWithTilemap(TmxMap tileMap, AbstractSprite sprite) {
-				
-		
+						
 		sprite.setCollidingCells(new ArrayList<TmxCell>());
 		
 		boolean onFloorCorrection = false;
@@ -221,10 +220,15 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 				sprite.setOnFloor(false);
 			} else {
 				checkUpperMapCollision(tileMap, sprite);
-				if (sprite.getMapCollisionEvent().isCollidingTop()) {
-					sprite.addCollidingCell(sprite.getMapCollisionEvent().getCollisionPoints().get(0).getCell());
-					newPosition.y = (int) sprite.getY();
-					sprite.getAcceleration().y = 10e-5F;
+				if (sprite.getState()==SpriteStateEnum.JUMPING && sprite.getMapCollisionEvent().isCollidingUpperBlock()) {					
+					TmxCell collidingCell = sprite.getMapCollisionEvent().getCollisionPoints().get(0).getCell();
+					if (sprite.getY()-collidingCell.getY()<0.2f) {
+						sprite.addCollidingCell(sprite.getMapCollisionEvent().getCollisionPoints().get(0).getCell());
+						newPosition.y = (int) sprite.getY();
+						sprite.setY(newPosition.y);
+						sprite.getAcceleration().y = 10e-5F;
+						sprite.setState(SpriteStateEnum.FALLING);
+					}														
 				}
 			}
 		}		
@@ -256,6 +260,41 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 				sprite.getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftMiddle, new TmxCell(tilemap.getTileAt(x, y), x, y)));
 			}
 		}
+	}
+	
+	protected void checkUpperMapCollision(TmxMap tilemap, AbstractSprite sprite) {
+		
+		sprite.reinitMapCollisionEvent();
+		sprite.getMapCollisionEvent().reinitCollisionPoints();
+		
+		Vector2 leftTopCorner = new Vector2(sprite.getX() + sprite.getOffset().x, sprite.getY() + sprite.getHeight());
+		Vector2 rightTopCorner = new Vector2(sprite.getX() + sprite.getWidth() + sprite.getOffset().x, sprite.getY() + sprite.getHeight());
+		Vector2 middleTopCorner = new Vector2(sprite.getX() + sprite.getWidth()/2 + sprite.getOffset().x, sprite.getY() + sprite.getHeight());
+		
+		int x = (int) leftTopCorner.x;
+		int y = (int) leftTopCorner.y;
+		boolean isCollision = tilemap.isCollisioningInvisibleTileAt(x, y);
+		sprite.getMapCollisionEvent().setCollidingTopLeft(isCollision);
+		if (isCollision) {
+			sprite.getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+		}
+		
+		x = (int) rightTopCorner.x;
+		y = (int) rightTopCorner.y;
+		isCollision = tilemap.isCollisioningInvisibleTileAt(x, y);
+		sprite.getMapCollisionEvent().setCollidingTopRight(isCollision);
+		if (isCollision) {
+			sprite.getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+		}
+		
+		x = (int) middleTopCorner.x;
+		y = (int) middleTopCorner.y;
+		isCollision = tilemap.isCollisioningInvisibleTileAt(x, y);
+		sprite.getMapCollisionEvent().setCollidingMiddleTop(isCollision);
+		if (isCollision) {
+			sprite.getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(middleTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
+		}
+	
 	}
 
 

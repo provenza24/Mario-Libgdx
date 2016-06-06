@@ -12,7 +12,7 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.util.ResourcesLoader;
 
-public class PiranhaPlant extends AbstractEnemy {
+public class PiranhaPlant extends AbstractUnkillableEnemy {
 			
 	private Mario mario;
 		
@@ -84,12 +84,7 @@ public class PiranhaPlant extends AbstractEnemy {
 		return Math.abs((getX()+HALF_WIDTH) - (mario.getX()+mario.getWidth()/2+mario.getOffset().x)) <=1.6f 
 				&& move==0 
 				&& acceleration.y>0;
-	}
-	
-	@Override
-	public boolean collideMario(Mario mario) {
-		return false;
-	}
+	}	
 
 	@Override
 	public void render(Batch batch) {		

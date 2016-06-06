@@ -18,6 +18,8 @@ public class CollisionEvent {
 	boolean collidingMiddleRight;
 	
 	boolean collidingMiddleLeft;
+	
+	boolean collidingMiddleTop;
 		
 	public CollisionEvent() {
 		collisionPoints = new ArrayList<CollisionPoint>();
@@ -67,8 +69,7 @@ public class CollisionEvent {
 		this.collidingTopRight = collidingTopRight;
 	}
 
-	// Collision TOP, BOTTOM, LEFT, RIGHT
-	
+	// Collision TOP, BOTTOM, LEFT, RIGHT	
 	public boolean isCollidingTop() {
 		return collidingTopLeft || collidingTopRight;
 	}
@@ -116,5 +117,17 @@ public class CollisionEvent {
 	
 	public boolean isBlockedTop() {
 		return (collidingTopLeft && collidingTopRight);						
+	}
+
+	public boolean isCollidingMiddleTop() {
+		return collidingMiddleTop;
+	}
+
+	public void setCollidingMiddleTop(boolean collidingMiddleTop) {
+		this.collidingMiddleTop = collidingMiddleTop;
+	}
+	
+	public boolean isCollidingUpperBlock() {
+		return (collidingTopLeft || collidingTopRight) && collidingMiddleTop;
 	}
 }

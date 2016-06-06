@@ -12,7 +12,6 @@ import com.game.mario.sprite.item.FireFlame;
 import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.GreenMushroom;
 import com.game.mario.sprite.item.RedMushroom;
-import com.game.mario.sprite.tileobject.item.CastleFirebar;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
@@ -34,8 +33,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(Coin.class, new CoinCollisionHandler());
 		handlers.put(AscendingMetalPlateform.class, new MetalPlateformCollisionHandler());
 		handlers.put(DescendingMetalPlateform.class, new MetalPlateformCollisionHandler());
-		handlers.put(CastleFirebar.class, new CastleFirebarCollisionHandler());		
-		handlers.put(FireFlame.class, new CastleFirebarCollisionHandler());
+		handlers.put(FireFlame.class, new FireFlameCollisionHandler());
 	}
 
 	public static IItemCollisionHandler getHandler(AbstractSprite sprite) {		

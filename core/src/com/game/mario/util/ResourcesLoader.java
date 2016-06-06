@@ -60,6 +60,8 @@ public class ResourcesLoader {
 	// Blocks
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));
 	
+	public static final Texture MYSTERY_BLOC_INVISIBLE = new Texture(Gdx.files.internal("sprites/items/invisible-block.png"));
+	
 	// Walls
 	public static final Texture WALL_UNDERGROUND = new Texture(Gdx.files.internal("sprites/wall/wall_underground.png"));
 	

@@ -45,7 +45,7 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt07ENgDAQBEFDQLsU4caRC4AIyRvMSBd98smOAQAAAP+4j90fAG+mPiFLn9ClT+jSJ3TpE7r0CV36hC59Qpc+oev6uK10TzNL7gGMFAbq
+   eJzt1bEKgCAARVFrsNFP7SP8cWkNKorAN5wDbxAXl4ulAAAAwD/2ZfYLgCtdnxBLn5BLn5BLn5BLn5Drqc/28rydBnzn/4Rc+oRc+oRc9ebuSHc1s8gNraMHMw==
   </data>
  </layer>
  <objectgroup name="objectsLayer">

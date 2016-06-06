@@ -18,15 +18,16 @@ import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.InvisibleMysteryBlock;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Bowser;
+import com.game.mario.sprite.tileobject.enemy.CastleFirebar;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
 import com.game.mario.sprite.tileobject.enemy.Koopa;
 import com.game.mario.sprite.tileobject.enemy.PiranhaPlant;
 import com.game.mario.sprite.tileobject.enemy.RedKoopa;
-import com.game.mario.sprite.tileobject.item.CastleFirebar;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
@@ -64,7 +65,7 @@ public class TmxMap {
 	private Array<BackgroundTypeEnum> backgroundTypesEnum;
 	
 	private float scrollMaxValue;
-		
+			
 	public TmxMap(String levelName) {
 		
 		map = new TmxMapLoader().load(levelName);
@@ -114,6 +115,9 @@ public class TmxMap {
 			if (objectProperty.get("type").toString().equals("redKoopa")) {				
 				enemies.add(new RedKoopa(mapObject));
 			}
+			if (objectProperty.get("type").toString().equals("castleFirebar")) {
+				enemies.add(new CastleFirebar(mapObject));		
+			}
 			if (objectProperty.get("type").toString().equals("bowser")) {				
 				enemies.add(new Bowser(mapObject));
 			}
@@ -139,10 +143,7 @@ public class TmxMap {
 				}				
 				
 			}
-			
-			if (objectProperty.get("type").toString().equals("castleFirebar")) {
-				items.add(new CastleFirebar(mapObject));		
-			}
+						
 		}
 	}
 
@@ -163,7 +164,9 @@ public class TmxMap {
 						blocks.add(new MysteryBlock(i, j, id, background));
 					} else if (blockTypeEnum==BlockTypeEnum.WALL_BLOCK) {
 						wallBlocks.add(new WallBlock(i, j, id, background));
-					}					
+					} else if (blockTypeEnum==BlockTypeEnum.MYSTERY_BLOCK_INVISIBLE) {
+						blocks.add(new InvisibleMysteryBlock(i, j, id, background));
+					} 					
 				}
 			}
 		}
@@ -181,7 +184,7 @@ public class TmxMap {
 	public boolean isCollisioningTileAt(int x, int y) {
 		Cell cell = tileLayer.getCell(x, y);
 		if (cell != null) {
-			return cell.getTile().getId() <= 128 && cell.getTile().getId()!=14;
+			return cell.getTile().getId() <= 128 && !TileIdConstants.isInvisibleBlock(cell.getTile().getId());
 		}		
 		return false;
 	}
@@ -189,7 +192,7 @@ public class TmxMap {
 	public boolean isCollisioningInvisibleTileAt(int x, int y) {
 		Cell cell = tileLayer.getCell(x, y);
 		if (cell != null) {
-			return cell.getTile().getId()==14;
+			return TileIdConstants.isInvisibleBlock(cell.getTile().getId());
 		}		
 		return false;
 	}

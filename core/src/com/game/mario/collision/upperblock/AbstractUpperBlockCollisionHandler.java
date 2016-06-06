@@ -34,6 +34,8 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 		handlers.put(TileIdConstants.MYSTERY_BLOCK_GREEN_MUSHROOM, new MysteryBlockCollisionHandler());
 		
 		handlers.put(TileIdConstants.MYSTERY_BLOCK_INVIBLE_COIN, new MysteryBlockCollisionHandler());
+		handlers.put(TileIdConstants.MYSTERY_BLOCK_INVIBLE_RED_MUSHROOM, new MysteryBlockCollisionHandler());
+		handlers.put(TileIdConstants.MYSTERY_BLOCK_INVIBLE_GREEN_MUSHROOM, new MysteryBlockCollisionHandler());
 		
 		// Walls collision handlers
 		handlers.put(TileIdConstants.WALL_OVERGROUND, new WallCollisionHandler());

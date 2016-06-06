@@ -26,7 +26,7 @@ public class WallBlock extends Block {
 	
 	@Override
 	public void initializeAnimationsWithBackground() {
-		spriteSheet = ResourcesLoader.WALL_TEXTURES.get(backgroundTypeEnum);
+		spriteSheet = ResourcesLoader.WALL_TEXTURES.get(worldTypeEnum);
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];

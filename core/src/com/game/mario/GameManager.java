@@ -40,11 +40,11 @@ public class GameManager extends Game {
 		initState();
 				
 		//levels.add("empty.tmx");
-		levels.add("test_world.tmx");				
+		//levels.add("test_world.tmx");				
 		
-		levels.add("level_1_1.tmx");
+		//levels.add("level_1_1.tmx");
 		levels.add("level_1_2.tmx");
-		levels.add("level_1_3.tmx");
+		//levels.add("level_1_3.tmx");
 		levels.add("level_1_4.tmx");
 		
 		gameScreen = new GameScreen();

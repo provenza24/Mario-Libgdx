@@ -33,32 +33,6 @@ public abstract class AbstractTilemapCollisionHandler implements ITilemapCollisi
 		sprite.getMapCollisionEvent().setCollidingBottomRight(sprite.getMapCollisionEvent().isCollidingBottom() || isCollision);
 	}
 	
-	protected void checkUpperMapCollision(TmxMap tilemap, AbstractSprite sprite) {
-		
-		sprite.reinitMapCollisionEvent();
-		sprite.getMapCollisionEvent().reinitCollisionPoints();
-		
-		Vector2 leftTopCorner = new Vector2(sprite.getX() + sprite.getOffset().x, sprite.getY() + sprite.getHeight());
-		Vector2 rightTopCorner = new Vector2(sprite.getX() + sprite.getWidth() + sprite.getOffset().x, sprite.getY() + sprite.getHeight());
-		
-		int x = (int) leftTopCorner.x;
-		int y = (int) leftTopCorner.y;
-		boolean isCollision = tilemap.isCollisioningInvisibleTileAt(x, y);
-		sprite.getMapCollisionEvent().setCollidingTopLeft(isCollision);
-		if (isCollision) {
-			sprite.getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(leftTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-		}
-		
-		x = (int) rightTopCorner.x;
-		y = (int) rightTopCorner.y;
-		isCollision = tilemap.isCollisioningInvisibleTileAt(x, y);
-		sprite.getMapCollisionEvent().setCollidingTopRight(isCollision);
-		if (isCollision) {
-			sprite.getMapCollisionEvent().getCollisionPoints().add(new CollisionPoint(rightTopCorner, new TmxCell(tilemap.getTileAt(x, y), x, y)));
-		}
-	
-	}
-	
 	protected void checkMapCollision(TmxMap tilemap, AbstractSprite sprite) {
 		
 		sprite.reinitMapCollisionEvent();
