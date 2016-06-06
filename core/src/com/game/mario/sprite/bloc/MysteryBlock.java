@@ -7,9 +7,7 @@ import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.util.ResourcesLoader;
 
 public class MysteryBlock extends Block {
-		
-	protected static float blocStateTime;
-		
+				
 	public MysteryBlock(int x, int y, int tileId, WorldTypeEnum backgroundType) {		
 		super(x,y, tileId, backgroundType);									
 		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
@@ -24,10 +22,6 @@ public class MysteryBlock extends Block {
 		animationFrames[1] = tmp[0][1];
 		animationFrames[2] = tmp[0][2];		
 		currentAnimation = new Animation(0.15f, animationFrames);
-	}
-	
-	public static void updateStateTime(float delta) {		
-		blocStateTime = blocStateTime + delta;
 	}
 	
 	protected void updateAnimation(float delta) {				

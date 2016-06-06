@@ -10,8 +10,6 @@ import com.game.mario.util.ResourcesLoader;
 
 public class Coin extends AbstractTileObjectSprite {
 
-	protected static float blocStateTime;
-	
 	public Coin(MapObject mapObject) {
 		
 		super(mapObject, new Vector2());												
@@ -30,10 +28,6 @@ public class Coin extends AbstractTileObjectSprite {
 		coinFrames[2] = tmp[0][2];
 		coinFrames[3] = tmp[0][3];
 		currentAnimation = new Animation(0.15f, coinFrames);				
-	}
-	
-	public static void updateStateTime(float delta) {		
-		blocStateTime = blocStateTime + delta;
 	}
 	
 	protected void updateAnimation(float delta) {				

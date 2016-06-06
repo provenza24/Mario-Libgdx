@@ -15,7 +15,6 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
@@ -29,7 +28,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 	public LevelEndingSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
 			 Array<IScrollingBackground> scrollingBbackgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
-		super(mario, tileMap, camera, scrollingBbackgrounds, font, spriteBatch, renderer, stage, batch);
+		super(mario, tileMap, camera, scrollingBbackgrounds, font, spriteBatch, renderer, stage, batch);		
 	}
 
 	public void handleScene(float delta) {

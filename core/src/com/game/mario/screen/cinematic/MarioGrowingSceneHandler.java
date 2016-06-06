@@ -20,14 +20,7 @@ public class MarioGrowingSceneHandler extends AbstractCinematicSceneHandler {
 			Array<IScrollingBackground> scrollingBackgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
 		super(mario, tileMap, camera, scrollingBackgrounds, font, spriteBatch, renderer, stage, batch);
-	}
-
-	protected void renderItems(float delta) {
-		for (AbstractSprite item : tileMap.getItems()) {
-			if (item.isVisible()) {								
-				item.render(renderer.getBatch());
-			}				
-		}
+		updateItems = false;
 	}
 	
 	public void handleScene(float delta) {

@@ -39,6 +39,10 @@ public abstract class AbstractCinematicSceneHandler {
 	
 	protected Batch batch;
 	
+	protected boolean updateItems;
+	
+	protected boolean updateEnemies;
+	
 	public AbstractCinematicSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
 			 Array<IScrollingBackground> backgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
@@ -52,6 +56,7 @@ public abstract class AbstractCinematicSceneHandler {
 		this.renderer = renderer;
 		this.stage = stage;
 		this.batch = batch;
+		this.updateItems = true;		
 	}
 
 	public abstract void handleScene(float delta);
@@ -63,17 +68,14 @@ public abstract class AbstractCinematicSceneHandler {
 		if (scrollingBackgrounds.size>1) {
 			scrollingBackgrounds.get(1).render();
 		}
+		
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		renderMysteryBlocks(delta);
 							
 		renderItems(delta);
 		
-		for (AbstractSprite enemy : tileMap.getEnemies()) {
-			if (enemy.isVisible()) {
-				enemy.render(renderer.getBatch());
-			}				
-		}
+		renderEnemies();
 		
 		renderStatusBar();
 		mario.render(renderer.getBatch());
@@ -81,23 +83,33 @@ public abstract class AbstractCinematicSceneHandler {
 		stage.draw();
 	}
 
-	protected void renderItems(float delta) {
+	private void renderEnemies() {
+		for (AbstractSprite enemy : tileMap.getEnemies()) {
+			if (enemy.isVisible()) {
+				enemy.render(renderer.getBatch());
+			}				
+		}
+	}
+
+	private void renderItems(float delta) {
 		for (AbstractSprite item : tileMap.getItems()) {
-			if (item.isVisible()) {				
+			if (item.isVisible()) {	
+				if (updateItems) {
 				item.update(tileMap, camera.getCamera(), delta);
+				}
 				item.render(renderer.getBatch());
 			}				
 		}
 	}
 	
-	protected void renderStatusBar() {
+	private void renderStatusBar() {
 		spriteBatch.begin();		
 		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
 		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
 		spriteBatch.end();
 	}
 	
-	protected void renderMysteryBlocks(float delta) {
+	private void renderMysteryBlocks(float delta) {
 
 		// Get blocks from tilemap
 		List<Block> blocks = tileMap.getBlocks();

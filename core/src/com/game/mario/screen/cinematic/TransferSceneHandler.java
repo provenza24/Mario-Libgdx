@@ -40,15 +40,6 @@ public class TransferSceneHandler extends AbstractCinematicSceneHandler {
 			mario.transfer(tileMap, camera, scrollingBackgrounds, spriteBatch);
 			timer = 0;			
 		}
-	}
-	
-	protected void renderItems(float delta) {
-		for (AbstractSprite item : tileMap.getItems()) {
-			if (item.isVisible()) {				
-				item.update(tileMap, camera.getCamera(), delta);
-				item.render(renderer.getBatch());
-			}				
-		}
-	}
+	}		
 	
 }

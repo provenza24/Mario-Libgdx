@@ -107,7 +107,7 @@ public class Bowser extends AbstractEnemy {
 											
 		super.update(tileMap, camera, deltaTime);		
 		
-		if (isAlive()) {
+		if (isVisible()) {
 			
 			timeBeforeStopping += deltaTime;
 			
@@ -150,7 +150,10 @@ public class Bowser extends AbstractEnemy {
 					acceleration.x = direction; 
 				}
 			}
-			
+		}
+		
+		if (isAlive()) {
+									
 			if (!isFiring) {
 				int fireRandomValue = MathUtils.random(chanceToFire-1);
 				if (fireRandomValue==0) {
@@ -176,8 +179,7 @@ public class Bowser extends AbstractEnemy {
 				}
 				
 				
-			}						
-			
+			}									
 		}				
 	}
 

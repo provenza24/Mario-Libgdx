@@ -21,6 +21,7 @@ import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.InvisibleMysteryBlock;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.bloc.WallBlock;
+import com.game.mario.sprite.tileobject.Lava;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Bowser;
 import com.game.mario.sprite.tileobject.enemy.CastleFirebar;
@@ -53,7 +54,7 @@ public class TmxMap {
 	private List<AbstractEnemy> enemies;
 	
 	private List<AbstractSprite> items;
-	
+		
 	private Mario mario;
 		
 	private WorldTypeEnum worldType;
@@ -95,7 +96,7 @@ public class TmxMap {
 		
 		items = new ArrayList<AbstractSprite>();
 		enemies = new ArrayList<AbstractEnemy>();
-		
+				
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
 			MapProperties objectProperty = mapObject.getProperties();		
@@ -117,7 +118,7 @@ public class TmxMap {
 			}
 			if (objectProperty.get("type").toString().equals("castleFirebar")) {
 				enemies.add(new CastleFirebar(mapObject));		
-			}
+			}			
 			if (objectProperty.get("type").toString().equals("bowser")) {				
 				enemies.add(new Bowser(mapObject));
 			}
@@ -143,7 +144,10 @@ public class TmxMap {
 				}				
 				
 			}
-						
+			if (objectProperty.get("type").toString().equals("lava")) {				
+				items.add(new Lava(mapObject));
+			}
+			
 		}
 	}
 

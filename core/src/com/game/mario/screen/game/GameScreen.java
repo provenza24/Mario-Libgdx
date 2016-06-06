@@ -36,13 +36,11 @@ import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
-import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.item.Fireball;
 import com.game.mario.sprite.misc.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
-import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.KeysConstants;
@@ -189,6 +187,9 @@ public class GameScreen implements Screen  {
 		
 	private void handleMarioAlive(float delta) {
 		
+		
+		AbstractSprite.updateStateTime(delta);
+		
 		// Listen to keyboard actions and update Mario status
 		handleInput();
 		
@@ -303,11 +304,11 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", x, y);
 			y = y -20;
 			alive = 0;
-			/*for (AbstractEnemy enemy : tileMap.getEnemies()) {
+			for (AbstractEnemy enemy : tileMap.getEnemies()) {
 				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() , x, y);
 				y = y -20;
 				alive++;
-			}*/			
+			}			
 			alive = 0;
 			for (AbstractSprite item : tileMap.getItems()) {
 				alive += item.isAlive() ? 1 : 0;
@@ -366,10 +367,7 @@ public class GameScreen implements Screen  {
 	}
 	
 	private void handleItems(float deltaTime) {
-		List<AbstractSprite> items = tileMap.getItems();
-		if (items.size()>0) {
-			Coin.updateStateTime(deltaTime);
-		}
+		List<AbstractSprite> items = tileMap.getItems();		
 		for (int i = 0; i < items.size(); i++) {
 			AbstractSprite item = items.get(i);			
 			item.update(tileMap, camera.getCamera(), deltaTime);
@@ -402,7 +400,7 @@ public class GameScreen implements Screen  {
 	
 	private void handleEnemies(float deltaTime) {
 
-		List<AbstractEnemy> enemies = tileMap.getEnemies();
+		List<AbstractEnemy> enemies = tileMap.getEnemies();		
 		for (int i = 0; i < enemies.size(); i++) {
 			AbstractEnemy enemy = enemies.get(i);
 			enemy.update(tileMap, camera.getCamera(), deltaTime);
@@ -466,8 +464,7 @@ public class GameScreen implements Screen  {
 
 		// Get blocks from tilemap
 		List<Block> blocks = tileMap.getBlocks();
-		if (blocks.size() > 0) {
-			MysteryBlock.updateStateTime(delta);
+		if (blocks.size() > 0) {			
 			batch = renderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {
