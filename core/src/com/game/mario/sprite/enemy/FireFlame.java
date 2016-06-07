@@ -1,16 +1,17 @@
-package com.game.mario.sprite.item;
+package com.game.mario.sprite.enemy;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Bowser;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
-public class FireFlame extends AbstractSprite {
+public class FireFlame extends AbstractEnemy {
 
 	private static final float WIDTH = 52/32f;
 	
@@ -29,7 +30,8 @@ public class FireFlame extends AbstractSprite {
 		acceleration.y = yTarget>getY() ? 0.1f : -0.1f;
 		
 		alive = true;
-		moveable = true;		
+		moveable = true;
+		killable = false;
 		gravitating = false;
 		collidableWithTilemap = false;		
 	}
@@ -63,6 +65,11 @@ public class FireFlame extends AbstractSprite {
 	protected void updateBounds() {
 		bounds.setX(getX()+offset.x);
 		bounds.setY(getY()+offset.y);
+	}
+
+	@Override
+	public EnemyTypeEnum getEnemyType() {		
+		return EnemyTypeEnum.FIRE_FLAME;
 	}
 	
 	

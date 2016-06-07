@@ -1,23 +1,19 @@
-package com.game.mario.sprite.tileobject;
+package com.game.mario.sprite.tileobject.sfx;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
-import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.AbstractItem;
-import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
 
 public class Lava extends AbstractTileObjectSprite {
 
-	public Lava(MapObject mapObject) {
-		
-		super(mapObject, new Vector2());												
+	public Lava(MapObject mapObject) {		
+		super(mapObject, new Vector2());		
 		collidableWithTilemap = false;
 		gravitating = false;		
-		moveable = false;		
+		moveable = false;			
 	}
 	
 	@Override
@@ -37,18 +33,8 @@ public class Lava extends AbstractTileObjectSprite {
 		currentAnimation = new Animation(0.1f, frames);			
 	}
 
-		
 	protected void updateAnimation(float delta) {				
 		currentFrame = currentAnimation.getKeyFrame(blocStateTime, true);		
 	}
 	
-	@Override
-	public boolean collideMario(Mario mario) {
-		mario.setAlive(false);
-		mario.setDeathAnimation();
-		SoundManager.getSoundManager().stopMusic();
-		SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);	
-		return false;
-	}
-
 }

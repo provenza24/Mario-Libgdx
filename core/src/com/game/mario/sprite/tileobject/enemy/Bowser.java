@@ -10,12 +10,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.BowserTilemapCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
-import com.game.mario.sprite.item.FireFlame;
-import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.sprite.enemy.FireFlame;
+import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
-public class Bowser extends AbstractEnemy {
+public class Bowser extends AbstractTileObjectEnemy {
 
 	private Animation walkAnimation;
 	
@@ -57,6 +57,7 @@ public class Bowser extends AbstractEnemy {
 		
 		gravitating = true;
 		collidableWithTilemap = true;
+		killable = false;
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		currentAnimation = walkAnimation;
 		GRAVITY_COEF = 0.002f;
@@ -95,12 +96,7 @@ public class Bowser extends AbstractEnemy {
 	@Override
 	public EnemyTypeEnum getEnemyType() { 
 		return EnemyTypeEnum.BOWSER;
-	}
-	
-	@Override
-	public boolean collideMario(Mario mario) {
-		return false;
-	}
+	}		
 	
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
@@ -173,7 +169,7 @@ public class Bowser extends AbstractEnemy {
 				} else if (firingTime>0.5f) {
 					setCurrentAnimation(endFireAnimation);
 					if (!hasFired) {
-						tileMap.getItems().add(new FireFlame(this, yInitial + MathUtils.random(2)));
+						tileMap.getEnemies().add(new FireFlame(this, yInitial + MathUtils.random(2)));
 						hasFired = true;
 					}
 				}

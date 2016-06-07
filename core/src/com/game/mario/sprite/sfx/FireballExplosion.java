@@ -1,4 +1,4 @@
-package com.game.mario.sprite.misc;
+package com.game.mario.sprite.sfx;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;

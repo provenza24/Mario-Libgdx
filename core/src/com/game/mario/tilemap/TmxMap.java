@@ -16,13 +16,12 @@ import com.badlogic.gdx.utils.Array;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.WorldTypeEnum;
+import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.InvisibleMysteryBlock;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.bloc.WallBlock;
-import com.game.mario.sprite.tileobject.Lava;
-import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Bowser;
 import com.game.mario.sprite.tileobject.enemy.CastleFirebar;
 import com.game.mario.sprite.tileobject.enemy.Goomba;
@@ -36,6 +35,7 @@ import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.DescendingMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.sprite.tileobject.sfx.Lava;
 import com.game.mario.util.TileIdConstants;
 import com.game.mario.util.TilemapPropertiesConstants;
 
@@ -54,6 +54,8 @@ public class TmxMap {
 	private List<AbstractEnemy> enemies;
 	
 	private List<AbstractSprite> items;
+	
+	private List<AbstractSprite> sfxSprites;
 		
 	private Mario mario;
 		
@@ -96,58 +98,70 @@ public class TmxMap {
 		
 		items = new ArrayList<AbstractSprite>();
 		enemies = new ArrayList<AbstractEnemy>();
+		sfxSprites = new ArrayList<AbstractSprite>();
 				
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
-			MapProperties objectProperty = mapObject.getProperties();		
-								
+			
+			MapProperties objectProperty = mapObject.getProperties();									
 			if (objectProperty.get("type").toString().equals("mario")) {
 				mario = new Mario(mapObject);
 			}
-			if (objectProperty.get("type").toString().equals("piranha")) {				
-				enemies.add(new PiranhaPlant(mapObject, mario));
-			}
-			if (objectProperty.get("type").toString().equals("goomba")) {				
-				enemies.add(new Goomba(mapObject, worldType));
-			}
-			if (objectProperty.get("type").toString().equals("koopa")) {				
-				enemies.add(new Koopa(mapObject));
-			}			
-			if (objectProperty.get("type").toString().equals("redKoopa")) {				
-				enemies.add(new RedKoopa(mapObject));
-			}
-			if (objectProperty.get("type").toString().equals("castleFirebar")) {
-				enemies.add(new CastleFirebar(mapObject));		
-			}			
-			if (objectProperty.get("type").toString().equals("bowser")) {				
-				enemies.add(new Bowser(mapObject));
-			}
-			if (objectProperty.get("type").toString().equals("transferDown")) {				
-				items.add(new TransferItemDown(mapObject));
-			}
-			if (objectProperty.get("type").toString().equals("transferRight")) {				
-				items.add(new TransferItemRight(mapObject));
-			}
-			if (objectProperty.get("type").toString().equals("coin")) {				
-				items.add(new Coin(mapObject));
-			}
-			if (objectProperty.get("type").toString().equals("flag")) {
-				flag = new Flag(mapObject, worldType);
-				items.add(flag);
-			}
+			initEnemies(mapObject, objectProperty);
+			initItems(mapObject, objectProperty);
+			initSfxSprites(mapObject, objectProperty);
+		}
+	}
+
+	private void initSfxSprites(MapObject mapObject, MapProperties objectProperty) {
+		if (objectProperty.get("type").toString().equals("lava")) {				
+			sfxSprites.add(new Lava(mapObject));
+		}		
+	}
+
+	private void initItems(MapObject mapObject, MapProperties objectProperty) {
+		if (objectProperty.get("type").toString().equals("transferDown")) {				
+			items.add(new TransferItemDown(mapObject));
+		}
+		if (objectProperty.get("type").toString().equals("transferRight")) {				
+			items.add(new TransferItemRight(mapObject));
+		}
+		if (objectProperty.get("type").toString().equals("coin")) {				
+			items.add(new Coin(mapObject));
+		}
+		if (objectProperty.get("type").toString().equals("flag")) {
+			flag = new Flag(mapObject, worldType);
+			items.add(flag);
+		}
+		
+		if (objectProperty.get("type").toString().equals("metalPlateform")) {
+			if (objectProperty.get("mode").toString().equals("ascending")) {
+				items.add(new AscendingMetalPlateform(mapObject));		
+			} else if (objectProperty.get("mode").toString().equals("descending")) {
+				items.add(new DescendingMetalPlateform(mapObject));		
+			}				
 			
-			if (objectProperty.get("type").toString().equals("metalPlateform")) {
-				if (objectProperty.get("mode").toString().equals("ascending")) {
-					items.add(new AscendingMetalPlateform(mapObject));		
-				} else if (objectProperty.get("mode").toString().equals("descending")) {
-					items.add(new DescendingMetalPlateform(mapObject));		
-				}				
-				
-			}
-			if (objectProperty.get("type").toString().equals("lava")) {				
-				items.add(new Lava(mapObject));
-			}
-			
+		}		
+	}
+
+	private void initEnemies(MapObject mapObject, MapProperties objectProperty) {
+		if (objectProperty.get("type").toString().equals("piranha")) {				
+			enemies.add(new PiranhaPlant(mapObject, mario));
+		}
+		if (objectProperty.get("type").toString().equals("goomba")) {				
+			enemies.add(new Goomba(mapObject, worldType));
+		}
+		if (objectProperty.get("type").toString().equals("koopa")) {				
+			enemies.add(new Koopa(mapObject));
+		}			
+		if (objectProperty.get("type").toString().equals("redKoopa")) {				
+			enemies.add(new RedKoopa(mapObject));
+		}
+		if (objectProperty.get("type").toString().equals("castleFirebar")) {
+			enemies.add(new CastleFirebar(mapObject));		
+		}			
+		if (objectProperty.get("type").toString().equals("bowser")) {				
+			enemies.add(new Bowser(mapObject));
 		}
 	}
 
@@ -313,6 +327,14 @@ public class TmxMap {
 
 	public void setScrollMaxValue(float scrollMaxValue) {
 		this.scrollMaxValue = scrollMaxValue;
+	}
+
+	public List<AbstractSprite> getSfxSprites() {
+		return sfxSprites;
+	}
+
+	public void setSfxSprites(List<AbstractSprite> sfxSprites) {
+		this.sfxSprites = sfxSprites;
 	}
 
 }

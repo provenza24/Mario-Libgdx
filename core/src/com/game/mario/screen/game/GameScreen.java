@@ -33,14 +33,14 @@ import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
 import com.game.mario.screen.cinematic.MarioGrowingSceneHandler;
 import com.game.mario.screen.cinematic.TransferSceneHandler;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.item.Fireball;
-import com.game.mario.sprite.misc.FireballExplosion;
+import com.game.mario.sprite.sfx.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
-import com.game.mario.sprite.tileobject.enemy.AbstractEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.KeysConstants;
@@ -242,6 +242,10 @@ public class GameScreen implements Screen  {
 		
 		// Render Mario		
 		mario.render(renderer.getBatch());
+		
+		// special effects sprites
+		handleSfxSprites(delta);
+		
 		// Render debug mode (press F1 to display/hide debug)
 		renderDebugMode();
 
@@ -280,8 +284,8 @@ public class GameScreen implements Screen  {
 			y = y -20;
 			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), x, y);
 			y = y -20;
-			//debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), x, y);
-			//y = y -20;			
+			debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), x, y);
+			y = y -20;			
 			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), x, y);
 			y = y -20;			
 			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), x, y);			
@@ -380,6 +384,19 @@ public class GameScreen implements Screen  {
 				items.remove(i--);
 			} else if (item.isVisible()) {
 				item.render(renderer.getBatch());
+			}
+		}
+	}
+	
+	private void handleSfxSprites(float deltaTime) {	
+		List<AbstractSprite> sfxSprites = tileMap.getSfxSprites();		
+		for (int i = 0; i < sfxSprites.size(); i++) {
+			AbstractSprite sfxSprite = sfxSprites.get(i);			
+			sfxSprite.update(tileMap, camera.getCamera(), deltaTime);			
+			if (sfxSprite.isDeletable()) {				
+				sfxSprites.remove(i--);
+			} else if (sfxSprite.isVisible()) {
+				sfxSprite.render(renderer.getBatch());
 			}
 		}
 	}

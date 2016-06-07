@@ -13,9 +13,10 @@ import com.game.mario.action.ActionFacade;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.util.ResourcesLoader;
 
-public class Goomba extends AbstractEnemy {
+public class Goomba extends AbstractTileObjectEnemy {
 
 	protected static final Map<WorldTypeEnum, Texture> TEXTURES = new HashMap<WorldTypeEnum, Texture>();
 	

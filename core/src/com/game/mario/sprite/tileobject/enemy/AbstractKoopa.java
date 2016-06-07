@@ -10,10 +10,11 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
-public abstract class AbstractKoopa extends AbstractEnemy {
+public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 
 	protected Animation walkLeftAnimation;
 	

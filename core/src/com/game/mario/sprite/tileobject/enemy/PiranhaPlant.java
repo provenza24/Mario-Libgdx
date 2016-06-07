@@ -9,10 +9,11 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.util.ResourcesLoader;
 
-public class PiranhaPlant extends AbstractUnkillableEnemy {
+public class PiranhaPlant extends AbstractTileObjectEnemy {
 			
 	private Mario mario;
 		
@@ -35,12 +36,14 @@ public class PiranhaPlant extends AbstractUnkillableEnemy {
 			
 	public PiranhaPlant(MapObject mapObject, Mario mario) {
 		super(mapObject, new Vector2(0.1f,0.1f));	
-		setGravitating(false);
-		setCollidableWithTilemap(false);
 		setAcceleration(new Vector2(0,ACCELERATION_Y));
 		pipePosition = new Vector2((int)getX(), (int)getY());
 		bounds=new Rectangle(getX()+offset.x, getY(), getWidth(), getHeight());
 		this.mario = mario;
+				
+		gravitating = false;
+		collidableWithTilemap = false;
+		killable = false;
 	}
 
 	@Override

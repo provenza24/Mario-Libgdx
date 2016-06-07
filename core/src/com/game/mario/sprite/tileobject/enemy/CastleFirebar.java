@@ -11,10 +11,11 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
-public class CastleFirebar extends AbstractUnkillableEnemy {
+public class CastleFirebar extends AbstractTileObjectEnemy {
 
 	private Polygon polygon;
 	
@@ -32,6 +33,7 @@ public class CastleFirebar extends AbstractUnkillableEnemy {
 		moveable = false;
 		collidableWithTilemap = false;
 		gravitating = false;
+		killable = false;
 		
 		float rotation = Float.parseFloat((String)mapObject.getProperties().get("angle"));		
 		rotateBy(rotation);				

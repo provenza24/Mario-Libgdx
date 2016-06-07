@@ -17,8 +17,6 @@ import com.game.mario.collision.tilemap.BasicTilemapCollisionHandler;
 import com.game.mario.collision.tilemap.ITilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.SpriteStateEnum;
-import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
@@ -319,17 +317,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public void setKilled(boolean killed) {
 		this.killed = killed;
 	}
-	
-	public boolean collideMario(Mario mario) {
-		boolean isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
-		if (isEnemyHit) {
-			kill();
-			mario.getAcceleration().y = 0.15f;
-			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);			
-		}
-		 return isEnemyHit;
-	}
-	
+		
 	public void kill() {
 		this.killed = true;			
 	}
