@@ -7,19 +7,24 @@ import com.game.mario.sprite.tileobject.mario.Mario;
 
 public abstract class AbstractEnemy extends AbstractSprite {
 			
-	protected boolean killable;
+	protected boolean killableByPlayer;
+	
+	protected boolean killableByFireball;
 	
 	public AbstractEnemy(float x, float y) {
 		super(x, y);		
 		state = SpriteStateEnum.WALKING;
-		killable = true;
+		killableByPlayer = true;
+		killableByFireball = true;
 	}
 	
 	public abstract EnemyTypeEnum getEnemyType();
 	
 	public void killByFireball(AbstractSprite fireball) {
-		this.bump();
-		acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
+		if (killableByFireball) {
+			this.bump();
+			acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
+		}
 	}		
 	
 	public boolean collideMario(Mario mario) {
@@ -33,11 +38,11 @@ public abstract class AbstractEnemy extends AbstractSprite {
 	}
 
 	public boolean isKillable() {
-		return killable;
+		return killableByPlayer;
 	}
 
 	public void setKillable(boolean killable) {
-		this.killable = killable;
+		this.killableByPlayer = killable;
 	}
 		
 

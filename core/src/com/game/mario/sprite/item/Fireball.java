@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.collision.tilemap.FireballTilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -23,20 +24,14 @@ public class Fireball extends AbstractSprite {
 		acceleration.y = -0.1f;
 		moveable = true;
 		collidableWithTilemap = true;
-		gravitating = true; 
+		gravitating = true;
+		tilemapCollisionHandler = new FireballTilemapCollisionHandler();
 	}
 	
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 		super.update(tileMap, camera, deltaTime);		
-		if (isOnFloor()) {			
-			acceleration.y = 0.1f;
-		}		
-		deletable = deletable 
-				||this.getMapCollisionEvent().isCollidingLeft() 
-				|| this.getMapCollisionEvent().isCollidingRight() 
-				|| this.getMapCollisionEvent().isCollidingTop()
-				|| camera.position.x+8<getX();
+		deletable = deletable || camera.position.x+9<getX();
 	}	
 
 	@Override

@@ -472,7 +472,7 @@ public class GameScreen implements Screen  {
 
 	private void explodeFireball(AbstractSprite fireball) {		
 		AbstractItem item = new FireballExplosion(fireball);		
-		tileMap.getItems().add(item);
+		tileMap.getSfxSprites().add(item);
 		stage.addActor(item);				   				
 		item.addAppearAction();
 	}
@@ -535,7 +535,7 @@ public class GameScreen implements Screen  {
 			camera.getCamera().update();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {			
-			mario.setY(mario.getY()-8);			
+			mario.setY(mario.getY()-6);			
 		}		
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
 			mario.setY(mario.getY()+8);			

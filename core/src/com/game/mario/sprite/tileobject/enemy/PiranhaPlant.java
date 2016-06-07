@@ -43,7 +43,7 @@ public class PiranhaPlant extends AbstractTileObjectEnemy {
 				
 		gravitating = false;
 		collidableWithTilemap = false;
-		killable = false;
+		killableByPlayer = false;
 	}
 
 	@Override

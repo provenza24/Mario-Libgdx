@@ -31,7 +31,8 @@ public class FireFlame extends AbstractEnemy {
 		
 		alive = true;
 		moveable = true;
-		killable = false;
+		killableByPlayer = false;
+		killableByFireball = false;
 		gravitating = false;
 		collidableWithTilemap = false;		
 	}

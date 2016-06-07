@@ -33,7 +33,8 @@ public class CastleFirebar extends AbstractTileObjectEnemy {
 		moveable = false;
 		collidableWithTilemap = false;
 		gravitating = false;
-		killable = false;
+		killableByPlayer = false;
+		killableByFireball = false;
 		
 		float rotation = Float.parseFloat((String)mapObject.getProperties().get("angle"));		
 		rotateBy(rotation);				

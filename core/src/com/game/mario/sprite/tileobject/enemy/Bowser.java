@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.BowserTilemapCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.enemy.FireFlame;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.tilemap.TmxMap;
@@ -51,13 +52,16 @@ public class Bowser extends AbstractTileObjectEnemy {
 	
 	private int chanceToFire = 20;
 	
+	private int fireballHints = 8;
+	
 	public Bowser(MapObject mapObject) {
 
 		super(mapObject, new Vector2(0.2f, 0.1f));
 		
 		gravitating = true;
 		collidableWithTilemap = true;
-		killable = false;
+		killableByPlayer = false;
+		killableByFireball = false;
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		currentAnimation = walkAnimation;
 		GRAVITY_COEF = 0.002f;
@@ -70,6 +74,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 		setState(SpriteStateEnum.WALKING);
 		
 		tilemapCollisionHandler = new BowserTilemapCollisionHandler();
+		
 		
 	}
 
@@ -178,5 +183,13 @@ public class Bowser extends AbstractTileObjectEnemy {
 			}									
 		}				
 	}
+	
+	public void killByFireball(AbstractSprite fireball) {
+		if (fireballHints==0) {
+			killed = true;
+		} else {
+			fireballHints--;
+		}
+	}	
 
 }

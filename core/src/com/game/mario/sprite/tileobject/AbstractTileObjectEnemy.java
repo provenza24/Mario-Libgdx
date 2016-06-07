@@ -6,7 +6,7 @@ import com.game.mario.sprite.AbstractEnemy;
 
 public abstract class AbstractTileObjectEnemy extends AbstractEnemy {
 			
-public AbstractTileObjectEnemy(MapObject mapObject, Vector2 offset) {
+	public AbstractTileObjectEnemy(MapObject mapObject, Vector2 offset) {
 		
 		super((Float) mapObject.getProperties().get("x")/32, (float)(((Float) mapObject.getProperties().get("y")) /32));
 		
