@@ -23,6 +23,8 @@ public class SoundManager {
 	
 	public static Sound SOUND_BONUS_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/bonus.mp3"));
 	
+	public static Sound SOUND_INVINCIBLE = Gdx.audio.newSound(Gdx.files.internal("audio/smb_invincible.ogg"));
+	
 	public static Sound SOUND_MARIO_DEATH = Gdx.audio.newSound(Gdx.files.internal("audio/smb_mariodie.ogg"));
 	
 	public static Sound SOUND_COIN = Gdx.audio.newSound(Gdx.files.internal("audio/smb_coin.ogg"));
@@ -45,7 +47,7 @@ public class SoundManager {
 	
 	public static Sound SOUND_FLAGPOLE = Gdx.audio.newSound(Gdx.files.internal("audio/smb_flagpole.ogg"));
 	
-	public static Sound SOUND_STAGE_CLEAR = Gdx.audio.newSound(Gdx.files.internal("audio/smb_stage_clear.ogg"));
+	public static Sound SOUND_STAGE_CLEAR = Gdx.audio.newSound(Gdx.files.internal("audio/smb_stage_clear.ogg"));		
 	
 	private static float soundFxVolume;
 	

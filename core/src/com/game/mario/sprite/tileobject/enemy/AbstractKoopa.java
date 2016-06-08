@@ -89,38 +89,43 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 				
 		boolean isEnemyHit = false;
 		
-		if (state == SpriteStateEnum.WALKING) {
-			isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
-			if (isEnemyHit) {
-				setSize(1 - offset.x * 2, 0.875f);	
-				bounds.set(getX(), getY(), getWidth(), getHeight());				
-				mario.getAcceleration().y = 0.15f;				
-				acceleration.x = 0;
-				state = SpriteStateEnum.NO_MOVE;
-				currentAnimation = killedAnimation;
-				noMoveTime = 0;
-				mario.setY(getY()+1);
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
-			}	
-		} else if (state == SpriteStateEnum.NO_MOVE) {			
-			isEnemyHit = true;
-			acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 10 : -10;
-			setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
-			state = SpriteStateEnum.SLIDING;
-			currentAnimation = slideAnimation;			
-			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
-		} else if (state == SpriteStateEnum.SLIDING) {
-			isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
-			if (isEnemyHit) {
-				mario.setY(getY()+1);
-				mario.getAcceleration().y = 0.15f;				
-				acceleration.x = 0;
-				state = SpriteStateEnum.NO_MOVE;
-				noMoveTime = 0;
-				currentAnimation = killedAnimation;
+		if (mario.isOwningStar()) {
+			bump();
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);		
+		} else {
+			if (state == SpriteStateEnum.WALKING) {
+				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+				if (isEnemyHit) {
+					setSize(1 - offset.x * 2, 0.875f);	
+					bounds.set(getX(), getY(), getWidth(), getHeight());				
+					mario.getAcceleration().y = 0.15f;				
+					acceleration.x = 0;
+					state = SpriteStateEnum.NO_MOVE;
+					currentAnimation = killedAnimation;
+					noMoveTime = 0;
+					mario.setY(getY()+1);
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
+				}	
+			} else if (state == SpriteStateEnum.NO_MOVE) {			
+				isEnemyHit = true;
+				acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 10 : -10;
+				setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
+				state = SpriteStateEnum.SLIDING;
+				currentAnimation = slideAnimation;			
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+			} else if (state == SpriteStateEnum.SLIDING) {
+				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+				if (isEnemyHit) {
+					mario.setY(getY()+1);
+					mario.getAcceleration().y = 0.15f;				
+					acceleration.x = 0;
+					state = SpriteStateEnum.NO_MOVE;
+					noMoveTime = 0;
+					currentAnimation = killedAnimation;
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+				}
 			}
-		}
+		}		
 		return isEnemyHit;
 	}
 	

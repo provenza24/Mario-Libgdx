@@ -27,13 +27,27 @@ public abstract class AbstractEnemy extends AbstractSprite {
 		}
 	}		
 	
+	public void killByStar() {
+		this.bump();		
+	}
+	
 	public boolean collideMario(Mario mario) {
-		boolean isEnemyHit = isKillable() && mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
-		if (isEnemyHit) {
-			kill();
-			mario.getAcceleration().y = 0.15f;
-			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);			
+		
+		boolean isEnemyHit = false;
+		
+		if (mario.isOwningStar()) {
+			isEnemyHit = mario.isOwningStar();
+			killByStar();
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+		} else {
+			isEnemyHit = isKillable() && mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+			if (isEnemyHit) {
+				kill();
+				mario.getAcceleration().y = 0.15f;
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);			
+			}
 		}
+		
 		 return isEnemyHit;
 	}
 

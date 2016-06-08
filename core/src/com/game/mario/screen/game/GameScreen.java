@@ -366,7 +366,7 @@ public class GameScreen implements Screen  {
 						sprite.getHeight());
 			}
 			for (AbstractSprite sprite : tileMap.getItems()) {
-				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY() + sprite.getOffset().y, sprite.getWidth(),
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
 			for (AbstractSprite sprite : mario.getFireballs()) {

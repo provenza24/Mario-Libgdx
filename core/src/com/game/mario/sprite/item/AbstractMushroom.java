@@ -10,8 +10,7 @@ public abstract class AbstractMushroom extends AbstractItem {
 		offset.x = 0.1f;
 		offset.y = 0.1f;
 		setSize(1 - 2*offset.x, 1f - offset.y);
-		acceleration.x = 4f;		
-		GRAVITY_COEF = 0.015f; 
+		acceleration.x = 4f;				
 	}
 	
 	@Override

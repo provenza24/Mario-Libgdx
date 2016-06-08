@@ -18,6 +18,7 @@ import com.game.mario.sprite.item.EjectedCoin;
 import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.GreenMushroom;
 import com.game.mario.sprite.item.RedMushroom;
+import com.game.mario.sprite.item.Star;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -43,11 +44,13 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 		
 		handlers.put(TileIdConstants.WALL_OVERGROUND_10_COINS, new WallCollisionHandler());
 		handlers.put(TileIdConstants.WALL_OVERGROUND_RED_MUSHROOM, new WallCollisionHandler());
-		handlers.put(TileIdConstants.WALL_OVERGROUND_GREEN_MUSHROOM, new WallCollisionHandler());		
+		handlers.put(TileIdConstants.WALL_OVERGROUND_GREEN_MUSHROOM, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_OVERGROUND_STAR, new WallCollisionHandler());	
 		
 		handlers.put(TileIdConstants.WALL_UNDERGROUND_10_COINS, new WallCollisionHandler());
 		handlers.put(TileIdConstants.WALL_UNDERGROUND_RED_MUSHROOM, new WallCollisionHandler());
 		handlers.put(TileIdConstants.WALL_UNDERGROUND_GREEN_MUSHROOM, new WallCollisionHandler());
+		handlers.put(TileIdConstants.WALL_UNDERGROUND_STAR, new WallCollisionHandler());		
 		
 	}
 	
@@ -106,6 +109,9 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 				GameManager.getGameManager().addCoin();
 				item = new EjectedCoin(block.getX(), yWallBlock+1);
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);						
+			} else if (itemEnum==ItemEnum.STAR) {				
+				item = new Star(block.getX(), yWallBlock+0.1f);
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
 			}
 			tileMap.getItems().add(item);
 			stage.addActor(item);

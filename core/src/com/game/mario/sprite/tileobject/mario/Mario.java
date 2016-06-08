@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -91,6 +92,10 @@ public class Mario extends AbstractTileObjectSprite {
 	private boolean invincible;
 
 	private float invincibleDuration;
+	
+	private float invincibleDurationTarget;
+	
+	private boolean owningStar;
 
 	private float deathNoMoveDuration;
 
@@ -318,10 +323,16 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 
 	private void updateInvincibleStatus(float deltaTime) {
-		if (isInvincible() && invincibleDuration < 3) {
+		
+		if (isOwningStar() && invincibleDuration >= invincibleDurationTarget-2) {
+			SoundManager.getSoundManager().stopMusic();
+			SoundManager.getSoundManager().playMusic(true);
+		}		
+		if (isInvincible() && invincibleDuration < invincibleDurationTarget) {
 			invincibleDuration += deltaTime;
 		} else {
 			invincible = false;
+			owningStar = false;					
 			invincibleDuration = 0;
 		}
 	}		
@@ -459,6 +470,10 @@ public class Mario extends AbstractTileObjectSprite {
 			batch.setColor(1, 1, 1, 0.5f);
 			super.render(batch);
 			batch.setColor(1, 1, 1, 1);
+		} else if (owningStar) {
+			batch.setColor(1, 1, 1, MathUtils.random(1f));
+			super.render(batch);
+			batch.setColor(1, 1, 1, 1);
 		} else {
 			super.render(batch);
 		}
@@ -482,6 +497,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public boolean isGrowingDown() {
 		return growingDown;
+	}
+
+	public float getInvincibleDurationTarget() {
+		return invincibleDurationTarget;
+	}
+
+	public void setInvincibleDurationTarget(float invincibleDurationTarget) {
+		this.invincibleDurationTarget = invincibleDurationTarget;
 	}
 
 	public void setGrowingDown(boolean growingDown) {
@@ -559,6 +582,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public TransferItem getTransferItem() {
 		return transferItem;
+	}
+
+	public boolean isOwningStar() {
+		return owningStar;
+	}
+
+	public void setOwningStar(boolean owningStar) {
+		this.owningStar = owningStar;
 	}
 
 	public void setTransferItem(TransferItem transferItem) {

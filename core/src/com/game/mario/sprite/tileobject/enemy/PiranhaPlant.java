@@ -103,7 +103,12 @@ public class PiranhaPlant extends AbstractTileObjectEnemy {
 		super.kill();
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 	}
-	
+		
+	@Override
+	public void killByStar() {
+		super.kill();
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+	}
 	
 
 }

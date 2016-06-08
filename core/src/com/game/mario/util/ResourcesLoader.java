@@ -25,6 +25,10 @@ public class ResourcesLoader {
 	
 	public static final Texture BOWSER = new Texture(Gdx.files.internal("sprites/enemies/bowser.png"));
 	
+	public static final Texture CASTLE_FIREBAR = new Texture(Gdx.files.internal("sprites/items/castle-firebar.png"));
+	
+	public static final Texture FIREFLAME = new Texture(Gdx.files.internal("sprites/items/fire-flame.png"));
+	
 	// Items
 	public static final Texture COIN = new Texture(Gdx.files.internal("sprites/items/coin.png"));	
 	
@@ -39,16 +43,14 @@ public class ResourcesLoader {
 	public static final Texture GREEN_MUSHROOM = new Texture(Gdx.files.internal("sprites/items/mushroom_green.png"));
 	
 	public static final Texture FLOWER = new Texture(Gdx.files.internal("sprites/items/flower.png"));
+	
+	public static final Texture STAR = new Texture(Gdx.files.internal("sprites/items/star.png"));
 
 	public static final Texture TRANSFER_ITEM = new Texture(Gdx.files.internal("sprites/items/transfer.png"));	
 	
 	public static final Texture FIREBALL = new Texture(Gdx.files.internal("sprites/items/fireball.png"));
 	
-	public static final Texture METAL_PLATEFORM = new Texture(Gdx.files.internal("sprites/items/metal-plateform.png"));
-	
-	public static final Texture CASTLE_FIREBAR = new Texture(Gdx.files.internal("sprites/items/castle-firebar.png"));
-	
-	public static final Texture FIREFLAME = new Texture(Gdx.files.internal("sprites/items/fire-flame.png"));
+	public static final Texture METAL_PLATEFORM = new Texture(Gdx.files.internal("sprites/items/metal-plateform.png"));		
 	
 	// Mario
 	public static final Texture MARIO_SMALL = new Texture(Gdx.files.internal("sprites/mario/mario.png"));
