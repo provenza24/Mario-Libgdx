@@ -45,11 +45,11 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt1bEKgCAARVFrsNFP7SP8cWkNKorAN5wDbxAXl4ulAAAAwD/2ZfYLgCtdnxBLn5BLn5BLn5BLn5Drqc/28rydBnzn/4Rc+oRc+oRc9ebuSHc1s8gNraMHMw==
+   eJzt2lsKwjAQheFTFRRcgbgGtyCz/1VJ6UuMmYiaJlP5PxhCmgt9OQ9TKsV3m9YpAL8jn0Bc5BOIy1YqAOOZnvOYzwGMYyKf+F+HN+XtPXZ8xxITOQSiMpFPoAdLxrTStdIZbw1AO5aN3rP8jLcGbNncP5702l9+4ly5u9Sb1vpVk/+dx1Rmzp7aGQB9mcgjEJWJfGK7LpN0bfC/W6t7ACzmOO2+qH2je/K6ByxglAegdCXg
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
-  <object id="66" type="flag" gid="419" x="1083" y="157" width="32" height="32"/>
+  <object id="66" type="flag" gid="419" x="4000" y="157" width="32" height="32"/>
  </objectgroup>
 </map>

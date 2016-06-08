@@ -48,6 +48,14 @@ import com.game.mario.util.WinConstants;
 
 public class GameScreen implements Screen  {
 		
+	private static final double JUMPTIMER_ACCELERATION_COEF = 6;
+
+	private static final int JUMP_TIMER_MAX = 40;
+
+	private static final float MARIO_JUMP_ACCELERATION_CONTINUE = 0.0117f;
+
+	private static final float MARIO_JUMP_ACCELERATION_INITIAL = 0.24f;
+
 	private boolean levelFinished = false;
 	
 	private boolean keyUpReleased = true;
@@ -85,6 +93,8 @@ public class GameScreen implements Screen  {
 	private ShapeRenderer shapeRenderer;
 
 	private int jumpTimerMax = 20;
+	
+	private float jumpAccelerationContinue = 20;
 	
 	private Array<IScrollingBackground> backgrounds;
 	
@@ -593,17 +603,19 @@ public class GameScreen implements Screen  {
 			// player is on the ground, so he is allowed to start a jump
 			mario.setJumpTimer(1);
 			mario.setState(SpriteStateEnum.JUMPING);
-			mario.getAcceleration().y = 0.16f;
+			mario.getAcceleration().y = MARIO_JUMP_ACCELERATION_INITIAL;
 			mario.setCanJumpHigher(true);
 			mario.setOnFloor(false);
-			jumpTimerMax = 24 + (int) (mario.getAcceleration().x / 4);
+			//jumpTimerMax = JUMP_TIMER_MAX + (int) (mario.getAcceleration().x * JUMPTIMER_ACCELERATION_COEF);
+			jumpTimerMax = JUMP_TIMER_MAX;
+			jumpAccelerationContinue = MARIO_JUMP_ACCELERATION_CONTINUE + mario.getAcceleration().x/4000;			
 			Sound soundToPlay = mario.getSizeState()>0 ? SoundManager.SOUND_JUMP_SUPER : SoundManager.SOUND_JUMP_SMALL;
 			SoundManager.getSoundManager().playSound(soundToPlay);
 		} else if (Gdx.input.isKeyPressed(KEY_UP) && mario.getState() == SpriteStateEnum.JUMPING
 				&& mario.canJumpHigher()) {
 			if (mario.getJumpTimer() < jumpTimerMax) { //
 				mario.incJumpTimer();
-				mario.getAcceleration().y += 0.009;
+				mario.getAcceleration().y += jumpAccelerationContinue;
 			} else {
 				mario.setCanJumpHigher(false);
 				mario.setJumpTimer(0);
