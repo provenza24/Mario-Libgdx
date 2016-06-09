@@ -51,7 +51,7 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmltLwzAYhjOVbiAIXihsXosH8ITeiF4EDz/B4z/w/As8/3Hfwuay2DRf02br6vvAC22afM2yPnSBKUUIiYFGtlrDaOWO2S/NPtoOxj5jQv4PWv31Thr6SYibl1b5GlrRT0Ji8E0/Cakt9JOQ+tJ0P9sRa9eJOU9cfcusT6fEHLOutfvJut40kn58NN1PQupGougnIXUkUfRzGlmc9ARIdGw3Q/3cRtsOsovsCfzVavJ+2vuodA/TUcN9Taw9zRKyHKGvBPMzhjLvqJtmIeNaW3Bs15Li2psOSBzHPmwXiowdYO7XQ9Y7y81QP0/QdoqcIecBfmrVnP8P+ZzaQDaFtYr0JaNkOSZ5vrNckI6tCpebIX5e4PwSuUKukRvk1uOoVsX9XMPxOrKqJuOn9F3mc4p+xifPsbxn3OWCb2zZ3znm+Dw3Q/y8w/k98oA8Ik/IcwQ/j3B8jByqcD+7qNNDVgTv+K7VT+qK2c+uUaROVi3p3F33DqHKOuOYv/089/r39T3neS7Y7b7vtOjcB+N9bkrf/yavmMcb8o58IJ/Il8DPsklvMcP8ZtZY39C1MWuUqdOEVLGe0xpdQX4AuiBOiA==
+   eJztmttKwzAcxjOVbiAIXihsXosH8ITeiF4ED4/g8Q08P4HnF/crrC6LSZM2zdrV7wc/KDn8m2X96AITghASAwm3OiOlsKuOS91H28HEV0zI/0GKv7nzlfkkxM5LJ7yGFMwnITH4Zj4JaSzMJyHNpe357Eas3STmHNrGhuxPL2CNpr7uUFN/20iGumh7PglpGolgPglpIolgPqeRxboXQKKjZzM0n9vo24G7cC9nnBT151M/R6VnmJ4YnWtinWmW4HKEsT6on7Es85a6qQuGvq7HtV7LF9vZNCOxXLvQs1BkboZ6Xi+z36ZshubzBH2n8AyeF8inFO35/5ArUxtw07NWkbFkHFPGfJ5vUxZ851aFLZsh+bxA+yW8gtfwBt5axkpRPJ9ruF6Hq6KefPq+y1yZYj7jk5exvGfclgXX3NDfOer8vGyG5PMO7ffwAT7CJ/hcYT6PcH0MD0X5fPZRZwBXPM7QfW2cb1bUcXqNInVMtXzXbrt3GaqsM4n168/zYHhf13OelwW93fWdFl17Nt+VTd/3v4lXrOcNvsMP+Am/cvIZalp6hv46q+xv2b1Ra4TUaYNV7Oe0KivwB254Tog=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
@@ -158,7 +158,7 @@
   <object id="42" type="coin" gid="428" x="7104" y="192" width="28" height="32"/>
   <object id="43" type="coin" gid="428" x="7136" y="192" width="28" height="32"/>
   <object id="44" type="coin" gid="428" x="7168" y="192" width="28" height="32"/>
-  <object id="46" type="transferRight" gid="422" x="7288" y="402" width="8" height="8">
+  <object id="46" type="transferRight" gid="422" x="7295" y="402" width="8" height="8">
    <properties>
     <property name="backgrounds" value="clouds,hills"/>
     <property name="music" value="overground"/>

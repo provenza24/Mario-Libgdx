@@ -15,6 +15,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
+import com.game.mario.enums.CastleTypeEnum;
+import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractSprite;
@@ -34,6 +36,8 @@ import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.DescendingMetalPlateform;
+import com.game.mario.sprite.tileobject.item.plateform.HorizontalMetalPlateform;
+import com.game.mario.sprite.tileobject.item.plateform.VerticalMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.sprite.tileobject.sfx.Lava;
 import com.game.mario.util.TileIdConstants;
@@ -68,6 +72,8 @@ public class TmxMap {
 	private Array<BackgroundTypeEnum> backgroundTypesEnum;
 	
 	private float scrollMaxValue;
+	
+	private CastleTypeEnum endLevelCastleType;
 			
 	public TmxMap(String levelName) {
 		
@@ -79,6 +85,8 @@ public class TmxMap {
 		musicTheme = ((String)properties.get("music")).toUpperCase();
 		String sScrollableTo = (String)properties.get("scrollableTo");
 		scrollMaxValue = sScrollableTo!=null && !sScrollableTo.equals("") ? Float.parseFloat(sScrollableTo) : 1000;
+		String sCastle = (String)properties.get("castle");
+		endLevelCastleType = worldType !=WorldTypeEnum.CASTLE ? sCastle!=null && !sCastle.equals("") ? CastleTypeEnum.valueOf(sCastle.toUpperCase()) : CastleTypeEnum.SMALL : null;		
  		initBlocks(worldType);		
 		initMapObjects();		
 		initBackgrounds(properties);
@@ -135,13 +143,23 @@ public class TmxMap {
 		}
 		
 		if (objectProperty.get("type").toString().equals("metalPlateform")) {
-			if (objectProperty.get("mode").toString().equals("ascending")) {
-				items.add(new AscendingMetalPlateform(mapObject));		
-			} else if (objectProperty.get("mode").toString().equals("descending")) {
-				items.add(new DescendingMetalPlateform(mapObject));		
-			}				
 			
-		}		
+			String mode = objectProperty.get("mode").toString();
+			DirectionEnum direction = DirectionEnum.valueOf(objectProperty.get("direction").toString().toUpperCase());			
+			if (mode.equals("infinite")) {
+				if (direction==DirectionEnum.UP) {
+					items.add(new AscendingMetalPlateform(mapObject));	
+				} else {
+					items.add(new DescendingMetalPlateform(mapObject));	
+				}									
+			} else if (mode.equals("predifined")) {
+				if (direction==DirectionEnum.UP || direction==DirectionEnum.DOWN) {
+					items.add(new VerticalMetalPlateform(mapObject));
+				} else {
+					items.add(new HorizontalMetalPlateform(mapObject));
+				}
+			}
+		}
 	}
 
 	private void initEnemies(MapObject mapObject, MapProperties objectProperty) {
@@ -335,6 +353,14 @@ public class TmxMap {
 
 	public void setSfxSprites(List<AbstractSprite> sfxSprites) {
 		this.sfxSprites = sfxSprites;
+	}
+
+	public CastleTypeEnum getEndLevelCastleType() {
+		return endLevelCastleType;
+	}
+
+	public void setEndLevelCastleType(CastleTypeEnum endLevelCastleType) {
+		this.endLevelCastleType = endLevelCastleType;
 	}
 
 }

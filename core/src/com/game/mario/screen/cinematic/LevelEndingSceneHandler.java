@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.enums.CastleTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
@@ -96,7 +97,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		}
 
 		if (endLevelState == 3) {
-			if (mario.getX() > tileMap.getFlagTargetPosition() + 6.35f) {
+			if (mario.getX() > tileMap.getFlagTargetPosition() + 8.35f) {
 				mario.setAcceleration(new Vector2());
 				endLevelState = 4;
 				timer = 0;
@@ -120,7 +121,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		if (endLevelState == 4 && timer > 3) {
 			mario.setAcceleration(new Vector2(2f, 0));
 			mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
-			if (mario.getX() > tileMap.getFlagTargetPosition() + 7.5f) {
+			if (mario.getX() > tileMap.getFlagTargetPosition() + 9.5f) {
 				mario.setAcceleration(new Vector2(0, 0));
 				mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
 				endLevelState = 5;
@@ -138,7 +139,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			renderCinematicScene(delta);
 			if (endLevelState>=4) {
 				renderer.getBatch().begin();				
-				renderer.getBatch().draw(ResourcesLoader.CASTLE_DOOR,(int)tileMap.getFlagTargetPosition() + 7, mario.getY(), 2,2);	
+				renderer.getBatch().draw(tileMap.getEndLevelCastleType()==CastleTypeEnum.SMALL ? ResourcesLoader.CASTLE_DOOR : ResourcesLoader.CASTLE_DOOR_BIG,(int)tileMap.getFlagTargetPosition() + 9, mario.getY(), 2,2);	
 				renderer.getBatch().end();
 			}
 

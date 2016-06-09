@@ -42,13 +42,13 @@
    <property name="world" value="underground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztl8lOwzAQhgcOhReAC2fEIpXCEUFhFEAt3FnfgP0J2F+ciSCSNWS81U6bML/0KYnjcRwnn6L05wD6itIB2hRk+yFsEJsw/fVWlFS0Kcj2Q1B3la7RVJ4TXAvZfgiVu+YYfGwlDaczMIdJyRnbdc33dJpzNPM14+62PQh+6yOdd43r6qdJE3VX3UUB6bxrXFc/TZqou//HXQS/e6rrV1fnO54mT5p0t/eLK+puniCou11KU+72YHruhtSUtMFdNLYmZc4sNSicc/Wrq/Mdj/fnaOLShLs9UHd9M/Lsh2wrtfEa6ZyrX3U8Zm2+8zXH5XQ5WMNY6uyZNWKdWIW87nJvY93dorYBsU3seLiNIZM0akpC3V0kFhiuFGwbGoS/z6WuTaqR6qQxbHWu8ZvMErHc0LUKiH9+k2SP2Cd2IZ+7dd7GultQ2xFxTJwEuosejIz9nN9d7qzkcM53AqH93zvJ0erZhQQhfD0KyO8uJiQkkrcx7p7T8QVxSVwR18SNw9/Q+VY1JTncdTkruZvj3UBov7uSo1K77XuMELYeBXTLXXNtbN7GuHtLx3fEPfFAPBJPGdyt/iNWIJ27vs426W4XEuqu7XuM4P+subddcLdaG5e3Pu7yPi/k6SvxRrwTH8RnBner/4gB/NzLkDhQojhkaztra2nOb1hzHHufPLaxJqkNpdRlviWkuN9vwZAzJg==
+   eJztl8lOwzAQhgcOgReAC2fEIpXCEUFhFEAt3FnfgP0J2F+ciSCSNWS8JHbahPmlT0ntseM4+RR1MAcwUJQe0KUgOw9hg9iE6e+3osSiS0F2HoK6q/SNtvIc4VrIzkMo3TXn4HMrcTidgTU0JWVs1zXf02mu0czXjLvb9SD47Y/U75rXVaeJE3VX3UUBqd81r6tOEyfq7v9xF8Hvnqrqqsb5zqdJkzbdzX5xRd1NEwR1t09py90MpuduyJiCLriLxtGkyJllDAp9rrqqcb7z8XqOpl7acDcDddc3Y886ZEepjY+R+lx15e8Ja/Ndrzkvp8/BCiZSsWfWiHViFdK6y71t6u4W9Q2JbWLHUochizTGFIS6u0gsMFzJ2TE0CH+fS1WbNEYaJ81hG+eav80sEcstXSuH+s+vSfaIfWIX0rlb5W1Td3PqOyKOiRNPd9GDsXGe8rvLnZUcTvlOIHT/eyc5Wj67kCCE70cO6d3FiIRE8raJu+fUfkFcElfENXEj1IautxxTkMJdl7OSuyneDYTuuys5KrXbvscIYfuRQ7/cNffG5m0Td2+p/Y64Jx6IR+Iporvl/4gViOeur7NtutuHhLpr+x4j+D9r7m0f3C33xuWtj7tSzQt5+kq8Ee/EB/EZ0d3yf8QQfu5lRBwotThkeztre2mub1Txu+598tjmajI2lEKT+Y4Q436/AXXoMyY=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="64" y="128" width="32" height="32"/>
   <object id="47" type="flag" gid="419" x="6580" y="128" width="32" height="32"/>
-  <object id="49" type="transferRight" gid="425" x="5304" y="340" width="8" height="8">
+  <object id="49" type="transferRight" gid="425" x="5311" y="340" width="8" height="8">
    <properties>
     <property name="backgrounds" value="clouds"/>
     <property name="mapType" value="0"/>
@@ -163,7 +163,7 @@
     <property name="yOutgoing" value="480"/>
    </properties>
   </object>
-  <object id="92" type="transferRight" gid="425" x="7512" y="436" width="8" height="8">
+  <object id="92" type="transferRight" gid="425" x="7519" y="436" width="8" height="8">
    <properties>
     <property name="backgrounds" value="underground"/>
     <property name="music" value="underground"/>
@@ -194,21 +194,25 @@
   <object id="128" type="coin" gid="428" x="7456" y="448" width="28" height="32"/>
   <object id="129" type="metalPlateform" gid="448" x="4960" y="432" width="96" height="16">
    <properties>
-    <property name="mode" value="ascending"/>
+    <property name="direction" value="up"/>
+    <property name="mode" value="infinite"/>
    </properties>
   </object>
   <object id="130" type="metalPlateform" gid="448" x="4960" y="152" width="96" height="16">
    <properties>
-    <property name="mode" value="ascending"/>
+    <property name="direction" value="up"/>
+    <property name="mode" value="infinite"/>
    </properties>
   </object>
   <object id="132" type="metalPlateform" gid="448" x="4480" y="408" width="96" height="16">
    <properties>
-    <property name="mode" value="descending"/>
+    <property name="direction" value="down"/>
+    <property name="mode" value="infinite"/>
    </properties>
   </object>
   <object id="134" type="metalPlateform" gid="448" x="4480" y="216" width="96" height="16">
    <properties>
+    <property name="direction" value="down"/>
     <property name="mode" value="descending"/>
    </properties>
   </object>

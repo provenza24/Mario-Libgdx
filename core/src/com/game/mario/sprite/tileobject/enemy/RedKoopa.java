@@ -21,9 +21,10 @@ public class RedKoopa extends AbstractKoopa {
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
 		super.update(tileMap, camera, deltaTime);
-		if (isAlive() && !isOnFloor() && state!=SpriteStateEnum.SLIDING) {					
+		if (isAlive() && !isOnFloor() && state!=SpriteStateEnum.SLIDING) {						
 			setX(oldPosition.x);
-			acceleration.x = -acceleration.x;
+			setY(oldPosition.y);
+			acceleration.x = -acceleration.x;			
 		}			
 	}
 	

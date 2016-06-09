@@ -17,6 +17,7 @@ import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.DescendingMetalPlateform;
+import com.game.mario.sprite.tileobject.item.plateform.VerticalMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -32,7 +33,8 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
 		handlers.put(Coin.class, new CoinCollisionHandler());
 		handlers.put(AscendingMetalPlateform.class, new MetalPlateformCollisionHandler());
-		handlers.put(DescendingMetalPlateform.class, new MetalPlateformCollisionHandler());		
+		handlers.put(DescendingMetalPlateform.class, new MetalPlateformCollisionHandler());
+		handlers.put(VerticalMetalPlateform.class, new MetalPlateformCollisionHandler());
 		handlers.put(Star.class, new StarCollisionHandler());
 	}
 

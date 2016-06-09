@@ -24,6 +24,7 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.DirectionEnum;
+import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.enums.SpriteStateEnum;
@@ -168,11 +169,11 @@ public class GameScreen implements Screen  {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
 		}		
 		
-		/*mario.setX(188);
-		mario.setY(9);
+		mario.setX(83);
+		mario.setY(12);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 194;						
-		camera.getCamera().update();*/
+		camera.getCamera().position.x = 89;						
+		camera.getCamera().update();
 	}
 		
 	@Override
@@ -281,7 +282,7 @@ public class GameScreen implements Screen  {
 
 		if (debugShowText) {
 			
-			int x = WinConstants.WIDTH - 400;
+			int x = WinConstants.WIDTH - 500;
 			int y = WinConstants.HEIGHT - 30;
 			
 			/* MARIO VARIABLES */
@@ -302,7 +303,7 @@ public class GameScreen implements Screen  {
 			
 			
 			/* ENV VARIABLES */
-			x = WinConstants.WIDTH - 200;
+			x = WinConstants.WIDTH - 300;
 			y = WinConstants.HEIGHT - 30;
 			
 			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
@@ -319,8 +320,10 @@ public class GameScreen implements Screen  {
 			y = y -20;
 			alive = 0;
 			for (AbstractEnemy enemy : tileMap.getEnemies()) {
-				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() , x, y);
+				if (enemy.getEnemyType()==EnemyTypeEnum.KOOPA) {
+				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() +"-onfloor " + enemy.isOnFloor(), x, y);				
 				y = y -20;
+				}
 				alive++;
 			}			
 			alive = 0;

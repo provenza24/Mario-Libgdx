@@ -89,6 +89,8 @@ public class ResourcesLoader {
 	
 	public static final Texture CASTLE_DOOR = new Texture(Gdx.files.internal("sprites/transparency/castle_door.png"));
 	
+	public static final Texture CASTLE_DOOR_BIG = new Texture(Gdx.files.internal("sprites/transparency/castle_door_big.png"));
+	
 	public static final Texture CASTLE_LAVA = new Texture(Gdx.files.internal("sprites/transparency/lava.png"));
 	
 	// Miscelleanous

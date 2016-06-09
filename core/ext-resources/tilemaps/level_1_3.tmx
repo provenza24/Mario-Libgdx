@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="170" height="15" tilewidth="32" tileheight="32" nextobjectid="80">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="171" height="15" tilewidth="32" tileheight="32" nextobjectid="83">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -35,14 +35,15 @@
  <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform.png" width="96" height="16"/>
  </tileset>
- <layer name="world" width="170" height="15">
+ <layer name="world" width="171" height="15">
   <properties>
    <property name="backgrounds" value="clouds,waterfall"/>
+   <property name="castle" value="big"/>
    <property name="music" value="overground"/>
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztl1tuwjAQRSlIiEUA3QEtXQKv/xaVFnZAea0AaOnGe5GKZA12YnvsJIa50vmJwZmYwzDUahKJRCKRSFLJ7qHsCiSS/PyKp5IEck+evoI3DdMyi5JYJTVPqWuujnXwvF2FR8bzq7WI635p/pOX1Dw9p8NwLKSnl/1899D193vzXTzNfm8VPKX1cGvJimnmKeu70STkJYSnPezxBJ5BH7xEdt/GU9N8UIanl1p0PhTlKb1XUfc0JYSnrt4NsD4EIzAGkwjP7tMPdD6H8rSl7GezR9vwmqp6apq9uTM59ZPjqYt371ibgQ/wCeZgEem8XftBTE/V/arkaZZHPuenW+fMOqE8dfVuibUvsAJrsAFb8fQqRfbTLL9uxVNX7/ZYO4Aj+AY/4MQ4b04/oHOgr6c2v22m+dd0PQVPdedXFU/pa1y9qwegQfbk9APVB04/tfksTP/ndNdT8JTW6erp+VIIH2LwB5kvTjU=
+   eJztl2tOw0AMhAtIFYcgcAOeNyiP/4AKhRu0QDkBj8DFmUqJZFl2ullvN0nxSKNKm8px0q/e2dHI5XK5XC7X0PS+03UHLleYfhtYPca1E/gUPnOmXR2ridUJrl3CV/A1fLMFvN7Cd4Lvu2zKFSSN1SnWH+BHeAY/wc89YZXz1pazAs9xSHxkeC7ai/Mep3HlddJYnWN9Ab/Ar/AbvOwJqysVBs5SslrXi60hzfn/xryV1Q+sf8Jf8Ddcwj/OqlrPUqNI2EuTtPzT1f9jzLxOnNVpte9Tz5ilLJD7HBbCqpYVumC17kViIher/F657qnJymq995dk/6c5QMsCOc5hMXNBYjoVq/ukXkiNA+U7fWVVy+LWjM4ZjWW13vvp/k9zgJQFcp7D2s6FTbJK6/WJ1SaWYt6fdN2Se1KxOq84LQmz3JzVnOcwZ9XW0zaxWs/Vc/hC+JTmaupzmGUu8FwYy2rIPqflYW19CKxK768vrPLvcO6kHMA53E3gPdaHZS5QJixzNeT30M540voQWOV9tmV1tZSCh035D1tNZ8M=
   </data>
  </layer>
  <objectgroup name="objectsLayer">
@@ -76,5 +77,19 @@
   <object id="77" type="coin" gid="428" x="3746" y="416" width="28" height="32"/>
   <object id="78" type="coin" gid="428" x="3906" y="224" width="28" height="32"/>
   <object id="79" type="coin" gid="428" x="3938" y="224" width="28" height="32"/>
+  <object id="80" type="metalPlateform" gid="448" x="1856" y="496" width="96" height="16">
+   <properties>
+    <property name="direction" value="up"/>
+    <property name="mode" value="predifined"/>
+    <property name="stepNumber" value="8.5"/>
+   </properties>
+  </object>
+  <object id="81" type="metalPlateform" gid="448" x="2880" y="288" width="96" height="16">
+   <properties>
+    <property name="direction" value="left"/>
+    <property name="mode" value="predifined"/>
+    <property name="stepNumber" value="3"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>
