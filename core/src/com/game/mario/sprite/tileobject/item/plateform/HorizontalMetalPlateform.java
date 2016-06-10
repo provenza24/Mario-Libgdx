@@ -27,9 +27,9 @@ public class HorizontalMetalPlateform extends AbstractMetalPlateform {
 	public HorizontalMetalPlateform(MapObject mapObject) {
 		super(mapObject);		
 		direction = DirectionEnum.valueOf(mapObject.getProperties().get("direction").toString().toUpperCase());		
-		stepNumber = 3;
+		stepNumber = Float.parseFloat(mapObject.getProperties().get("stepNumber").toString());
 		acceleration.x = ACCELERATION_MIN;
-		DECCELERATION_STEP = 1.52f;
+		DECCELERATION_STEP = stepNumber - 1.48f;
 		spriteBatch = new SpriteBatch();
 		debugFont = new BitmapFont();		
 		debugFont.setColor(0, 0, 1, 1);
@@ -38,38 +38,26 @@ public class HorizontalMetalPlateform extends AbstractMetalPlateform {
 	@Override
 	public void move(float deltaTime) {		
 		
-		if (currentStep<=stepNumber) {
-			currentStep = currentStep + acceleration.x;
-			if (currentStep>=DECCELERATION_STEP) {
-				acceleration.x += acceleration.x > ACCELERATION_MIN ? -ACCELERATION : 0;
-			} else {
-				acceleration.x += acceleration.x < ACCELERATION_MAX ? ACCELERATION : 0;
-			}						
-		} else {				
-			currentStep = 0;
-			direction = direction==DirectionEnum.RIGHT ? DirectionEnum.LEFT : DirectionEnum.RIGHT;
-			acceleration.x = ACCELERATION_MIN;
+		if (isAlive()) {
+			if (currentStep<=stepNumber) {
+				currentStep = currentStep + acceleration.x;
+				if (currentStep>=DECCELERATION_STEP) {
+					acceleration.x += acceleration.x > ACCELERATION_MIN ? -ACCELERATION : 0;
+				} else {
+					acceleration.x += acceleration.x < ACCELERATION_MAX ? ACCELERATION : 0;
+				}						
+			} else {				
+				currentStep = 0;
+				direction = direction==DirectionEnum.RIGHT ? DirectionEnum.LEFT : DirectionEnum.RIGHT;
+				acceleration.x = ACCELERATION_MIN;
+			}
+			
+			storeOldPosition();
+					
+			float xVelocity = direction == DirectionEnum.LEFT ? -acceleration.x : acceleration.x;
+			setX(getX() + xVelocity);
 		}
-		
-		storeOldPosition();
-				
-		float xVelocity = direction == DirectionEnum.LEFT ? -acceleration.x : acceleration.x;
-		setX(getX() + xVelocity);
-		
 					
 	}
-	
-	public void render(Batch batch) {
-		batch.begin();
-		//@TODO replace this by computing value at initialization		
-		batch.draw(currentFrame, getX(), getY(), renderingSize.x, renderingSize.y);		
-		batch.end();
-		
-		spriteBatch.begin();
-		debugFont.draw(spriteBatch, "acceleration.x=" + String.format("%.3f", acceleration.x), 20, 200);
-		debugFont.draw(spriteBatch, "direction="+direction, 20, 220);
-		spriteBatch.end();
-	}
-
 
 }

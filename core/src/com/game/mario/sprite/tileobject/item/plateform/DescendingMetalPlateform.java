@@ -2,6 +2,7 @@ package com.game.mario.sprite.tileobject.item.plateform;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
+import com.game.mario.enums.DirectionEnum;
 import com.game.mario.tilemap.TmxMap;
 
 public class DescendingMetalPlateform extends AbstractMetalPlateform {
@@ -9,6 +10,7 @@ public class DescendingMetalPlateform extends AbstractMetalPlateform {
 	public DescendingMetalPlateform(MapObject mapObject) {
 		super(mapObject);
 		acceleration.y = -0.05f;
+		direction = DirectionEnum.DOWN;
 	}
 	
 	@Override
@@ -17,6 +19,7 @@ public class DescendingMetalPlateform extends AbstractMetalPlateform {
 		if (getY() <= -1) {
 			setY(16);
 			updateBounds();
+			isStuck = true;			
 		}
 	}
 

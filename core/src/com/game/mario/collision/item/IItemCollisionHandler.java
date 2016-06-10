@@ -10,7 +10,8 @@ import com.game.mario.tilemap.TmxMap;
 
 public interface IItemCollisionHandler {
 
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds);
+public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds);
 	
 	public void bump(Stage stage, TmxMap tileMap, AbstractSprite item);
+	
 }

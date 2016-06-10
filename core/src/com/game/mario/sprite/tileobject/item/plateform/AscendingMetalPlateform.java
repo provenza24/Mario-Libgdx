@@ -17,6 +17,7 @@ public class AscendingMetalPlateform extends AbstractMetalPlateform {
 		if (getY() >= 15) {
 			setY(-2);
 			updateBounds();
+			isStuck = false;			
 		}
 	}
 

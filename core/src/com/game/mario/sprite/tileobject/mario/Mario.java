@@ -107,7 +107,9 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private TransferItem transferItem;
 
-	private List<AbstractSprite> fireballs;				
+	private List<AbstractSprite> fireballs;	
+	
+	private boolean isStuck;
 
 	public Mario(MapObject mapObject) {
 		super(mapObject, new Vector2(X_OFFSET, Y_OFFSET));
@@ -309,6 +311,20 @@ public class Mario extends AbstractTileObjectSprite {
 		}
 	}
 	
+	public void move(float deltaTime) {
+		
+		storeOldPosition();
+		
+		float xVelocity = deltaTime * acceleration.x;
+		xVelocity = direction == DirectionEnum.LEFT ? -xVelocity : xVelocity;
+		setX(getX() + xVelocity);
+		
+		if (!isStuck) {
+			applyGravity();			
+		}
+		setY(getY() + acceleration.y);
+	}
+	
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 		move(deltaTime);		
 		tilemapCollisionHandler.collideWithTilemap(tileMap, this);
@@ -426,6 +442,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public int getJumpTimer() {
 		return jumpTimer;
+	}
+
+	public boolean isStuck() {
+		return isStuck;
+	}
+
+	public void setStuck(boolean isStuck) {
+		this.isStuck = isStuck;
 	}
 
 	public void incJumpTimer() {

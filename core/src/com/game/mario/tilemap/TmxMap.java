@@ -34,6 +34,7 @@ import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.Flag;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
+import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.DescendingMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.HorizontalMetalPlateform;
@@ -60,6 +61,8 @@ public class TmxMap {
 	private List<AbstractSprite> items;
 	
 	private List<AbstractSprite> sfxSprites;
+	
+	private List<AbstractMetalPlateform> plateforms;
 		
 	private Mario mario;
 		
@@ -107,6 +110,7 @@ public class TmxMap {
 		items = new ArrayList<AbstractSprite>();
 		enemies = new ArrayList<AbstractEnemy>();
 		sfxSprites = new ArrayList<AbstractSprite>();
+		plateforms = new ArrayList<AbstractMetalPlateform>();
 				
 		MapObjects objects = objectsLayer.getObjects();
 		for (MapObject mapObject : objects) {
@@ -148,15 +152,15 @@ public class TmxMap {
 			DirectionEnum direction = DirectionEnum.valueOf(objectProperty.get("direction").toString().toUpperCase());			
 			if (mode.equals("infinite")) {
 				if (direction==DirectionEnum.UP) {
-					items.add(new AscendingMetalPlateform(mapObject));	
+					plateforms.add(new AscendingMetalPlateform(mapObject));	
 				} else {
-					items.add(new DescendingMetalPlateform(mapObject));	
+					plateforms.add(new DescendingMetalPlateform(mapObject));	
 				}									
 			} else if (mode.equals("predifined")) {
 				if (direction==DirectionEnum.UP || direction==DirectionEnum.DOWN) {
-					items.add(new VerticalMetalPlateform(mapObject));
+					plateforms.add(new VerticalMetalPlateform(mapObject));
 				} else {
-					items.add(new HorizontalMetalPlateform(mapObject));
+					plateforms.add(new HorizontalMetalPlateform(mapObject));
 				}
 			}
 		}
@@ -361,6 +365,14 @@ public class TmxMap {
 
 	public void setEndLevelCastleType(CastleTypeEnum endLevelCastleType) {
 		this.endLevelCastleType = endLevelCastleType;
+	}
+
+	public List<AbstractMetalPlateform> getPlateforms() {
+		return plateforms;
+	}
+
+	public void setPlateforms(List<AbstractMetalPlateform> plateforms) {
+		this.plateforms = plateforms;
 	}
 
 }

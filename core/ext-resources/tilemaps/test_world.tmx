@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="80">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="86">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -45,11 +45,49 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt2ksKwjAUheFTFRQE5+Ia3IKc/a9KipMYcytqmqbyf3AJzYtOzuCWSv27DvMUgN+RT6Bf5BPol2cqAMuznvOYPwNYjkU+8b92byrau2/4jiUWOQR6ZZFPoAUnY1rpWulMtAagHmdjNJefidaANRv7x4Ne+8tPHAtzJ8W96VS/asXfeawyB3umzgBoyyKPQK8s8on1Og/SpcL/brXuAfAwxmnzRW0r3ZPXrcMClnIHmCMl7g==
+   eJzt0zEOgEAMA0FDkf8/GWp01yEloBnJvZtNAAAAAAAAeFt1HwCWKvqEiSr6hIkq+oSJnm3qE2ZYtalP6LdrU5/Q47h3fnjwZxfdtgEI
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="66" type="flag" gid="419" x="4000" y="157" width="32" height="32"/>
+  <object id="80" type="metalPlateform" gid="448" x="663" y="382" width="96" height="16">
+   <properties>
+    <property name="direction" value="up"/>
+    <property name="mode" value="infinite"/>
+   </properties>
+  </object>
+  <object id="81" type="metalPlateform" gid="448" x="663" y="102" width="96" height="16">
+   <properties>
+    <property name="direction" value="up"/>
+    <property name="mode" value="infinite"/>
+   </properties>
+  </object>
+  <object id="82" type="metalPlateform" gid="448" x="352" y="358" width="96" height="16">
+   <properties>
+    <property name="direction" value="down"/>
+    <property name="mode" value="infinite"/>
+   </properties>
+  </object>
+  <object id="83" type="metalPlateform" gid="448" x="352" y="166" width="96" height="16">
+   <properties>
+    <property name="direction" value="down"/>
+    <property name="mode" value="descending"/>
+   </properties>
+  </object>
+  <object id="84" type="metalPlateform" gid="448" x="992" y="400" width="96" height="16">
+   <properties>
+    <property name="direction" value="up"/>
+    <property name="mode" value="predifined"/>
+    <property name="stepNumber" value="8.5"/>
+   </properties>
+  </object>
+  <object id="85" type="metalPlateform" gid="448" x="1302" y="218" width="96" height="16">
+   <properties>
+    <property name="direction" value="left"/>
+    <property name="mode" value="predifined"/>
+    <property name="stepNumber" value="3"/>
+   </properties>
+  </object>
  </objectgroup>
 </map>

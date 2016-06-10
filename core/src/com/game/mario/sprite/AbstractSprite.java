@@ -204,7 +204,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		float xVelocity = deltaTime * acceleration.x;
 		xVelocity = direction == DirectionEnum.LEFT ? -xVelocity : xVelocity;
 		setX(getX() + xVelocity);
-
+		
 		applyGravity();
 		setY(getY() + acceleration.y);		
 	}

@@ -8,12 +8,15 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.item.AbstractItemCollisionHandler;
 import com.game.mario.collision.item.IItemCollisionHandler;
+import com.game.mario.collision.plateform.AbstractPlateformCollisionHandler;
+import com.game.mario.collision.plateform.IPlateformCollisionHandler;
 import com.game.mario.collision.upperblock.AbstractUpperBlockCollisionHandler;
 import com.game.mario.collision.upperblock.IUpperBlockCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -73,6 +76,13 @@ public class CollisionHandler {
 		IItemCollisionHandler collisionHandler = AbstractItemCollisionHandler.getHandler(item);
 		if (collisionHandler!=null) {			
 			collisionHandler.collide(mario, item, camera, scrollingBackgrounds);
+		}
+	}
+	
+	public void collideMarioWithPlateform(Mario mario, AbstractMetalPlateform plateform) {
+		IPlateformCollisionHandler collisionHandler = AbstractPlateformCollisionHandler.getHandler(plateform);
+		if (collisionHandler!=null) {			
+			collisionHandler.collide(mario, plateform);
 		}
 	}
 

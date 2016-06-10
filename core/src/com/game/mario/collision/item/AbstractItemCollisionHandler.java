@@ -32,11 +32,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(Flower.class, new FlowerCollisionHandler());
 		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
 		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
-		handlers.put(Coin.class, new CoinCollisionHandler());
-		handlers.put(AscendingMetalPlateform.class, new MetalPlateformCollisionHandler());
-		handlers.put(DescendingMetalPlateform.class, new MetalPlateformCollisionHandler());
-		handlers.put(VerticalMetalPlateform.class, new MetalPlateformCollisionHandler());
-		handlers.put(HorizontalMetalPlateform.class, new MetalPlateformCollisionHandler());
+		handlers.put(Coin.class, new CoinCollisionHandler());		
 		handlers.put(Star.class, new StarCollisionHandler());
 	}
 

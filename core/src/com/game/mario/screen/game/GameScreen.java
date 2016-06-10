@@ -42,6 +42,7 @@ import com.game.mario.sprite.item.Fireball;
 import com.game.mario.sprite.sfx.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
+import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.KeysConstants;
@@ -49,8 +50,6 @@ import com.game.mario.util.WinConstants;
 
 public class GameScreen implements Screen  {
 		
-	private static final double JUMPTIMER_ACCELERATION_COEF = 6;
-
 	private static final int JUMP_TIMER_MAX = 40;
 
 	private static final float MARIO_JUMP_ACCELERATION_CONTINUE = 0.0117f;
@@ -169,11 +168,11 @@ public class GameScreen implements Screen  {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
 		}		
 		
-		mario.setX(83);
-		mario.setY(12);
+		/*mario.setX(54);
+		mario.setY(2);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 89;						
-		camera.getCamera().update();
+		camera.getCamera().position.x = 60;						
+		camera.getCamera().update();*/
 	}
 		
 	@Override
@@ -201,11 +200,13 @@ public class GameScreen implements Screen  {
 		
 		AbstractSprite.updateStateTime(delta);
 		
+		handlePlateforms(delta);
+		
 		// Listen to keyboard actions and update Mario status
 		handleInput();
-		
+						
 		mario.update(tileMap, camera.getCamera(), delta);
-		
+							
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -242,7 +243,9 @@ public class GameScreen implements Screen  {
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		// Render mystery blocks
-		renderMysteryBlocks(delta);		
+		renderMysteryBlocks(delta);
+		// render plateforms
+		renderPlateforms(delta);
 		//handleItems
 		handleItems(delta);
 		// Render enemies
@@ -269,6 +272,31 @@ public class GameScreen implements Screen  {
 				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
 			levelFinished = true;
 		}			
+	}
+
+	private void handlePlateforms(float deltaTime) {
+		
+		mario.setStuck(false);
+		List<AbstractMetalPlateform> plateforms = tileMap.getPlateforms();		
+		for (int i = 0; i < plateforms.size(); i++) {
+			AbstractMetalPlateform plateform = plateforms.get(i);			
+			plateform.update(tileMap, camera.getCamera(), deltaTime);			
+			if (plateform.isDeletable()) {				
+				plateforms.remove(i--);
+			} 
+		}				
+	}
+	
+	private void renderPlateforms(float deltaTime) {
+		
+		List<AbstractMetalPlateform> plateforms = tileMap.getPlateforms();		
+		for (int i = 0; i < plateforms.size(); i++) {
+			AbstractMetalPlateform plateform = plateforms.get(i);
+			if (plateform.isVisible()) {
+				plateform.render(renderer.getBatch());
+			}
+		}		
+		
 	}
 
 	private void renderStatusBar() {
@@ -300,6 +328,9 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), x, y);
 			y = y -20;			
 			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), x, y);			
+			y = y -20;			
+			debugFont.draw(spriteBatch, "isOnPlateform: " + mario.isStuck(), x, y);
+			
 			
 			
 			/* ENV VARIABLES */
@@ -330,14 +361,20 @@ public class GameScreen implements Screen  {
 			for (AbstractSprite item : tileMap.getItems()) {
 				alive += item.isAlive() ? 1 : 0;
 			}
+			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", x, y);
+			y = y -20;
 			alive = 0;
 			/*for (AbstractSprite item : tileMap.getItems()) {
 				debugFont.draw(spriteBatch, "Item #" + alive + " - " + (item.isAlive() ? " alive - " : "") + (item.isVisible() ? " visible - " : "") , x, y);
 				y = y -20;
 				alive++;
 			}*/	
-			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", x, y);
-			y = y -20;
+			alive = 0;
+			for (AbstractMetalPlateform plateform : tileMap.getPlateforms()) {
+				debugFont.draw(spriteBatch, "Plateform #" + alive + " - " + (plateform.isAlive() ? " alive - " : "") + (plateform.isVisible() ? " visible - " : "") , x, y);
+				y = y -20;
+				alive++;
+			}			
 			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), x, y);
 			y = y -20;			
 			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, x, y);

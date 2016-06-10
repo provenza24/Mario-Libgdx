@@ -1,9 +1,7 @@
 package com.game.mario.sprite.tileobject.item.plateform;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapObject;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.tilemap.TmxMap;
 
 public class VerticalMetalPlateform extends AbstractMetalPlateform {
 
@@ -27,9 +25,9 @@ public class VerticalMetalPlateform extends AbstractMetalPlateform {
 		DECCELERATION_STEP = stepNumber - 4.2f;
 	}
 	
-	@Override
-	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
-		super.update(tileMap, camera, deltaTime);		
+	public void move(float deltaTime) {
+		
+		super.move(deltaTime);		
 		
 		if (isAlive()) {
 			if (currentStep<=stepNumber) {
@@ -45,10 +43,8 @@ public class VerticalMetalPlateform extends AbstractMetalPlateform {
 				currentStep = 0;
 				direction = direction==DirectionEnum.UP ? DirectionEnum.DOWN : DirectionEnum.UP;
 				acceleration.y = direction==DirectionEnum.UP ? ACCELERATION_MIN : -ACCELERATION_MIN;
-			}
-			updateBounds();
-		}			
+			}	
+		}
 	}
-
 
 }
