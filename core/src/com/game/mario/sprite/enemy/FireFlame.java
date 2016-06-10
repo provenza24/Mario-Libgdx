@@ -25,7 +25,7 @@ public class FireFlame extends AbstractEnemy {
 		setSize(WIDTH, HEIGHT - 2*offset.y);		
 		renderingSize = new Vector2(WIDTH,HEIGHT);
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight()+offset.y);			
-		acceleration.x = -3;
+		acceleration.x = -3.5f;
 		this.yTarget = yTarget;		
 		acceleration.y = yTarget>getY() ? 0.1f : -0.1f;
 		

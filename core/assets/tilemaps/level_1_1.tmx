@@ -33,7 +33,7 @@
   <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
  </tileset>
  <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
-  <image source="../sprites/items/metal-plateform.png" width="96" height="16"/>
+  <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
  </tileset>
  <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
   <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>

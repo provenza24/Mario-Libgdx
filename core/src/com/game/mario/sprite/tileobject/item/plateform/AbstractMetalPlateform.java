@@ -20,16 +20,16 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 	
 	public AbstractMetalPlateform(MapObject mapObject) {
 		super(mapObject, new Vector2());
-		setRenderingSize(3, 0.5f);
+		//setRenderingSize(3, 0.5f);
 		gravitating = false;
 		collidableWithTilemap = false;		
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
+		
+		initializeAnimationsUsingSize();
 	}	
 	
-	@Override
-	public void initializeAnimations() {
-		
-		spriteSheet = ResourcesLoader.METAL_PLATEFORM;
+	public void initializeAnimationsUsingSize() {
+		spriteSheet = getWidth()==2 ? ResourcesLoader.METAL_PLATEFORM_4 : ResourcesLoader.METAL_PLATEFORM_6;
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
@@ -37,6 +37,10 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 		currentFrame = currentAnimation.getKeyFrame(0, false);
 	}
 	
+	@Override
+	public void initializeAnimations() {		
+	}
+
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 		
@@ -64,12 +68,12 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 			
 			mario.setStuck(mario.isStuck() || isStuck);
 			
-			if (getX()<camera.position.x-9) {
+			if (getX()<camera.position.x-13) {
 				// Sprite is left out of screen, or has felt out of down screen
 				deletable = true;				
 			} else {
 				// Check if sprite is visible
-				visible = getX() < camera.position.x+8;				
+				visible = getX() < camera.position.x + 12;				
 			}									
 		} else {			
 			if (camera.position.x < tileMap.getFlag().getX()) {				
