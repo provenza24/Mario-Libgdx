@@ -480,7 +480,7 @@ public class GameScreen implements Screen  {
 				for (int k = 0; k < mario.getFireballs().size(); k++) {
 					AbstractSprite fireball = mario.getFireballs().get(k);					
 					boolean collideFireball = fireball.getBounds().overlaps(enemy.getBounds());
-					if (collideFireball) {
+					if (collideFireball && !enemy.isKilled()) {
 						enemy.killByFireball(fireball);
 						mario.getFireballs().remove(k--);
 						explodeFireball(fireball);		

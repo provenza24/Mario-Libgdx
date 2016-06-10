@@ -1,8 +1,5 @@
 package com.game.mario.sprite.tileobject.item.plateform;
 
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
 import com.game.mario.enums.DirectionEnum;
 
@@ -20,19 +17,12 @@ public class HorizontalMetalPlateform extends AbstractMetalPlateform {
 	
 	private float currentStep;
 	
-	BitmapFont debugFont;
-	
-	SpriteBatch spriteBatch;
-	
 	public HorizontalMetalPlateform(MapObject mapObject) {
 		super(mapObject);		
 		direction = DirectionEnum.valueOf(mapObject.getProperties().get("direction").toString().toUpperCase());		
 		stepNumber = Float.parseFloat(mapObject.getProperties().get("stepNumber").toString());
 		acceleration.x = ACCELERATION_MIN;
-		DECCELERATION_STEP = stepNumber - 1.48f;
-		spriteBatch = new SpriteBatch();
-		debugFont = new BitmapFont();		
-		debugFont.setColor(0, 0, 1, 1);
+		DECCELERATION_STEP = stepNumber - 1.48f;		
 	}
 	
 	@Override
