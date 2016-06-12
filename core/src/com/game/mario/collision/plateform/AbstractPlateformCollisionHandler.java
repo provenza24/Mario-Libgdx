@@ -33,19 +33,27 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 	
 	public void collide(Mario mario, AbstractMetalPlateform plateform) {
 				
-		mario.getAcceleration().y = 0;
-		
-		if (mario.getY()+mario.getHeight()>plateform.getY()) {
-		
-			mario.setY(plateform.getY()+plateform.getHeight());
-		
-			plateform.stuckMario(mario);
-			mario.setOnFloor(true);										
-		
-			if (mario.getState()==SpriteStateEnum.JUMPING || mario.getState()==SpriteStateEnum.FALLING) {				
-				mario.setState(SpriteStateEnum.NO_MOVE);
+		if (mario.getAcceleration().y>0) {
+			System.out.println("Cas 1");
+			mario.getAcceleration().y = 0;
+			mario.setY(plateform.getY() - (mario.getHeight() + mario.getOffset().y) - 0.0001f);
+			mario.setState(SpriteStateEnum.FALLING);
+			mario.setOnFloor(false);
+		} else {
+			mario.getAcceleration().y = 0;
+			
+			if (mario.getY()+mario.getHeight()>plateform.getY()) {
+			
+				mario.setY(plateform.getY()+plateform.getHeight());
+			
+				plateform.stuckMario(mario);
+				mario.setOnFloor(true);										
+			
+				if (mario.getState()==SpriteStateEnum.JUMPING || mario.getState()==SpriteStateEnum.FALLING) {				
+					mario.setState(SpriteStateEnum.NO_MOVE);
+				}
 			}
-		}
+		}		
 							
 	}
 		
