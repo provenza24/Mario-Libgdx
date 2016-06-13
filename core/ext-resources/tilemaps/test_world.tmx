@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="86">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="87">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -26,16 +26,16 @@
  <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48" tilecount="2" columns="2">
   <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
+ <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
+ <tileset firstgid="442" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa_red.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
+ <tileset firstgid="452" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
  </tileset>
- <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
+ <tileset firstgid="453" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
   <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
  <layer name="world" width="232" height="15">
@@ -45,48 +45,53 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzt0zEOgEAMA0FDkf8/GWp01yEloBnJvZtNAAAAAAAAeFt1HwCWKvqEiSr6hIkq+oSJnm3qE2ZYtalP6LdrU5/Q47h3fnjwZxfdtgEI
+   eJztw7ENAAAEADD8fzRPGEibNAIAAAAAAAAAAAAAAAD25KzD4bMGa48AYA==
   </data>
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="66" type="flag" gid="419" x="4000" y="157" width="32" height="32"/>
-  <object id="80" type="metalPlateform" gid="448" x="663" y="382" width="96" height="16">
+  <object id="80" type="metalPlateform" gid="452" x="1057" y="373" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="81" type="metalPlateform" gid="448" x="663" y="102" width="96" height="16">
+  <object id="81" type="metalPlateform" gid="452" x="1057" y="93" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="82" type="metalPlateform" gid="448" x="352" y="358" width="96" height="16">
+  <object id="82" type="metalPlateform" gid="452" x="852" y="337" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="83" type="metalPlateform" gid="448" x="352" y="166" width="96" height="16">
+  <object id="83" type="metalPlateform" gid="452" x="852" y="145" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
     <property name="mode" value="descending"/>
    </properties>
   </object>
-  <object id="84" type="metalPlateform" gid="448" x="992" y="400" width="96" height="16">
+  <object id="84" type="metalPlateform" gid="452" x="128" y="375" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="predifined"/>
     <property name="stepNumber" value="8.5"/>
    </properties>
   </object>
-  <object id="85" type="metalPlateform" gid="448" x="1302" y="218" width="96" height="16">
+  <object id="85" type="metalPlateform" gid="452" x="438" y="188" width="96" height="16">
    <properties>
     <property name="direction" value="left"/>
     <property name="mode" value="predifined"/>
     <property name="stepNumber" value="3"/>
+   </properties>
+  </object>
+  <object id="86" type="redKoopa" gid="451" x="319" y="351" width="32" height="48">
+   <properties>
+    <property name="state" value="flying"/>
    </properties>
   </object>
  </objectgroup>

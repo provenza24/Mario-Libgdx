@@ -168,10 +168,18 @@ public class GameScreen implements Screen  {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
 		}		
 		
-		/*mario.setX(54);
-		mario.setY(2);
+		int xFlagPos = 194;
+		int yFlagPos = 1;		
+		int xFlyingKoopa = 73;
+		int yFlyingKoopa = 73;
+		
+		int x = xFlagPos;
+		int y = yFlagPos;
+		
+		/*mario.setX(xFlagPos);
+		mario.setY(yFlagPos);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = 60;						
+		camera.getCamera().position.x = xFlagPos+6;						
 		camera.getCamera().update();*/
 	}
 		
@@ -310,7 +318,7 @@ public class GameScreen implements Screen  {
 
 		if (debugShowText) {
 			
-			int x = WinConstants.WIDTH - 500;
+			int x = WinConstants.WIDTH - 600;
 			int y = WinConstants.HEIGHT - 30;
 			
 			/* MARIO VARIABLES */
@@ -334,7 +342,7 @@ public class GameScreen implements Screen  {
 			
 			
 			/* ENV VARIABLES */
-			x = WinConstants.WIDTH - 300;
+			x = WinConstants.WIDTH - 350;
 			y = WinConstants.HEIGHT - 30;
 			
 			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
@@ -352,7 +360,7 @@ public class GameScreen implements Screen  {
 			alive = 0;
 			for (AbstractEnemy enemy : tileMap.getEnemies()) {
 				if (enemy.getEnemyType()==EnemyTypeEnum.KOOPA) {
-				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() +"-onfloor " + enemy.isOnFloor(), x, y);				
+				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() + " -onFloor "+enemy.isOnFloor(), x, y);				
 				y = y -20;
 				}
 				alive++;

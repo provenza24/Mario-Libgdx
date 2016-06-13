@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteStateEnum;
 import com.game.mario.sound.SoundManager;
@@ -26,16 +27,47 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	protected Animation bumpAnimation;
 	
+	protected Animation flyAnimation;
+	
 	protected float noMoveTime;
 	
+	protected static final float ACCELERATION = 0.00055f;
+
+	protected static final float ACCELERATION_MIN = 0.00025f;
+	
+	protected static final float ACCELERATION_MAX = 0.08f;
+	
+	protected float DECCELERATION_STEP;
+	
+	protected float STEP_NUMBER;		
+	
+	protected float currentStep;
+	
 	public AbstractKoopa(MapObject mapObject) {
+		
 		super(mapObject, new Vector2(0.2f, 0.1f));				
 		setSize(1 - offset.x * 2, 1 - offset.y);
-		currentAnimation = walkLeftAnimation;
-		acceleration.x = -1.9f;		
-		gravitating = true;
+		
+		String sState = (String)mapObject.getProperties().get("state");
+		if ("flying".equals(sState)) {
+			collidableWithTilemap = false;
+			gravitating = false;
+			onFloor = false;
+			currentAnimation = flyAnimation;
+			state = SpriteStateEnum.FLYING;
+			direction = DirectionEnum.DOWN;		
+			STEP_NUMBER = 6;
+			DECCELERATION_STEP = STEP_NUMBER/2 + 0.01f;
+			acceleration.y = direction==DirectionEnum.UP ? ACCELERATION_MIN : -ACCELERATION_MIN;		
+		} else {
+			gravitating = true;
+			currentAnimation = walkLeftAnimation;
+			acceleration.x = -1.9f;
+			acceleration.y = 0;
+			onFloor = true;			
+		}								
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());	
-		onFloor = true;
+		
 	}
 	
 	@Override
@@ -45,6 +77,28 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 
 	@Override
 	public abstract void initializeAnimations();
+	
+	@Override
+	public void move(float deltaTime) {
+		
+		super.move(deltaTime);
+		if (state==SpriteStateEnum.FLYING) {
+			if (currentStep<=STEP_NUMBER) {				
+				float positiveAcceleration =  Math.abs(acceleration.y);
+				currentStep = currentStep + positiveAcceleration;
+				if (currentStep>=DECCELERATION_STEP) {
+					acceleration.y += positiveAcceleration > ACCELERATION_MIN ? direction==DirectionEnum.UP ? -ACCELERATION : ACCELERATION : 0;
+				} else {
+					acceleration.y += positiveAcceleration < ACCELERATION_MAX ? direction==DirectionEnum.UP ? ACCELERATION : -ACCELERATION : 0;
+				}
+				 
+			} else {
+				currentStep = 0;
+				direction = direction==DirectionEnum.UP ? DirectionEnum.DOWN : DirectionEnum.UP;
+				acceleration.y = direction==DirectionEnum.UP ? ACCELERATION_MIN : -ACCELERATION_MIN;
+			}			
+		} 		
+	}
 	
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
@@ -93,7 +147,19 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 			bump();
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);		
 		} else {
-			if (state == SpriteStateEnum.WALKING) {
+			if (state == SpriteStateEnum.FLYING) {
+				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+				if (isEnemyHit) {
+					mario.setY(getY()+getHeight());					
+					mario.getAcceleration().y = 0.2f;	
+					currentAnimation = walkLeftAnimation;
+					acceleration.x = -1.9f;		
+					bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
+					state = SpriteStateEnum.FALLING_AFTER_FLY;
+					collidableWithTilemap = true;
+					gravitating = true;
+				}
+			} else if (state == SpriteStateEnum.WALKING) {
 				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
 				if (isEnemyHit) {
 					setSize(1 - offset.x * 2, 0.875f);	
@@ -135,7 +201,8 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	@Override
 	public void killByFireball(AbstractSprite fireball) {		
 		if (!isBumped()) {
-			super.bump();			
+			super.bump();
+			gravitating = true;
 			collidableWithTilemap = false;
 			this.currentAnimation = bumpAnimation;
 			acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
@@ -147,7 +214,8 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	@Override
 	public void bump() {
 		if (!isBumped()) {
-			super.bump();			
+			super.bump();
+			gravitating = true;
 			collidableWithTilemap = false;
 			this.currentAnimation = bumpAnimation;
 			acceleration.x = getAcceleration().x > 0 ? 3 : -3;
@@ -158,7 +226,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	protected void initializeTextures() {
 		
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 8, spriteSheet.getHeight() / 1);
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 10, spriteSheet.getHeight() / 1);
 
 		TextureRegion[] walkFrames = new TextureRegion[2];
 		walkFrames[0] = tmp[0][0];
@@ -188,7 +256,11 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		TextureRegion[] bumpedFrames = new TextureRegion[1];
 		bumpedFrames[0] = tmp[0][7];				
 		bumpAnimation = new Animation(0, bumpedFrames);
-		
+	
+		TextureRegion[] flyFrames = new TextureRegion[2];
+		flyFrames[0] = tmp[0][8];
+		flyFrames[1] = tmp[0][9];		
+		flyAnimation = new Animation(0.15f, flyFrames);		
 	}
 
 }

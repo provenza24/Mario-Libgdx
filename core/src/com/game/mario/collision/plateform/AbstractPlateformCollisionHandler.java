@@ -33,8 +33,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 	
 	public void collide(Mario mario, AbstractMetalPlateform plateform) {
 				
-		if (mario.getAcceleration().y>0) {
-			System.out.println("Cas 1");
+		if (mario.getAcceleration().y>0) {			
 			mario.getAcceleration().y = 0;
 			mario.setY(plateform.getY() - (mario.getHeight() + mario.getOffset().y) - 0.0001f);
 			mario.setState(SpriteStateEnum.FALLING);

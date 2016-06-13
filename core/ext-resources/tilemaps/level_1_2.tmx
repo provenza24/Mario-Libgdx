@@ -26,13 +26,13 @@
  <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48" tilecount="2" columns="2">
   <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
+ <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
+ <tileset firstgid="442" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa_red.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
+ <tileset firstgid="452" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
  </tileset>
  <layer name="world" width="239" height="15">
@@ -173,7 +173,7 @@
     <property name="yOutgoing" value="96"/>
    </properties>
   </object>
-  <object id="93" type="redKoopa" gid="440" x="4672" y="448" width="32" height="48"/>
+  <object id="93" type="redKoopa" gid="442" x="4672" y="448" width="32" height="48"/>
   <object id="111" type="coin" gid="428" x="7488" y="320" width="28" height="32"/>
   <object id="112" type="coin" gid="428" x="7456" y="320" width="28" height="32"/>
   <object id="113" type="coin" gid="428" x="7424" y="320" width="28" height="32"/>
@@ -192,25 +192,25 @@
   <object id="126" type="coin" gid="428" x="7392" y="448" width="28" height="32"/>
   <object id="127" type="coin" gid="428" x="7424" y="448" width="28" height="32"/>
   <object id="128" type="coin" gid="428" x="7456" y="448" width="28" height="32"/>
-  <object id="129" type="metalPlateform" gid="448" x="4960" y="432" width="96" height="16">
+  <object id="129" type="metalPlateform" gid="452" x="4960" y="432" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="130" type="metalPlateform" gid="448" x="4960" y="152" width="96" height="16">
+  <object id="130" type="metalPlateform" gid="452" x="4960" y="152" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="132" type="metalPlateform" gid="448" x="4480" y="408" width="96" height="16">
+  <object id="132" type="metalPlateform" gid="452" x="4480" y="408" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="134" type="metalPlateform" gid="448" x="4480" y="216" width="96" height="16">
+  <object id="134" type="metalPlateform" gid="452" x="4480" y="216" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
     <property name="mode" value="descending"/>

@@ -69,7 +69,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		timer += delta;
 
 		if (endLevelState == 0) {
-			mario.setPosition(mario.getX() - 0.6f, mario.getY());
+			mario.setPosition(tileMap.getFlagTargetPosition() - 0.5f, mario.getY());
 			mario.setCurrentAnimation(mario.getMarioFlagRightAnimation());
 			mario.setAcceleration(new Vector2());
 			mario.setGravitating(false);
@@ -83,8 +83,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			mario.setCurrentAnimation(mario.getMarioFlagLeftAnimation());
 			mario.setAcceleration(new Vector2());
 			mario.setGravitating(true);
-			endLevelState = 2;
-			/*tileMap.getFlag().addAction(ActionFacade.createMoveAction(tileMap.getFlag().getX(), tileMap.getFlag().getY() - 8.5f, 1f));*/
+			endLevelState = 2;			
 			tileMap.getFlag().setGravitating(true);
 			tileMap.getFlag().setCollidableWithTilemap(true);
 		} else if (endLevelState == 2 && mario.isOnFloor() && timer > 1.5f) {

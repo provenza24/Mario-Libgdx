@@ -26,28 +26,28 @@
  <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48" tilecount="2" columns="2">
   <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
+ <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
+ <tileset firstgid="442" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa_red.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
+ <tileset firstgid="452" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
  </tileset>
- <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
+ <tileset firstgid="453" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
   <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
- <tileset firstgid="452" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+ <tileset firstgid="456" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
   <image source="../sprites/items/hawk.png" width="96" height="32"/>
  </tileset>
- <tileset firstgid="455" name="bowser" tilewidth="64" tileheight="76" tilecount="4" columns="4">
+ <tileset firstgid="459" name="bowser" tilewidth="64" tileheight="76" tilecount="4" columns="4">
   <image source="../sprites/enemies/bowser.png" width="256" height="76"/>
  </tileset>
- <tileset firstgid="459" name="lava" tilewidth="32" tileheight="64" tilecount="8" columns="8">
+ <tileset firstgid="463" name="lava" tilewidth="32" tileheight="64" tilecount="8" columns="8">
   <image source="../sprites/transparency/lava.png" width="256" height="64"/>
  </tileset>
- <tileset firstgid="467" name="Metal_plateform_4" tilewidth="64" tileheight="16" tilecount="1" columns="1">
+ <tileset firstgid="471" name="Metal_plateform_4" tilewidth="64" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-4.png" width="64" height="16"/>
  </tileset>
  <layer name="world" width="158" height="15">
@@ -63,69 +63,69 @@
  </layer>
  <objectgroup name="objectsLayer">
   <object id="1" type="mario" gid="401" x="0" y="224" width="32" height="32"/>
-  <object id="50" type="castleFirebar" gid="449" x="914" y="352" width="96" height="16">
+  <object id="50" type="castleFirebar" gid="453" x="914" y="352" width="96" height="16">
    <properties>
     <property name="angle" value="90"/>
    </properties>
   </object>
-  <object id="51" type="castleFirebar" gid="449" x="1520" y="224" width="96" height="16">
+  <object id="51" type="castleFirebar" gid="453" x="1520" y="224" width="96" height="16">
    <properties>
     <property name="angle" value="120"/>
    </properties>
   </object>
-  <object id="52" type="castleFirebar" gid="449" x="1872" y="224" width="96" height="16">
+  <object id="52" type="castleFirebar" gid="453" x="1872" y="224" width="96" height="16">
    <properties>
     <property name="angle" value="180"/>
    </properties>
   </object>
-  <object id="53" type="castleFirebar" gid="449" x="2096" y="224" width="96" height="16">
+  <object id="53" type="castleFirebar" gid="453" x="2096" y="224" width="96" height="16">
    <properties>
     <property name="angle" value="225"/>
    </properties>
   </object>
-  <object id="54" type="castleFirebar" gid="449" x="2384" y="320" width="96" height="16">
+  <object id="54" type="castleFirebar" gid="453" x="2384" y="320" width="96" height="16">
    <properties>
     <property name="angle" value="270"/>
    </properties>
   </object>
-  <object id="57" type="castleFirebar" gid="449" x="2640" y="320" width="96" height="16">
+  <object id="57" type="castleFirebar" gid="453" x="2640" y="320" width="96" height="16">
    <properties>
     <property name="angle" value="315"/>
    </properties>
   </object>
-  <object id="59" type="castleFirebar" gid="449" x="2768" y="160" width="96" height="16">
+  <object id="59" type="castleFirebar" gid="453" x="2768" y="160" width="96" height="16">
    <properties>
     <property name="angle" value="0"/>
    </properties>
   </object>
-  <object id="60" type="flag" gid="452" x="4448" y="288" width="32" height="32"/>
-  <object id="61" type="bowser" gid="455" x="4370" y="320" width="64" height="76">
+  <object id="60" type="flag" gid="456" x="4448" y="288" width="32" height="32"/>
+  <object id="61" type="bowser" gid="459" x="4370" y="320" width="64" height="76">
    <properties>
     <property name="xAlive" value="2392"/>
    </properties>
   </object>
-  <object id="63" type="lava" gid="459" x="352" y="480" width="32" height="64"/>
-  <object id="64" type="lava" gid="459" x="384" y="480" width="32" height="64"/>
-  <object id="65" type="lava" gid="459" x="768" y="480" width="32" height="64"/>
-  <object id="66" type="lava" gid="459" x="800" y="480" width="32" height="64"/>
-  <object id="67" type="lava" gid="459" x="832" y="480" width="32" height="64"/>
-  <object id="68" type="lava" gid="459" x="960" y="480" width="32" height="64"/>
-  <object id="69" type="lava" gid="459" x="992" y="480" width="32" height="64"/>
-  <object id="70" type="lava" gid="459" x="1024" y="480" width="32" height="64"/>
-  <object id="71" type="lava" gid="459" x="4032" y="480" width="32" height="64"/>
-  <object id="72" type="lava" gid="459" x="4064" y="480" width="32" height="64"/>
-  <object id="73" type="lava" gid="459" x="4096" y="480" width="32" height="64"/>
-  <object id="74" type="lava" gid="459" x="4128" y="480" width="32" height="64"/>
-  <object id="75" type="lava" gid="459" x="4160" y="480" width="32" height="64"/>
-  <object id="76" type="lava" gid="459" x="4192" y="480" width="32" height="64"/>
-  <object id="77" type="lava" gid="459" x="4224" y="480" width="32" height="64"/>
-  <object id="78" type="lava" gid="459" x="4256" y="480" width="32" height="64"/>
-  <object id="79" type="lava" gid="459" x="4288" y="480" width="32" height="64"/>
-  <object id="80" type="lava" gid="459" x="4320" y="480" width="32" height="64"/>
-  <object id="81" type="lava" gid="459" x="4352" y="480" width="32" height="64"/>
-  <object id="82" type="lava" gid="459" x="4384" y="480" width="32" height="64"/>
-  <object id="83" type="lava" gid="459" x="4416" y="480" width="32" height="64"/>
-  <object id="85" type="metalPlateform" gid="467" x="4352" y="208" width="64" height="16">
+  <object id="63" type="lava" gid="463" x="352" y="480" width="32" height="64"/>
+  <object id="64" type="lava" gid="463" x="384" y="480" width="32" height="64"/>
+  <object id="65" type="lava" gid="463" x="768" y="480" width="32" height="64"/>
+  <object id="66" type="lava" gid="463" x="800" y="480" width="32" height="64"/>
+  <object id="67" type="lava" gid="463" x="832" y="480" width="32" height="64"/>
+  <object id="68" type="lava" gid="463" x="960" y="480" width="32" height="64"/>
+  <object id="69" type="lava" gid="463" x="992" y="480" width="32" height="64"/>
+  <object id="70" type="lava" gid="463" x="1024" y="480" width="32" height="64"/>
+  <object id="71" type="lava" gid="463" x="4032" y="480" width="32" height="64"/>
+  <object id="72" type="lava" gid="463" x="4064" y="480" width="32" height="64"/>
+  <object id="73" type="lava" gid="463" x="4096" y="480" width="32" height="64"/>
+  <object id="74" type="lava" gid="463" x="4128" y="480" width="32" height="64"/>
+  <object id="75" type="lava" gid="463" x="4160" y="480" width="32" height="64"/>
+  <object id="76" type="lava" gid="463" x="4192" y="480" width="32" height="64"/>
+  <object id="77" type="lava" gid="463" x="4224" y="480" width="32" height="64"/>
+  <object id="78" type="lava" gid="463" x="4256" y="480" width="32" height="64"/>
+  <object id="79" type="lava" gid="463" x="4288" y="480" width="32" height="64"/>
+  <object id="80" type="lava" gid="463" x="4320" y="480" width="32" height="64"/>
+  <object id="81" type="lava" gid="463" x="4352" y="480" width="32" height="64"/>
+  <object id="82" type="lava" gid="463" x="4384" y="480" width="32" height="64"/>
+  <object id="83" type="lava" gid="463" x="4416" y="480" width="32" height="64"/>
+  <object id="85" type="metalPlateform" gid="471" x="4352" y="208" width="64" height="16">
    <properties>
     <property name="direction" value="LEFT"/>
     <property name="mode" value="predifined"/>

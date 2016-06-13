@@ -26,22 +26,22 @@
  <tileset firstgid="430" name="Piranah" tilewidth="32" tileheight="48" tilecount="2" columns="2">
   <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa.png" width="256" height="48"/>
+ <tileset firstgid="432" name="Koopa" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="440" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="8" columns="8">
-  <image source="../sprites/enemies/koopa_red.png" width="256" height="48"/>
+ <tileset firstgid="442" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa_red.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="448" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
+ <tileset firstgid="452" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
  </tileset>
- <tileset firstgid="449" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
+ <tileset firstgid="453" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
   <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
- <tileset firstgid="452" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
+ <tileset firstgid="456" name="hawk" tilewidth="32" tileheight="32" tilecount="3" columns="3">
   <image source="../sprites/items/hawk.png" width="96" height="32"/>
  </tileset>
- <tileset firstgid="455" name="bowser" tilewidth="64" tileheight="76" tilecount="4" columns="4">
+ <tileset firstgid="459" name="bowser" tilewidth="64" tileheight="76" tilecount="4" columns="4">
   <image source="../sprites/enemies/bowser.png" width="256" height="76"/>
  </tileset>
  <layer name="world" width="232" height="15">

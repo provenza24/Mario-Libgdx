@@ -57,7 +57,7 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 						newPosition.y = (int) sprite.getY() + 1f;
 						sprite.getAcceleration().y = 0;												
 						sprite.setOnFloor(true);
-						if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
+						if (isFalling(sprite)) {
 							sprite.setState(SpriteStateEnum.WALKING);
 						}
 					}
@@ -81,7 +81,7 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								newPosition.y = (int) sprite.getY();
 								sprite.getAcceleration().y = 10e-5F;	
 								sprite.setOnFloor(true);
-								if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
+								if (isFalling(sprite)) {
 									sprite.setState(SpriteStateEnum.WALKING);
 								}
 							} else {								
@@ -103,7 +103,7 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								newPosition.y = (int) sprite.getY() + 1f;						
 								sprite.getAcceleration().y = 0;
 								sprite.setOnFloor(true);
-								if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
+								if (isFalling(sprite)) {
 									sprite.setState(SpriteStateEnum.WALKING);
 								}
 							} else {
@@ -125,7 +125,7 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								newPosition.y = (int) sprite.getY() + 1f;
 								sprite.getAcceleration().y = 0;
 								sprite.setOnFloor(true);
-								if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
+								if (isFalling(sprite)) {
 									sprite.setState(SpriteStateEnum.WALKING);
 								}
 							} else {
@@ -145,7 +145,7 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 							if (xDelta>yDelta) {
 								newPosition.y = (int) sprite.getY();
 								sprite.getAcceleration().y = 10e-5F;
-								if (sprite.getState()==SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.SLIDING) {
+								if (isFalling(sprite)) {
 									sprite.setState(SpriteStateEnum.WALKING);
 								}
 							} else {
@@ -169,16 +169,21 @@ public class BasicTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 		}  else {
 			if (move.y < 0 && !onFloorCorrection) {				
 				sprite.setOnFloor(false);
-				if (sprite.getState()!=SpriteStateEnum.SLIDING) {
+				if (sprite.getState()!=SpriteStateEnum.SLIDING 
+						&& sprite.getState()!=SpriteStateEnum.FALLING_AFTER_FLY ) {
 					sprite.setState(SpriteStateEnum.FALLING);
 				}
 			}
 		}	
 		
-		if (reverseAcceleration && sprite.getState()!=SpriteStateEnum.FALLING) {
+		if (reverseAcceleration && !isFalling(sprite)) {				
 			sprite.getAcceleration().x = - sprite.getAcceleration().x;
 		}
 		
 	}	
+	
+	private boolean isFalling(AbstractSprite sprite) {
+		return sprite.getState() == SpriteStateEnum.FALLING || sprite.getState()==SpriteStateEnum.FALLING_AFTER_FLY;
+	}
 
 }
