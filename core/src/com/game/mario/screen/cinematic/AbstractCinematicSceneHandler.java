@@ -64,6 +64,9 @@ public abstract class AbstractCinematicSceneHandler {
 	protected void renderCinematicScene(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		AbstractSprite.updateStateTime(delta);
+		
 		scrollingBackgrounds.get(0).render();
 		if (scrollingBackgrounds.size>1) {
 			scrollingBackgrounds.get(1).render();
@@ -72,7 +75,8 @@ public abstract class AbstractCinematicSceneHandler {
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		renderMysteryBlocks(delta);							
-		renderItems(delta);		
+		renderItems(delta);
+		renderPlateforms(delta);
 		renderEnemies();
 		mario.render(renderer.getBatch());
 		renderSfxSprites(delta);		
@@ -83,7 +87,8 @@ public abstract class AbstractCinematicSceneHandler {
 
 	private void renderSfxSprites(float delta) {
 		for (AbstractSprite sfxSprites : tileMap.getSfxSprites()) {
-			if (sfxSprites.isVisible()) {					
+			if (sfxSprites.isVisible()) {			
+				sfxSprites.update(tileMap, camera.getCamera(), delta);
 				sfxSprites.render(renderer.getBatch());
 			}				
 		}
@@ -106,6 +111,12 @@ public abstract class AbstractCinematicSceneHandler {
 				}
 				item.render(renderer.getBatch());
 			}				
+		}
+	}
+	
+	private void renderPlateforms(float delta) {
+		for (AbstractSprite plateform : tileMap.getPlateforms()) {			
+			plateform.render(renderer.getBatch());				
 		}
 	}
 	

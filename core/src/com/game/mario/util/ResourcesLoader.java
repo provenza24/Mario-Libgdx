@@ -61,6 +61,8 @@ public class ResourcesLoader {
 	
 	public static final Texture MARIO_FLOWER = new Texture(Gdx.files.internal("sprites/mario/mario-big-flower.png"));
 	
+	public static final Texture MARIO_SMALL_STAR = new Texture(Gdx.files.internal("sprites/mario/mario-star.png"));
+	
 	// Blocks
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));
 	

@@ -338,7 +338,8 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), x, y);			
 			y = y -20;			
 			debugFont.draw(spriteBatch, "isOnPlateform: " + mario.isStuck(), x, y);
-			
+			y = y -20;			
+			debugFont.draw(spriteBatch, "sizeState: " + mario.getSizeState(), x, y);
 			
 			
 			/* ENV VARIABLES */

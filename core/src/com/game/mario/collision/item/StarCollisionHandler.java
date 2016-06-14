@@ -19,6 +19,7 @@ public class StarCollisionHandler extends AbstractItemCollisionHandler {
 		super.collide(mario, item, camera, scrollingBackgrounds);	
 		mario.setInvincible(true);
 		mario.setOwningStar(true);
+		mario.changeStarAnimation();
 		mario.setInvincibleDurationTarget(10);
 		
 		SoundManager.getSoundManager().stopMusic();
