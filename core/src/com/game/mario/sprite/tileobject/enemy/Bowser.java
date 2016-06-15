@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.BowserTilemapCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.enemy.FireFlame;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
@@ -71,7 +71,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 		yInitial = getY();
 		xTarget = xInitial;
 		
-		setState(SpriteStateEnum.WALKING);
+		setState(SpriteMoveEnum.WALKING);
 		
 		tilemapCollisionHandler = new BowserTilemapCollisionHandler();
 		
@@ -112,7 +112,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 			
 			timeBeforeStopping += deltaTime;
 			
-			if (state!=SpriteStateEnum.JUMPING) {
+			if (state!=SpriteMoveEnum.JUMPING) {
 				timeBeforeJump += deltaTime;
 			}
 			
@@ -125,16 +125,16 @@ public class Bowser extends AbstractTileObjectEnemy {
 				acceleration.x = -1f;
 			}
 						
-			if (state!=SpriteStateEnum.JUMPING && timeBeforeJump>1 && !(acceleration.x>0 && xTarget-getX()<1)) {
+			if (state!=SpriteMoveEnum.JUMPING && timeBeforeJump>1 && !(acceleration.x>0 && xTarget-getX()<1)) {
 				int jumpRandomValue = MathUtils.random(chanceToJump-1);
 				if (jumpRandomValue==0) {			
 					timeBeforeJump = 0;
 					acceleration.y=0.08f;
-					setState(SpriteStateEnum.JUMPING);
+					setState(SpriteMoveEnum.JUMPING);
 				}
 			}
 									
-			if (state==SpriteStateEnum.WALKING && timeBeforeStopping>3) {
+			if (state==SpriteMoveEnum.WALKING && timeBeforeStopping>3) {
 				int stopRandomValue = MathUtils.random(chanceToStop-1);
 				if (stopRandomValue==0) {
 					direction = acceleration.x>0 ? 1 : -1;

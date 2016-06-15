@@ -27,7 +27,7 @@ import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.screen.cinematic.LevelEndingSceneHandler;
 import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
@@ -618,7 +618,7 @@ public class GameScreen implements Screen  {
 		if (Gdx.input.isKeyPressed(KEY_RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
 				// Sliding
-				mario.setStateIfNotJumping(SpriteStateEnum.SLIDING_LEFT);
+				mario.setStateIfNotJumping(SpriteMoveEnum.SLIDING_LEFT);
 				mario.decelerate(1.5f);
 				if (mario.getAcceleration().x <= 0) {
 					mario.getAcceleration().x = 0;
@@ -627,12 +627,12 @@ public class GameScreen implements Screen  {
 			} else {
 				mario.accelerate(Gdx.input.isKeyPressed(KEY_SPEED_UP));
 				mario.setDirection(DirectionEnum.RIGHT);
-				mario.setStateIfNotJumping(SpriteStateEnum.RUNNING_RIGHT);
+				mario.setStateIfNotJumping(SpriteMoveEnum.RUNNING_RIGHT);
 			}
 		} else if (Gdx.input.isKeyPressed(KEY_LEFT)) {
 			if (mario.getDirection() == DirectionEnum.RIGHT) {
 				// Sliding
-				mario.setStateIfNotJumping(SpriteStateEnum.SLIDING_RIGHT);
+				mario.setStateIfNotJumping(SpriteMoveEnum.SLIDING_RIGHT);
 				mario.decelerate(1.5f);
 				if (mario.getAcceleration().x <= 0) {
 					mario.getAcceleration().x = 0;
@@ -641,17 +641,17 @@ public class GameScreen implements Screen  {
 			} else {
 				mario.accelerate(Gdx.input.isKeyPressed(KEY_SPEED_UP));
 				mario.setDirection(DirectionEnum.LEFT);
-				mario.setStateIfNotJumping(SpriteStateEnum.RUNNING_LEFT);
+				mario.setStateIfNotJumping(SpriteMoveEnum.RUNNING_LEFT);
 			}
 		} else {
 			mario.decelerate(1);
 		}
 
 		if (Gdx.input.isKeyPressed(KEY_UP) && mario.canInitiateJump()
-				&& !(mario.getState() == SpriteStateEnum.JUMPING || mario.getState() == SpriteStateEnum.FALLING)) {
+				&& !(mario.getState() == SpriteMoveEnum.JUMPING || mario.getState() == SpriteMoveEnum.FALLING)) {
 			// player is on the ground, so he is allowed to start a jump
 			mario.setJumpTimer(1);
-			mario.setState(SpriteStateEnum.JUMPING);
+			mario.setState(SpriteMoveEnum.JUMPING);
 			mario.getAcceleration().y = MARIO_JUMP_ACCELERATION_INITIAL;
 			mario.setCanJumpHigher(true);
 			mario.setOnFloor(false);
@@ -660,7 +660,7 @@ public class GameScreen implements Screen  {
 			jumpAccelerationContinue = MARIO_JUMP_ACCELERATION_CONTINUE + mario.getAcceleration().x/4000;			
 			Sound soundToPlay = mario.getSizeState()>0 ? SoundManager.SOUND_JUMP_SUPER : SoundManager.SOUND_JUMP_SMALL;
 			SoundManager.getSoundManager().playSound(soundToPlay);
-		} else if (Gdx.input.isKeyPressed(KEY_UP) && mario.getState() == SpriteStateEnum.JUMPING
+		} else if (Gdx.input.isKeyPressed(KEY_UP) && mario.getState() == SpriteMoveEnum.JUMPING
 				&& mario.canJumpHigher()) {
 			if (mario.getJumpTimer() < jumpTimerMax) { //
 				mario.incJumpTimer();
@@ -668,7 +668,7 @@ public class GameScreen implements Screen  {
 			} else {
 				mario.setCanJumpHigher(false);
 				mario.setJumpTimer(0);
-				mario.setState(SpriteStateEnum.FALLING);
+				mario.setState(SpriteMoveEnum.FALLING);
 			}
 		} else {
 			mario.setCanJumpHigher(false);

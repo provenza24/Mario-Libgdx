@@ -1,7 +1,7 @@
 package com.game.mario.sprite;
 
 import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
 
@@ -13,7 +13,7 @@ public abstract class AbstractEnemy extends AbstractSprite {
 	
 	public AbstractEnemy(float x, float y) {
 		super(x, y);		
-		state = SpriteStateEnum.WALKING;
+		state = SpriteMoveEnum.WALKING;
 		killableByPlayer = true;
 		killableByFireball = true;
 	}
@@ -40,7 +40,7 @@ public abstract class AbstractEnemy extends AbstractSprite {
 			killByStar();
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
 		} else {
-			isEnemyHit = isKillable() && mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+			isEnemyHit = isKillable() && mario.getY() > getY() && mario.getState() == SpriteMoveEnum.FALLING;
 			if (isEnemyHit) {
 				kill();
 				mario.getAcceleration().y = 0.15f;

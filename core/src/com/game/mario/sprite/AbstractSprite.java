@@ -16,7 +16,7 @@ import com.game.mario.collision.CollisionEvent;
 import com.game.mario.collision.tilemap.BasicTilemapCollisionHandler;
 import com.game.mario.collision.tilemap.ITilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
@@ -27,7 +27,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected int sizeState;
 	
-	protected SpriteStateEnum state;
+	protected SpriteMoveEnum state;
 	
 	protected ITilemapCollisionHandler tilemapCollisionHandler;
 	
@@ -433,11 +433,11 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		this.oldAcceleration = oldAcceleration;
 	}
 
-	public SpriteStateEnum getState() {
+	public SpriteMoveEnum getState() {
 		return state;
 	}
 
-	public void setState(SpriteStateEnum state) {
+	public void setState(SpriteMoveEnum state) {
 		this.state = state;
 	}
 

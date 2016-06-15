@@ -7,12 +7,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -22,7 +20,7 @@ import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.tilemap.MarioTilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
@@ -86,7 +84,7 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	private Animation marioStandLeftAnimation;
 
-	private SpriteStateEnum previousState;
+	private SpriteMoveEnum previousState;
 
 	private int jumpTimer;
 
@@ -126,8 +124,8 @@ public class Mario extends AbstractTileObjectSprite {
 		canJumpHigher = true;
 		gravitating = true;
 		direction = DirectionEnum.RIGHT;
-		state = SpriteStateEnum.NO_MOVE;
-		previousState = SpriteStateEnum.NO_MOVE;
+		state = SpriteMoveEnum.NO_MOVE;
+		previousState = SpriteMoveEnum.NO_MOVE;
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
@@ -153,102 +151,84 @@ public class Mario extends AbstractTileObjectSprite {
 			bounds.setHeight(2 - offset.y);
 		}		
 		updateBounds();		
-		marioRunRightAnimation = animations[i][0];
-		marioRunLeftAnimation = animations[i][1];
-		marioSlideRightAnimation = animations[i][2];
-		marioSlideLeftAnimation = animations[i][3];
-		marioJumpRightAnimation = animations[i][4];
-		marioJumpLeftAnimation = animations[i][5];
-		marioDeathAnimation = animations[i][6];
-		marioFlagRightAnimation = animations[i][7];
-		marioFlagLeftAnimation = animations[i][8];
-		marioVictoryAnimation = animations[i][9];
+		refreshAnimations();
 	}
 	
-	public void changeStarAnimation() {
-		int i = sizeState ==0 ? 3 : 4;
-		marioRunRightAnimation = animations[i][0];
-		marioRunLeftAnimation = animations[i][1];
-		marioSlideRightAnimation = animations[i][2];
-		marioSlideLeftAnimation = animations[i][3];
-		marioJumpRightAnimation = animations[i][4];
-		marioJumpLeftAnimation = animations[i][5];
-		marioDeathAnimation = animations[i][6];
-		marioFlagRightAnimation = animations[i][7];
-		marioFlagLeftAnimation = animations[i][8];
-		marioVictoryAnimation = animations[i][9];
+	public void refreshAnimations() {		
+		int animationIdx = owningStar ? sizeState == 0 ? 3 : 4 : sizeState;
+		marioRunRightAnimation = animations[animationIdx][0];
+		marioRunLeftAnimation = animations[animationIdx][1];
+		marioSlideRightAnimation = animations[animationIdx][2];
+		marioSlideLeftAnimation = animations[animationIdx][3];
+		marioJumpRightAnimation = animations[animationIdx][4];
+		marioJumpLeftAnimation = animations[animationIdx][5];
+		marioDeathAnimation = animations[animationIdx][6];
+		marioFlagRightAnimation = animations[animationIdx][7];
+		marioFlagLeftAnimation = animations[animationIdx][8];
+		marioVictoryAnimation = animations[animationIdx][9];
+		
 	}
 	
+	private Animation createAnimation(TextureRegion[][] textures, int startFrameIndex, int nbFrames, float frameDelay) {
+				
+		TextureRegion[] frames = new TextureRegion[nbFrames];
+		for (int i=0;i<nbFrames;i++) {			
+			frames[i] = textures[0][startFrameIndex+i];
+		}		
+		return new Animation(frameDelay, frames);		
+	}
+		
 	private void initStarAnimations() {
 		
+		final int STAND_RIGHT_FRAME_INDEX = 0;
+		final int STAND_RIGHT_FRAMES = 4;
+		final int RUN_RIGHT_FRAME_INDEX = 4;
+		final int RUN_RIGHT_FRAMES = 24;
+		final int JUMP_RIGHT_FRAME_INDEX = 28;
+		final int JUMP_RIGHT_FRAMES = 4;
+		final int SLIDE_RIGHT_FRAME_INDEX = 32;
+		final int SLIDE_RIGHT_FRAMES = 4;
+		
+		final int STAND_LEFT_FRAME_INDEX = 36;
+		final int STAND_LEFT_FRAMES = 4;
+		final int RUN_LEFT_FRAMES = 24;
+		final int RUN_LEFT_FRAME_INDEX = 40;
+				
 		Texture textureTmp = ResourcesLoader.MARIO_SMALL_STAR;
-		TextureRegion[][] tmp = TextureRegion.split(textureTmp, textureTmp.getWidth() / 28, textureTmp.getHeight() / 1);
+		TextureRegion[][] tmp = TextureRegion.split(textureTmp, textureTmp.getWidth() / 76, textureTmp.getHeight() / 1);
 
-		TextureRegion[] marioStandRightFrames = new TextureRegion[2];
-		marioStandRightFrames[0] = tmp[0][0];
-		marioStandRightFrames[1] = tmp[0][1];
-		marioStandRightAnimation = new Animation(0.05f, marioStandRightFrames);		
+		marioStandRightAnimation = createAnimation(tmp, STAND_RIGHT_FRAME_INDEX, STAND_RIGHT_FRAMES, 0.025f);
+		marioRunRightAnimation = createAnimation(tmp, RUN_RIGHT_FRAME_INDEX, RUN_RIGHT_FRAMES, 0.025f);	
+		marioJumpRightAnimation = createAnimation(tmp, JUMP_RIGHT_FRAME_INDEX, JUMP_RIGHT_FRAMES, 0.025f);			
+		marioSlideRightAnimation = createAnimation(tmp, SLIDE_RIGHT_FRAME_INDEX, SLIDE_RIGHT_FRAMES, 0.025f);
 		
-		TextureRegion[] marioStandLeftFrames = new TextureRegion[2];
-		marioStandLeftFrames[0] = tmp[0][10];
-		marioStandLeftFrames[1] = tmp[0][11];
-		marioStandLeftAnimation = new Animation(0.025f, marioStandLeftFrames);
-		marioStandLeftAnimation.setPlayMode(PlayMode.LOOP);
+		marioStandLeftAnimation = createAnimation(tmp, STAND_LEFT_FRAME_INDEX, STAND_LEFT_FRAMES, 0.025f);		
+		marioRunLeftAnimation = createAnimation(tmp, RUN_LEFT_FRAME_INDEX, RUN_LEFT_FRAMES, 0.025f);
+				
+		Texture textureJumpingLeft = ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT;
+		TextureRegion[][] regionsJumpingLeft = TextureRegion.split(textureJumpingLeft, textureJumpingLeft.getWidth()/4, textureJumpingLeft.getHeight() / 1);
+		marioJumpLeftAnimation = createAnimation(regionsJumpingLeft, 0, 4, 0.025f);
 		
-		TextureRegion[] marioRunRightFrames = new TextureRegion[6];
-		marioRunRightFrames[0] = tmp[0][0];
-		marioRunRightFrames[1] = tmp[0][1];
-		marioRunRightFrames[2] = tmp[0][2];
-		marioRunRightFrames[3] = tmp[0][3];
-		marioRunRightFrames[4] = tmp[0][4];
-		marioRunRightFrames[5] = tmp[0][5];
-		marioRunRightAnimation = new Animation(0.025f, marioRunRightFrames);
-
-		TextureRegion[] marioRunLeftFrames = new TextureRegion[6];
-		marioRunLeftFrames[0] = tmp[0][10];
-		marioRunLeftFrames[1] = tmp[0][11];
-		marioRunLeftFrames[2] = tmp[0][12];
-		marioRunLeftFrames[3] = tmp[0][13];
-		marioRunLeftFrames[4] = tmp[0][14];
-		marioRunLeftFrames[5] = tmp[0][15];
-		marioRunLeftAnimation = new Animation(0.025f, marioRunLeftFrames);
-
-		TextureRegion[] marioSlideRightFrames = new TextureRegion[2];
-		marioSlideRightFrames[0] = tmp[0][8];
-		marioSlideRightFrames[1] = tmp[0][9];
-		marioSlideRightAnimation = new Animation(0.025f, marioSlideRightFrames);
-
-		TextureRegion[] marioSlideLeftFrames = new TextureRegion[2];
-		marioSlideLeftFrames[0] = tmp[0][18];
-		marioSlideLeftFrames[1] = tmp[0][19];
-		marioSlideLeftAnimation = new Animation(0.025f, marioSlideLeftFrames);
-
-		TextureRegion[] marioJumpRightFrames = new TextureRegion[2];
-		marioJumpRightFrames[0] = tmp[0][6];
-		marioJumpRightFrames[1] = tmp[0][7];
-		marioJumpRightAnimation = new Animation(0.025f, marioJumpRightFrames);
-
-		TextureRegion[] marioJumpLeftFrames = new TextureRegion[2];
-		marioJumpLeftFrames[0] = tmp[0][16];
-		marioJumpLeftFrames[1] = tmp[0][17];
-		marioJumpLeftAnimation = new Animation(0.025f, marioJumpLeftFrames);
-
+		Texture textureSlidingLeft = ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT;
+		TextureRegion[][] regionsSlidingLeft = TextureRegion.split(textureSlidingLeft, textureSlidingLeft.getWidth()/4, textureSlidingLeft.getHeight() / 1);
+		marioSlideLeftAnimation = createAnimation(regionsSlidingLeft, 0, 4, 0.025f);
+								
 		TextureRegion[] marioDeathFrames = new TextureRegion[1];
-		marioDeathFrames[0] = tmp[0][20];
+		marioDeathFrames[0] = tmp[0][46];
 		marioDeathAnimation = new Animation(1, marioDeathFrames);
 
 		TextureRegion[] marioFlagRightFrames = new TextureRegion[2];
-		marioFlagRightFrames[0] = tmp[0][22];
-		marioFlagRightFrames[1] = tmp[0][23];
+		marioFlagRightFrames[0] = tmp[0][48];
+		marioFlagRightFrames[1] = tmp[0][49];
 		marioFlagRightAnimation = new Animation(0.025f, marioFlagRightFrames);
 
 		TextureRegion[] marioFlagLeftFrames = new TextureRegion[2];
-		marioFlagLeftFrames[0] = tmp[0][24];
-		marioFlagLeftFrames[1] = tmp[0][25];
+		marioFlagLeftFrames[0] = tmp[0][50];
+		marioFlagLeftFrames[1] = tmp[0][51];
 		marioFlagLeftAnimation = new Animation(0.025f, marioFlagLeftFrames);
 
 		TextureRegion[] marioVictoryFrames = new TextureRegion[1];
-		marioVictoryFrames[0] = tmp[0][26];
+		marioVictoryFrames[0] = tmp[0][52];
 		marioVictoryAnimation = new Animation(1, marioVictoryFrames);
 
 		if (animations == null) {
@@ -269,6 +249,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	@Override
 	public void initializeAnimations() {
+		
 		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);
 		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
 		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);
@@ -282,8 +263,7 @@ public class Mario extends AbstractTileObjectSprite {
 		marioGrowDownRightAnimation = new Animation(0.15f, frames);
 
 		Texture growDownLeftTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
-		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3,
-				growDownLeftTexture.getHeight() / 1);
+		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3, growDownLeftTexture.getHeight() / 1);
 		frames = new TextureRegion[2];
 		frames[0] = tmp[0][1];
 		frames[1] = tmp[0][0];
@@ -316,7 +296,7 @@ public class Mario extends AbstractTileObjectSprite {
 		marioRunRightFrames[0] = tmp[0][0];
 		marioRunRightFrames[1] = tmp[0][1];
 		marioRunRightFrames[2] = tmp[0][2];
-		marioRunRightAnimation = new Animation(0.05f, marioRunRightFrames);
+		marioRunRightAnimation = new Animation(0.05f, marioRunRightFrames);		
 
 		TextureRegion[] marioRunLeftFrames = new TextureRegion[3];
 		marioRunLeftFrames[0] = tmp[0][5];
@@ -414,8 +394,8 @@ public class Mario extends AbstractTileObjectSprite {
 		previousState = state;		
 	}
 
-	public void setStateIfNotJumping(SpriteStateEnum pstate) {
-		if (state != SpriteStateEnum.FALLING && state != SpriteStateEnum.JUMPING) {
+	public void setStateIfNotJumping(SpriteMoveEnum pstate) {
+		if (state != SpriteMoveEnum.FALLING && state != SpriteMoveEnum.JUMPING) {
 			this.state = pstate;
 		}
 	}
@@ -458,9 +438,9 @@ public class Mario extends AbstractTileObjectSprite {
 		} else {
 			invincible = false;
 			if (owningStar) {
-				changeSizeState(sizeState);
-			}
-			owningStar = false;					
+				owningStar = false;
+				refreshAnimations();
+			}							
 			invincibleDuration = 0;
 		}
 	}		
@@ -501,14 +481,14 @@ public class Mario extends AbstractTileObjectSprite {
 
 		float xMove = getX() - getOldPosition().x;
 
-		if (getState() != SpriteStateEnum.JUMPING && getState() != SpriteStateEnum.FALLING) {
+		if (getState() != SpriteMoveEnum.JUMPING && getState() != SpriteMoveEnum.FALLING) {
 			if (xMove == 0) {
-				if (getState() == SpriteStateEnum.SLIDING_LEFT) {
+				if (getState() == SpriteMoveEnum.SLIDING_LEFT) {
 					setDirection(DirectionEnum.RIGHT);
-				} else if (getState() == SpriteStateEnum.SLIDING_RIGHT) {
+				} else if (getState() == SpriteMoveEnum.SLIDING_RIGHT) {
 					setDirection(DirectionEnum.LEFT);
 				}
-				setState(SpriteStateEnum.NO_MOVE);
+				setState(SpriteMoveEnum.NO_MOVE);
 				if (!isOwningStar()) {
 					currentAnimation = direction == DirectionEnum.RIGHT ? marioRunRightAnimation : marioRunLeftAnimation;
 					currentFrame = currentAnimation.getKeyFrame(0, false);
@@ -521,10 +501,10 @@ public class Mario extends AbstractTileObjectSprite {
 					currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 				}
 			} else {
-				currentAnimation = state == SpriteStateEnum.RUNNING_LEFT ? marioRunLeftAnimation
-						: state == SpriteStateEnum.RUNNING_RIGHT ? marioRunRightAnimation
-								: state == SpriteStateEnum.SLIDING_LEFT ? marioSlideLeftAnimation
-										: state == SpriteStateEnum.SLIDING_RIGHT ? marioSlideRightAnimation
+				currentAnimation = state == SpriteMoveEnum.RUNNING_LEFT ? marioRunLeftAnimation
+						: state == SpriteMoveEnum.RUNNING_RIGHT ? marioRunRightAnimation
+								: state == SpriteMoveEnum.SLIDING_LEFT ? marioSlideLeftAnimation
+										: state == SpriteMoveEnum.SLIDING_RIGHT ? marioSlideRightAnimation
 												: direction == DirectionEnum.RIGHT ? marioRunRightAnimation
 														: marioRunLeftAnimation;
 				currentFrame = currentAnimation.getKeyFrame(stateTime, true);
@@ -533,7 +513,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 		if (!onFloor) {
 			currentAnimation = direction == DirectionEnum.RIGHT ? marioJumpRightAnimation : marioJumpLeftAnimation;
-			currentFrame = currentAnimation.getKeyFrame(0, false);
+			currentFrame = currentAnimation.getKeyFrame(owningStar ? stateTime : 0, owningStar ? true :false);
 		}
 	}
 
@@ -553,11 +533,11 @@ public class Mario extends AbstractTileObjectSprite {
 		this.canJumpHigher = canJumpHigher;
 	}
 
-	public SpriteStateEnum getState() {
+	public SpriteMoveEnum getState() {
 		return state;
 	}
 
-	public void setState(SpriteStateEnum pstate) {
+	public void setState(SpriteMoveEnum pstate) {
 		this.state = pstate;
 	}
 
@@ -589,11 +569,11 @@ public class Mario extends AbstractTileObjectSprite {
 		this.marioRunRightAnimation = marioRunRightAnimation;
 	}
 
-	public SpriteStateEnum getPreviousState() {
+	public SpriteMoveEnum getPreviousState() {
 		return previousState;
 	}
 
-	public void setPreviousState(SpriteStateEnum previousState) {
+	public void setPreviousState(SpriteMoveEnum previousState) {
 		this.previousState = previousState;
 	}
 
@@ -691,7 +671,7 @@ public class Mario extends AbstractTileObjectSprite {
 	public void transfer(TmxMap tilemap, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds,
 			SpriteBatch spriteBatch) {
 		setOnFloor(true);
-		setState(SpriteStateEnum.NO_MOVE);
+		setState(SpriteMoveEnum.NO_MOVE);
 		setAcceleration(new Vector2(0, 0));
 		setDirection(DirectionEnum.RIGHT);
 		setX(transferItem.getTransferPosition().x);

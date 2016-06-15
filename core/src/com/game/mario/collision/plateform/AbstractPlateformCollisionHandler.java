@@ -3,7 +3,7 @@ package com.game.mario.collision.plateform;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
@@ -36,7 +36,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 		if (mario.getAcceleration().y>0) {			
 			mario.getAcceleration().y = 0;
 			mario.setY(plateform.getY() - (mario.getHeight() + mario.getOffset().y) - 0.0001f);
-			mario.setState(SpriteStateEnum.FALLING);
+			mario.setState(SpriteMoveEnum.FALLING);
 			mario.setOnFloor(false);
 		} else {
 			mario.getAcceleration().y = 0;
@@ -48,8 +48,8 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 				plateform.stuckMario(mario);
 				mario.setOnFloor(true);										
 			
-				if (mario.getState()==SpriteStateEnum.JUMPING || mario.getState()==SpriteStateEnum.FALLING) {				
-					mario.setState(SpriteStateEnum.NO_MOVE);
+				if (mario.getState()==SpriteMoveEnum.JUMPING || mario.getState()==SpriteMoveEnum.FALLING) {				
+					mario.setState(SpriteMoveEnum.NO_MOVE);
 				}
 			}
 		}		

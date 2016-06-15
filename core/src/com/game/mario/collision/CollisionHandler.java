@@ -13,7 +13,7 @@ import com.game.mario.collision.plateform.IPlateformCollisionHandler;
 import com.game.mario.collision.upperblock.AbstractUpperBlockCollisionHandler;
 import com.game.mario.collision.upperblock.IUpperBlockCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
@@ -30,11 +30,11 @@ public class CollisionHandler {
 		if (enemy1.getBounds().overlaps(enemy2.getBounds()) && !enemy1.isBumped() && !enemy2.isBumped()) {
 		
 			boolean isKoopaSliding = false;
-			if (enemy1.getEnemyType()==EnemyTypeEnum.KOOPA && enemy1.getState()==SpriteStateEnum.SLIDING) {
+			if (enemy1.getEnemyType()==EnemyTypeEnum.KOOPA && enemy1.getState()==SpriteMoveEnum.SLIDING) {
 				enemy2.bump();	
 				isKoopaSliding = true;
 			}
-			if (enemy2.getEnemyType()==EnemyTypeEnum.KOOPA && enemy2.getState()==SpriteStateEnum.SLIDING) {
+			if (enemy2.getEnemyType()==EnemyTypeEnum.KOOPA && enemy2.getState()==SpriteMoveEnum.SLIDING) {
 				enemy1.bump();
 				isKoopaSliding = true;
 			}

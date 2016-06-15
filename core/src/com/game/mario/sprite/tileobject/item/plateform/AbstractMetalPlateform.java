@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
@@ -61,8 +61,8 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 			if (isStuck() && direction==DirectionEnum.DOWN) {				
 				tileMap.getMario().setY(getY()+getHeight());
 				tileMap.getMario().setOnFloor(true);
-				if (tileMap.getMario().getState()==SpriteStateEnum.FALLING) {
-					tileMap.getMario().setState(SpriteStateEnum.NO_MOVE);					
+				if (tileMap.getMario().getState()==SpriteMoveEnum.FALLING) {
+					tileMap.getMario().setState(SpriteMoveEnum.NO_MOVE);					
 				}
 			}
 			
@@ -92,7 +92,7 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 	}
 	
 	private boolean isUnder(Mario mario) {
-		return mario.getState()!=SpriteStateEnum.JUMPING
+		return mario.getState()!=SpriteMoveEnum.JUMPING
 				&& mario.getY() >= getY() 
 				&& ((mario.getX()+mario.getOffset().x>=getX() && mario.getX()+mario.getOffset().x<=getX()+getWidth())
 				||	(mario.getX()+mario.getOffset().x+mario.getWidth()>=getX() && mario.getX()+mario.getOffset().x+mario.getWidth()<=getX()+getWidth()));

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.CollisionPoint;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -28,8 +28,8 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 		
 		if (sprite.getOldAcceleration().y == 0 && sprite.getMapCollisionEvent().isCollidingBottom()) {
 			// Mario is on a plateform and is still on it
-			if (sprite.getState()==SpriteStateEnum.FALLING) {
-				sprite.setState(SpriteStateEnum.NO_MOVE);
+			if (sprite.getState()==SpriteMoveEnum.FALLING) {
+				sprite.setState(SpriteMoveEnum.NO_MOVE);
 			}
 			sprite.setOnFloor(true);			
 			sprite.setY((int) sprite.getY() + 1 + COLLISION_X_CORRECTIF);
@@ -54,15 +54,15 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 					if (sprite.getMove().y==0 && sprite.getMove().x!=0) {
 						newPosition.x = sprite.getMove().x>0 ? (int) (sprite.getX() + sprite.getOffset().x) +  sprite.getOffset().x - COLLISION_X_CORRECTIF : (int) (sprite.getX() + sprite.getWidth() +  sprite.getOffset().x) -  sprite.getOffset().x + COLLISION_X_CORRECTIF;						
 						sprite.getAcceleration().x = 0;	
-						if (sprite.getState()!=SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.JUMPING) {
-							sprite.setState(SpriteStateEnum.NO_MOVE);
+						if (sprite.getState()!=SpriteMoveEnum.FALLING && sprite.getState()!=SpriteMoveEnum.JUMPING) {
+							sprite.setState(SpriteMoveEnum.NO_MOVE);
 						}
 					}
 					
 					if (sprite.getMove().y<0 && sprite.getMove().x==0) {						
 						newPosition.y = (int) sprite.getY() + 1f;
 						sprite.getAcceleration().y = 0;
-						sprite.setState(SpriteStateEnum.NO_MOVE);
+						sprite.setState(SpriteMoveEnum.NO_MOVE);
 						sprite.setOnFloor(true);					
 					}
 					
@@ -70,7 +70,7 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 						sprite.addCollidingCell(collisionPoint.getCell());						
 						newPosition.y = (int) sprite.getY();
 						sprite.getAcceleration().y = 10e-5F;						
-						sprite.setState(SpriteStateEnum.FALLING);						
+						sprite.setState(SpriteMoveEnum.FALLING);						
 					}
 					
 					if (sprite.getMove().x>0 && sprite.getMove().y>0) {
@@ -86,11 +86,11 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								sprite.addCollidingCell(collisionPoint.getCell());
 								newPosition.y = (int) sprite.getY();
 								sprite.getAcceleration().y = 10e-5F;								
-								if (sprite.getState()!=SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.JUMPING) {
-									sprite.setState(SpriteStateEnum.NO_MOVE);
+								if (sprite.getState()!=SpriteMoveEnum.FALLING && sprite.getState()!=SpriteMoveEnum.JUMPING) {
+									sprite.setState(SpriteMoveEnum.NO_MOVE);
 									sprite.setOnFloor(true);		
-								} else if (sprite.getState()==SpriteStateEnum.JUMPING) {
-									sprite.setState(SpriteStateEnum.FALLING);
+								} else if (sprite.getState()==SpriteMoveEnum.JUMPING) {
+									sprite.setState(SpriteMoveEnum.FALLING);
 								}						
 							} else {								
 								newPosition.x = (int) (sprite.getX() + sprite.getOffset().x) + sprite.getOffset().x - COLLISION_X_CORRECTIF;						
@@ -112,7 +112,7 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								newPosition.y = (int) sprite.getY() + 1f;						
 								sprite.getAcceleration().y = 0;
 								sprite.setOnFloor(true);		
-								sprite.setState(SpriteStateEnum.NO_MOVE);
+								sprite.setState(SpriteMoveEnum.NO_MOVE);
 							} else {
 								newPosition.x = (int) (sprite.getX() + sprite.getOffset().x) + sprite.getOffset().x - COLLISION_X_CORRECTIF;						
 								sprite.getAcceleration().x = 0;										
@@ -134,7 +134,7 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								newPosition.y = (int) sprite.getY() + 1f;
 								sprite.getAcceleration().y = 0;
 								sprite.setOnFloor(true);
-								sprite.setState(SpriteStateEnum.NO_MOVE);
+								sprite.setState(SpriteMoveEnum.NO_MOVE);
 							} else {
 								newPosition.x = (int) (sprite.getX() + sprite.getWidth() + sprite.getOffset().x) - sprite.getOffset().x + COLLISION_X_CORRECTIF;					
 								sprite.getAcceleration().x = 0;					
@@ -156,11 +156,11 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 								newPosition.y = (int) sprite.getY();
 								sprite.getAcceleration().y = 10e-5F;
 								
-								if (sprite.getState()!=SpriteStateEnum.FALLING && sprite.getState()!=SpriteStateEnum.JUMPING) {
-									sprite.setState(SpriteStateEnum.NO_MOVE);
+								if (sprite.getState()!=SpriteMoveEnum.FALLING && sprite.getState()!=SpriteMoveEnum.JUMPING) {
+									sprite.setState(SpriteMoveEnum.NO_MOVE);
 									sprite.setOnFloor(true);
-								} else if (sprite.getState()==SpriteStateEnum.JUMPING) {
-									sprite.setState(SpriteStateEnum.FALLING);
+								} else if (sprite.getState()==SpriteMoveEnum.JUMPING) {
+									sprite.setState(SpriteMoveEnum.FALLING);
 								}
 																
 							} else {								
@@ -222,18 +222,18 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 		}  else {
 			
 			if (sprite.getMove().y < 0 && !onFloorCorrection) {						
-				sprite.setState(SpriteStateEnum.FALLING);
+				sprite.setState(SpriteMoveEnum.FALLING);
 				sprite.setOnFloor(false);
 			} else {
 				checkUpperMapCollision(tileMap, sprite);
-				if (sprite.getState()==SpriteStateEnum.JUMPING && sprite.getMapCollisionEvent().isCollidingUpperBlock()) {					
+				if (sprite.getState()==SpriteMoveEnum.JUMPING && sprite.getMapCollisionEvent().isCollidingUpperBlock()) {					
 					TmxCell collidingCell = sprite.getMapCollisionEvent().getCollisionPoints().get(0).getCell();
 					if (sprite.getY()-collidingCell.getY()<0.2f) {
 						sprite.addCollidingCell(sprite.getMapCollisionEvent().getCollisionPoints().get(0).getCell());
 						newPosition.y = (int) sprite.getY();
 						sprite.setY(newPosition.y);
 						sprite.getAcceleration().y = 10e-5F;
-						sprite.setState(SpriteStateEnum.FALLING);
+						sprite.setState(SpriteMoveEnum.FALLING);
 					}														
 				}
 			}

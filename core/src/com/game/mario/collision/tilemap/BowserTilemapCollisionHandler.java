@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.CollisionPoint;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -54,14 +54,14 @@ public class BowserTilemapCollisionHandler extends AbstractTilemapCollisionHandl
 						newPosition.y = (int) sprite.getY() + 1f;
 						sprite.getAcceleration().y = 0;												
 						sprite.setOnFloor(true);						
-						sprite.setState(SpriteStateEnum.WALKING);						
+						sprite.setState(SpriteMoveEnum.WALKING);						
 					}					
 										
 					if (move.x>0 && move.y<0) {											 
 						newPosition.y = (int) sprite.getY() + 1f;						
 						sprite.getAcceleration().y = 0;
 						sprite.setOnFloor(true);		
-						sprite.setState(SpriteStateEnum.WALKING);			
+						sprite.setState(SpriteMoveEnum.WALKING);			
 					}
 					
 					if (move.x<0 && move.y<0) {	
@@ -69,7 +69,7 @@ public class BowserTilemapCollisionHandler extends AbstractTilemapCollisionHandl
 						newPosition.y = (int) sprite.getY() + 1f;
 						sprite.getAcceleration().y = 0;
 						sprite.setOnFloor(true);
-						sprite.setState(SpriteStateEnum.WALKING);																							
+						sprite.setState(SpriteMoveEnum.WALKING);																							
 					}														
 														
 				}
@@ -86,7 +86,7 @@ public class BowserTilemapCollisionHandler extends AbstractTilemapCollisionHandl
 		}  else {
 			if (move.y < 0 && !onFloorCorrection) {				
 				sprite.setOnFloor(false);
-				sprite.setState(SpriteStateEnum.FALLING);				
+				sprite.setState(SpriteMoveEnum.FALLING);				
 			}
 		}			
 		

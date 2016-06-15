@@ -13,7 +13,7 @@ import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.CastleTypeEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -52,7 +52,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 				if (mario.isOnFloor() && endLevelState==0) {
 					endLevelState = 1;
 					mario.getAcceleration().x=0;
-					mario.setState(SpriteStateEnum.NO_MOVE);
+					mario.setState(SpriteMoveEnum.NO_MOVE);
 					mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
 				}				
 				mario.move(delta);

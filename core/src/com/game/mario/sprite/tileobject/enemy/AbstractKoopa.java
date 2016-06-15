@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.EnemyTypeEnum;
-import com.game.mario.enums.SpriteStateEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
@@ -54,7 +54,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 			gravitating = false;
 			onFloor = false;
 			currentAnimation = flyAnimation;
-			state = SpriteStateEnum.FLYING;
+			state = SpriteMoveEnum.FLYING;
 			direction = DirectionEnum.DOWN;		
 			STEP_NUMBER = 6;
 			DECCELERATION_STEP = STEP_NUMBER/2 + 0.01f;
@@ -82,7 +82,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	public void move(float deltaTime) {
 		
 		super.move(deltaTime);
-		if (state==SpriteStateEnum.FLYING) {
+		if (state==SpriteMoveEnum.FLYING) {
 			if (currentStep<=STEP_NUMBER) {				
 				float positiveAcceleration =  Math.abs(acceleration.y);
 				currentStep = currentStep + positiveAcceleration;
@@ -106,7 +106,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		super.update(tileMap, camera, deltaTime);
 		
 		if (isAlive()) {
-			if (!bumped && state==SpriteStateEnum.NO_MOVE) {									
+			if (!bumped && state==SpriteMoveEnum.NO_MOVE) {									
 				noMoveTime = noMoveTime + deltaTime;
 				if (noMoveTime<5) {
 					// nothing to do
@@ -118,7 +118,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 					currentAnimation = walkLeftAnimation;
 					acceleration.x = -1.9f;		
 					bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
-					state = SpriteStateEnum.WALKING;
+					state = SpriteMoveEnum.WALKING;
 				} 
 			}			
 		}			
@@ -126,7 +126,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	@Override
 	public void updateAnimation(float delta) {		
-		if (!bumped && state==SpriteStateEnum.WALKING) {
+		if (!bumped && state==SpriteMoveEnum.WALKING) {
 			if (acceleration.x>0 && currentAnimation!=walkRightAnimation) {
 				currentAnimation = walkRightAnimation;
 				
@@ -147,45 +147,45 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 			bump();
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);		
 		} else {
-			if (state == SpriteStateEnum.FLYING) {
-				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+			if (state == SpriteMoveEnum.FLYING) {
+				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteMoveEnum.FALLING;
 				if (isEnemyHit) {
 					mario.setY(getY()+getHeight());					
 					mario.getAcceleration().y = 0.2f;	
 					currentAnimation = walkLeftAnimation;
 					acceleration.x = -1.9f;		
 					bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
-					state = SpriteStateEnum.FALLING_AFTER_FLY;
+					state = SpriteMoveEnum.FALLING_AFTER_FLY;
 					collidableWithTilemap = true;
 					gravitating = true;
 				}
-			} else if (state == SpriteStateEnum.WALKING) {
-				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+			} else if (state == SpriteMoveEnum.WALKING) {
+				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteMoveEnum.FALLING;
 				if (isEnemyHit) {
 					setSize(1 - offset.x * 2, 0.875f);	
 					bounds.set(getX(), getY(), getWidth(), getHeight());				
 					mario.getAcceleration().y = 0.15f;				
 					acceleration.x = 0;
-					state = SpriteStateEnum.NO_MOVE;
+					state = SpriteMoveEnum.NO_MOVE;
 					currentAnimation = killedAnimation;
 					noMoveTime = 0;
 					mario.setY(getY()+1);
 					SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);				
 				}	
-			} else if (state == SpriteStateEnum.NO_MOVE) {			
+			} else if (state == SpriteMoveEnum.NO_MOVE) {			
 				isEnemyHit = true;
 				acceleration.x = mario.getX()+mario.getWidth()/2 < getX()+getWidth()/2 ? 10 : -10;
 				setX(acceleration.x>0 ? mario.getX()+mario.getWidth()+0.1f :  mario.getX()-1f);
-				state = SpriteStateEnum.SLIDING;
+				state = SpriteMoveEnum.SLIDING;
 				currentAnimation = slideAnimation;			
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
-			} else if (state == SpriteStateEnum.SLIDING) {
-				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteStateEnum.FALLING;
+			} else if (state == SpriteMoveEnum.SLIDING) {
+				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteMoveEnum.FALLING;
 				if (isEnemyHit) {
 					mario.setY(getY()+1);
 					mario.getAcceleration().y = 0.15f;				
 					acceleration.x = 0;
-					state = SpriteStateEnum.NO_MOVE;
+					state = SpriteMoveEnum.NO_MOVE;
 					noMoveTime = 0;
 					currentAnimation = killedAnimation;
 					SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
