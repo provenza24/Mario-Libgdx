@@ -1,13 +1,12 @@
 package com.game.mario.sprite.tileobject.item;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class Flag extends AbstractTileObjectSprite {
 
@@ -25,13 +24,8 @@ public class Flag extends AbstractTileObjectSprite {
 	}
 				
 	public void initializeAnimations(WorldTypeEnum backgroundTypeEnum)  {		
-		spriteSheet = backgroundTypeEnum.equals(WorldTypeEnum.CASTLE) ?  ResourcesLoader.HAWK : ResourcesLoader.FLAG;			
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);				
-		TextureRegion[] flagFrames = new TextureRegion[3];
-		flagFrames[0] = tmp[0][0];
-		flagFrames[1] = tmp[0][1];
-		flagFrames[2] = tmp[0][2];		
-		currentAnimation = new Animation(0.15f, flagFrames);				
+		spriteSheet = backgroundTypeEnum.equals(WorldTypeEnum.CASTLE) ?  ResourcesLoader.HAWK : ResourcesLoader.FLAG;	
+		currentAnimation = AnimationBuilder.getInstance().build(spriteSheet, 0, 3, 0.15f);					
 	}
 
 	public float getFlagTargetPosition() {

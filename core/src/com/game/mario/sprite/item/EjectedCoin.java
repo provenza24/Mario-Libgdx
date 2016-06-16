@@ -1,13 +1,11 @@
 package com.game.mario.sprite.item;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.DeleteItemAction;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class EjectedCoin extends AbstractItem {
 
@@ -17,22 +15,8 @@ public class EjectedCoin extends AbstractItem {
 	}
 
 	@Override
-	public void initializeAnimations() {
-		
-		spriteSheet = ResourcesLoader.COIN_BLOC;				
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 9, spriteSheet.getHeight() / 1);				
-		TextureRegion[] coinFrames = new TextureRegion[9];
-		coinFrames[0] = tmp[0][0];
-		coinFrames[1] = tmp[0][1];
-		coinFrames[2] = tmp[0][2];
-		coinFrames[3] = tmp[0][3];
-		coinFrames[4] = tmp[0][4];
-		coinFrames[5] = tmp[0][5];
-		coinFrames[6] = tmp[0][6];
-		coinFrames[7] = tmp[0][7];
-		coinFrames[8] = tmp[0][8];		
-		currentAnimation = new Animation(0.45f/9, coinFrames);
-		currentAnimation.setPlayMode(PlayMode.NORMAL);
+	public void initializeAnimations() {		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.COIN_BLOC, 0, 9, 0.45f/9);				
 	}
 	
 	@Override

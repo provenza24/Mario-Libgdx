@@ -15,45 +15,54 @@ public class AnimationBuilder {
 		return instance;
 	}
 	
-	public Animation createAnimation(Texture texture, int startFrameIndex, int nbFrames, float frameDelay) {
+	public Animation build(Texture texture, int startFrameIndex, int nbFrames, float frameDelay) {
 			
 		TextureRegion[][] textureRegions = TextureRegion.split(texture, texture.getWidth()/nbFrames, texture.getHeight());		
-		TextureRegion[] frames = new TextureRegion[nbFrames];
+		TextureRegion[] frameTextures = new TextureRegion[nbFrames];
 		for (int i=0;i<nbFrames;i++) {			
-			frames[i] = textureRegions[0][startFrameIndex+i];
+			frameTextures[i] = textureRegions[0][startFrameIndex+i];
 		}		
-		return new Animation(frameDelay, frames);		
+		return new Animation(frameDelay, frameTextures);		
 	}
 	
-	public Animation createAnimation(TextureRegion[][] textureRegions, int startFrameIndex, int nbFrames, float frameDelay) {
+	public Animation build(TextureRegion[][] textureRegions, int startFrameIndex, int nbFrames, float frameDelay) {
 		
-		TextureRegion[] frames = new TextureRegion[nbFrames];
+		TextureRegion[] frameTextures = new TextureRegion[nbFrames];
 		for (int i=0;i<nbFrames;i++) {			
-			frames[i] = textureRegions[0][startFrameIndex+i];
+			frameTextures[i] = textureRegions[0][startFrameIndex+i];
 		}		
-		return new Animation(frameDelay, frames);		
+		return new Animation(frameDelay, frameTextures);		
 	}
 	
-	public Animation createReversedAnimation(Texture texture, int startFrameIndex, int nbFrames, float frameDelay) {
+	public Animation build(TextureRegion[][] textureRegions, int[] frames, float frameDelay) {
+		
+		TextureRegion[] frameTextures = new TextureRegion[frames.length];
+		for (int i=0;i<frames.length;i++) {			
+			frameTextures[i] = textureRegions[0][frames[i]];
+		}		
+		return new Animation(frameDelay, frameTextures);		
+	}
+	
+	public Animation buildReversed(Texture texture, int startFrameIndex, int nbFrames, float frameDelay) {
 		
 		TextureRegion[][] textureRegions = TextureRegion.split(texture, texture.getWidth()/nbFrames, texture.getHeight());		
-		TextureRegion[] frames = new TextureRegion[nbFrames];
+		TextureRegion[] frameTextures = new TextureRegion[nbFrames];
 		int j = 0;
 		for (int i=startFrameIndex;i>=startFrameIndex+1-nbFrames;i--) {			
-			frames[j] = textureRegions[0][i];
+			frameTextures[j] = textureRegions[0][i];
 			j++;
 		}		
-		return new Animation(frameDelay, frames);		
+		return new Animation(frameDelay, frameTextures);		
 	}
 	
-	public Animation createReversedAnimation(TextureRegion[][] textureRegions, int startFrameIndex, int nbFrames, float frameDelay) {		
-		TextureRegion[] frames = new TextureRegion[nbFrames];
+	public Animation buildReversed(TextureRegion[][] textureRegions, int startFrameIndex, int nbFrames, float frameDelay) {		
+		TextureRegion[] frameTextures = new TextureRegion[nbFrames];
 		int j = 0;
 		for (int i=startFrameIndex;i>=startFrameIndex+1-nbFrames;i--) {			
-			frames[j] = textureRegions[0][i];
+			frameTextures[j] = textureRegions[0][i];
 			j++;
 		}		
-		return new Animation(frameDelay, frames);		
+		return new Animation(frameDelay, frameTextures);		
 	}
 	
 	

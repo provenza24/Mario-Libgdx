@@ -1,10 +1,9 @@
 package com.game.mario.sprite.bloc;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class MysteryBlock extends Block {
 				
@@ -15,17 +14,11 @@ public class MysteryBlock extends Block {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ResourcesLoader.MYSTERY_BLOC;
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);		
-		TextureRegion[] animationFrames = new TextureRegion[3];
-		animationFrames[0] = tmp[0][0];
-		animationFrames[1] = tmp[0][1];
-		animationFrames[2] = tmp[0][2];		
-		currentAnimation = new Animation(0.15f, animationFrames);
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MYSTERY_BLOC, 0, 3, 0.15f);		
 	}
 	
 	protected void updateAnimation(float delta) {				
-		currentFrame = currentAnimation.getKeyFrame(blocStateTime, true);		
+		currentFrame = currentAnimation.getKeyFrame(commonStateTime, true);		
 	}
 
 	@Override

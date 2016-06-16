@@ -1,8 +1,6 @@
 package com.game.mario.sprite.tileobject.enemy;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -12,6 +10,7 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class PiranhaPlant extends AbstractTileObjectEnemy {
 			
@@ -53,16 +52,7 @@ public class PiranhaPlant extends AbstractTileObjectEnemy {
 
 	@Override
 	public void initializeAnimations() {
-		
-		spriteSheet = ResourcesLoader.PIRANHA_PLANT;
-
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 2,
-				spriteSheet.getHeight() / 1);
-
-		TextureRegion[] frames = new TextureRegion[2];
-		frames[0] = tmp[0][0];
-		frames[1] = tmp[0][1];
-		currentAnimation = new Animation(0.15f, frames);		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.PIRANHA_PLANT, 0, 2, 0.15f);			
 	}
 	
 	@Override

@@ -1,8 +1,6 @@
 package com.game.mario.sprite.item;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.FireballTilemapCollisionHandler;
@@ -11,6 +9,7 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class Fireball extends AbstractSprite {
 
@@ -36,14 +35,7 @@ public class Fireball extends AbstractSprite {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ResourcesLoader.FIREBALL;				
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);				
-		TextureRegion[] frames = new TextureRegion[4];
-		frames[0] = tmp[0][0];
-		frames[1] = tmp[0][1];
-		frames[2] = tmp[0][2];
-		frames[3] = tmp[0][3];			
-		currentAnimation = new Animation(0.05f, frames);				
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.FIREBALL, 0, 4, 0.05f);						
 	}
 	
 

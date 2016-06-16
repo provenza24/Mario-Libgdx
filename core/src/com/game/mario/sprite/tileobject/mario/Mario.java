@@ -174,46 +174,46 @@ public class Mario extends AbstractTileObjectSprite {
 		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / 14, texture.getHeight());
 			
 		animations[i] = new Animation[10];
-		animations[i][0] = AnimationBuilder.getInstance().createAnimation(tmp, 0, 3, 0.05f);
-		animations[i][1] = AnimationBuilder.getInstance().createAnimation(tmp, 5, 3, 0.05f);
-		animations[i][2] = AnimationBuilder.getInstance().createAnimation(tmp, 9, 1, 1);
-		animations[i][3] = AnimationBuilder.getInstance().createAnimation(tmp, 4, 1, 1);
-		animations[i][4] = AnimationBuilder.getInstance().createAnimation(tmp, 3, 1, 1);
-		animations[i][5] = AnimationBuilder.getInstance().createAnimation(tmp, 8, 1, 1);
-		animations[i][6] = AnimationBuilder.getInstance().createAnimation(tmp, 10, 1, 1);
-		animations[i][7] = AnimationBuilder.getInstance().createAnimation(tmp, 11, 1, 1);
-		animations[i][8] = AnimationBuilder.getInstance().createAnimation(tmp, 12, 1, 1);
-		animations[i][9] = AnimationBuilder.getInstance().createAnimation(tmp, 13, 1, 1);
+		animations[i][0] = AnimationBuilder.getInstance().build(tmp, 0, 3, 0.05f);
+		animations[i][1] = AnimationBuilder.getInstance().build(tmp, 5, 3, 0.05f);
+		animations[i][2] = AnimationBuilder.getInstance().build(tmp, 9, 1, 1);
+		animations[i][3] = AnimationBuilder.getInstance().build(tmp, 4, 1, 1);
+		animations[i][4] = AnimationBuilder.getInstance().build(tmp, 3, 1, 1);
+		animations[i][5] = AnimationBuilder.getInstance().build(tmp, 8, 1, 1);
+		animations[i][6] = AnimationBuilder.getInstance().build(tmp, 10, 1, 1);
+		animations[i][7] = AnimationBuilder.getInstance().build(tmp, 11, 1, 1);
+		animations[i][8] = AnimationBuilder.getInstance().build(tmp, 12, 1, 1);
+		animations[i][9] = AnimationBuilder.getInstance().build(tmp, 13, 1, 1);
 
 	}
 	
 	private void initGrowingAnimations() {
 		Texture growDownRightTexture = ResourcesLoader.MARIO_GROW_UP_RIGHT;
 		TextureRegion[][] tmp = TextureRegion.split(growDownRightTexture, growDownRightTexture.getWidth() / 3, growDownRightTexture.getHeight());		
-		marioGrowUpRightAnimation = AnimationBuilder.getInstance().createAnimation(tmp, 0, 2, 0.15f);
-		marioGrowDownRightAnimation = AnimationBuilder.getInstance().createReversedAnimation(tmp, 1, 2, 0.15f);
+		marioGrowUpRightAnimation = AnimationBuilder.getInstance().build(tmp, 0, 2, 0.15f);
+		marioGrowDownRightAnimation = AnimationBuilder.getInstance().buildReversed(tmp, 1, 2, 0.15f);
 		
 		Texture growDownLeftTexture = ResourcesLoader.MARIO_GROW_UP_LEFT;
 		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3, growDownLeftTexture.getHeight());
-		marioGrowUpLeftAnimation = AnimationBuilder.getInstance().createAnimation(tmp, 0, 2, 0.15f);
-		marioGrowDownLeftAnimation = AnimationBuilder.getInstance().createReversedAnimation(tmp, 1, 2, 0.15f);
+		marioGrowUpLeftAnimation = AnimationBuilder.getInstance().build(tmp, 0, 2, 0.15f);
+		marioGrowDownLeftAnimation = AnimationBuilder.getInstance().buildReversed(tmp, 1, 2, 0.15f);
 	}
 	
 	private void initStarAnimations() {
 		
-		marioStandRightAnimation = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
-		marioStandLeftAnimation = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);		
+		marioStandRightAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
+		marioStandLeftAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);		
 			
 		animations[3] = new Animation[10];
-		animations[3][0] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
-		animations[3][1] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
-		animations[3][2] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
-		animations[3][3] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT, 0, 4, 0.025f);
-		animations[3][4] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_JUMP_RIGHT, 0, 4, 0.025f);
-		animations[3][5] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT, 0, 4, 0.025f);		
+		animations[3][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
+		animations[3][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
+		animations[3][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
+		animations[3][3] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT, 0, 4, 0.025f);
+		animations[3][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_JUMP_RIGHT, 0, 4, 0.025f);
+		animations[3][5] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT, 0, 4, 0.025f);		
 		animations[3][7] = animations[0][7];
 		animations[3][8] = animations[0][8];
-		animations[3][9] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
+		animations[3][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
 	}
 	
 	public void refreshAnimations() {		

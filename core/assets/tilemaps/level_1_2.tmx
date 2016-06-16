@@ -213,7 +213,7 @@
   <object id="134" type="metalPlateform" gid="452" x="4480" y="216" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
-    <property name="mode" value="descending"/>
+    <property name="mode" value="infinite"/>
    </properties>
   </object>
   <object id="135" type="piranha" gid="430" x="5968" y="443" width="32" height="48"/>

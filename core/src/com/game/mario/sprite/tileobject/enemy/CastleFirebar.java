@@ -1,9 +1,7 @@
 package com.game.mario.sprite.tileobject.enemy;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Polygon;
@@ -14,6 +12,7 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class CastleFirebar extends AbstractTileObjectEnemy {
 
@@ -49,14 +48,8 @@ public class CastleFirebar extends AbstractTileObjectEnemy {
 	}	
 
 	@Override
-	public void initializeAnimations() {
-		spriteSheet = ResourcesLoader.CASTLE_FIREBAR;
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);
-		TextureRegion[] animationFrames = new TextureRegion[3];
-		animationFrames[0] = tmp[0][0];
-		animationFrames[1] = tmp[0][1];
-		animationFrames[2] = tmp[0][2];
-		currentAnimation = new Animation(0.08f, animationFrames);						
+	public void initializeAnimations() {		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.CASTLE_FIREBAR, 0, 3, 0.08f);							
 	}
 	
 	public void render(Batch batch) {		

@@ -15,10 +15,6 @@ import com.game.mario.sprite.item.Star;
 import com.game.mario.sprite.tileobject.item.Coin;
 import com.game.mario.sprite.tileobject.item.TransferItemDown;
 import com.game.mario.sprite.tileobject.item.TransferItemRight;
-import com.game.mario.sprite.tileobject.item.plateform.AscendingMetalPlateform;
-import com.game.mario.sprite.tileobject.item.plateform.DescendingMetalPlateform;
-import com.game.mario.sprite.tileobject.item.plateform.HorizontalMetalPlateform;
-import com.game.mario.sprite.tileobject.item.plateform.VerticalMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 

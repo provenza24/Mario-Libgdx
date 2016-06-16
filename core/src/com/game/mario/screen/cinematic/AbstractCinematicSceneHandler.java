@@ -65,7 +65,7 @@ public abstract class AbstractCinematicSceneHandler {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		AbstractSprite.updateStateTime(delta);
+		AbstractSprite.updateCommonStateTime(delta);
 		
 		scrollingBackgrounds.get(0).render();
 		if (scrollingBackgrounds.size>1) {
@@ -132,7 +132,7 @@ public abstract class AbstractCinematicSceneHandler {
 		// Get blocks from tilemap
 		List<Block> blocks = tileMap.getBlocks();
 		if (blocks.size() > 0) {
-			MysteryBlock.updateStateTime(delta);
+			MysteryBlock.updateCommonStateTime(delta);
 			batch = renderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {

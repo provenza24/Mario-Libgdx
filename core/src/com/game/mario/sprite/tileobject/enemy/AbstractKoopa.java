@@ -14,6 +14,7 @@ import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 
@@ -226,41 +227,14 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	protected void initializeTextures() {
 		
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 10, spriteSheet.getHeight() / 1);
-
-		TextureRegion[] walkFrames = new TextureRegion[2];
-		walkFrames[0] = tmp[0][0];
-		walkFrames[1] = tmp[0][1];
-		walkLeftAnimation = new Animation(0.15f, walkFrames);
-		
-		TextureRegion[] walkRightFrames = new TextureRegion[2];
-		walkRightFrames[0] = tmp[0][5];
-		walkRightFrames[1] = tmp[0][6];
-		walkRightAnimation = new Animation(0.15f, walkRightFrames);
-
-		TextureRegion[] slideFrames = new TextureRegion[3];
-		slideFrames[0] = tmp[0][2];
-		slideFrames[1] = tmp[0][3];
-		slideFrames[2] = tmp[0][4];
-		slideAnimation = new Animation(0.04f, slideFrames);
-		
-		TextureRegion[] killedFrames = new TextureRegion[1];
-		killedFrames[0] = tmp[0][3];
-		killedAnimation = new Animation(0, killedFrames);
-		
-		TextureRegion[] wakeUpFrames = new TextureRegion[2];
-		wakeUpFrames[0] = tmp[0][2];		
-		wakeUpFrames[1] = tmp[0][4];
-		wakeUpAnimation = new Animation(0.1f, wakeUpFrames);
-		
-		TextureRegion[] bumpedFrames = new TextureRegion[1];
-		bumpedFrames[0] = tmp[0][7];				
-		bumpAnimation = new Animation(0, bumpedFrames);
-	
-		TextureRegion[] flyFrames = new TextureRegion[2];
-		flyFrames[0] = tmp[0][8];
-		flyFrames[1] = tmp[0][9];		
-		flyAnimation = new Animation(0.15f, flyFrames);		
+		TextureRegion[][] textureRegions = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 10, spriteSheet.getHeight() / 1);
+		walkLeftAnimation = AnimationBuilder.getInstance().build(textureRegions, 0, 2, 0.15f);
+		walkRightAnimation = AnimationBuilder.getInstance().build(textureRegions, 5, 2, 0.15f);
+		slideAnimation = AnimationBuilder.getInstance().build(textureRegions, 2, 3, 0.04f);
+		killedAnimation = AnimationBuilder.getInstance().build(textureRegions, 3, 1, 1f);
+		bumpAnimation = AnimationBuilder.getInstance().build(textureRegions, 7, 1, 1f);		
+		flyAnimation = AnimationBuilder.getInstance().build(textureRegions, 8, 2, 0.15f);
+		wakeUpAnimation = AnimationBuilder.getInstance().build(textureRegions, new int[] {2,4}, 0.1f);							
 	}
 
 }

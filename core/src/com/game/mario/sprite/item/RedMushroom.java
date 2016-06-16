@@ -1,8 +1,7 @@
 package com.game.mario.sprite.item;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class RedMushroom extends AbstractMushroom {
 
@@ -12,11 +11,7 @@ public class RedMushroom extends AbstractMushroom {
 
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ResourcesLoader.RED_MUSHROOM;
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
-		TextureRegion[] animationFrames = new TextureRegion[1];
-		animationFrames[0] = tmp[0][0];
-		currentAnimation = new Animation(0, animationFrames);
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.RED_MUSHROOM, 0, 1, 0);
 	}
 		
 }

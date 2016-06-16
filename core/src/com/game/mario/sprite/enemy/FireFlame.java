@@ -1,8 +1,6 @@
 package com.game.mario.sprite.enemy;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
@@ -10,6 +8,7 @@ import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.tileobject.enemy.Bowser;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class FireFlame extends AbstractEnemy {
 
@@ -39,13 +38,7 @@ public class FireFlame extends AbstractEnemy {
 		
 	@Override
 	public void initializeAnimations() {
-		spriteSheet = ResourcesLoader.FIREFLAME;				
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);				
-		TextureRegion[] frames = new TextureRegion[3];
-		frames[0] = tmp[0][0];
-		frames[1] = tmp[0][1];
-		frames[2] = tmp[0][2];		
-		currentAnimation = new Animation(0.05f, frames);				
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.FIREFLAME, 0, 3, 0.05f);					
 	}
 	
 	@Override

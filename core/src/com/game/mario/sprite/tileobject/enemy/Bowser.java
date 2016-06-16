@@ -83,8 +83,8 @@ public class Bowser extends AbstractTileObjectEnemy {
 		spriteSheet = ResourcesLoader.BOWSER;
 
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);
-		TextureRegion[] walkFrames = new TextureRegion[2];
 		
+		TextureRegion[] walkFrames = new TextureRegion[2];		
 		walkFrames[0] = tmp[0][0];
 		walkFrames[1] = tmp[0][1];
 		walkAnimation = new Animation(0.3f, walkFrames);
@@ -93,8 +93,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 		firingFrames[0] = tmp[0][2];
 		firingFrames[1] = tmp[0][3];
 		
-		fireAnimation = new Animation(0, tmp[0][2]);
-		
+		fireAnimation = new Animation(0, tmp[0][2]);		
 		endFireAnimation = new Animation(0, tmp[0][3]);
 	}
 

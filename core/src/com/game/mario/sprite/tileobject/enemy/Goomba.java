@@ -15,6 +15,7 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class Goomba extends AbstractTileObjectEnemy {
 
@@ -71,22 +72,12 @@ public class Goomba extends AbstractTileObjectEnemy {
 	
 	public void initializeAnimations(WorldTypeEnum backgroundTypeEnum) {
 
-		spriteSheet = TEXTURES.get(backgroundTypeEnum);		
-		
+		spriteSheet = TEXTURES.get(backgroundTypeEnum);				
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);		
 		
-		TextureRegion[] walkFrames = new TextureRegion[2];
-		walkFrames[0] = tmp[0][0];
-		walkFrames[1] = tmp[0][1];
-		walkAnimation = new Animation(0.15f, walkFrames);
-		
-		TextureRegion[] killedFrames = new TextureRegion[1];
-		killedFrames[0] = tmp[0][2];
-		killedAnimation = new Animation(0, killedFrames);		
-		
-		TextureRegion[] bumpFrames = new TextureRegion[1];
-		bumpFrames[0] = tmp[0][3];
-		bumpAnimation = new Animation(0, bumpFrames);
+		walkAnimation = AnimationBuilder.getInstance().build(tmp, 0, 2, 0.15f);
+		killedAnimation = AnimationBuilder.getInstance().build(tmp, 2, 1, 0.15f);
+		bumpAnimation = AnimationBuilder.getInstance().build(tmp, 3, 1, 0.15f);
 	}
 
 }

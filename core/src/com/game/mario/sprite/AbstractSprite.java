@@ -23,7 +23,7 @@ import com.game.mario.util.RectangleUtil;
 
 public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
 	
-	protected static float blocStateTime; 
+	protected static float commonStateTime; 
 	
 	protected int sizeState;
 	
@@ -132,7 +132,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public abstract void initializeAnimations();
 
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
-						
+							
 		if (alive) {
 			// The sprite is alive, we first update its animation
 			updateAnimation(deltaTime);
@@ -477,8 +477,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		this.frame = frame;
 	}
 	
-	public static void updateStateTime(float delta) {		
-		blocStateTime = blocStateTime + delta;
+	public static void updateCommonStateTime(float delta) {		
+		commonStateTime = commonStateTime + delta;
 	}
 	
 }

@@ -1,7 +1,5 @@
 package com.game.mario.sprite.sfx;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -10,6 +8,7 @@ import com.game.mario.action.DeleteItemAction;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class FireballExplosion extends AbstractItem {
 	
@@ -27,15 +26,7 @@ public class FireballExplosion extends AbstractItem {
 
 	@Override
 	public void initializeAnimations() {
-		
-		spriteSheet = ResourcesLoader.FIREBALL_EXPLOSION;				
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 3, spriteSheet.getHeight() / 1);				
-		TextureRegion[] frames = new TextureRegion[3];
-		frames[0] = tmp[0][0];
-		frames[1] = tmp[0][1];
-		frames[2] = tmp[0][2];				
-		currentAnimation = new Animation(0.05f, frames);			
-		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.FIREBALL_EXPLOSION, 0, 3, 0.05f);						
 	}
 
 	@Override

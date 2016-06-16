@@ -206,7 +206,7 @@ public class GameScreen implements Screen  {
 	private void handleMarioAlive(float delta) {
 		
 		
-		AbstractSprite.updateStateTime(delta);
+		AbstractSprite.updateCommonStateTime(delta);
 		
 		handlePlateforms(delta);
 		
@@ -432,7 +432,7 @@ public class GameScreen implements Screen  {
 	private void handleItems(float deltaTime) {
 		List<AbstractSprite> items = tileMap.getItems();		
 		for (int i = 0; i < items.size(); i++) {
-			AbstractSprite item = items.get(i);			
+			AbstractSprite item = items.get(i);						
 			item.update(tileMap, camera.getCamera(), deltaTime);
 			boolean collideMario = item.overlaps(mario);			
 			
