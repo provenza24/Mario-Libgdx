@@ -1,4 +1,4 @@
-package com.game.mario.util;
+package com.game.mario.util.constant;
 
 public class TilemapPropertiesConstants {
 

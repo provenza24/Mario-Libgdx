@@ -14,7 +14,7 @@ import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.util.ResourcesLoader;
-import com.game.mario.util.TilemapPropertiesConstants;
+import com.game.mario.util.constant.TilemapPropertiesConstants;
 
 public abstract class TransferItem extends AbstractTileObjectSprite {
 

@@ -1,4 +1,4 @@
-package com.game.mario.util;
+package com.game.mario.util.constant;
 
 import com.badlogic.gdx.Input.Keys;
 

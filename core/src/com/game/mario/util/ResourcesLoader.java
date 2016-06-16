@@ -7,6 +7,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.game.mario.enums.WorldTypeEnum;
+import com.game.mario.util.constant.WinConstants;
 
 public class ResourcesLoader {
 
@@ -63,9 +64,28 @@ public class ResourcesLoader {
 	
 	public static final Texture MARIO_SMALL_STAR = new Texture(Gdx.files.internal("sprites/mario/mario-star.png"));
 	
-	public static final Texture MARIO_SMALL_STAR_JUMP_LEFT = new Texture(Gdx.files.internal("sprites/mario/small/star/mario_jump_left.png"));
+	public static final Texture MARIO_SMALL_STAR_JUMP_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_jump_left.png"));
 	
-	public static final Texture MARIO_SMALL_STAR_SLIDE_LEFT = new Texture(Gdx.files.internal("sprites/mario/small/star/mario_slide_left.png"));
+	public static final Texture MARIO_SMALL_STAR_SLIDE_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_slide_left.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_RUN_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_run_left.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_STAND_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_stand_left.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_RUN_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_run_right.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_JUMP_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_jump_right.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_SLIDE_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_slide_right.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_STAND_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_stand_right.png"));
+	
+	public static final Texture MARIO_SMALL_STAR_VICTORY = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_victory.png"));
+	
+	public static final Texture MARIO_GROW_UP_RIGHT = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-right.png"));
+	
+	public static final Texture MARIO_GROW_UP_LEFT = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
+	
 	
 	// Blocks
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));

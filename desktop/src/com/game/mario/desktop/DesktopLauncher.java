@@ -3,7 +3,7 @@ package com.game.mario.desktop;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.game.mario.GameManager;
-import com.game.mario.util.WinConstants;
+import com.game.mario.util.constant.WinConstants;
 
 public class DesktopLauncher {
 		

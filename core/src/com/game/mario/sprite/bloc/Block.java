@@ -7,7 +7,7 @@ import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sprite.AbstractSprite;
-import com.game.mario.util.TileIdConstants;
+import com.game.mario.util.constant.TileIdConstants;
 
 public abstract class Block extends AbstractSprite {
 	

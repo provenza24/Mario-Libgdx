@@ -11,7 +11,7 @@ import com.game.mario.screen.menu.AbstractMenuScreen;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.menu.MushroomSelector;
 import com.game.mario.util.ResourcesLoader;
-import com.game.mario.util.WinConstants;
+import com.game.mario.util.constant.WinConstants;
 
 public class MainMenuScreen extends AbstractMenuScreen {
 

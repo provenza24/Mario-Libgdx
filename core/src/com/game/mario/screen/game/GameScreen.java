@@ -45,8 +45,8 @@ import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
-import com.game.mario.util.KeysConstants;
-import com.game.mario.util.WinConstants;
+import com.game.mario.util.constant.KeysConstants;
+import com.game.mario.util.constant.WinConstants;
 
 public class GameScreen implements Screen  {
 		

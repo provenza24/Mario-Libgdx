@@ -21,7 +21,7 @@ import com.game.mario.sprite.item.wallpiece.TopRightWallPiece;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
-import com.game.mario.util.TileIdConstants;
+import com.game.mario.util.constant.TileIdConstants;
 
 public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 

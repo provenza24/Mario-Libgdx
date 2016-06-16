@@ -10,7 +10,7 @@ import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
-import com.game.mario.util.TileIdConstants;
+import com.game.mario.util.constant.TileIdConstants;
 
 public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHandler {
 

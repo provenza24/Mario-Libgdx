@@ -1,4 +1,4 @@
-package com.game.mario.util;
+package com.game.mario.util.constant;
 
 import java.util.ArrayList;
 import java.util.HashMap;

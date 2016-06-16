@@ -41,8 +41,8 @@ import com.game.mario.sprite.tileobject.item.plateform.HorizontalMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.VerticalMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.sprite.tileobject.sfx.Lava;
-import com.game.mario.util.TileIdConstants;
-import com.game.mario.util.TilemapPropertiesConstants;
+import com.game.mario.util.constant.TileIdConstants;
+import com.game.mario.util.constant.TilemapPropertiesConstants;
 
 public class TmxMap {
 

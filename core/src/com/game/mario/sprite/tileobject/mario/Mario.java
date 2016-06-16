@@ -3,7 +3,6 @@ package com.game.mario.sprite.tileobject.mario;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -27,6 +26,7 @@ import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.sprite.tileobject.item.TransferItem;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 /**
  * sizeState values : 0=small, 1=big, 2=flowered
@@ -36,6 +36,7 @@ import com.game.mario.util.ResourcesLoader;
  */
 public class Mario extends AbstractTileObjectSprite {
 			
+	/** Offset contants */
 	private static final float X_OFFSET = 0.05f;
 	
 	private static final float Y_OFFSET = 0.1f;
@@ -50,6 +51,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private static final float ACCELERATION_COEF_SPEEDUP = 0.2f;
 
+	/** Animations tables : each state of Mario */
 	private Animation animations[][];
 
 	private Animation marioRunRightAnimation;
@@ -126,7 +128,7 @@ public class Mario extends AbstractTileObjectSprite {
 		direction = DirectionEnum.RIGHT;
 		state = SpriteMoveEnum.NO_MOVE;
 		previousState = SpriteMoveEnum.NO_MOVE;
-		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
+		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());		
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
 		invincible = false;
@@ -154,6 +156,66 @@ public class Mario extends AbstractTileObjectSprite {
 		refreshAnimations();
 	}
 	
+	
+
+	@Override
+	public void initializeAnimations() {
+		
+		animations = new Animation[4][10];
+		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);
+		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
+		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);		
+		initGrowingAnimations();		
+		initStarAnimations();
+	}
+
+	private void initializeAnimation(Texture texture, int i) {
+
+		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / 14, texture.getHeight());
+			
+		animations[i] = new Animation[10];
+		animations[i][0] = AnimationBuilder.getInstance().createAnimation(tmp, 0, 3, 0.05f);
+		animations[i][1] = AnimationBuilder.getInstance().createAnimation(tmp, 5, 3, 0.05f);
+		animations[i][2] = AnimationBuilder.getInstance().createAnimation(tmp, 9, 1, 1);
+		animations[i][3] = AnimationBuilder.getInstance().createAnimation(tmp, 4, 1, 1);
+		animations[i][4] = AnimationBuilder.getInstance().createAnimation(tmp, 3, 1, 1);
+		animations[i][5] = AnimationBuilder.getInstance().createAnimation(tmp, 8, 1, 1);
+		animations[i][6] = AnimationBuilder.getInstance().createAnimation(tmp, 10, 1, 1);
+		animations[i][7] = AnimationBuilder.getInstance().createAnimation(tmp, 11, 1, 1);
+		animations[i][8] = AnimationBuilder.getInstance().createAnimation(tmp, 12, 1, 1);
+		animations[i][9] = AnimationBuilder.getInstance().createAnimation(tmp, 13, 1, 1);
+
+	}
+	
+	private void initGrowingAnimations() {
+		Texture growDownRightTexture = ResourcesLoader.MARIO_GROW_UP_RIGHT;
+		TextureRegion[][] tmp = TextureRegion.split(growDownRightTexture, growDownRightTexture.getWidth() / 3, growDownRightTexture.getHeight());		
+		marioGrowUpRightAnimation = AnimationBuilder.getInstance().createAnimation(tmp, 0, 2, 0.15f);
+		marioGrowDownRightAnimation = AnimationBuilder.getInstance().createReversedAnimation(tmp, 1, 2, 0.15f);
+		
+		Texture growDownLeftTexture = ResourcesLoader.MARIO_GROW_UP_LEFT;
+		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3, growDownLeftTexture.getHeight());
+		marioGrowUpLeftAnimation = AnimationBuilder.getInstance().createAnimation(tmp, 0, 2, 0.15f);
+		marioGrowDownLeftAnimation = AnimationBuilder.getInstance().createReversedAnimation(tmp, 1, 2, 0.15f);
+	}
+	
+	private void initStarAnimations() {
+		
+		marioStandRightAnimation = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
+		marioStandLeftAnimation = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);		
+			
+		animations[3] = new Animation[10];
+		animations[3][0] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
+		animations[3][1] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
+		animations[3][2] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
+		animations[3][3] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT, 0, 4, 0.025f);
+		animations[3][4] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_JUMP_RIGHT, 0, 4, 0.025f);
+		animations[3][5] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT, 0, 4, 0.025f);		
+		animations[3][7] = animations[0][7];
+		animations[3][8] = animations[0][8];
+		animations[3][9] = AnimationBuilder.getInstance().createAnimation(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
+	}
+	
 	public void refreshAnimations() {		
 		int animationIdx = owningStar ? sizeState == 0 ? 3 : 4 : sizeState;
 		marioRunRightAnimation = animations[animationIdx][0];
@@ -165,192 +227,7 @@ public class Mario extends AbstractTileObjectSprite {
 		marioDeathAnimation = animations[animationIdx][6];
 		marioFlagRightAnimation = animations[animationIdx][7];
 		marioFlagLeftAnimation = animations[animationIdx][8];
-		marioVictoryAnimation = animations[animationIdx][9];
-		
-	}
-	
-	private Animation createAnimation(TextureRegion[][] textures, int startFrameIndex, int nbFrames, float frameDelay) {
-				
-		TextureRegion[] frames = new TextureRegion[nbFrames];
-		for (int i=0;i<nbFrames;i++) {			
-			frames[i] = textures[0][startFrameIndex+i];
-		}		
-		return new Animation(frameDelay, frames);		
-	}
-		
-	private void initStarAnimations() {
-		
-		final int STAND_RIGHT_FRAME_INDEX = 0;
-		final int STAND_RIGHT_FRAMES = 4;
-		final int RUN_RIGHT_FRAME_INDEX = 4;
-		final int RUN_RIGHT_FRAMES = 24;
-		final int JUMP_RIGHT_FRAME_INDEX = 28;
-		final int JUMP_RIGHT_FRAMES = 4;
-		final int SLIDE_RIGHT_FRAME_INDEX = 32;
-		final int SLIDE_RIGHT_FRAMES = 4;
-		
-		final int STAND_LEFT_FRAME_INDEX = 36;
-		final int STAND_LEFT_FRAMES = 4;
-		final int RUN_LEFT_FRAMES = 24;
-		final int RUN_LEFT_FRAME_INDEX = 40;
-				
-		Texture textureTmp = ResourcesLoader.MARIO_SMALL_STAR;
-		TextureRegion[][] tmp = TextureRegion.split(textureTmp, textureTmp.getWidth() / 76, textureTmp.getHeight() / 1);
-
-		marioStandRightAnimation = createAnimation(tmp, STAND_RIGHT_FRAME_INDEX, STAND_RIGHT_FRAMES, 0.025f);
-		marioRunRightAnimation = createAnimation(tmp, RUN_RIGHT_FRAME_INDEX, RUN_RIGHT_FRAMES, 0.025f);	
-		marioJumpRightAnimation = createAnimation(tmp, JUMP_RIGHT_FRAME_INDEX, JUMP_RIGHT_FRAMES, 0.025f);			
-		marioSlideRightAnimation = createAnimation(tmp, SLIDE_RIGHT_FRAME_INDEX, SLIDE_RIGHT_FRAMES, 0.025f);
-		
-		marioStandLeftAnimation = createAnimation(tmp, STAND_LEFT_FRAME_INDEX, STAND_LEFT_FRAMES, 0.025f);		
-		marioRunLeftAnimation = createAnimation(tmp, RUN_LEFT_FRAME_INDEX, RUN_LEFT_FRAMES, 0.025f);
-				
-		Texture textureJumpingLeft = ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT;
-		TextureRegion[][] regionsJumpingLeft = TextureRegion.split(textureJumpingLeft, textureJumpingLeft.getWidth()/4, textureJumpingLeft.getHeight() / 1);
-		marioJumpLeftAnimation = createAnimation(regionsJumpingLeft, 0, 4, 0.025f);
-		
-		Texture textureSlidingLeft = ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT;
-		TextureRegion[][] regionsSlidingLeft = TextureRegion.split(textureSlidingLeft, textureSlidingLeft.getWidth()/4, textureSlidingLeft.getHeight() / 1);
-		marioSlideLeftAnimation = createAnimation(regionsSlidingLeft, 0, 4, 0.025f);
-								
-		TextureRegion[] marioDeathFrames = new TextureRegion[1];
-		marioDeathFrames[0] = tmp[0][46];
-		marioDeathAnimation = new Animation(1, marioDeathFrames);
-
-		TextureRegion[] marioFlagRightFrames = new TextureRegion[2];
-		marioFlagRightFrames[0] = tmp[0][48];
-		marioFlagRightFrames[1] = tmp[0][49];
-		marioFlagRightAnimation = new Animation(0.025f, marioFlagRightFrames);
-
-		TextureRegion[] marioFlagLeftFrames = new TextureRegion[2];
-		marioFlagLeftFrames[0] = tmp[0][50];
-		marioFlagLeftFrames[1] = tmp[0][51];
-		marioFlagLeftAnimation = new Animation(0.025f, marioFlagLeftFrames);
-
-		TextureRegion[] marioVictoryFrames = new TextureRegion[1];
-		marioVictoryFrames[0] = tmp[0][52];
-		marioVictoryAnimation = new Animation(1, marioVictoryFrames);
-
-		if (animations == null) {
-			animations = new Animation[4][10];
-		}
-		animations[3] = new Animation[10];
-		animations[3][0] = marioRunRightAnimation;
-		animations[3][1] = marioRunLeftAnimation;
-		animations[3][2] = marioSlideRightAnimation;
-		animations[3][3] = marioSlideLeftAnimation;
-		animations[3][4] = marioJumpRightAnimation;
-		animations[3][5] = marioJumpLeftAnimation;
-		animations[3][6] = marioDeathAnimation;
-		animations[3][7] = marioFlagRightAnimation;
-		animations[3][8] = marioFlagLeftAnimation;
-		animations[3][9] = marioVictoryAnimation;
-	}
-
-	@Override
-	public void initializeAnimations() {
-		
-		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);
-		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
-		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);
-
-		Texture growDownRightTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-right.png"));
-		TextureRegion[][] tmp = TextureRegion.split(growDownRightTexture, growDownRightTexture.getWidth() / 3,
-				growDownRightTexture.getHeight() / 1);
-		TextureRegion[] frames = new TextureRegion[2];
-		frames[0] = tmp[0][1];
-		frames[1] = tmp[0][0];
-		marioGrowDownRightAnimation = new Animation(0.15f, frames);
-
-		Texture growDownLeftTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
-		tmp = TextureRegion.split(growDownLeftTexture, growDownLeftTexture.getWidth() / 3, growDownLeftTexture.getHeight() / 1);
-		frames = new TextureRegion[2];
-		frames[0] = tmp[0][1];
-		frames[1] = tmp[0][0];
-		marioGrowDownLeftAnimation = new Animation(0.15f, frames);
-
-		Texture growUpLeftTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
-		tmp = TextureRegion.split(growUpLeftTexture, growUpLeftTexture.getWidth() / 3,
-				growUpLeftTexture.getHeight() / 1);
-		frames = new TextureRegion[2];
-		frames[0] = tmp[0][0];
-		frames[1] = tmp[0][1];
-		marioGrowUpLeftAnimation = new Animation(0.15f, frames);
-
-		Texture growUpRightTexture = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-right.png"));
-		tmp = TextureRegion.split(growUpRightTexture, growUpRightTexture.getWidth() / 3,
-				growUpRightTexture.getHeight() / 1);
-		frames = new TextureRegion[2];
-		frames[0] = tmp[0][0];
-		frames[1] = tmp[0][1];
-		marioGrowUpRightAnimation = new Animation(0.15f, frames);
-		
-		initStarAnimations();
-	}
-
-	private void initializeAnimation(Texture texture, int i) {
-
-		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / 14, texture.getHeight() / 1);
-
-		TextureRegion[] marioRunRightFrames = new TextureRegion[3];
-		marioRunRightFrames[0] = tmp[0][0];
-		marioRunRightFrames[1] = tmp[0][1];
-		marioRunRightFrames[2] = tmp[0][2];
-		marioRunRightAnimation = new Animation(0.05f, marioRunRightFrames);		
-
-		TextureRegion[] marioRunLeftFrames = new TextureRegion[3];
-		marioRunLeftFrames[0] = tmp[0][5];
-		marioRunLeftFrames[1] = tmp[0][6];
-		marioRunLeftFrames[2] = tmp[0][7];
-		marioRunLeftAnimation = new Animation(0.05f, marioRunLeftFrames);
-
-		TextureRegion[] marioSlideRightFrames = new TextureRegion[1];
-		marioSlideRightFrames[0] = tmp[0][9];
-		marioSlideRightAnimation = new Animation(1, marioSlideRightFrames);
-
-		TextureRegion[] marioSlideLeftFrames = new TextureRegion[1];
-		marioSlideLeftFrames[0] = tmp[0][4];
-		marioSlideLeftAnimation = new Animation(1, marioSlideLeftFrames);
-
-		TextureRegion[] marioJumpRightFrames = new TextureRegion[1];
-		marioJumpRightFrames[0] = tmp[0][3];
-		marioJumpRightAnimation = new Animation(1, marioJumpRightFrames);
-
-		TextureRegion[] marioJumpLeftFrames = new TextureRegion[1];
-		marioJumpLeftFrames[0] = tmp[0][8];
-		marioJumpLeftAnimation = new Animation(1, marioJumpLeftFrames);
-
-		TextureRegion[] marioDeathFrames = new TextureRegion[1];
-		marioDeathFrames[0] = tmp[0][10];
-		marioDeathAnimation = new Animation(1, marioDeathFrames);
-
-		TextureRegion[] marioFlagRightFrames = new TextureRegion[1];
-		marioFlagRightFrames[0] = tmp[0][11];
-		marioFlagRightAnimation = new Animation(1, marioFlagRightFrames);
-
-		TextureRegion[] marioFlagLeftFrames = new TextureRegion[1];
-		marioFlagLeftFrames[0] = tmp[0][12];
-		marioFlagLeftAnimation = new Animation(1, marioFlagLeftFrames);
-
-		TextureRegion[] marioVictoryFrames = new TextureRegion[1];
-		marioVictoryFrames[0] = tmp[0][13];
-		marioVictoryAnimation = new Animation(1, marioVictoryFrames);
-
-		if (animations == null) {
-			animations = new Animation[4][10];
-		}
-		animations[i] = new Animation[10];
-		animations[i][0] = marioRunRightAnimation;
-		animations[i][1] = marioRunLeftAnimation;
-		animations[i][2] = marioSlideRightAnimation;
-		animations[i][3] = marioSlideLeftAnimation;
-		animations[i][4] = marioJumpRightAnimation;
-		animations[i][5] = marioJumpLeftAnimation;
-		animations[i][6] = marioDeathAnimation;
-		animations[i][7] = marioFlagRightAnimation;
-		animations[i][8] = marioFlagLeftAnimation;
-		animations[i][9] = marioVictoryAnimation;
-
+		marioVictoryAnimation = animations[animationIdx][9];		
 	}
 
 	public void accelerate(boolean accelerationKeyHold) {
