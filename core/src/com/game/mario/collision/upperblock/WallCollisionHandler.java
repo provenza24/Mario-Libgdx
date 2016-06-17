@@ -9,15 +9,15 @@ import com.game.mario.action.ChangeCellValueAction;
 import com.game.mario.action.DeleteBlocSpriteAction;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.WallBlock;
-import com.game.mario.sprite.item.EjectedCoin;
-import com.game.mario.sprite.item.wallpiece.AbstractWallPiece;
-import com.game.mario.sprite.item.wallpiece.BottomLeftWallPiece;
-import com.game.mario.sprite.item.wallpiece.BottomRightWallPiece;
-import com.game.mario.sprite.item.wallpiece.TopLeftWallPiece;
-import com.game.mario.sprite.item.wallpiece.TopRightWallPiece;
+import com.game.mario.sprite.sfx.EjectedCoin;
+import com.game.mario.sprite.sfx.wallpiece.AbstractWallPiece;
+import com.game.mario.sprite.sfx.wallpiece.BottomLeftWallPiece;
+import com.game.mario.sprite.sfx.wallpiece.BottomRightWallPiece;
+import com.game.mario.sprite.sfx.wallpiece.TopLeftWallPiece;
+import com.game.mario.sprite.sfx.wallpiece.TopRightWallPiece;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -70,19 +70,19 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		tileMap.removeCell(collidingCell.getX(), collidingCell.getY());
 		
 		AbstractWallPiece topLeftPiece = new TopLeftWallPiece(collidingCell.getX(), collidingCell.getY()+0.5f); 
-		tileMap.getItems().add(topLeftPiece);
+		tileMap.getSfxSprites().add(topLeftPiece);
 		stage.addActor(topLeftPiece);
 		
 		AbstractWallPiece topRightPiece = new TopRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()+0.5f); 
-		tileMap.getItems().add(topRightPiece);
+		tileMap.getSfxSprites().add(topRightPiece);
 		stage.addActor(topRightPiece);
 		
 		AbstractWallPiece bottomRightPiece = new BottomRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()); 
-		tileMap.getItems().add(bottomRightPiece);
+		tileMap.getSfxSprites().add(bottomRightPiece);
 		stage.addActor(bottomRightPiece);
 		
 		AbstractWallPiece bottomLeftPiece = new BottomLeftWallPiece(collidingCell.getX(), collidingCell.getY()); 
-		tileMap.getItems().add(bottomLeftPiece);
+		tileMap.getSfxSprites().add(bottomLeftPiece);
 		stage.addActor(bottomLeftPiece);
 		
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BREAK_BLOCK);
@@ -106,10 +106,10 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 			if (specialWallBlock.getItemEnum()==ItemEnum.COINS_10 && specialWallBlock.getCoins() > 0 ) {				
 				GameManager.getGameManager().addCoin();
 				specialWallBlock.removeCoin();				
-				AbstractItem item = new EjectedCoin(specialWallBlock.getX(), specialWallBlock.getY()+1);									
-				tileMap.getItems().add(item);
-				stage.addActor(item);				   				
-				item.addAppearAction();		
+				AbstractSfxSprite sprite = new EjectedCoin(specialWallBlock.getX(), specialWallBlock.getY()+1);									
+				tileMap.getSfxSprites().add(sprite);
+				stage.addActor(sprite);				   				
+				sprite.addAppearAction();		
 				if (specialWallBlock.getCoins()==0) {
 					replacingTileValue = specialWallBlock.getReplacingTileValue();
 				}											

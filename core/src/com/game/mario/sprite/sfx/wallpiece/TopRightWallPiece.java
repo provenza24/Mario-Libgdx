@@ -1,4 +1,4 @@
-package com.game.mario.sprite.item.wallpiece;
+package com.game.mario.sprite.sfx.wallpiece;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

@@ -6,9 +6,9 @@ import com.game.mario.GameManager;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.AbstractSprite;
-import com.game.mario.sprite.item.EjectedCoin;
+import com.game.mario.sprite.sfx.EjectedCoin;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -26,10 +26,10 @@ public class CoinCollisionHandler extends AbstractItemCollisionHandler {
 
 	@Override
 	public void bump(Stage stage, TmxMap tileMap, AbstractSprite item) {		
-		AbstractItem ejectedCoin = new EjectedCoin(item.getX(), item.getY());
+		AbstractSfxSprite ejectedCoin = new EjectedCoin(item.getX(), item.getY());
 		GameManager.getGameManager().addCoin();
 		item.setDeletable(true);
-		tileMap.getItems().add(ejectedCoin);
+		tileMap.getSfxSprites().add(ejectedCoin);
 		stage.addActor(ejectedCoin);
 		ejectedCoin.addAppearAction();
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);

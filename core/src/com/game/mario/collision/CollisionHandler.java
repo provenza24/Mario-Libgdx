@@ -15,6 +15,7 @@ import com.game.mario.collision.upperblock.IUpperBlockCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractEnemy;
+import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -72,7 +73,7 @@ public class CollisionHandler {
 	
 	}
 	
-	public void collideMarioWithItem(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
+	public void collideMarioWithItem(Mario mario, AbstractItem item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
 		IItemCollisionHandler collisionHandler = AbstractItemCollisionHandler.getHandler(item);
 		if (collisionHandler!=null) {			
 			collisionHandler.collide(mario, item, camera, scrollingBackgrounds);

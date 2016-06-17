@@ -3,12 +3,13 @@ package com.game.mario.sprite.tileobject.item;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.enums.ItemEnum;
 import com.game.mario.enums.WorldTypeEnum;
-import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
+import com.game.mario.sprite.tileobject.AbstractTileObjectItem;
 import com.game.mario.util.ResourcesLoader;
 import com.game.mario.util.animation.AnimationBuilder;
 
-public class Flag extends AbstractTileObjectSprite {
+public class Flag extends AbstractTileObjectItem {
 
 	private float flagTargetPosition;
 	
@@ -35,5 +36,14 @@ public class Flag extends AbstractTileObjectSprite {
 	@Override
 	public void initializeAnimations()  {		
 	
+	}
+
+	@Override
+	public void addAppearAction() {	
+	}
+
+	@Override
+	public ItemEnum getType() {		
+		return null;
 	}
 }

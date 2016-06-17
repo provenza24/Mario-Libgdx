@@ -1,6 +1,8 @@
 package com.game.mario.sprite;
 
-public abstract class AbstractItem extends AbstractSprite {
+import com.game.mario.enums.ItemEnum;
+
+public abstract class AbstractItem extends AbstractSprite implements IAppearable {
 
 	public AbstractItem(float x, float y) {
 		super(x, y);		
@@ -12,5 +14,6 @@ public abstract class AbstractItem extends AbstractSprite {
 	
 	public abstract void addAppearAction();
 
+	public abstract ItemEnum getType();
 
 }

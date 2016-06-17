@@ -1,13 +1,13 @@
-package com.game.mario.sprite.item;
+package com.game.mario.sprite.sfx;
 
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.action.DeleteItemAction;
-import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.util.ResourcesLoader;
 import com.game.mario.util.animation.AnimationBuilder;
 
-public class EjectedCoin extends AbstractItem {
+public class EjectedCoin extends AbstractSfxSprite {
 
 	public EjectedCoin(float x, float y) {
 		super(x, y);		

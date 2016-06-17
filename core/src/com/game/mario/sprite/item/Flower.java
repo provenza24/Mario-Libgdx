@@ -1,6 +1,7 @@
 package com.game.mario.sprite.item;
 
 import com.game.mario.action.ActionFacade;
+import com.game.mario.enums.ItemEnum;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.util.ResourcesLoader;
 import com.game.mario.util.animation.AnimationBuilder;
@@ -19,6 +20,11 @@ public class Flower extends AbstractItem {
 	@Override
 	public void addAppearAction() {
 		addAction(ActionFacade.createMoveAction(getX(), getY()+0.9f, 0.5f));
+	}
+
+	@Override
+	public ItemEnum getType() {		
+		return ItemEnum.FLOWER;
 	}
 		
 }

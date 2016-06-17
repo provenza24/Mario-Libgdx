@@ -7,33 +7,27 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
+import com.game.mario.enums.ItemEnum;
+import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSprite;
-import com.game.mario.sprite.item.Flower;
-import com.game.mario.sprite.item.GreenMushroom;
-import com.game.mario.sprite.item.RedMushroom;
-import com.game.mario.sprite.item.Star;
-import com.game.mario.sprite.tileobject.item.Coin;
-import com.game.mario.sprite.tileobject.item.TransferItemDown;
-import com.game.mario.sprite.tileobject.item.TransferItemRight;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
 public abstract class AbstractItemCollisionHandler implements IItemCollisionHandler {
 
-	private static Map<Class<?>, IItemCollisionHandler> handlers = new HashMap<Class<?>, IItemCollisionHandler>();
+	private static Map<ItemEnum, IItemCollisionHandler> handlers = new HashMap<ItemEnum, IItemCollisionHandler>();
 
 	static {
-		handlers.put(RedMushroom.class, new RedMushroomCollisionHandler());
-		handlers.put(GreenMushroom.class, new GreenMushroomCollisionHandler());
-		handlers.put(Flower.class, new FlowerCollisionHandler());
-		handlers.put(TransferItemDown.class, new TransferCollisionHandler());
-		handlers.put(TransferItemRight.class, new TransferCollisionHandler());
-		handlers.put(Coin.class, new CoinCollisionHandler());		
-		handlers.put(Star.class, new StarCollisionHandler());
+		handlers.put(ItemEnum.RED_MUSHROOM, new RedMushroomCollisionHandler());
+		handlers.put(ItemEnum.GREEN_MUSHROOM, new GreenMushroomCollisionHandler());
+		handlers.put(ItemEnum.FLOWER, new FlowerCollisionHandler());
+		handlers.put(ItemEnum.TRANSFER_ITEM, new TransferCollisionHandler());		
+		handlers.put(ItemEnum.COIN, new CoinCollisionHandler());		
+		handlers.put(ItemEnum.STAR, new StarCollisionHandler());
 	}
 
-	public static IItemCollisionHandler getHandler(AbstractSprite sprite) {		
-		return handlers.get(sprite.getClass());
+	public static IItemCollisionHandler getHandler(AbstractItem sprite) {		
+		return handlers.get(sprite.getType());
 	}
 
 	public AbstractItemCollisionHandler() {

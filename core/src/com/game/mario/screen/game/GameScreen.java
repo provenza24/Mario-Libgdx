@@ -36,6 +36,7 @@ import com.game.mario.screen.cinematic.TransferSceneHandler;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.item.Fireball;
@@ -430,12 +431,11 @@ public class GameScreen implements Screen  {
 	}
 	
 	private void handleItems(float deltaTime) {
-		List<AbstractSprite> items = tileMap.getItems();		
+		List<AbstractItem> items = tileMap.getItems();		
 		for (int i = 0; i < items.size(); i++) {
-			AbstractSprite item = items.get(i);						
+			AbstractItem item = items.get(i);						
 			item.update(tileMap, camera.getCamera(), deltaTime);
-			boolean collideMario = item.overlaps(mario);			
-			
+			boolean collideMario = item.overlaps(mario);						
 			if (collideMario) {
 				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, backgrounds);				
 			}
@@ -448,7 +448,7 @@ public class GameScreen implements Screen  {
 	}
 	
 	private void handleSfxSprites(float deltaTime) {	
-		List<AbstractSprite> sfxSprites = tileMap.getSfxSprites();		
+		List<AbstractSfxSprite> sfxSprites = tileMap.getSfxSprites();		
 		for (int i = 0; i < sfxSprites.size(); i++) {
 			AbstractSprite sfxSprite = sfxSprites.get(i);			
 			sfxSprite.update(tileMap, camera.getCamera(), deltaTime);			
@@ -530,10 +530,10 @@ public class GameScreen implements Screen  {
 	}
 
 	private void explodeFireball(AbstractSprite fireball) {		
-		AbstractItem item = new FireballExplosion(fireball);		
-		tileMap.getSfxSprites().add(item);
-		stage.addActor(item);				   				
-		item.addAppearAction();
+		AbstractSfxSprite sprite = new FireballExplosion(fireball);		
+		tileMap.getSfxSprites().add(sprite);
+		stage.addActor(sprite);				   				
+		sprite.addAppearAction();
 	}
 
 	private void renderMysteryBlocks(float delta) {

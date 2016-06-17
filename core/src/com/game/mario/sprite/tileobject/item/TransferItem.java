@@ -9,14 +9,15 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.enums.BackgroundTypeEnum;
+import com.game.mario.enums.ItemEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
-import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
+import com.game.mario.sprite.tileobject.AbstractTileObjectItem;
 import com.game.mario.util.ResourcesLoader;
 import com.game.mario.util.constant.TilemapPropertiesConstants;
 
-public abstract class TransferItem extends AbstractTileObjectSprite {
+public abstract class TransferItem extends AbstractTileObjectItem {
 
 	protected int keyToPress;
 	
@@ -114,6 +115,14 @@ public abstract class TransferItem extends AbstractTileObjectSprite {
 		this.backgroundTypesEnum = backgroundTypesEnum;
 	}
 
+	@Override
+	public void addAppearAction() {		
+	}
+	
+	@Override
+	public ItemEnum getType() {
+		return ItemEnum.TRANSFER_ITEM;
+	}
 
 	
 }

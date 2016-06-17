@@ -15,7 +15,6 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
-import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 
@@ -132,7 +131,6 @@ public abstract class AbstractCinematicSceneHandler {
 		// Get blocks from tilemap
 		List<Block> blocks = tileMap.getBlocks();
 		if (blocks.size() > 0) {
-			MysteryBlock.updateCommonStateTime(delta);
 			batch = renderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {

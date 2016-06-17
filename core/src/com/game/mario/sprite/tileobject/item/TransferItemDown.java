@@ -13,5 +13,5 @@ public class TransferItemDown extends TransferItem {
 		pipe = new Sprite(ResourcesLoader.PIPE_DOWN);
 		pipe.setPosition((int)getX(), (int)getY() -2);
 	}
-
+	
 }

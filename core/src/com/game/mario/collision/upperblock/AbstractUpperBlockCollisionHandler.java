@@ -11,14 +11,15 @@ import com.game.mario.collision.item.AbstractItemCollisionHandler;
 import com.game.mario.collision.item.IItemCollisionHandler;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
-import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.bloc.Block;
-import com.game.mario.sprite.item.EjectedCoin;
 import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.GreenMushroom;
 import com.game.mario.sprite.item.RedMushroom;
 import com.game.mario.sprite.item.Star;
+import com.game.mario.sprite.sfx.EjectedCoin;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
@@ -59,29 +60,28 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 	}
 	
 	protected void bumpElements(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
-		List<AbstractSprite> itemsToHandle = new ArrayList<AbstractSprite>();
-		for (AbstractSprite item : tileMap.getItems()) {			
+		List<AbstractItem> itemsToHandle = new ArrayList<AbstractItem>();
+		for (AbstractItem item : tileMap.getItems()) {			
 			if (collidingCell.getX() == (int)(item.getX()+item.getWidth()/2) 
 					&& collidingCell.getY() == (int)(item.getY()) - 1) {
 				itemsToHandle.add(item);							
 			} 			
 		}
-		for (AbstractSprite item : itemsToHandle) {
+		for (AbstractItem item : itemsToHandle) {
 			IItemCollisionHandler itemCollisionHandler = AbstractItemCollisionHandler.getHandler(item);
 			if (itemCollisionHandler!=null) {
 				itemCollisionHandler.bump(stage, tileMap, item);
 			}			
 		}
 		
-		List<AbstractSprite> enemiesToHandle = new ArrayList<AbstractSprite>();
-		for (AbstractSprite enemy : tileMap.getEnemies()) {			
+		List<AbstractEnemy> enemiesToHandle = new ArrayList<AbstractEnemy>();
+		for (AbstractEnemy enemy : tileMap.getEnemies()) {			
 			if (collidingCell.getX() == (int)(enemy.getX()+enemy.getWidth()/2) 
 					&& collidingCell.getY() == (int)(enemy.getY()) - 1) {
 				enemiesToHandle.add(enemy);							
 			} 			
 		}
-		for (AbstractSprite enemy : enemiesToHandle) {
-			// TODO Do same stuff for enemies	
+		for (AbstractEnemy enemy : enemiesToHandle) {			
 			enemy.bump();
 		}
 	}
@@ -94,28 +94,33 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 		
 		if (itemEnum!=null) {
 			AbstractItem item = null;
-			if (itemEnum==ItemEnum.RED_MUSHROOM) {
-				Mario mario = tileMap.getMario();
-				if (mario.getSizeState()==0) {
-					item = new RedMushroom(block.getX(), yWallBlock+0.1f);
-				} else {
-					item = new Flower(block.getX(), yWallBlock+0.1f);
-				}
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
-			} else if (itemEnum==ItemEnum.GREEN_MUSHROOM) {
-				item = new GreenMushroom(block.getX(), yWallBlock+0.1f);
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
-			} else if (itemEnum==ItemEnum.COIN) {
+			if (itemEnum==ItemEnum.COIN) {
 				GameManager.getGameManager().addCoin();
-				item = new EjectedCoin(block.getX(), yWallBlock+1);
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);						
-			} else if (itemEnum==ItemEnum.STAR) {				
-				item = new Star(block.getX(), yWallBlock+0.1f);
-				SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
-			}
-			tileMap.getItems().add(item);
-			stage.addActor(item);
-			item.addAppearAction();
+				AbstractSfxSprite sprite = new EjectedCoin(block.getX(), yWallBlock+1);
+				SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);
+				tileMap.getSfxSprites().add(sprite);
+				stage.addActor(sprite);
+				sprite.addAppearAction();
+			} else {
+				if (itemEnum==ItemEnum.RED_MUSHROOM) {
+					Mario mario = tileMap.getMario();
+					if (mario.getSizeState()==0) {
+						item = new RedMushroom(block.getX(), yWallBlock+0.1f);
+					} else {
+						item = new Flower(block.getX(), yWallBlock+0.1f);
+					}
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
+				} else if (itemEnum==ItemEnum.GREEN_MUSHROOM) {
+					item = new GreenMushroom(block.getX(), yWallBlock+0.1f);
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
+				}  else if (itemEnum==ItemEnum.STAR) {				
+					item = new Star(block.getX(), yWallBlock+0.1f);
+					SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP_APPEAR);						
+				}
+				tileMap.getItems().add(item);
+				stage.addActor(item);
+				item.addAppearAction();
+			}						
 		}
 		
 		

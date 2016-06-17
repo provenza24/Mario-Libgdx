@@ -19,6 +19,8 @@ import com.game.mario.enums.CastleTypeEnum;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.AbstractEnemy;
+import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.bloc.Block;
 import com.game.mario.sprite.bloc.InvisibleMysteryBlock;
@@ -58,9 +60,9 @@ public class TmxMap {
 	
 	private List<AbstractEnemy> enemies;
 	
-	private List<AbstractSprite> items;
+	private List<AbstractItem> items;
 	
-	private List<AbstractSprite> sfxSprites;
+	private List<AbstractSfxSprite> sfxSprites;
 	
 	private List<AbstractMetalPlateform> plateforms;
 		
@@ -107,9 +109,9 @@ public class TmxMap {
 
 	private void initMapObjects() {
 		
-		items = new ArrayList<AbstractSprite>();
+		items = new ArrayList<AbstractItem>();
 		enemies = new ArrayList<AbstractEnemy>();
-		sfxSprites = new ArrayList<AbstractSprite>();
+		sfxSprites = new ArrayList<AbstractSfxSprite>();
 		plateforms = new ArrayList<AbstractMetalPlateform>();
 				
 		MapObjects objects = objectsLayer.getObjects();
@@ -287,11 +289,11 @@ public class TmxMap {
 
 	
 
-	public List<AbstractSprite> getItems() {
+	public List<AbstractItem> getItems() {
 		return items;
 	}
 
-	public void setItems(List<AbstractSprite> items) {
+	public void setItems(List<AbstractItem> items) {
 		this.items = items;
 	}
 
@@ -351,11 +353,11 @@ public class TmxMap {
 		this.scrollMaxValue = scrollMaxValue;
 	}
 
-	public List<AbstractSprite> getSfxSprites() {
+	public List<AbstractSfxSprite> getSfxSprites() {
 		return sfxSprites;
 	}
 
-	public void setSfxSprites(List<AbstractSprite> sfxSprites) {
+	public void setSfxSprites(List<AbstractSfxSprite> sfxSprites) {
 		this.sfxSprites = sfxSprites;
 	}
 
