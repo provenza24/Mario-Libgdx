@@ -424,6 +424,11 @@ public class GameScreen implements Screen  {
 						sprite.getHeight());
 			}
 			
+			for (AbstractMetalPlateform plateform : tileMap.getPlateforms()) {
+				shapeRenderer.rect(plateform.getX() + plateform.getOffset().x, plateform.getY(), plateform.getWidth(),
+						plateform.getHeight());
+			}
+			
 			shapeRenderer.end();
 			Gdx.gl.glDisable(GL20.GL_BLEND);
 			batch.end();
