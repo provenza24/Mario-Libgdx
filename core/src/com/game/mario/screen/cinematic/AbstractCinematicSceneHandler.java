@@ -90,8 +90,8 @@ public abstract class AbstractCinematicSceneHandler {
 
 	private void renderSfxSprites(float delta) {
 		for (AbstractSprite sfxSprites : tileMap.getSfxSprites()) {
-			if (sfxSprites.isVisible()) {			
-				sfxSprites.update(tileMap, camera.getCamera(), delta);
+			sfxSprites.update(tileMap, camera.getCamera(), delta);
+			if (sfxSprites.isVisible()) {							
 				sfxSprites.render(renderer.getBatch());
 			}				
 		}
@@ -121,7 +121,8 @@ public abstract class AbstractCinematicSceneHandler {
 	}
 	
 	private void renderPlateforms(float delta) {
-		for (AbstractSprite plateform : tileMap.getPlateforms()) {			
+		for (AbstractSprite plateform : tileMap.getPlateforms()) {	
+			plateform.update(tileMap, camera.getCamera(), delta);
 			plateform.render(renderer.getBatch());				
 		}
 	}

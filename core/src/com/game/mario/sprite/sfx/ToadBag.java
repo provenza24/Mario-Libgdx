@@ -1,11 +1,13 @@
 package com.game.mario.sprite.sfx;
 
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.sprite.AbstractSfxSprite;
+import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 
 public class ToadBag extends AbstractSfxSprite {
@@ -17,12 +19,10 @@ public class ToadBag extends AbstractSfxSprite {
 	public ToadBag(float x, float y) {		
 		super(x ,y);						
 		renderingSize = new Vector2(2,2);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());		
-		alive = true;
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());				
 		gravitating = false;
 		collidableWithTilemap = false;
-		moveable = false;
-		visible = true;
+		moveable = false;		
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class ToadBag extends AbstractSfxSprite {
 		frame[0] = tmp[0][3];
 		frame[1] = tmp[0][4];
 		frame[2] = tmp[0][5];
-		openingBagAnimation = new Animation(0.5f, frame);	
+		openingBagAnimation = new Animation(0.1f, frame);	
 		openingBagAnimation.setPlayMode(PlayMode.NORMAL);
 	}
 
@@ -66,6 +66,12 @@ public class ToadBag extends AbstractSfxSprite {
 			currentFrame = currentAnimation.getKeyFrame(stateTime, false);		
 		}
 		
+	}
+
+	@Override
+	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
+		// TODO Auto-generated method stub
+		super.update(tileMap, camera, deltaTime);
 	}
 	
 }
