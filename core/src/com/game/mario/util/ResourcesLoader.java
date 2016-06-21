@@ -124,6 +124,8 @@ public class ResourcesLoader {
 	// Miscelleanous
 	public static final Texture FIREBALL_EXPLOSION = new Texture(Gdx.files.internal("sprites/misc/fireball_explosion.png"));
 	
+	public static final Texture CASTLE_BAG = new Texture(Gdx.files.internal("sprites/misc/bag.png"));
+	
 	// Menu
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	

@@ -55,7 +55,8 @@ public abstract class AbstractCinematicSceneHandler {
 		this.renderer = renderer;
 		this.stage = stage;
 		this.batch = batch;
-		this.updateItems = true;		
+		this.updateItems = true;	
+		this.updateEnemies = false;
 	}
 
 	public abstract void handleScene(float delta);
@@ -66,22 +67,25 @@ public abstract class AbstractCinematicSceneHandler {
 		
 		AbstractSprite.updateCommonStateTime(delta);
 		
-		scrollingBackgrounds.get(0).render();
-		if (scrollingBackgrounds.size>1) {
-			scrollingBackgrounds.get(1).render();
-		}
-		
+		renderBackgrounds();		
 		renderer.setView(camera.getCamera());
 		renderer.render();
 		renderMysteryBlocks(delta);							
 		renderItems(delta);
 		renderPlateforms(delta);
-		renderEnemies();
+		renderEnemies(delta);
 		mario.render(renderer.getBatch());
 		renderSfxSprites(delta);		
 		renderStatusBar();		
 		stage.act();
 		stage.draw();
+	}
+
+	protected void renderBackgrounds() {
+		scrollingBackgrounds.get(0).render();
+		if (scrollingBackgrounds.size>1) {
+			scrollingBackgrounds.get(1).render();
+		}
 	}
 
 	private void renderSfxSprites(float delta) {
@@ -94,9 +98,12 @@ public abstract class AbstractCinematicSceneHandler {
 		
 	}
 
-	private void renderEnemies() {
+	protected void renderEnemies(float delta) {
 		for (AbstractSprite enemy : tileMap.getEnemies()) {
 			if (enemy.isVisible()) {
+				if (updateEnemies) {
+					enemy.update(tileMap, camera.getCamera(), delta);
+				}
 				enemy.render(renderer.getBatch());
 			}				
 		}

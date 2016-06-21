@@ -44,7 +44,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 		} else {							
 			
 			if (mario.getMove().x==0 && mario.getMove().y<0) {				
-				if (mario.getY()> plateform.getY()) {
+				if (mario.getOldPosition().y> plateform.getY()) {
 					stuckMario(mario, plateform);
 				}
 			} else if (mario.getMove().y==0 && mario.getMove().x==0 && mario.getState()==SpriteMoveEnum.NO_MOVE) {				
@@ -57,7 +57,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 				handleFallingStraight(mario, plateform);					
 			}  else if (mario.getMove().y==0 && mario.getMove().x!=0) {				
 				handleRunning(mario, plateform);							
-			}  else if (mario.getMove().x>0 && mario.getMove().y>0) {				
+			}  else if (mario.getMove().x>0 && mario.getMove().y>0) {					
 				handleJumpingRight(mario, plateform);				
 			} else if (mario.getMove().x<0 && mario.getMove().y>0) {											
 				handleJumpingLeft(mario, plateform);
@@ -68,11 +68,11 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 	}
 
 	private void handleJumpingLeft(Mario mario, AbstractMetalPlateform plateform) {
-		Vector2 plateformRightTop = new Vector2(plateform.getX() + plateform.getWidth(), plateform.getY() + plateform.getHeight());
-		Vector2 plateformRightBottom = new Vector2(plateform.getX() + plateform.getWidth(), plateform.getY());
 		
-		if (mario.getBounds().contains(plateformRightTop) || mario.getBounds().contains(plateformRightBottom)
-				&& mario.getOldPosition().x>=plateform.getX()+plateform.getWidth()) {
+		float deltaX = plateform.getX() + plateform.getWidth() - mario.getX()+mario.getOffset().x;
+		float deltaY = mario.getY()+mario.getHeight()-plateform.getY();		
+		
+		if (deltaY>deltaX) {
 			mario.setX(plateform.getX() + plateform.getWidth() - mario.getOffset().x + COLLISION_X_CORRECTIF);
 			mario.getAcceleration().x = 0;				
 		} else {
@@ -81,14 +81,14 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 	}
 
 	private void handleJumpingRight(Mario mario, AbstractMetalPlateform plateform) {
-		Vector2 plateformLeftTop = new Vector2(plateform.getX(), plateform.getY() + plateform.getHeight());
-		Vector2 plateformLeftBottom = new Vector2(plateform.getX(), plateform.getY());
-							
-		if ((mario.getBounds().contains(plateformLeftBottom) || mario.getBounds().contains(plateformLeftTop)) 
-				&& mario.getOldPosition().x+mario.getWidth()+mario.getOffset().x<=plateform.getX()) {
+								
+		float deltaX = mario.getX()+mario.getWidth()+mario.getOffset().x - plateform.getX();
+		float deltaY = mario.getY()+mario.getHeight()-plateform.getY();
+		
+		if (deltaY>deltaX) {
 			mario.setX(plateform.getX() - (mario.getWidth() + mario.getOffset().x) - COLLISION_X_CORRECTIF);
-			mario.getAcceleration().x = 0;				
-		} else {
+			mario.getAcceleration().x = 0;			
+		} else {			
 			handleFallingStraight(mario, plateform);				
 		}
 	}
@@ -111,7 +111,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 				mario.setX(plateform.getX() + plateform.getWidth() - mario.getOffset().x + COLLISION_X_CORRECTIF);
 				mario.getAcceleration().x = 0;				
 			} else {
-				if (mario.getY()> plateform.getY()) {
+				if (mario.getOldPosition().y> plateform.getY()) {
 					stuckMario(mario, plateform);
 				}
 			}
@@ -129,7 +129,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 			mario.setX(plateform.getX() + plateform.getWidth() - mario.getOffset().x + COLLISION_X_CORRECTIF);
 			mario.getAcceleration().x = 0;				
 		} else {
-			if (mario.getY()> plateform.getY()) {
+			if (mario.getOldPosition().y> plateform.getY()) {
 				stuckMario(mario, plateform);
 			}
 		}
@@ -144,7 +144,7 @@ public abstract class AbstractPlateformCollisionHandler implements IPlateformCol
 			mario.setX(plateform.getX() - (mario.getWidth() + mario.getOffset().x) - COLLISION_X_CORRECTIF);
 			mario.getAcceleration().x = 0;				
 		} else {
-			if (mario.getY()> plateform.getY()) {
+			if (mario.getOldPosition().y> plateform.getY()) {
 				stuckMario(mario, plateform);
 			}			
 		}

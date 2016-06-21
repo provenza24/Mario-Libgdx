@@ -12,8 +12,10 @@ public class HorizontalPlateformCollisionHandler extends AbstractPlateformCollis
 	@Override
 	public void collide(Mario mario, AbstractMetalPlateform plateform) {
 		
-		super.collide(mario, plateform);		
-		mario.setX(mario.getX() + (plateform.getDirection()==DirectionEnum.LEFT ? -plateform.getAcceleration().x: plateform.getAcceleration().x));
+		super.collide(mario, plateform);
+		if (plateform.isStuck()) {
+			mario.setX(mario.getX() + (plateform.getDirection()==DirectionEnum.LEFT ? -plateform.getAcceleration().x: plateform.getAcceleration().x));
+		}
 	}
 
 }

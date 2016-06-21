@@ -169,19 +169,22 @@ public class GameScreen implements Screen  {
 			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
 		}		
 		
+		int xBowserPos = 124;
+		int yBowserPos = 5;
+		
 		int xFlagPos = 194;
 		int yFlagPos = 1;		
 		int xFlyingKoopa = 73;
 		int yFlyingKoopa = 73;
 		
-		int x = xFlagPos;
-		int y = yFlagPos;
+		int x = xBowserPos;
+		int y = yBowserPos;
 		
-		/*mario.setX(xFlagPos);
-		mario.setY(yFlagPos);
+		mario.setX(x);
+		mario.setY(y);
 		camera.setCameraOffset(2f);
-		camera.getCamera().position.x = xFlagPos+6;						
-		camera.getCamera().update();*/
+		camera.getCamera().position.x = x+6;						
+		camera.getCamera().update();
 	}
 		
 	@Override

@@ -377,4 +377,12 @@ public class TmxMap {
 		this.plateforms = plateforms;
 	}
 
+	public TiledMapTileLayer getTileLayer() {
+		return tileLayer;
+	}
+
+	public void setTileLayer(TiledMapTileLayer tileLayer) {
+		this.tileLayer = tileLayer;
+	}
+
 }

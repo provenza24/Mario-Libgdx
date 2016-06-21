@@ -55,7 +55,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 	
 	private int chanceToFire = 20;
 	
-	private int fireballHints = 8;
+	private int fireballHints = 0;
 	
 	public Bowser(MapObject mapObject) {
 
@@ -70,7 +70,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 		GRAVITY_COEF = 0.002f;
 		
 		acceleration.x = 1f;
-		xInitial = getX() + 0.5f;
+		xInitial = getX();
 		yInitial = getY();
 		xTarget = xInitial;
 		
@@ -115,91 +115,97 @@ public class Bowser extends AbstractTileObjectEnemy {
 											
 		super.update(tileMap, camera, deltaTime);		
 		
-		if (isVisible()) {
-			
-			Mario mario = tileMap.getMario();
-			if (getX()<mario.getX()) {
-				setCurrentAnimation(walkRightAnimation);
-				if (getX()<xInitial) {					
-					acceleration.x = 1f;
-					timeBeforeStopping = 0;
-					timeBeforeJump = 0;					
-				}
-			} else {
-				timeBeforeStopping += deltaTime;
+		if (killed) {
+			acceleration.x = 0;
+		} else {
+			if (isVisible()) {
 				
-				if (state!=SpriteMoveEnum.JUMPING) {
-					timeBeforeJump += deltaTime;
-				}
-				
-				if (acceleration.x<0 && getX()<xTarget) {
-					acceleration.x = 1f;
-					xTarget = xInitial + 0.1f;
-				} else if (acceleration.x>0 && getX()>xTarget) {
-					setX(xInitial);
-					xTarget = xInitial - (3+MathUtils.random(6));
-					acceleration.x = -1f;
-				}
-							
-				if (state!=SpriteMoveEnum.JUMPING && timeBeforeJump>1 && !(acceleration.x>0 && xTarget-getX()<1)) {
-					int jumpRandomValue = MathUtils.random(chanceToJump-1);
-					if (jumpRandomValue==0) {			
-						timeBeforeJump = 0;
-						acceleration.y=0.08f;
-						setState(SpriteMoveEnum.JUMPING);
-					}
-				}
-										
-				if (state==SpriteMoveEnum.WALKING && timeBeforeStopping>3) {
-					int stopRandomValue = MathUtils.random(chanceToStop-1);
-					if (stopRandomValue==0) {
-						direction = acceleration.x>0 ? 1 : -1;
+				Mario mario = tileMap.getMario();
+				if (getX()<mario.getX() || mario.getX()>xInitial-1) {
+					setCurrentAnimation(walkRightAnimation);
+					if (getX()<xInitial + 0.1f) {					
+						acceleration.x = 1f;
 						timeBeforeStopping = 0;
-						acceleration.x = 0;
-						stopTime = 0;		
-						targetStopTime = 0.5f + MathUtils.random(2f);
+						timeBeforeJump = 0;	
+						xTarget = xInitial + 0.1f;
 					}
-				}
-				
-				if (acceleration.x==0) {
-					stopTime +=deltaTime;
-					if (stopTime>targetStopTime) {
-						acceleration.x = direction; 
-					}
-				}
-				
-				if (isAlive()) {
+				} else {
+													
+					timeBeforeStopping += deltaTime;
 					
-					if (!isFiring) {
-						int fireRandomValue = MathUtils.random(chanceToFire-1);
-						if (fireRandomValue==0) {
-							firingTime = 0;
-							isFiring = true;
-							setCurrentAnimation(fireAnimation);
-							hasFired = false;
+					if (state!=SpriteMoveEnum.JUMPING) {
+						timeBeforeJump += deltaTime;
+					}
+					
+					if (acceleration.x<0 && getX()<xTarget) {
+						acceleration.x = 1f;
+						xTarget = xInitial + 0.1f;
+					} else if (acceleration.x>0 && getX()>xTarget) {
+						setX(xInitial);
+						xTarget = xInitial - (3+MathUtils.random(6));
+						acceleration.x = -1f;
+					}
+								
+					if (state!=SpriteMoveEnum.JUMPING && timeBeforeJump>1 && !(acceleration.x>0 && xTarget-getX()<1)) {
+						int jumpRandomValue = MathUtils.random(chanceToJump-1);
+						if (jumpRandomValue==0) {			
+							timeBeforeJump = 0;
+							acceleration.y=0.08f;
+							setState(SpriteMoveEnum.JUMPING);
 						}
-					} else {
+					}
+											
+					if (state==SpriteMoveEnum.WALKING && timeBeforeStopping>3) {
+						int stopRandomValue = MathUtils.random(chanceToStop-1);
+						if (stopRandomValue==0) {
+							direction = acceleration.x>0 ? 1 : -1;
+							timeBeforeStopping = 0;
+							acceleration.x = 0;
+							stopTime = 0;		
+							targetStopTime = 0.5f + MathUtils.random(2f);
+						}
+					}
+					
+					if (acceleration.x==0) {
+						stopTime +=deltaTime;
+						if (stopTime>targetStopTime) {
+							acceleration.x = direction; 
+						}
+					}
+					
+					if (isAlive()) {
 						
-						firingTime += deltaTime;
-						
-						if (firingTime>3) {
-							isFiring = false;
-						} else if (firingTime>1f) {
-							setCurrentAnimation(walkAnimation);					
-						} else if (firingTime>0.5f) {
-							setCurrentAnimation(endFireAnimation);
-							if (!hasFired) {
-								tileMap.getEnemies().add(new FireFlame(this, yInitial + MathUtils.random(2)));
-								hasFired = true;
+						if (!isFiring) {
+							int fireRandomValue = MathUtils.random(chanceToFire-1);
+							if (fireRandomValue==0) {
+								firingTime = 0;
+								isFiring = true;
+								setCurrentAnimation(fireAnimation);
+								hasFired = false;
 							}
-						}
-						
-						
-					}									
-				}				
+						} else {
+							
+							firingTime += deltaTime;
+							
+							if (firingTime>3) {
+								isFiring = false;
+							} else if (firingTime>1f) {
+								setCurrentAnimation(walkAnimation);					
+							} else if (firingTime>0.5f) {
+								setCurrentAnimation(endFireAnimation);
+								if (!hasFired) {
+									tileMap.getEnemies().add(new FireFlame(this, yInitial + MathUtils.random(2)));
+									hasFired = true;
+								}
+							}
+							
+							
+						}									
+					}				
+				}
 			}
-		}		
-		
+		}
+						
 	}
 	
 	public void killByFireball(AbstractSprite fireball) {
