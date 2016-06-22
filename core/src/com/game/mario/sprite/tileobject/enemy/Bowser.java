@@ -26,6 +26,8 @@ public class Bowser extends AbstractTileObjectEnemy {
 	private Animation fireAnimation;
 	
 	private Animation endFireAnimation;
+	
+	private Animation bumpedAnimation;
 
 	private float xInitial;
 	
@@ -55,7 +57,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 	
 	private int chanceToFire = 20;
 	
-	private int fireballHints = 0;
+	private int fireballHints = 7;
 	
 	public Bowser(MapObject mapObject) {
 
@@ -85,7 +87,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 	public void initializeAnimations() {
 		spriteSheet = ResourcesLoader.BOWSER;
 
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 6, spriteSheet.getHeight() / 1);
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 7, spriteSheet.getHeight() / 1);
 		
 		TextureRegion[] walkFrames = new TextureRegion[2];		
 		walkFrames[0] = tmp[0][0];
@@ -103,6 +105,8 @@ public class Bowser extends AbstractTileObjectEnemy {
 		
 		fireAnimation = new Animation(0, tmp[0][2]);		
 		endFireAnimation = new Animation(0, tmp[0][3]);
+		
+		bumpedAnimation = new Animation(0, tmp[0][6]);
 	}
 
 	@Override
@@ -208,12 +212,22 @@ public class Bowser extends AbstractTileObjectEnemy {
 						
 	}
 	
+	@Override
 	public void killByFireball(AbstractSprite fireball) {
 		if (fireballHints==0) {
-			killed = true;
+			bump();
 		} else {
-			fireballHints--;
+			fireballHints--;			
 		}
+	}
+
+	@Override
+	public void bump() {		
+		super.bump();
+		collidableWithTilemap = false;		
+		currentAnimation = bumpedAnimation;
+		acceleration.y = 0.1f;
+		GRAVITY_COEF = 0.01f;
 	}	
 
 }

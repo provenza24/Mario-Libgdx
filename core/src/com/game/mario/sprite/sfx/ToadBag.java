@@ -2,12 +2,14 @@ package com.game.mario.sprite.sfx;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class ToadBag extends AbstractSfxSprite {
 	
@@ -22,24 +24,16 @@ public class ToadBag extends AbstractSfxSprite {
 		gravitating = false;
 		collidableWithTilemap = false;
 		moveable = false;		
+		currentAnimation = shakingBagAnimation;
 	}
 
 	@Override
 	public void initializeAnimations() {		
 		spriteSheet = ResourcesLoader.CASTLE_BAG;			
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 8, spriteSheet.getHeight() / 1);				
-		TextureRegion[] frame = new TextureRegion[3];
-		frame[0] = tmp[0][0];
-		frame[1] = tmp[0][1];
-		frame[2] = tmp[0][2];
-		shakingBagAnimation = new Animation(0.2f, frame);		
-		currentAnimation = shakingBagAnimation;
-		
-		frame = new TextureRegion[3];
-		frame[0] = tmp[0][3];
-		frame[1] = tmp[0][4];
-		frame[2] = tmp[0][5];
-		openingBagAnimation = new Animation(0.1f, frame);	
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 8, spriteSheet.getHeight() / 1);
+		shakingBagAnimation = AnimationBuilder.getInstance().build(tmp, new int[] {0,1,2}, 0.2f);
+		shakingBagAnimation.setPlayMode(PlayMode.LOOP_PINGPONG);
+		openingBagAnimation = AnimationBuilder.getInstance().build(tmp, new int[] {3,4,5}, 0.1f);			
 	}
 
 	@Override
@@ -55,11 +49,11 @@ public class ToadBag extends AbstractSfxSprite {
 	}
 
 	@Override
-	protected void updateAnimation(float delta) {
-		// Override because the coin animation must be played only one time
+	protected void updateAnimation(float delta) {		
 		if (currentAnimation==shakingBagAnimation) {
 			super.updateAnimation(delta);
 		} else {
+			// Override because the animation must be played only one time when the bag explodes
 			stateTime = stateTime + delta;
 			currentFrame = currentAnimation.getKeyFrame(stateTime, false);		
 		}

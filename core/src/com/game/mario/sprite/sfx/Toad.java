@@ -23,8 +23,7 @@ public class Toad extends AbstractSfxSprite {
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());		
 		gravitating = true;
 		collidableWithTilemap = true;
-		moveable = true;
-		visible = true;
+		moveable = true;		
 		onFloor=true;	
 		GRAVITY_COEF = 0.012f;
 	}

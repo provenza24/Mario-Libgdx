@@ -14,9 +14,11 @@ import com.badlogic.gdx.utils.Array;
 import com.game.mario.background.IScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.enums.ItemEnum;
 import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.sprite.AbstractEnemy;
+import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.sfx.Toad;
 import com.game.mario.sprite.sfx.ToadBag;
 import com.game.mario.sprite.tileobject.mario.Mario;
@@ -35,6 +37,8 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 	
 	private ToadBag toadBag;
 	
+	private boolean bowserWasKilled = true;
+	
 	public CastleLevelEndingSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
 			 Array<IScrollingBackground> scrollingBbackgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
@@ -51,7 +55,7 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 				}
 			}
 		}		
-		updateEnemies = true;			
+		updateEnemies = true;		
 	}
 
 	protected void renderBackgrounds() {	
@@ -84,11 +88,23 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 			timer = 0;
 			for (AbstractEnemy enemy : tileMap.getEnemies()) {
 				if (enemy.getEnemyType()==EnemyTypeEnum.BOWSER) {
-					enemy.kill();
+					if (!enemy.isKilled()) {
+						enemy.kill();
+						bowserWasKilled = false;
+					} 
+				}
+			}
+			for (AbstractItem item : tileMap.getItems()) {
+				if (item.getType()==ItemEnum.HAWK) {
+					item.setVisible(false);
 				}
 			}
 			toadBag = new ToadBag(150, 2);
-			tileMap.getSfxSprites().add(toadBag);					
+			tileMap.getSfxSprites().add(toadBag);
+			if (bowserWasKilled) {
+				endLevelState = 2;
+				updateScrolling = true;
+			}
 		} else if (endLevelState==1) {			
 			if (timer>0.1f && tileToRemove.size()>0) {
 				timer = 0;
@@ -112,8 +128,13 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 			if (mario.getX()>149) {
 				mario.getAcceleration().x = 0;
 				mario.setCurrentFrame(mario.getMarioRunRightAnimation().getKeyFrame(0));
-			} else {		
+			} else {						
 				mario.move(delta);
+				if (mario.isOnFloor()) {
+					mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
+				} else {
+					mario.setCurrentAnimation(mario.getMarioJumpRightAnimation());
+				}
 				mario.updateCinematicAnimation(delta);
 			}
 		} else if (endLevelState==3 && timer>2) {
@@ -128,7 +149,7 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 		renderCinematicScene(delta);
 		if (endLevelState>=5) {
 			spriteBatch.begin();			
-			font.draw(spriteBatch, "Thank you Mario,", WinConstants.WIDTH/2, WinConstants.HEIGHT/2 - 32);
+			font.draw(spriteBatch, "thank you mario,", WinConstants.WIDTH/2, WinConstants.HEIGHT/2 - 32);
 			font.draw(spriteBatch, "but our princess", WinConstants.WIDTH/2, WinConstants.HEIGHT/2 - 52);
 			font.draw(spriteBatch, "is in an other castle !!!",  WinConstants.WIDTH/2, WinConstants.HEIGHT/2 - 72);
 			spriteBatch.end();

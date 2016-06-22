@@ -23,7 +23,7 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 		handlers.put(ItemEnum.FLOWER, new FlowerCollisionHandler());
 		handlers.put(ItemEnum.TRANSFER_ITEM, new TransferCollisionHandler());		
 		handlers.put(ItemEnum.COIN, new CoinCollisionHandler());		
-		handlers.put(ItemEnum.STAR, new StarCollisionHandler());
+		handlers.put(ItemEnum.STAR, new StarCollisionHandler());		
 	}
 
 	public static IItemCollisionHandler getHandler(AbstractItem sprite) {		

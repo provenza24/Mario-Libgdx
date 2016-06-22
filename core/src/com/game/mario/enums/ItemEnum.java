@@ -10,6 +10,7 @@ public enum ItemEnum {
 	STAR, 
 	FLOWER,
 	TRANSFER_ITEM,
-	FLAG;	
+	FLAG,
+	HAWK;	
 	
 }

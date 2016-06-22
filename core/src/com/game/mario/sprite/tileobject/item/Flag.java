@@ -13,19 +13,21 @@ public class Flag extends AbstractTileObjectItem {
 
 	private float flagTargetPosition;
 	
-	public Flag(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
+	private WorldTypeEnum worldTypeEnum;
+	
+	public Flag(MapObject mapObject, WorldTypeEnum worldType) {
 		
 		super(mapObject, new Vector2());			
 		collidableWithTilemap = false;
 		gravitating = false;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		flagTargetPosition = getX() - getWidth() /2;
-		
-		initializeAnimations(backgroundTypeEnum);
+		worldTypeEnum = worldType;
+		initializeAnimations(worldType);		
 	}
 				
-	public void initializeAnimations(WorldTypeEnum backgroundTypeEnum)  {		
-		spriteSheet = backgroundTypeEnum.equals(WorldTypeEnum.CASTLE) ?  ResourcesLoader.HAWK : ResourcesLoader.FLAG;	
+	public void initializeAnimations(WorldTypeEnum worldType)  {		
+		spriteSheet = worldType.equals(WorldTypeEnum.CASTLE) ?  ResourcesLoader.HAWK : ResourcesLoader.FLAG;	
 		currentAnimation = AnimationBuilder.getInstance().build(spriteSheet, 0, 3, 0.15f);					
 	}
 
@@ -44,6 +46,6 @@ public class Flag extends AbstractTileObjectItem {
 
 	@Override
 	public ItemEnum getType() {		
-		return null;
+		return worldTypeEnum==WorldTypeEnum.CASTLE ? ItemEnum.HAWK : ItemEnum.FLAG;
 	}
 }
