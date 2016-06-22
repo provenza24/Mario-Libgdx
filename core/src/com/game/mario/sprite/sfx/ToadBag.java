@@ -28,7 +28,7 @@ public class ToadBag extends AbstractSfxSprite {
 	@Override
 	public void initializeAnimations() {		
 		spriteSheet = ResourcesLoader.CASTLE_BAG;			
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 6, spriteSheet.getHeight() / 1);				
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 8, spriteSheet.getHeight() / 1);				
 		TextureRegion[] frame = new TextureRegion[3];
 		frame[0] = tmp[0][0];
 		frame[1] = tmp[0][1];
@@ -40,8 +40,8 @@ public class ToadBag extends AbstractSfxSprite {
 		frame[0] = tmp[0][3];
 		frame[1] = tmp[0][4];
 		frame[2] = tmp[0][5];
-		openingBagAnimation = new Animation(0.5f, frame);	
-		openingBagAnimation.setPlayMode(PlayMode.NORMAL);
+		openingBagAnimation = new Animation(0.1f, frame);	
+		openingBagAnimation.setPlayMode(PlayMode.NORMAL);	
 	}
 
 	@Override

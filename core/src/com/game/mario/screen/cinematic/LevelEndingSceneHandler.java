@@ -23,6 +23,7 @@ import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.sfx.Toad;
 import com.game.mario.sprite.sfx.ToadBag;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
@@ -154,7 +155,11 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 		}  else if (endLevelState==4 && timer>2) {
 			toadBag.setCurrentAnimation(toadBag.getOpeningBagAnimation());
 			toadBag.setStateTime(0);
-		}										
+			endLevelState = 5;
+		}  else if (endLevelState==5 && timer>1) {
+			tileMap.getSfxSprites().add(new Toad(mario.getX()+2, mario.getY()));
+			endLevelState = 6;
+		}
 		mario.collideWithTilemap(tileMap);					
 		renderCinematicScene(delta);		
 	}

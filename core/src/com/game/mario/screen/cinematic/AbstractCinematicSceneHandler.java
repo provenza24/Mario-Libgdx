@@ -121,7 +121,8 @@ public abstract class AbstractCinematicSceneHandler {
 	}
 	
 	private void renderPlateforms(float delta) {
-		for (AbstractSprite plateform : tileMap.getPlateforms()) {			
+		for (AbstractSprite plateform : tileMap.getPlateforms()) {
+			plateform.update(tileMap, camera.getCamera(), delta);
 			plateform.render(renderer.getBatch());				
 		}
 	}
