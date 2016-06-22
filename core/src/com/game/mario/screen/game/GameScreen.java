@@ -28,11 +28,13 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.MusicEnum;
 import com.game.mario.enums.ScreenEnum;
 import com.game.mario.enums.SpriteMoveEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
-import com.game.mario.screen.cinematic.LevelEndingSceneHandler;
 import com.game.mario.screen.cinematic.MarioDeathSceneHandler;
 import com.game.mario.screen.cinematic.MarioGrowingSceneHandler;
 import com.game.mario.screen.cinematic.TransferSceneHandler;
+import com.game.mario.screen.cinematic.ending.CastleLevelEndingSceneHandler;
+import com.game.mario.screen.cinematic.ending.FlagLevelEndingSceneHandler;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
@@ -158,7 +160,12 @@ public class GameScreen implements Screen  {
 		
 		levelFinished = false;			
 				
-		levelEndingSceneHandler = new LevelEndingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		if (tileMap.getWorldType()==WorldTypeEnum.CASTLE) {
+			levelEndingSceneHandler = new CastleLevelEndingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		} else {
+			levelEndingSceneHandler = new FlagLevelEndingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		}
+		
 		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
 		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
 		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);	
@@ -180,11 +187,11 @@ public class GameScreen implements Screen  {
 		int x = xBowserPos;
 		int y = yBowserPos;
 		
-		mario.setX(x);
+		/*mario.setX(x);
 		mario.setY(y);
 		camera.setCameraOffset(2f);
 		camera.getCamera().position.x = x+6;						
-		camera.getCamera().update();
+		camera.getCamera().update();*/
 	}
 		
 	@Override

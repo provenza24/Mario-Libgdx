@@ -47,7 +47,7 @@ public abstract class TransferItem extends AbstractTileObjectItem {
 		backgroundTypesEnum = new Array<BackgroundTypeEnum>();
 		for (String background : backgrounds) {
 			backgroundTypesEnum.add(BackgroundTypeEnum.valueOf(background.toUpperCase()));
-		}
+		}		
 	}
 			
 	@Override

@@ -126,6 +126,8 @@ public class ResourcesLoader {
 	
 	public static final Texture CASTLE_BAG = new Texture(Gdx.files.internal("sprites/misc/bag.png"));
 	
+	public static final Texture CASTLE_TOAD = new Texture(Gdx.files.internal("sprites/misc/toad.png"));
+	
 	// Menu
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	

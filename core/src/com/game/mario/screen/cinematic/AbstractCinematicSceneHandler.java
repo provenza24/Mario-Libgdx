@@ -38,9 +38,13 @@ public abstract class AbstractCinematicSceneHandler {
 	
 	protected Batch batch;
 	
+	protected boolean updatePlateforms;
+	
 	protected boolean updateItems;
 	
 	protected boolean updateEnemies;
+	
+	protected boolean updateSfxSprites;
 	
 	public AbstractCinematicSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
 			 Array<IScrollingBackground> backgrounds, BitmapFont font, SpriteBatch spriteBatch,
@@ -57,9 +61,11 @@ public abstract class AbstractCinematicSceneHandler {
 		this.batch = batch;
 		this.updateItems = true;	
 		this.updateEnemies = false;
+		this.updatePlateforms = false;
+		this.updateSfxSprites = true;
 	}
 
-	public abstract void handleScene(float delta);
+	public abstract void handleScene(float delta);		
 	
 	protected void renderCinematicScene(float delta) {
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -89,13 +95,14 @@ public abstract class AbstractCinematicSceneHandler {
 	}
 
 	private void renderSfxSprites(float delta) {
-		for (AbstractSprite sfxSprites : tileMap.getSfxSprites()) {
-			sfxSprites.update(tileMap, camera.getCamera(), delta);
+		for (AbstractSprite sfxSprites : tileMap.getSfxSprites()) {			
 			if (sfxSprites.isVisible()) {							
+				if (updateSfxSprites) {
+					sfxSprites.update(tileMap, camera.getCamera(), delta);
+				}
 				sfxSprites.render(renderer.getBatch());
 			}				
 		}
-		
 	}
 
 	protected void renderEnemies(float delta) {
@@ -113,7 +120,7 @@ public abstract class AbstractCinematicSceneHandler {
 		for (AbstractSprite item : tileMap.getItems()) {
 			if (item.isVisible()) {	
 				if (updateItems) {
-				item.update(tileMap, camera.getCamera(), delta);
+					item.update(tileMap, camera.getCamera(), delta);
 				}
 				item.render(renderer.getBatch());
 			}				
@@ -122,8 +129,13 @@ public abstract class AbstractCinematicSceneHandler {
 	
 	private void renderPlateforms(float delta) {
 		for (AbstractSprite plateform : tileMap.getPlateforms()) {	
-			plateform.update(tileMap, camera.getCamera(), delta);
-			plateform.render(renderer.getBatch());				
+			if (plateform.isVisible()) {
+				if (updatePlateforms) {
+					plateform.update(tileMap, camera.getCamera(), delta);
+				}
+				plateform.render(renderer.getBatch());
+			}
+				
 		}
 	}
 	

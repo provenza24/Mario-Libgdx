@@ -14,11 +14,13 @@ public class Toad extends AbstractSfxSprite {
 	
 	private float timer;
 	
+	private int jumpNumber;
+	
 	public Toad(float x, float y) {		
 		super(x ,y);						
-		renderingSize = new Vector2(2,2);
+		setSize(1, 1.47f);
+		renderingSize = new Vector2(1, 1.47f);
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());		
-		alive = true;
 		gravitating = true;
 		collidableWithTilemap = true;
 		moveable = true;
@@ -29,10 +31,10 @@ public class Toad extends AbstractSfxSprite {
 
 	@Override
 	public void initializeAnimations() {		
-		spriteSheet = ResourcesLoader.CASTLE_BAG;			
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 8, spriteSheet.getHeight() / 1);						
-		onFloorTexture = tmp[0][7];
-		jumpingTexture = tmp[0][6];							
+		spriteSheet = ResourcesLoader.CASTLE_TOAD;			
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 2, spriteSheet.getHeight() / 1);						
+		onFloorTexture = tmp[0][0];
+		jumpingTexture = tmp[0][1];							
 	}
 
 	@Override
@@ -40,20 +42,17 @@ public class Toad extends AbstractSfxSprite {
 	}
 
 	@Override
-	protected void updateAnimation(float delta) {		
-		if (onFloor) {
-			currentFrame = onFloorTexture;
-		} else {
-			currentFrame = jumpingTexture;
-		}
+	protected void updateAnimation(float delta) {	
+		currentFrame = onFloor ? onFloorTexture : jumpingTexture;		
 	}
 
 	@Override
 	public void move(float deltaTime) {
 		timer += deltaTime;
-		if (onFloor && timer>1) {			
+		if (onFloor && timer>1 && jumpNumber<6) {			
 			onFloor = false;
-			acceleration.y = 0.4f;			
+			acceleration.y = 0.4f;	
+			jumpNumber++;
 		} else {
 			if (getY()>3) {				
 				acceleration.y = 0;
@@ -61,8 +60,6 @@ public class Toad extends AbstractSfxSprite {
 			}
 		}
 		super.move(deltaTime);
-	}
-	
-		
+	}			
 	
 }

@@ -5,8 +5,7 @@ import com.game.mario.enums.ItemEnum;
 public abstract class AbstractItem extends AbstractSprite implements IAppearable {
 
 	public AbstractItem(float x, float y) {
-		super(x, y);		
-		alive = true;
+		super(x, y);				
 		moveable = true;
 		collidableWithTilemap = true;
 		gravitating = true;

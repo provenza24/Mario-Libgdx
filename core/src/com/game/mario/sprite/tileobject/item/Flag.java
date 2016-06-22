@@ -15,7 +15,7 @@ public class Flag extends AbstractTileObjectItem {
 	
 	public Flag(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
 		
-		super(mapObject, new Vector2());	
+		super(mapObject, new Vector2());			
 		collidableWithTilemap = false;
 		gravitating = false;				
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());

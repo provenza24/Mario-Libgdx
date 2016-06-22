@@ -12,7 +12,7 @@ public class Coin extends AbstractTileObjectItem {
 
 	public Coin(MapObject mapObject) {
 		
-		super(mapObject, new Vector2());												
+		super(mapObject, new Vector2());		
 		collidableWithTilemap = false;
 		gravitating = false;		
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());

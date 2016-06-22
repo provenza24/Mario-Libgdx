@@ -7,6 +7,7 @@ public abstract class AbstractMushroom extends AbstractItem {
 
 	public AbstractMushroom(float x, float y) {
 		super(x, y);
+		alive = true;
 		offset.x = 0.1f;
 		offset.y = 0.1f;
 		setSize(1 - 2*offset.x, 1f - offset.y);
