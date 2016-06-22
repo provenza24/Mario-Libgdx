@@ -121,6 +121,8 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 					enemy.kill();
 				}
 			}
+			toadBag = new ToadBag(150, 2);
+			tileMap.getSfxSprites().add(toadBag);					
 		} else if (endLevelState==1) {			
 			if (timer>0.1f && tileToRemove.size()>0) {
 				timer = 0;
@@ -138,7 +140,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			} else {
 				updateScrolling = false;
 				endLevelState=3;
-				mario.setCurrentFrame(mario.getMarioRunRightAnimation().getKeyFrame(0));
+				mario.setCurrentFrame(mario.getMarioRunRightAnimation().getKeyFrame(0));				
 			}
 			if (mario.getX()>149) {
 				mario.getAcceleration().x = 0;
@@ -147,12 +149,7 @@ public class LevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 				mario.move(delta);
 				mario.updateCinematicAnimation(delta);
 			}
-		}  else if (endLevelState==3) {
-			toadBag = new ToadBag(mario.getX()+2, mario.getY());
-			tileMap.getSfxSprites().add(toadBag);
-			endLevelState= 4;
-			timer = 0;
-		}  else if (endLevelState==4 && timer>2) {
+		} else if (endLevelState==3 && timer>3) {
 			toadBag.setCurrentAnimation(toadBag.getOpeningBagAnimation());
 			toadBag.setStateTime(0);
 			endLevelState = 5;
