@@ -19,8 +19,10 @@ import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
+import com.game.mario.sprite.sfx.BreakingBridgeWall;
 import com.game.mario.sprite.sfx.Toad;
 import com.game.mario.sprite.sfx.ToadBag;
+import com.game.mario.sprite.tileobject.enemy.Bowser;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.constant.WinConstants;
@@ -39,6 +41,8 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 	
 	private boolean bowserWasKilled = true;
 	
+	private AbstractEnemy bowser;
+	
 	public CastleLevelEndingSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
 			 Array<IScrollingBackground> scrollingBbackgrounds, BitmapFont font, SpriteBatch spriteBatch,
 			OrthogonalTiledMapRenderer renderer, Stage stage, Batch batch) {
@@ -54,7 +58,14 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 					}
 				}
 			}
-		}		
+		}	
+		for (AbstractEnemy enemy : tileMap.getEnemies()) {
+			if (enemy.getEnemyType()==EnemyTypeEnum.BOWSER) {
+				if (!enemy.isKilled()) {
+					bowser = enemy;					
+				} 
+			}
+		}
 		updateEnemies = true;		
 	}
 
@@ -76,6 +87,8 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 		timer += delta;		
 		
 		if (!mario.isOnFloor() && endLevelState==0) {
+			bowser.setGravitating(false);
+			bowser.getAcceleration().y = 0;
 			mario.setCurrentAnimation(mario.getMarioJumpRightAnimation());
 			mario.move(delta);
 			mario.updateCinematicAnimation(delta);
@@ -86,14 +99,10 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 			mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
 			mario.setCurrentFrame(mario.getCurrentAnimation().getKeyFrame(0));
 			timer = 0;
-			for (AbstractEnemy enemy : tileMap.getEnemies()) {
-				if (enemy.getEnemyType()==EnemyTypeEnum.BOWSER) {
-					if (!enemy.isKilled()) {
-						enemy.kill();
-						bowserWasKilled = false;
-					} 
-				}
-			}
+			if (!bowser.isKilled()) {
+				bowser.kill();
+				bowserWasKilled = false;
+			}			
 			for (AbstractItem item : tileMap.getItems()) {
 				if (item.getType()==ItemEnum.HAWK) {
 					item.setVisible(false);
@@ -103,17 +112,21 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 			tileMap.getSfxSprites().add(toadBag);
 			if (bowserWasKilled) {
 				endLevelState = 2;
-				updateScrolling = true;
-			}
+				updateScrolling = true;				
+			}			
 		} else if (endLevelState==1) {			
 			if (timer>0.1f && tileToRemove.size()>0) {
 				timer = 0;
-					Vector2 tilePos = tileToRemove.get(tileToRemove.size()-1);
-					tileMap.removeCell((int)tilePos.x, (int)tilePos.y);
-					tileToRemove.remove(tileToRemove.size()-1);								
+				Vector2 tilePos = tileToRemove.get(tileToRemove.size()-1);
+				tileMap.getSfxSprites().add(new BreakingBridgeWall(tilePos.x, tilePos.y-2));
+				tileMap.removeCell((int)tilePos.x, (int)tilePos.y);
+				tileToRemove.remove(tileToRemove.size()-1);
+				if (tileToRemove.size()==1) {
+					bowser.setGravitating(true);
+				}
 			} else if (timer>3) {
 				endLevelState = 2;
-				updateScrolling = true;
+				updateScrolling = true;				
 			}
 		} else if (endLevelState==2) {			
 			if (camera.getCamera().position.x<149) {

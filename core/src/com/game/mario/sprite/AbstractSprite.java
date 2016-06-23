@@ -117,13 +117,15 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		
 		initializeAnimations();
 		
+		
+		
 		tilemapCollisionHandler = new BasicTilemapCollisionHandler();
 	}
 	
 	public AbstractSprite(float x, float y,ITilemapCollisionHandler tilemapCollisionHandler) {
 		this(x ,y);
 		this.tilemapCollisionHandler = tilemapCollisionHandler;
-	}
+	}	
 		
 	public Rectangle getBounds() {
         return bounds;
