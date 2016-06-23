@@ -12,18 +12,12 @@ public class EjectedCoin extends AbstractSfxSprite {
 	public EjectedCoin(float x, float y) {
 		super(x, y);		
 		collidableWithTilemap = false;
+		isAnimationLooping = false;
 	}
 
 	@Override
 	public void initializeAnimations() {		
 		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.COIN_BLOC, 0, 9, 0.45f/9);				
-	}
-	
-	@Override
-	protected void updateAnimation(float delta) {
-		// Override because the coin animation must be played only one time
-		stateTime = stateTime + delta;
-		currentFrame = currentAnimation.getKeyFrame(stateTime, false);		
 	}
 
 	@Override

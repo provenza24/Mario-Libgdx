@@ -187,11 +187,11 @@ public class GameScreen implements Screen  {
 		int x = xBowserPos;
 		int y = yBowserPos;
 		
-		mario.setX(x);
+		/*mario.setX(x);
 		mario.setY(y);
 		camera.setCameraOffset(2f);
 		camera.getCamera().position.x = x+6;						
-		camera.getCamera().update();
+		camera.getCamera().update();*/
 	}
 		
 	@Override

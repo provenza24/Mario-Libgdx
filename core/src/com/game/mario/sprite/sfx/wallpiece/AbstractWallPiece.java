@@ -19,13 +19,8 @@ public abstract class AbstractWallPiece extends AbstractSfxSprite {
 				
 		moveable = true;		
 		gravitating = true;
-	}
-	
-	@Override
-	protected void updateAnimation(float delta) {
-		// Ovverided because the coin animation must be played only one time
-		stateTime = stateTime + delta;
-		currentFrame = currentAnimation.getKeyFrame(stateTime, false);		
+		
+		isAnimationLooping = false;
 	}
 
 	@Override

@@ -24,7 +24,7 @@ public class ToadBag extends AbstractSfxSprite {
 		gravitating = false;
 		collidableWithTilemap = false;
 		moveable = false;		
-		currentAnimation = shakingBagAnimation;
+		currentAnimation = shakingBagAnimation;		
 	}
 
 	@Override

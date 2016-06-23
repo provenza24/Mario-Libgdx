@@ -22,8 +22,10 @@ import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
 
 public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
-	
+		
 	protected static float commonStateTime; 
+	
+	protected boolean isAnimationLooping;
 	
 	protected int sizeState;
 	
@@ -110,14 +112,13 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		collidableWithTilemap = false;
 		gravitating = false;
 		bumped = false;
+		isAnimationLooping = true;
 		
 		stateTime = 0f;				
 		
 		xAlive = getX() - 16 ;
 		
 		initializeAnimations();
-		
-		
 		
 		tilemapCollisionHandler = new BasicTilemapCollisionHandler();
 	}
@@ -189,7 +190,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	protected void updateAnimation(float delta) {
 		stateTime = stateTime + delta;
-		currentFrame = currentAnimation.getKeyFrame(stateTime, true);		
+		currentFrame = currentAnimation.getKeyFrame(stateTime, isAnimationLooping);		
 	}
 	
 	protected void storeOldPosition() {

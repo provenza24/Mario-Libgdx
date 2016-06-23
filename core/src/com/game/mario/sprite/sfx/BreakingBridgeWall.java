@@ -12,15 +12,10 @@ public class BreakingBridgeWall extends AbstractSfxSprite {
 		super(x ,y);						
 		setSize(spriteSheet.getWidth()/12/32, spriteSheet.getHeight()/32);
 		renderingSize = new Vector2(spriteSheet.getWidth()/12/32, spriteSheet.getHeight()/32);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());				
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());	
+		isAnimationLooping = false;
 	}
-
-	@Override
-	protected void updateAnimation(float delta) {
-		stateTime = stateTime + delta;
-		currentFrame = currentAnimation.getKeyFrame(stateTime, false);	
-	}
-
+	
 	@Override
 	public void initializeAnimations() {		
 		spriteSheet = ResourcesLoader.BRIDGE_BREAKING_WALL;
