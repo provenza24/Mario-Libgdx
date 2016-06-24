@@ -14,7 +14,7 @@ import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSfxSprite;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.sprite.item.Flower;
 import com.game.mario.sprite.item.GreenMushroom;
 import com.game.mario.sprite.item.RedMushroom;
@@ -86,7 +86,7 @@ public abstract class AbstractUpperBlockCollisionHandler implements IUpperBlockC
 		}
 	}
 	
-	protected void addItemFromBlock(TmxMap tileMap, Stage stage, Block block) {
+	protected void addItemFromBlock(TmxMap tileMap, Stage stage, AbstractBlock block) {
 		
 		float yWallBlock = block.getY();
 		

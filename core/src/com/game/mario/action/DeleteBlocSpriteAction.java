@@ -1,13 +1,13 @@
 package com.game.mario.action;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 
 public class DeleteBlocSpriteAction extends Action {
 
-	private Block block;
+	private AbstractBlock block;
 
-	public DeleteBlocSpriteAction(Block block) {
+	public DeleteBlocSpriteAction(AbstractBlock block) {
 		this.block = block;		
 	}
 

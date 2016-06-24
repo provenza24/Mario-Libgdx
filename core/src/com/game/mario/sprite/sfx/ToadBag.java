@@ -20,10 +20,7 @@ public class ToadBag extends AbstractSfxSprite {
 	public ToadBag(float x, float y) {		
 		super(x ,y);						
 		renderingSize = new Vector2(2,2);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());				
-		gravitating = false;
-		collidableWithTilemap = false;
-		moveable = false;		
+		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());							
 		currentAnimation = shakingBagAnimation;		
 	}
 
@@ -61,8 +58,7 @@ public class ToadBag extends AbstractSfxSprite {
 	}
 
 	@Override
-	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
-		// TODO Auto-generated method stub
+	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {		
 		super.update(tileMap, camera, deltaTime);
 	}
 	

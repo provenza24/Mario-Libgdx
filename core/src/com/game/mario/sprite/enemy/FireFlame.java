@@ -19,8 +19,9 @@ public class FireFlame extends AbstractEnemy {
 	private float yTarget;
 	
 	public FireFlame(Bowser bowser, float yTarget) {
+		
 		super(bowser.getX()-WIDTH, bowser.getY() + bowser.getHeight() - HEIGHT);				
-		offset.y = 0.1f;
+		setOffset(new Vector2(0, 0.1f));
 		setSize(WIDTH, HEIGHT - 2*offset.y);		
 		renderingSize = new Vector2(WIDTH,HEIGHT);
 		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight()+offset.y);			
@@ -31,9 +32,7 @@ public class FireFlame extends AbstractEnemy {
 		alive = true;
 		moveable = true;
 		killableByPlayer = false;
-		killableByFireball = false;
-		gravitating = false;
-		collidableWithTilemap = false;		
+		killableByFireball = false;				
 	}
 		
 	@Override
@@ -44,15 +43,11 @@ public class FireFlame extends AbstractEnemy {
 	@Override
 	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
 											
-		super.update(tileMap, camera, deltaTime);		
-		
-		if (isAlive()) {
-			if (acceleration.y<0 && getY()<=yTarget || acceleration.y>0 && getY()>=yTarget) {
-				acceleration.y = 0;
-				setY(yTarget);
-			}
-		}
-		
+		super.update(tileMap, camera, deltaTime);				
+		if (isAlive() && hasReachVerticalTargetPosition()) {
+			acceleration.y = 0;
+			setY(yTarget);			
+		}		
 	}
 	
 	@Override
@@ -64,6 +59,11 @@ public class FireFlame extends AbstractEnemy {
 	@Override
 	public EnemyTypeEnum getEnemyType() {		
 		return EnemyTypeEnum.FIRE_FLAME;
+	}
+	
+	private boolean hasReachVerticalTargetPosition() {
+		return acceleration.y<0 && getY()<=yTarget 
+				|| acceleration.y>0 && getY()>=yTarget;
 	}
 	
 	

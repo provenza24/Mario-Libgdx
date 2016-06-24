@@ -22,9 +22,7 @@ public abstract class AbstractTileObjectSprite extends AbstractSprite {
 		setY(getY()+getHeight());
 		
 		String xAliveString = (String) mapObject.getProperties().get("xAlive");
-		xAlive = xAliveString!=null ? Float.parseFloat(xAliveString) / 32 : getX() - 16 ;
-		collidableWithTilemap = true;
-		moveable = true;		
+		xAlive = xAliveString!=null ? Float.parseFloat(xAliveString) / 32 : getX() - 16 ;		
 	}
 
 }

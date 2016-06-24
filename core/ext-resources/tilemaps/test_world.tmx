@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="87">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="232" height="15" tilewidth="32" tileheight="32" nextobjectid="98">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -38,6 +38,9 @@
  <tileset firstgid="453" name="castleFirebar" tilewidth="96" tileheight="16" tilecount="3" columns="3">
   <image source="../sprites/items/castle-firebar.png" width="288" height="16"/>
  </tileset>
+ <tileset firstgid="456" name="bowser" tilewidth="64" tileheight="76" tilecount="4" columns="4">
+  <image source="../sprites/enemies/bowser.png" width="256" height="76"/>
+ </tileset>
  <layer name="world" width="232" height="15">
   <properties>
    <property name="backgrounds" value="clouds,hills"/>
@@ -45,34 +48,30 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztzsENACAIADFkAPYfV7cgYJvc/yIAAAAAAAAAAICfVfcAAAAA651XDg42u2kmAG4=
+   eJztmstKw1AQhkcpqFjd6RuIVeiqbsQLs/PyHm2hLfYNtI/uBE7oIaTO5DLpSf0/+JhDSA5ZnD//JkT9ZCI+iAODU3Emzgt75NeKc3wEdwmAhSr5zHM3LewR5za+Z98ZSFkALKA/kU+QLp79WXZdm1Weye7lngqABc/+rDurZJQpzfPOigBYaKM/PbBkNO7P1GBFACy00Z8eoD8BQH96wYoAWEB/+sCKAFhAf/rAimB/nIR5WphnYZ6HOQzzIsxL5/cqI7X+vBKvqXl/vkXr92j9Ea0/W3rnMlgRAAtN+jPPUpvcifeE/gT/m1txJN5Q/f7Ms7SLhbiu6dLgirbn3eNb0QRWBOAvnsRn8ZHq9WeWPS0/X+KPoxvannftW9E1rAi6Jful8vjAjfvzm3yzZ83ni/jaQ0G3/AJ7Ltso
   </data>
  </layer>
- <objectgroup name="objectsLayer">
+ <objectgroup name="objectsLayer" offsetx="-0.333333" offsety="0">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
-  <object id="66" type="flag" gid="419" x="4000" y="157" width="32" height="32"/>
-  <object id="80" type="metalPlateform" gid="452" x="641" y="375" width="96" height="16">
+  <object id="66" type="flag" gid="419" x="6752" y="157" width="32" height="32"/>
+  <object id="93" type="transferRight" gid="425" x="1403" y="423" width="8" height="8">
    <properties>
-    <property name="direction" value="up"/>
-    <property name="mode" value="infinite"/>
+    <property name="backgrounds" value="castle"/>
+    <property name="music" value="overground"/>
+    <property name="scrollable" value="true"/>
+    <property name="world" value="castle"/>
+    <property name="xOutgoing" value="1984"/>
+    <property name="yOutgoing" value="384"/>
    </properties>
   </object>
-  <object id="81" type="metalPlateform" gid="452" x="641" y="95" width="96" height="16">
+  <object id="97" type="transferDown" gid="422" x="2652" y="320" width="8" height="8">
    <properties>
-    <property name="direction" value="up"/>
-    <property name="mode" value="infinite"/>
-   </properties>
-  </object>
-  <object id="82" type="metalPlateform" gid="452" x="1302" y="336" width="96" height="16">
-   <properties>
-    <property name="direction" value="down"/>
-    <property name="mode" value="infinite"/>
-   </properties>
-  </object>
-  <object id="83" type="metalPlateform" gid="452" x="1302" y="144" width="96" height="16">
-   <properties>
-    <property name="direction" value="down"/>
-    <property name="mode" value="descending"/>
+    <property name="backgrounds" value="underground"/>
+    <property name="music" value="underground"/>
+    <property name="scrollable" value="true"/>
+    <property name="world" value="underground"/>
+    <property name="xOutgoing" value="3088"/>
+    <property name="yOutgoing" value="128"/>
    </properties>
   </object>
  </objectgroup>

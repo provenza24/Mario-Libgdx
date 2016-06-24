@@ -7,15 +7,12 @@ import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.util.ResourcesLoader;
 
-public class WallBlock extends Block {
+public class WallBlock extends AbstractBlock {
 
 	private int coins;
 	
-	public WallBlock(int x, int y, int tileId, WorldTypeEnum backgroundType) {
-		
-		super(x,y, tileId, backgroundType);									
-		setBlocType(BlockTypeEnum.WALL_BLOCK);		
-		
+	public WallBlock(int x, int y, int tileId, WorldTypeEnum backgroundType) {		
+		super(x,y, tileId, backgroundType);													
 		coins = itemEnum==ItemEnum.COINS_10 ? 10 :0;								 	
 	}
 
@@ -26,7 +23,7 @@ public class WallBlock extends Block {
 	
 	@Override
 	public void initializeAnimationsWithBackground() {
-		spriteSheet = ResourcesLoader.WALL_TEXTURES.get(worldTypeEnum);
+		spriteSheet = ResourcesLoader.WALL_TEXTURES.get(worldType);
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
 		TextureRegion[] animationFrames = new TextureRegion[1];
 		animationFrames[0] = tmp[0][0];
@@ -41,8 +38,8 @@ public class WallBlock extends Block {
 		return coins;
 	}
 
-	public void setCoins(int coins) {
-		this.coins = coins;
+	@Override
+	public BlockTypeEnum getBlocType() {		
+		return BlockTypeEnum.WALL_BLOCK;
 	}
-	
 }

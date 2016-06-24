@@ -9,7 +9,7 @@ import com.game.mario.enums.ItemEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.util.constant.TileIdConstants;
 
-public abstract class Block extends AbstractSprite {
+public abstract class AbstractBlock extends AbstractSprite {
 	
 	protected static final Map<Integer, Integer> REPLACING_TILES_UNDERGROUND = new HashMap<Integer, Integer>();
 	
@@ -21,8 +21,6 @@ public abstract class Block extends AbstractSprite {
 	
 	protected static final Map<WorldTypeEnum, Map<Integer, Integer>> REPLACING_TILES_LIST = new HashMap<WorldTypeEnum, Map<Integer, Integer>>();				
 	
-	protected BlockTypeEnum blocType;
-	
 	protected static final Map<Integer, ItemEnum> MAP_ITEMS = new HashMap<Integer, ItemEnum>();
 			
 	protected ItemEnum itemEnum;
@@ -31,7 +29,7 @@ public abstract class Block extends AbstractSprite {
 	
 	protected int tileId;
 	
-	protected WorldTypeEnum worldTypeEnum;
+	protected WorldTypeEnum worldType;
 		
 	static {	
 		REPLACING_TILES_OVERGROUND.put(TileIdConstants.MYSTERY_BLOCK_COIN, TileIdConstants.BLOCK_OVERGROUND);		
@@ -98,16 +96,13 @@ public abstract class Block extends AbstractSprite {
 		MAP_ITEMS.put(TileIdConstants.WALL_UNDERGROUND_STAR, ItemEnum.STAR);
 	}
 			
-	public Block(float x, float y, int tileId, WorldTypeEnum backgroundTypeEnum) {
+	public AbstractBlock(float x, float y, int tileId, WorldTypeEnum worldType) {
 		super(x, y);	
-		itemEnum = MAP_ITEMS.get(tileId);				
+		this.itemEnum = MAP_ITEMS.get(tileId);				
 		this.tileId = tileId;
-		this.worldTypeEnum = backgroundTypeEnum;
-		replacingTileValue = REPLACING_TILES_LIST.get(backgroundTypeEnum).get(tileId);
-		collidableWithTilemap = false;
-		moveable = false;
-		gravitating = false;
-		initializeAnimationsWithBackground();
+		this.worldType = worldType;
+		this.replacingTileValue = REPLACING_TILES_LIST.get(worldType).get(tileId);		
+		this.initializeAnimationsWithBackground();
 	}
 	
 	public abstract void initializeAnimationsWithBackground();
@@ -131,14 +126,8 @@ public abstract class Block extends AbstractSprite {
 		this.replacingTileValue = replacingTileValue;
 	}
 
-	public BlockTypeEnum getBlocType() {
-		return blocType;
-	}
-
-	public void setBlocType(BlockTypeEnum blocType) {
-		this.blocType = blocType;
-	}
-
+	public abstract BlockTypeEnum getBlocType();
+		
 	public int getTileId() {
 		return tileId;
 	}

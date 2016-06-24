@@ -35,11 +35,9 @@ public class Goomba extends AbstractTileObjectEnemy {
 		super(mapObject, new Vector2(0.2f, 0.1f));								
 							
 		acceleration.x = -1.9f; 
-		gravitating = true;		
 		bounds=new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		
-		initializeAnimations(backgroundTypeEnum);		
-		currentAnimation = walkAnimation;		
+		initializeAnimations(backgroundTypeEnum);				
 	}		
 	
 	public void kill() {
@@ -78,6 +76,8 @@ public class Goomba extends AbstractTileObjectEnemy {
 		walkAnimation = AnimationBuilder.getInstance().build(tmp, 0, 2, 0.15f);
 		killedAnimation = AnimationBuilder.getInstance().build(tmp, 2, 1, 0.15f);
 		bumpAnimation = AnimationBuilder.getInstance().build(tmp, 3, 1, 0.15f);
+		
+		currentAnimation = walkAnimation;
 	}
 
 }

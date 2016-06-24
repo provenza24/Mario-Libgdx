@@ -7,7 +7,7 @@ import com.game.mario.action.ActionFacade;
 import com.game.mario.action.ChangeCellValueAction;
 import com.game.mario.action.ReplaceWallAction;
 import com.game.mario.enums.BlockTypeEnum;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.constant.TileIdConstants;
@@ -19,7 +19,7 @@ public class MysteryBlockCollisionHandler extends AbstractUpperBlockCollisionHan
 	
 	public void handle(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
 		
-		Block block = tileMap.getBlockAt(collidingCell.getX(), collidingCell.getY());		
+		AbstractBlock block = tileMap.getBlockAt(collidingCell.getX(), collidingCell.getY());		
 		if (block!=null) {
 			if (block.getBlocType()==BlockTypeEnum.MYSTERY_BLOCK_INVISIBLE) {				
 				block.changeFrame();

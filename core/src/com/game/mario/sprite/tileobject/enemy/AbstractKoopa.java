@@ -60,8 +60,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 			STEP_NUMBER = 6;
 			DECCELERATION_STEP = STEP_NUMBER/2 + 0.01f;
 			acceleration.y = direction==DirectionEnum.UP ? ACCELERATION_MIN : -ACCELERATION_MIN;		
-		} else {
-			gravitating = true;
+		} else {			
 			currentAnimation = walkLeftAnimation;
 			acceleration.x = -1.9f;
 			acceleration.y = 0;

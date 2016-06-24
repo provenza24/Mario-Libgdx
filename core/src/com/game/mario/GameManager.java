@@ -38,8 +38,7 @@ public class GameManager extends Game {
 	public void create() {
 				
 		initState();
-				
-		//levels.add("empty.tmx");
+						
 		//levels.add("test_world.tmx");				
 		
 		levels.add("level_1_1.tmx");

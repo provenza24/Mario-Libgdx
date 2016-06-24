@@ -63,8 +63,6 @@ public class Bowser extends AbstractTileObjectEnemy {
 
 		super(mapObject, new Vector2(0.2f, 0.1f));
 		
-		gravitating = true;
-		collidableWithTilemap = true;
 		killableByPlayer = false;
 		killableByFireball = false;
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());

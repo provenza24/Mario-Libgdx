@@ -40,7 +40,7 @@ import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.AbstractSprite;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.sprite.item.Fireball;
 import com.game.mario.sprite.sfx.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
@@ -554,13 +554,13 @@ public class GameScreen implements Screen  {
 	private void renderMysteryBlocks(float delta) {
 
 		// Get blocks from tilemap
-		List<Block> blocks = tileMap.getBlocks();
+		List<AbstractBlock> blocks = tileMap.getBlocks();
 		if (blocks.size() > 0) {			
 			batch = renderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {
 				// For each block
-				Block block = blocks.get(i);
+				AbstractBlock block = blocks.get(i);
 				block.update(tileMap, camera.getCamera(), delta);
 				if (block.isDeletable()) {					
 					blocks.remove(i--);

@@ -1,16 +1,16 @@
 package com.game.mario.action;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.tilemap.TmxMap;
 
 public class ReplaceWallAction extends Action{
 
-	private Block block;
+	private AbstractBlock block;
 	
 	private TmxMap tmxMap;
 	
-	public ReplaceWallAction(TmxMap tmxMap, Block block) {
+	public ReplaceWallAction(TmxMap tmxMap, AbstractBlock block) {
 		this.tmxMap = tmxMap;
 		this.block = block;
 	}

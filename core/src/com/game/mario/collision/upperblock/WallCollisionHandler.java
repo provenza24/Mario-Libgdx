@@ -10,7 +10,7 @@ import com.game.mario.action.DeleteBlocSpriteAction;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSfxSprite;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.sprite.bloc.WallBlock;
 import com.game.mario.sprite.sfx.EjectedCoin;
 import com.game.mario.sprite.sfx.wallpiece.AbstractWallPiece;
@@ -90,7 +90,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage, WallBlock specialWallBlock) {
 		
-		Block wallBlock = new WallBlock(collidingCell.getX(), collidingCell.getY(),collidingCell.getCell().getTile().getId(), tileMap.getWorldType());		
+		AbstractBlock wallBlock = new WallBlock(collidingCell.getX(), collidingCell.getY(),collidingCell.getCell().getTile().getId(), tileMap.getWorldType());		
 		tileMap.getBlocks().add(wallBlock);
 		stage.addActor(wallBlock);
 		float yWallBlock = wallBlock.getY();

@@ -21,8 +21,7 @@ import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSfxSprite;
-import com.game.mario.sprite.AbstractSprite;
-import com.game.mario.sprite.bloc.Block;
+import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.sprite.bloc.InvisibleMysteryBlock;
 import com.game.mario.sprite.bloc.MysteryBlock;
 import com.game.mario.sprite.bloc.WallBlock;
@@ -54,7 +53,7 @@ public class TmxMap {
 	
 	private MapLayer objectsLayer;
 
-	private List<Block> blocks;
+	private List<AbstractBlock> blocks;
 	
 	private List<WallBlock> wallBlocks;
 	
@@ -191,7 +190,7 @@ public class TmxMap {
 
 	private void initBlocks(WorldTypeEnum background) {
 		
-		blocks = new ArrayList<Block>();
+		blocks = new ArrayList<AbstractBlock>();
 		wallBlocks = new ArrayList<WallBlock>();
 
 		for (int i = 0; i < tileLayer.getWidth(); i++) {
@@ -214,8 +213,8 @@ public class TmxMap {
 		}
 	}
 	
-	public Block getBlockAt(int x, int y) {
-		for (Block block : blocks) {
+	public AbstractBlock getBlockAt(int x, int y) {
+		for (AbstractBlock block : blocks) {
 			if (block.getX()==x && block.getY()==y) {
 				return block;
 			}
@@ -279,11 +278,11 @@ public class TmxMap {
 		this.mario = mario;
 	}
 
-	public List<Block> getBlocks() {
+	public List<AbstractBlock> getBlocks() {
 		return blocks;
 	}
 
-	public void setBlocks(List<Block> blocks) {
+	public void setBlocks(List<AbstractBlock> blocks) {
 		this.blocks = blocks;
 	}
 

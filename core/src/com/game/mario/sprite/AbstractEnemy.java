@@ -15,7 +15,10 @@ public abstract class AbstractEnemy extends AbstractSprite {
 		super(x, y);		
 		state = SpriteMoveEnum.WALKING;
 		killableByPlayer = true;
-		killableByFireball = true;
+		killableByFireball = true;		
+		gravitating = true;
+		moveable = true;
+		collidableWithTilemap = true;
 	}
 	
 	public abstract EnemyTypeEnum getEnemyType();

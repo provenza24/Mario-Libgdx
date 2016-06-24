@@ -5,11 +5,10 @@ import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.util.ResourcesLoader;
 import com.game.mario.util.animation.AnimationBuilder;
 
-public class MysteryBlock extends Block {
+public class MysteryBlock extends AbstractBlock {
 				
 	public MysteryBlock(int x, int y, int tileId, WorldTypeEnum backgroundType) {		
-		super(x,y, tileId, backgroundType);									
-		setBlocType(BlockTypeEnum.MYSTERY_BLOCK);
+		super(x,y, tileId, backgroundType);											
 	}	
 
 	@Override
@@ -23,6 +22,11 @@ public class MysteryBlock extends Block {
 
 	@Override
 	public void initializeAnimationsWithBackground() {		
+	}
+	
+	@Override
+	public BlockTypeEnum getBlocType() {
+		return BlockTypeEnum.MYSTERY_BLOCK;
 	}
 	
 }

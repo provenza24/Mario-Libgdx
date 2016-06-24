@@ -9,7 +9,7 @@ import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.util.ResourcesLoader;
 
-public class InvisibleMysteryBlock extends Block {
+public class InvisibleMysteryBlock extends AbstractBlock {
 	
 	private static final Map<WorldTypeEnum, Integer> BLOCK_VISIBLE_FRAMES = new HashMap<WorldTypeEnum, Integer>();
 	
@@ -21,8 +21,7 @@ public class InvisibleMysteryBlock extends Block {
 	}
 	
 	public InvisibleMysteryBlock(int x, int y, int tileId, WorldTypeEnum worldType) {		
-		super(x,y, tileId, worldType);									
-		setBlocType(BlockTypeEnum.MYSTERY_BLOCK_INVISIBLE);
+		super(x,y, tileId, worldType);											
 	}	
 
 	@Override
@@ -41,13 +40,19 @@ public class InvisibleMysteryBlock extends Block {
 	public void initializeAnimationsWithBackground() {		
 	}
 	
+	@Override
+	public BlockTypeEnum getBlocType() {
+		return BlockTypeEnum.MYSTERY_BLOCK_INVISIBLE;
+	}
+			
 	protected void updateAnimation(float delta) {
 		stateTime = stateTime + delta;
 		currentFrame = currentAnimation.getKeyFrame(frame, false);				
 	}
 	
 	public void changeFrame() {
-		frame = BLOCK_VISIBLE_FRAMES.get(worldTypeEnum);
+		frame = BLOCK_VISIBLE_FRAMES.get(worldType);
 	}
+	
 	
 }

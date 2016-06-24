@@ -10,8 +10,7 @@ import com.game.mario.util.animation.AnimationBuilder;
 public class EjectedCoin extends AbstractSfxSprite {
 
 	public EjectedCoin(float x, float y) {
-		super(x, y);		
-		collidableWithTilemap = false;
+		super(x, y);				
 		isAnimationLooping = false;
 	}
 
