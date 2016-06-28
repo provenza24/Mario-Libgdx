@@ -48,7 +48,7 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmstKw1AQhkcpqFjd6RuIVeiqbsQLs/PyHm2hLfYNtI/uBE7oIaTO5DLpSf0/+JhDSA5ZnD//JkT9ZCI+iAODU3Emzgt75NeKc3wEdwmAhSr5zHM3LewR5za+Z98ZSFkALKA/kU+QLp79WXZdm1Weye7lngqABc/+rDurZJQpzfPOigBYaKM/PbBkNO7P1GBFACy00Z8eoD8BQH96wYoAWEB/+sCKAFhAf/rAimB/nIR5WphnYZ6HOQzzIsxL5/cqI7X+vBKvqXl/vkXr92j9Ea0/W3rnMlgRAAtN+jPPUpvcifeE/gT/m1txJN5Q/f7Ms7SLhbiu6dLgirbn3eNb0QRWBOAvnsRn8ZHq9WeWPS0/X+KPoxvannftW9E1rAi6Jful8vjAjfvzm3yzZ83ni/jaQ0G3/AJ7Ltso
+   eJztmstuwjAQRYeKX4A/qHhIXcGm4qHZUfofgARV+weFT2eysLAs6EweE5zqHunIVuJYWfjmbkLUTWbiXOwb3Il78ZDsEa6l41sPPhIAC2XyGXK3S/aIcxuveXYGchYAC+hP5BPki2d/3ruujWWeKdZyRwXAgmd/Vh3LZJQpz/POigBYaKI/PbBkNO7P3GBFACw00Z8eoD8BQH96wYoAWEB/+sCKAFhAf/rAigBYyK0/B+KQ6vfnJpp/RPNtNP9s6J3vwYoAWKjTnyFLTTIRp4T+BL6EM63dT9ekmfBiJI7FV6renyFLjziKPxU9Gfyi23n3+FbUgRUB+IuFuBTfqVp/FtnT8vMtnh290O28a9+KtmFF0C7FL5Uv/9y4P3/JN3vWfK7EdQcF7XIFOoLa+g==
   </data>
  </layer>
  <objectgroup name="objectsLayer" offsetx="-0.333333" offsety="0">

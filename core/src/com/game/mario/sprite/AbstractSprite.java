@@ -483,5 +483,13 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	public static void updateCommonStateTime(float delta) {		
 		commonStateTime = commonStateTime + delta;
 	}
+
+	public ITilemapCollisionHandler getTilemapCollisionHandler() {
+		return tilemapCollisionHandler;
+	}
+
+	public void setTilemapCollisionHandler(ITilemapCollisionHandler tilemapCollisionHandler) {
+		this.tilemapCollisionHandler = tilemapCollisionHandler;
+	}
 	
 }

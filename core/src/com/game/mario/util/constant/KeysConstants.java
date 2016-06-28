@@ -4,6 +4,8 @@ import com.badlogic.gdx.Input.Keys;
 
 public class KeysConstants {
 
+	public static final int KEY_DOWN = Keys.DOWN;
+	
 	public static final int KEY_UP = Keys.Z;
 	
 	public static final int KEY_LEFT = Keys.LEFT;

@@ -8,7 +8,7 @@ public enum SpriteMoveEnum {
 	SLIDING_LEFT, 
 	NO_MOVE, 
 	JUMPING, 
-	FALLING,
+	FALLING,	
 	
 	WALKING, 
 	SLIDING, 

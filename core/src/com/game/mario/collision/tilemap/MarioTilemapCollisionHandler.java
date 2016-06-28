@@ -54,7 +54,8 @@ public class MarioTilemapCollisionHandler extends AbstractTilemapCollisionHandle
 					if (sprite.getMove().y==0 && sprite.getMove().x!=0) {
 						newPosition.x = sprite.getMove().x>0 ? (int) (sprite.getX() + sprite.getOffset().x) +  sprite.getOffset().x - COLLISION_X_CORRECTIF : (int) (sprite.getX() + sprite.getWidth() +  sprite.getOffset().x) -  sprite.getOffset().x + COLLISION_X_CORRECTIF;						
 						sprite.getAcceleration().x = 0;	
-						if (sprite.getState()!=SpriteMoveEnum.FALLING && sprite.getState()!=SpriteMoveEnum.JUMPING) {
+						if (sprite.getState()!=SpriteMoveEnum.FALLING 
+								&& sprite.getState()!=SpriteMoveEnum.JUMPING) {
 							sprite.setState(SpriteMoveEnum.NO_MOVE);
 						}
 					}

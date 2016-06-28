@@ -85,6 +85,10 @@ public class Mario extends AbstractTileObjectSprite {
 	private Animation marioStandRightAnimation;
 	
 	private Animation marioStandLeftAnimation;
+	
+	private Animation marioCrouchRightAnimation;
+	
+	private Animation marioCrouchLeftAnimation;
 
 	private SpriteMoveEnum previousState;
 
@@ -115,6 +119,8 @@ public class Mario extends AbstractTileObjectSprite {
 	private List<AbstractSprite> fireballs;	
 	
 	private boolean isStuck;
+	
+	private boolean isCrouch;
 
 	public Mario(MapObject mapObject) {
 		super(mapObject, new Vector2(X_OFFSET, Y_OFFSET));
@@ -171,9 +177,9 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private void initializeAnimation(Texture texture, int i) {
 
-		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / 14, texture.getHeight());
+		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / (i==0 ? 14 :16), texture.getHeight());
 			
-		animations[i] = new Animation[10];
+		animations[i] = new Animation[12];
 		animations[i][0] = AnimationBuilder.getInstance().build(tmp, 0, 3, 0.05f);
 		animations[i][1] = AnimationBuilder.getInstance().build(tmp, 5, 3, 0.05f);
 		animations[i][2] = AnimationBuilder.getInstance().build(tmp, 9, 1, 1);
@@ -184,6 +190,11 @@ public class Mario extends AbstractTileObjectSprite {
 		animations[i][7] = AnimationBuilder.getInstance().build(tmp, 11, 1, 1);
 		animations[i][8] = AnimationBuilder.getInstance().build(tmp, 12, 1, 1);
 		animations[i][9] = AnimationBuilder.getInstance().build(tmp, 13, 1, 1);
+		if (i>0) {
+			// Crouch animation if Mario is big
+			animations[i][10] = AnimationBuilder.getInstance().build(tmp, 14, 1, 1);
+			animations[i][11] = AnimationBuilder.getInstance().build(tmp, 15, 1, 1);
+		}
 
 	}
 	
@@ -204,7 +215,7 @@ public class Mario extends AbstractTileObjectSprite {
 		marioStandRightAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
 		marioStandLeftAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);		
 			
-		animations[3] = new Animation[10];
+		animations[3] = new Animation[12];
 		animations[3][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
 		animations[3][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
 		animations[3][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
@@ -214,6 +225,8 @@ public class Mario extends AbstractTileObjectSprite {
 		animations[3][7] = animations[0][7];
 		animations[3][8] = animations[0][8];
 		animations[3][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
+		animations[3][10] = null; // TODO Crouch animation right
+		animations[3][11] = null; // TODO Crouch animation right
 	}
 	
 	public void refreshAnimations() {		
@@ -227,7 +240,9 @@ public class Mario extends AbstractTileObjectSprite {
 		marioDeathAnimation = animations[animationIdx][6];
 		marioFlagRightAnimation = animations[animationIdx][7];
 		marioFlagLeftAnimation = animations[animationIdx][8];
-		marioVictoryAnimation = animations[animationIdx][9];		
+		marioVictoryAnimation = animations[animationIdx][9];
+		marioCrouchRightAnimation = animations[animationIdx][10];
+		marioCrouchLeftAnimation = animations[animationIdx][11];		
 	}
 
 	public void accelerate(boolean accelerationKeyHold) {
@@ -272,7 +287,7 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 
 	public void setStateIfNotJumping(SpriteMoveEnum pstate) {
-		if (state != SpriteMoveEnum.FALLING && state != SpriteMoveEnum.JUMPING) {
+		if (state != SpriteMoveEnum.FALLING && state != SpriteMoveEnum.JUMPING && !isCrouch) {
 			this.state = pstate;
 		}
 	}
@@ -356,10 +371,15 @@ public class Mario extends AbstractTileObjectSprite {
 
 		stateTime = stateTime + delta;
 
-		float xMove = getX() - getOldPosition().x;
-
-		if (getState() != SpriteMoveEnum.JUMPING && getState() != SpriteMoveEnum.FALLING) {
-			if (xMove == 0) {
+		if (isCrouch) {
+			currentAnimation = direction == DirectionEnum.RIGHT ? marioCrouchRightAnimation : marioCrouchLeftAnimation; 
+			currentFrame = currentAnimation.getKeyFrame(0, false);
+		} else if (!onFloor) {
+			currentAnimation = direction == DirectionEnum.RIGHT ? marioJumpRightAnimation : marioJumpLeftAnimation;
+			currentFrame = currentAnimation.getKeyFrame(owningStar ? stateTime : 0, owningStar ? true :false);
+		} else { //if (getState() != SpriteMoveEnum.JUMPING && getState() != SpriteMoveEnum.FALLING) {
+			float xMove = getX() - getOldPosition().x;
+			if (xMove == 0) {				
 				if (getState() == SpriteMoveEnum.SLIDING_LEFT) {
 					setDirection(DirectionEnum.RIGHT);
 				} else if (getState() == SpriteMoveEnum.SLIDING_RIGHT) {
@@ -377,21 +397,19 @@ public class Mario extends AbstractTileObjectSprite {
 					}					
 					currentFrame = currentAnimation.getKeyFrame(stateTime, true);
 				}
+								
 			} else {
-				currentAnimation = state == SpriteMoveEnum.RUNNING_LEFT ? marioRunLeftAnimation
+				currentAnimation = 						
+						state == SpriteMoveEnum.RUNNING_LEFT ? marioRunLeftAnimation
 						: state == SpriteMoveEnum.RUNNING_RIGHT ? marioRunRightAnimation
 								: state == SpriteMoveEnum.SLIDING_LEFT ? marioSlideLeftAnimation
 										: state == SpriteMoveEnum.SLIDING_RIGHT ? marioSlideRightAnimation
 												: direction == DirectionEnum.RIGHT ? marioRunRightAnimation
 														: marioRunLeftAnimation;
 				currentFrame = currentAnimation.getKeyFrame(stateTime, true);
-			}
+			}			
 		}
 
-		if (!onFloor) {
-			currentAnimation = direction == DirectionEnum.RIGHT ? marioJumpRightAnimation : marioJumpLeftAnimation;
-			currentFrame = currentAnimation.getKeyFrame(owningStar ? stateTime : 0, owningStar ? true :false);
-		}
 	}
 
 	public boolean canInitiateJump() {
@@ -547,6 +565,10 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void transfer(TmxMap tilemap, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds,
 			SpriteBatch spriteBatch) {
+		if (isCrouch) {
+			// Maybe we're coming from an horinzontal pipe, Mario had to crouch to get into
+			uncrouch();
+		}
 		setOnFloor(true);
 		setState(SpriteMoveEnum.NO_MOVE);
 		setAcceleration(new Vector2(0, 0));
@@ -592,5 +614,30 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public void setTransferItem(TransferItem transferItem) {
 		this.transferItem = transferItem;
-	}	
+	}
+	
+	public void crouch() {
+		isCrouch = true;		
+		setSize(1 - 2*offset.x, 1f - offset.y);		
+		bounds.setWidth(1 - 2*offset.x);
+		bounds.setHeight(1 - offset.y);						
+		updateBounds();				
+	}
+	
+	public void uncrouch() {		
+		isCrouch = false;		
+		setSize(1 - 2*offset.x, 2 - offset.y);		
+		bounds.setWidth(1 - 2*offset.x);
+		bounds.setHeight(2 - offset.y);	
+		updateBounds();		
+	}
+
+	public boolean isCrouch() {
+		return isCrouch;
+	}
+
+	public void setCrouch(boolean isCrouch) {
+		this.isCrouch = isCrouch;
+	}
+			
 }
