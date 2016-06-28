@@ -29,7 +29,8 @@ public class MarioGrowingSceneHandler extends AbstractCinematicSceneHandler {
 		renderCinematicScene(delta);				
 		if (growingDuration>=1) {
 			growingDuration = 0;					
-			if (mario.isGrowingDown()) {
+			if (mario.isGrowingDown()) {				
+				mario.setCrouch(false);				
 				mario.changeSizeState(0);				
 				mario.setGrowingDown(false);
 				mario.setInvincible(true);
