@@ -13,6 +13,8 @@ import com.game.mario.camera.GameCamera;
 import com.game.mario.enums.CastleTypeEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.sprite.AbstractSfxSprite;
+import com.game.mario.sprite.sfx.WhiteFlag;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
@@ -22,6 +24,8 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 	private float timer = 0;
 
 	private int endLevelState = 0;
+	
+	private AbstractSfxSprite whiteFlag;
 	
 	public FlagLevelEndingSceneHandler(Mario mario, TmxMap tileMap, GameCamera camera,
 			 Array<IScrollingBackground> scrollingBbackgrounds, BitmapFont font, SpriteBatch spriteBatch,
@@ -65,6 +69,12 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 				endLevelState = 4;
 				timer = 0;
 				mario.setCurrentAnimation(mario.getMarioVictoryAnimation());
+				if (tileMap.getEndLevelCastleType()==CastleTypeEnum.SMALL) {
+					whiteFlag = new WhiteFlag(mario.getX(), mario.getY()+4);
+					tileMap.getSfxSprites().add(whiteFlag);
+					stage.addActor(whiteFlag);
+					whiteFlag.addAppearAction();					
+				}				
 			} else {
 				camera.moveCamera(mario);
 				// Move scrolling background
@@ -102,7 +112,10 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			renderCinematicScene(delta);
 			if (endLevelState>=4) {
 				renderer.getBatch().begin();				
-				renderer.getBatch().draw(tileMap.getEndLevelCastleType()==CastleTypeEnum.SMALL ? ResourcesLoader.CASTLE_DOOR : ResourcesLoader.CASTLE_DOOR_BIG,(int)tileMap.getFlagTargetPosition() + 9, mario.getY(), 2,2);	
+				renderer.getBatch().draw(tileMap.getEndLevelCastleType()==CastleTypeEnum.SMALL ? ResourcesLoader.CASTLE_DOOR : ResourcesLoader.CASTLE_DOOR_BIG,(int)tileMap.getFlagTargetPosition() + 9, mario.getY(), 2,2);								
+				if (tileMap.getEndLevelCastleType()==CastleTypeEnum.SMALL) {
+					renderer.getBatch().draw(ResourcesLoader.CASTLE_TOP,(int)tileMap.getFlagTargetPosition() + 8, 5, 2,1);
+				}
 				renderer.getBatch().end();
 			}
 

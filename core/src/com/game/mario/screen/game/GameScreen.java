@@ -23,7 +23,6 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
-import com.game.mario.collision.CollisionPoint;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.EnemyTypeEnum;
@@ -49,7 +48,6 @@ import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
-import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.constant.KeysConstants;
 import com.game.mario.util.constant.WinConstants;
@@ -189,8 +187,8 @@ public class GameScreen implements Screen  {
 		int xFlyingKoopa = 73;
 		int yFlyingKoopa = 73;
 		
-		int x = xBowserPos;
-		int y = yBowserPos;
+		int x = xFlagPos;
+		int y = yFlagPos;
 		
 		/*mario.setX(x);
 		mario.setY(y);

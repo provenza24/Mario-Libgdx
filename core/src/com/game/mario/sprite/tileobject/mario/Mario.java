@@ -167,7 +167,7 @@ public class Mario extends AbstractTileObjectSprite {
 	@Override
 	public void initializeAnimations() {
 		
-		animations = new Animation[4][10];
+		animations = new Animation[5][14];
 		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);
 		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
 		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);		
@@ -179,7 +179,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / (i==0 ? 14 :16), texture.getHeight());
 			
-		animations[i] = new Animation[12];
+		animations[i] = new Animation[14];
 		animations[i][0] = AnimationBuilder.getInstance().build(tmp, 0, 3, 0.05f);
 		animations[i][1] = AnimationBuilder.getInstance().build(tmp, 5, 3, 0.05f);
 		animations[i][2] = AnimationBuilder.getInstance().build(tmp, 9, 1, 1);
@@ -195,6 +195,8 @@ public class Mario extends AbstractTileObjectSprite {
 			animations[i][10] = AnimationBuilder.getInstance().build(tmp, 14, 1, 1);
 			animations[i][11] = AnimationBuilder.getInstance().build(tmp, 15, 1, 1);
 		}
+		animations[i][12] = null;
+		animations[i][13] = null;
 
 	}
 	
@@ -211,11 +213,8 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 	
 	private void initStarAnimations() {
-		
-		marioStandRightAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
-		marioStandLeftAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);		
-			
-		animations[3] = new Animation[12];
+				
+		animations[3] = new Animation[14];
 		animations[3][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
 		animations[3][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
 		animations[3][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
@@ -227,6 +226,23 @@ public class Mario extends AbstractTileObjectSprite {
 		animations[3][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
 		animations[3][10] = null; // TODO Crouch animation right
 		animations[3][11] = null; // TODO Crouch animation right
+		animations[3][12] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
+		animations[3][13] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);
+		
+		animations[4] = new Animation[14];
+		animations[4][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_RUN_RIGHT, 0, 24, 0.025f);
+		animations[4][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_RUN_LEFT, 0, 24, 0.025f);
+		animations[4][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
+		animations[4][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_SLIDE_LEFT, 0, 4, 0.025f);
+		animations[4][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_JUMP_RIGHT, 0, 4, 0.025f);
+		animations[4][5] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_JUMP_LEFT, 0, 4, 0.025f);		
+		animations[4][7] = animations[0][7];
+		animations[4][8] = animations[0][8];
+		animations[4][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_VICTORY, 0, 4, 0.025f);;
+		animations[4][10] = null; // TODO Crouch animation right
+		animations[4][11] = null; // TODO Crouch animation right
+		animations[4][12] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_STAND_RIGHT, 0, 4, 0.025f);
+		animations[4][13] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_STAND_LEFT, 0, 4, 0.025f);
 	}
 	
 	public void refreshAnimations() {		
@@ -243,6 +259,8 @@ public class Mario extends AbstractTileObjectSprite {
 		marioVictoryAnimation = animations[animationIdx][9];
 		marioCrouchRightAnimation = animations[animationIdx][10];
 		marioCrouchLeftAnimation = animations[animationIdx][11];		
+		marioStandRightAnimation = animations[animationIdx][12];
+		marioStandLeftAnimation = animations[animationIdx][13];
 	}
 
 	public void accelerate(boolean accelerationKeyHold) {

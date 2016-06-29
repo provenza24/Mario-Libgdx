@@ -69,19 +69,19 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		
 		tileMap.removeCell(collidingCell.getX(), collidingCell.getY());
 		
-		AbstractWallPiece topLeftPiece = new TopLeftWallPiece(collidingCell.getX(), collidingCell.getY()+0.5f); 
+		AbstractWallPiece topLeftPiece = new TopLeftWallPiece(collidingCell.getX(), collidingCell.getY()+0.5f, tileMap.getWorldType()); 
 		tileMap.getSfxSprites().add(topLeftPiece);
 		stage.addActor(topLeftPiece);
 		
-		AbstractWallPiece topRightPiece = new TopRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()+0.5f); 
+		AbstractWallPiece topRightPiece = new TopRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()+0.5f, tileMap.getWorldType()); 
 		tileMap.getSfxSprites().add(topRightPiece);
 		stage.addActor(topRightPiece);
 		
-		AbstractWallPiece bottomRightPiece = new BottomRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY()); 
+		AbstractWallPiece bottomRightPiece = new BottomRightWallPiece(collidingCell.getX()+0.5f, collidingCell.getY(), tileMap.getWorldType()); 
 		tileMap.getSfxSprites().add(bottomRightPiece);
 		stage.addActor(bottomRightPiece);
 		
-		AbstractWallPiece bottomLeftPiece = new BottomLeftWallPiece(collidingCell.getX(), collidingCell.getY()); 
+		AbstractWallPiece bottomLeftPiece = new BottomLeftWallPiece(collidingCell.getX(), collidingCell.getY(), tileMap.getWorldType()); 
 		tileMap.getSfxSprites().add(bottomLeftPiece);
 		stage.addActor(bottomLeftPiece);
 		

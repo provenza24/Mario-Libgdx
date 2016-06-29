@@ -5,11 +5,12 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.game.mario.enums.WorldTypeEnum;
 
 public class TopLeftWallPiece extends AbstractWallPiece {
 
-	public TopLeftWallPiece(float x, float y) {
-		super(x, y, new Vector2(-X_ACCELERATION_COEFF,Y_ACCELERATION_COEFF*1.5f));		
+	public TopLeftWallPiece(float x, float y, WorldTypeEnum worldTypeEnum) {
+		super(x, y, new Vector2(-X_ACCELERATION_COEFF,Y_ACCELERATION_COEFF*1.5f), worldTypeEnum);		
 	}
 	
 	@Override
