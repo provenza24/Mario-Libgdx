@@ -21,7 +21,7 @@ import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.RectangleUtil;
 
-public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable {
+public abstract class AbstractSprite extends Actor implements IMoveable, IDrawable, ICollisionable {
 		
 	protected static float commonStateTime; 
 	
