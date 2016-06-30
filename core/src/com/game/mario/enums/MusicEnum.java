@@ -2,5 +2,5 @@ package com.game.mario.enums;
 
 public enum MusicEnum {
 
-	OVERGROUND, UNDERGROUND, BONUS;
+	OVERGROUND, UNDERGROUND, BONUS, CASTLE;
 }

@@ -80,7 +80,7 @@ public class GameScreen implements Screen  {
 
 	private boolean debugShowFps = false;
 
-	private TmxMap tileMap;
+	private TmxMap tilemap;
 
 	private OrthogonalTiledMapRenderer renderer;
 
@@ -116,44 +116,50 @@ public class GameScreen implements Screen  {
 		
 	public GameScreen() {
 		
-		shapeRenderer = new ShapeRenderer();
-
-		spriteBatch = new SpriteBatch();
+		// Initialize fonts
 		debugFont = new BitmapFont();		
-		debugFont.setColor(0, 0, 1, 1);
-		
+		debugFont.setColor(0, 0, 1, 1);		
 		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));		
 		font.setColor(1,1,1,1);
+		
+		// Sprite batch, used to draw background and debug text 
+		spriteBatch = new SpriteBatch();		
+		// Shape renderer, used to draw rectangles around sprites in debug mode
+		shapeRenderer = new ShapeRenderer();
+				
+		// Load the tilemap, set the unit scale to 1/32 (1 unit == 32 pixels)
+		tilemap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
+		// Renderer used to draw tilemap
+		renderer = new OrthogonalTiledMapRenderer(tilemap.getMap(), 1 / 32f);				
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
-		tileMap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
-		renderer = new OrthogonalTiledMapRenderer(tileMap.getMap(), 1 / 32f);
+		tilemap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
+		renderer = new OrthogonalTiledMapRenderer(tilemap.getMap(), 1 / 32f);
 
-		mario = tileMap.getMario();
+		// Mario !!!
+		mario = tilemap.getMario();
 
 		// create an orthographic camera, shows us 30x20 units of the world
 		camera = new GameCamera();
 		camera.setCameraOffset(mario.getX());
 		
+		// Initialize backgrounds, which are defined in each TMX map with Tiled
 		backgrounds = new Array<IScrollingBackground>();
 		int i=0;
-		for (BackgroundTypeEnum backgroundTypeEnum : tileMap.getBackgroundTypesEnum()) {
-			if (i==0) {
-				IScrollingBackground scrollingBackground_1 = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, 16);
-				backgrounds.add(scrollingBackground_1);				
-			} else {
-				IScrollingBackground scrollingBackground_2 = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, 24);
-				backgrounds.add(scrollingBackground_2);				
-			}
+		for (BackgroundTypeEnum backgroundTypeEnum : tilemap.getBackgroundTypesEnum()) {
+			IScrollingBackground scrollingBackground = new LeftScrollingBackground(mario, spriteBatch, backgroundTypeEnum, i==0 ? 16 : 24);
+			backgrounds.add(scrollingBackground);			
 			i++;
 		}
 		
-		stage = new Stage();
-					
-		for (Actor actor : tileMap.getBlocks()) {
+		// Initialize stage, the stage is used for sprites actions
+		stage = new Stage();					
+		for (Actor actor : tilemap.getBlocks()) {
+			// Add all blocks as actors, to simulate a movement when small Mario collides a wall while jumping
 			stage.addActor(actor);
 		}
-		
+				
+		// Initialize status bar, remaining lifes, collected coins
 		MarioLifes marioLifes = new MarioLifes();
 		marioLifes.setPosition(10, Gdx.graphics.getHeight()-20 - marioLifes.getHeight()/2);
 		MarioCoins marioCoins= new MarioCoins();
@@ -161,23 +167,21 @@ public class GameScreen implements Screen  {
 		stage.addActor(marioLifes);
 		stage.addActor(marioCoins);
 		
+		// Boolean indicating if level is finished or not
 		levelFinished = false;			
 				
-		if (tileMap.getWorldType()==WorldTypeEnum.CASTLE) {
-			levelEndingSceneHandler = new CastleLevelEndingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		// Initialize scene handlers to play cinematics scenes during game
+		if (tilemap.getWorldType()==WorldTypeEnum.CASTLE) {
+			levelEndingSceneHandler = new CastleLevelEndingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
 		} else {
-			levelEndingSceneHandler = new FlagLevelEndingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
-		}
-		
-		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
-		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
-		marioTransferSceneHandler = new TransferSceneHandler(mario, tileMap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);	
-						
-		if (tileMap.getMusicTheme().toUpperCase().equals(MusicEnum.OVERGROUND.toString())) {
-			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_OVERWORLD_THEME);	
-		} else {
-			SoundManager.getSoundManager().setStageMusic(SoundManager.SOUND_UNDERGROUND_THEME);
+			levelEndingSceneHandler = new FlagLevelEndingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
 		}		
+		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+		marioTransferSceneHandler = new TransferSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);	
+						
+		// Initialize sound theme
+		SoundManager.getSoundManager().setStageMusic(MusicEnum.valueOf(tilemap.getMusicTheme().toUpperCase()));				
 		
 		int xBowserPos = 124;
 		int yBowserPos = 5;
@@ -233,10 +237,10 @@ public class GameScreen implements Screen  {
 		// 3 - Update bounds
 		// 4 - Update animation
 		// 5 - update status		
-		mario.update(tileMap, camera.getCamera(), delta);
+		mario.update(tilemap, camera.getCamera(), delta);
 							
 		// Check Mario collision with a block if it's under his head 
-		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);
+		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tilemap, stage);
 		
 		// Draw the scene
 		Gdx.gl.glClearColor(0, 0, 0, 1);
@@ -246,7 +250,7 @@ public class GameScreen implements Screen  {
 			
 			
 			// @TODO refactor this in camera.move method
-			if (camera.getCamera().position.x < tileMap.getScrollMaxValue()) {
+			if (camera.getCamera().position.x < tilemap.getScrollMaxValue()) {
 				// Move camera			
 				camera.moveCamera(mario);
 				// Move scrolling background
@@ -298,8 +302,8 @@ public class GameScreen implements Screen  {
 		// Display status bar				
 		renderStatusBar();
 				
-		if (mario.getX()>=tileMap.getFlagTargetPosition() 
-				&& camera.getCamera().position.x -8 < tileMap.getFlag().getX()) {			
+		if (mario.getX()>=tilemap.getFlagTargetPosition() 
+				&& camera.getCamera().position.x -8 < tilemap.getFlag().getX()) {			
 			levelFinished = true;
 		}			
 	}
@@ -307,10 +311,10 @@ public class GameScreen implements Screen  {
 	private void handlePlateforms(float deltaTime) {
 		
 		mario.setStuck(false);
-		List<AbstractMetalPlateform> plateforms = tileMap.getPlateforms();		
+		List<AbstractMetalPlateform> plateforms = tilemap.getPlateforms();		
 		for (int i = 0; i < plateforms.size(); i++) {
 			AbstractMetalPlateform plateform = plateforms.get(i);			
-			plateform.update(tileMap, camera.getCamera(), deltaTime);			
+			plateform.update(tilemap, camera.getCamera(), deltaTime);			
 			if (plateform.isDeletable()) {				
 				plateforms.remove(i--);
 			} 
@@ -319,7 +323,7 @@ public class GameScreen implements Screen  {
 	
 	private void renderPlateforms(float deltaTime) {
 		
-		List<AbstractMetalPlateform> plateforms = tileMap.getPlateforms();		
+		List<AbstractMetalPlateform> plateforms = tilemap.getPlateforms();		
 		for (int i = 0; i < plateforms.size(); i++) {
 			AbstractMetalPlateform plateform = plateforms.get(i);
 			if (plateform.isVisible()) {
@@ -372,16 +376,16 @@ public class GameScreen implements Screen  {
 			y = y -20;
 			debugFont.draw(spriteBatch, " camera.offset=" + String.format("%.1f", camera.getCameraOffset()), x, y);
 			y = y -20;			
-			debugFont.draw(spriteBatch, "Mysteryblocks: " + tileMap.getBlocks().size(), x, y);
+			debugFont.draw(spriteBatch, "Mysteryblocks: " + tilemap.getBlocks().size(), x, y);
 			y = y -20;
 			int alive = 0;
-			for (AbstractEnemy enemy : tileMap.getEnemies()) {
+			for (AbstractEnemy enemy : tilemap.getEnemies()) {
 				alive += enemy.isAlive() ? 1 : 0;
 			}
-			debugFont.draw(spriteBatch, "Enemies: " + tileMap.getEnemies().size() + " - " + alive + " alive", x, y);
+			debugFont.draw(spriteBatch, "Enemies: " + tilemap.getEnemies().size() + " - " + alive + " alive", x, y);
 			y = y -20;
 			alive = 0;
-			for (AbstractEnemy enemy : tileMap.getEnemies()) {
+			for (AbstractEnemy enemy : tilemap.getEnemies()) {
 				if (enemy.getEnemyType()==EnemyTypeEnum.KOOPA) {
 				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() + " -onFloor "+enemy.isOnFloor(), x, y);				
 				y = y -20;
@@ -389,10 +393,10 @@ public class GameScreen implements Screen  {
 				alive++;
 			}			
 			alive = 0;
-			for (AbstractSprite item : tileMap.getItems()) {
+			for (AbstractSprite item : tilemap.getItems()) {
 				alive += item.isAlive() ? 1 : 0;
 			}
-			debugFont.draw(spriteBatch, "Items: " + tileMap.getItems().size() + " - " + alive + " alive", x, y);
+			debugFont.draw(spriteBatch, "Items: " + tilemap.getItems().size() + " - " + alive + " alive", x, y);
 			y = y -20;
 			alive = 0;
 			/*for (AbstractSprite item : tileMap.getItems()) {
@@ -401,7 +405,7 @@ public class GameScreen implements Screen  {
 				alive++;
 			}*/	
 			alive = 0;
-			for (AbstractMetalPlateform plateform : tileMap.getPlateforms()) {
+			for (AbstractMetalPlateform plateform : tilemap.getPlateforms()) {
 				debugFont.draw(spriteBatch, "Plateform #" + alive + " - " + (plateform.isAlive() ? " alive - " : "") + (plateform.isVisible() ? " visible - " : "") , x, y);
 				y = y -20;
 				alive++;
@@ -410,7 +414,7 @@ public class GameScreen implements Screen  {
 			y = y -20;			
 			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, x, y);
 			y = y -20;
-			debugFont.draw(spriteBatch, "worldType: " + tileMap.getWorldType(), x, y);
+			debugFont.draw(spriteBatch, "worldType: " + tilemap.getWorldType(), x, y);
 			
 			spriteBatch.end();
 		}
@@ -432,11 +436,11 @@ public class GameScreen implements Screen  {
 			shapeRenderer.begin(ShapeType.Filled);
 			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
 			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
-			for (AbstractSprite sprite : tileMap.getEnemies()) {
+			for (AbstractSprite sprite : tilemap.getEnemies()) {
 				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
-			for (AbstractSprite sprite : tileMap.getItems()) {
+			for (AbstractSprite sprite : tilemap.getItems()) {
 				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
 						sprite.getHeight());
 			}
@@ -445,7 +449,7 @@ public class GameScreen implements Screen  {
 						sprite.getHeight());
 			}
 			
-			for (AbstractMetalPlateform plateform : tileMap.getPlateforms()) {
+			for (AbstractMetalPlateform plateform : tilemap.getPlateforms()) {
 				shapeRenderer.rect(plateform.getX() + plateform.getOffset().x, plateform.getY(), plateform.getWidth(),
 						plateform.getHeight());
 			}
@@ -457,10 +461,10 @@ public class GameScreen implements Screen  {
 	}
 	
 	private void handleItems(float deltaTime) {
-		List<AbstractItem> items = tileMap.getItems();		
+		List<AbstractItem> items = tilemap.getItems();		
 		for (int i = 0; i < items.size(); i++) {
 			AbstractItem item = items.get(i);						
-			item.update(tileMap, camera.getCamera(), deltaTime);
+			item.update(tilemap, camera.getCamera(), deltaTime);
 			boolean collideMario = item.overlaps(mario);						
 			if (collideMario) {
 				CollisionHandler.getCollisionHandler().collideMarioWithItem(mario, item, camera, backgrounds);				
@@ -474,10 +478,10 @@ public class GameScreen implements Screen  {
 	}
 	
 	private void handleSfxSprites(float deltaTime) {	
-		List<AbstractSfxSprite> sfxSprites = tileMap.getSfxSprites();		
+		List<AbstractSfxSprite> sfxSprites = tilemap.getSfxSprites();		
 		for (int i = 0; i < sfxSprites.size(); i++) {
 			AbstractSprite sfxSprite = sfxSprites.get(i);			
-			sfxSprite.update(tileMap, camera.getCamera(), deltaTime);			
+			sfxSprite.update(tilemap, camera.getCamera(), deltaTime);			
 			if (sfxSprite.isDeletable()) {				
 				sfxSprites.remove(i--);
 			} else if (sfxSprite.isVisible()) {
@@ -490,7 +494,7 @@ public class GameScreen implements Screen  {
 		List<AbstractSprite> fireballs = mario.getFireballs();
 		for (int i = 0; i < fireballs.size(); i++) {
 			AbstractSprite abstractSprite = fireballs.get(i); 
-			abstractSprite.update(tileMap, camera.getCamera(), deltaTime);			
+			abstractSprite.update(tilemap, camera.getCamera(), deltaTime);			
 			if (abstractSprite.isDeletable()) {				
 				fireballs.remove(i--);
 				explodeFireball(abstractSprite);		
@@ -502,10 +506,10 @@ public class GameScreen implements Screen  {
 	
 	private void handleEnemies(float deltaTime) {
 
-		List<AbstractEnemy> enemies = tileMap.getEnemies();		
+		List<AbstractEnemy> enemies = tilemap.getEnemies();		
 		for (int i = 0; i < enemies.size(); i++) {
 			AbstractEnemy enemy = enemies.get(i);
-			enemy.update(tileMap, camera.getCamera(), deltaTime);
+			enemy.update(tilemap, camera.getCamera(), deltaTime);
 			// Draw it
 			if (enemy.isAlive()) {
 				for (int j = i + 1; j < enemies.size(); j++) {
@@ -557,7 +561,7 @@ public class GameScreen implements Screen  {
 
 	private void explodeFireball(AbstractSprite fireball) {		
 		AbstractSfxSprite sprite = new FireballExplosion(fireball);		
-		tileMap.getSfxSprites().add(sprite);
+		tilemap.getSfxSprites().add(sprite);
 		stage.addActor(sprite);				   				
 		sprite.addAppearAction();
 	}
@@ -565,14 +569,14 @@ public class GameScreen implements Screen  {
 	private void renderMysteryBlocks(float delta) {
 
 		// Get blocks from tilemap
-		List<AbstractBlock> blocks = tileMap.getBlocks();
+		List<AbstractBlock> blocks = tilemap.getBlocks();
 		if (blocks.size() > 0) {			
 			batch = renderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {
 				// For each block
 				AbstractBlock block = blocks.get(i);
-				block.update(tileMap, camera.getCamera(), delta);
+				block.update(tilemap, camera.getCamera(), delta);
 				if (block.isDeletable()) {					
 					blocks.remove(i--);
 				} else if (block.isVisible()) {
@@ -607,7 +611,7 @@ public class GameScreen implements Screen  {
 		}				
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.changeSizeState(mario.getSizeState()==0 ? 1 : mario.getSizeState()==1 ? 2 : 0);
+			mario.changeSizeState(mario.getSizeState()==0 ? 2 : mario.getSizeState()==2 ? 3 : 0);
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
@@ -632,7 +636,7 @@ public class GameScreen implements Screen  {
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			
 			List<AbstractSprite> fireballs = mario.getFireballs();
-			if (fireballs.size()<2 && mario.getSizeState()==2 && keyUpReleased == true) {
+			if (fireballs.size()<2 && mario.getSizeState()>=3 && keyUpReleased == true) {
 				// A fireball can be launched only if mario has a flower
 				fireballs.add(new Fireball(mario));
 			}
@@ -704,7 +708,7 @@ public class GameScreen implements Screen  {
 			jumpTimerMax = JUMP_TIMER_MAX;	
 			float coefAcceleration = mario.getAcceleration().x<7 ? mario.getAcceleration().x/6000 : mario.getAcceleration().x/4000; 
 			jumpAccelerationContinue = MARIO_JUMP_ACCELERATION_CONTINUE + coefAcceleration;			
-			Sound soundToPlay = mario.getSizeState()>0 ? SoundManager.SOUND_JUMP_SUPER : SoundManager.SOUND_JUMP_SMALL;
+			Sound soundToPlay = mario.getSizeState()>=1 ? SoundManager.SOUND_JUMP_SUPER : SoundManager.SOUND_JUMP_SMALL;
 			SoundManager.getSoundManager().playSound(soundToPlay);
 		} else if (Gdx.input.isKeyPressed(KEY_UP) && mario.getState() == SpriteMoveEnum.JUMPING
 				&& mario.canJumpHigher()) {
@@ -724,8 +728,7 @@ public class GameScreen implements Screen  {
 		mario.setCanInitiateJump(!Gdx.input.isKeyPressed(KEY_UP) && mario.isOnFloor());
 
 		if (Gdx.input.isKeyPressed(KEY_DOWN)
-				&& mario.getSizeState()!=0 
-				&& mario.getSizeState()!=3
+				&& mario.getSizeState()>1 				
 				&& mario.getState()!=SpriteMoveEnum.JUMPING
 				&& mario.getState()!=SpriteMoveEnum.FALLING) {
 			mario.crouch();
@@ -743,13 +746,13 @@ public class GameScreen implements Screen  {
 		
 		int x = (int) leftTopCorner.x;
 		int y = (int) leftTopCorner.y;		
-		if (tileMap.isCollisioningTileAt(x, y)) {
+		if (tilemap.isCollisioningTileAt(x, y)) {
 			return true;
 		}		
 		x = (int) rightTopCorner.x;
 		y = (int) rightTopCorner.y;								
 		
-		return tileMap.isCollisioningTileAt(x, y);
+		return tilemap.isCollisioningTileAt(x, y);
 	}
 	
 	@Override
@@ -786,7 +789,7 @@ public class GameScreen implements Screen  {
 	@Override
 	public void dispose() {		
 		stage.dispose();
-		tileMap.dispose();		
+		tilemap.dispose();		
 		renderer.dispose();		
 		shapeRenderer.dispose();
 		font.dispose();

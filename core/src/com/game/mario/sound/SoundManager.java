@@ -6,6 +6,7 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.game.mario.enums.MusicEnum;
+import com.game.mario.enums.WorldTypeEnum;
 
 public class SoundManager {
 
@@ -65,6 +66,7 @@ public class SoundManager {
 		THEMES.put(MusicEnum.UNDERGROUND, SOUND_UNDERGROUND_THEME);
 		THEMES.put(MusicEnum.OVERGROUND, SOUND_OVERWORLD_THEME);
 		THEMES.put(MusicEnum.BONUS, SOUND_BONUS_THEME);
+		THEMES.put(MusicEnum.CASTLE, SOUND_OVERWORLD_THEME);
 	}
 	
 	private SoundManager() {	
@@ -147,6 +149,10 @@ public class SoundManager {
 
 	public void setStageMusic(Sound stageMusic) {
 		SoundManager.stageMusic = stageMusic;
+	}
+	
+	public void setStageMusic(MusicEnum musicEnum) {
+		SoundManager.stageMusic = THEMES.get(musicEnum);
 	}
 
 	public Sound getCurrentMusic() {

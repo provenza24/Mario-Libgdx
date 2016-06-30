@@ -10,7 +10,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.GameManager;
@@ -124,9 +123,6 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public Mario(MapObject mapObject) {
 		super(mapObject, new Vector2(X_OFFSET, Y_OFFSET));
-		//renderingSize = new Vector2(1, 1);
-		stateTime = 0f;
-		jumpTimer = 0;
 		onFloor = true;
 		canInitiateJump = true;
 		canJumpHigher = true;
@@ -134,20 +130,16 @@ public class Mario extends AbstractTileObjectSprite {
 		direction = DirectionEnum.RIGHT;
 		state = SpriteMoveEnum.NO_MOVE;
 		previousState = SpriteMoveEnum.NO_MOVE;
-		//bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());		
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
-		invincible = false;
-		invincibleDuration = 0;
 		alive = true;
-		deathNoMoveDuration = 0;
 		fireballs = new ArrayList<AbstractSprite>();	
 		tilemapCollisionHandler = new MarioTilemapCollisionHandler();
 	}
 
 	public void changeSizeState(int i) {
 		sizeState = i;
-		if (i == 0) {
+		if (i <= 1) {
 			setSize(1 - 2*offset.x, 1 - offset.y);
 			setRenderingSize(1, 1);
 			bounds.setWidth(1 - 2*offset.x);
@@ -169,15 +161,15 @@ public class Mario extends AbstractTileObjectSprite {
 		
 		animations = new Animation[5][14];
 		initializeAnimation(ResourcesLoader.MARIO_SMALL, 0);
-		initializeAnimation(ResourcesLoader.MARIO_BIG, 1);
-		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 2);		
+		initializeAnimation(ResourcesLoader.MARIO_BIG, 2);
+		initializeAnimation(ResourcesLoader.MARIO_FLOWER, 3);		
 		initGrowingAnimations();		
 		initStarAnimations();
 	}
 
 	private void initializeAnimation(Texture texture, int i) {
 
-		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / (i==0 ? 14 :16), texture.getHeight());
+		TextureRegion[][] tmp = TextureRegion.split(texture, texture.getWidth() / (i<=1 ? 14 :16), texture.getHeight());
 			
 		animations[i] = new Animation[14];
 		animations[i][0] = AnimationBuilder.getInstance().build(tmp, 0, 3, 0.05f);
@@ -214,20 +206,20 @@ public class Mario extends AbstractTileObjectSprite {
 	
 	private void initStarAnimations() {
 				
-		animations[3] = new Animation[14];
-		animations[3][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
-		animations[3][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
-		animations[3][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
-		animations[3][3] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT, 0, 4, 0.025f);
-		animations[3][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_JUMP_RIGHT, 0, 4, 0.025f);
-		animations[3][5] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT, 0, 4, 0.025f);		
-		animations[3][7] = animations[0][7];
-		animations[3][8] = animations[0][8];
-		animations[3][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
-		animations[3][10] = null; // TODO Crouch animation right
-		animations[3][11] = null; // TODO Crouch animation right
-		animations[3][12] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
-		animations[3][13] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);
+		animations[1] = new Animation[14];
+		animations[1][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_RIGHT, 0, 24, 0.025f);
+		animations[1][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_RUN_LEFT, 0, 24, 0.025f);
+		animations[1][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
+		animations[1][3] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_SLIDE_LEFT, 0, 4, 0.025f);
+		animations[1][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_JUMP_RIGHT, 0, 4, 0.025f);
+		animations[1][5] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_JUMP_LEFT, 0, 4, 0.025f);		
+		animations[1][7] = animations[0][7];
+		animations[1][8] = animations[0][8];
+		animations[1][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_VICTORY, 0, 4, 0.025f);;
+		animations[1][10] = null;
+		animations[1][11] = null;
+		animations[1][12] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_RIGHT, 0, 4, 0.025f);
+		animations[1][13] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_SMALL_STAR_STAND_LEFT, 0, 4, 0.025f);
 		
 		animations[4] = new Animation[14];
 		animations[4][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_RUN_RIGHT, 0, 24, 0.025f);
@@ -246,7 +238,7 @@ public class Mario extends AbstractTileObjectSprite {
 	}
 	
 	public void refreshAnimations() {		
-		int animationIdx = owningStar ? sizeState == 0 ? 3 : 4 : sizeState;
+		int animationIdx = owningStar ? sizeState == 0 ? 1 : 4 : sizeState;
 		marioRunRightAnimation = animations[animationIdx][0];
 		marioRunLeftAnimation = animations[animationIdx][1];
 		marioSlideRightAnimation = animations[animationIdx][2];

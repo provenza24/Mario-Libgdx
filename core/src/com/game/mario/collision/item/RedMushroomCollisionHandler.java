@@ -15,10 +15,10 @@ public class RedMushroomCollisionHandler extends AbstractMushroomCollisionHandle
 	@Override
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
 		super.collide(mario, item, camera, scrollingBackgrounds);
-		if (mario.getSizeState()==0) {
+		if (mario.getSizeState()<=1) {
 			mario.setGrowingUp(true);			
 			mario.setGrowUpAnimation();
-			mario.changeSizeState(1);
+			mario.changeSizeState(2);
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP);			
 		}
 	}
