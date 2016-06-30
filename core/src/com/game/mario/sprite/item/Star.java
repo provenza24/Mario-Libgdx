@@ -1,5 +1,6 @@
 package com.game.mario.sprite.item;
 
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.collision.tilemap.StarTilemapCollisionHandler;
 import com.game.mario.enums.ItemEnum;
@@ -10,11 +11,8 @@ import com.game.mario.util.animation.AnimationBuilder;
 public class Star extends AbstractItem {
 	
 	public Star(float x, float y) {
-		super(x, y);
-		GRAVITY_COEF = 0.010f;
-		offset.x = 0.1f;
-		offset.y = 0.4f;
-		setSize(1 - 2*offset.x, 1f - offset.y);
+		super(x, y, new Vector2(1, 1), new Vector2(0.1f, 0.4f));
+		GRAVITY_COEF = 0.010f;		
 		acceleration.x = 2.9f;
 		acceleration.y = 0;
 		

@@ -7,11 +7,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.action.ActionFacade;
-import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
 import com.game.mario.util.ResourcesLoader;
@@ -32,11 +31,8 @@ public class Goomba extends AbstractTileObjectEnemy {
 		
 	public Goomba(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
 		
-		super(mapObject, new Vector2(0.2f, 0.1f));								
-							
-		acceleration.x = -1.9f; 
-		bounds=new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
-		
+		super(mapObject, new Vector2(0.2f, 0.1f));															
+		acceleration.x = -1.9f; 				
 		initializeAnimations(backgroundTypeEnum);				
 	}		
 	

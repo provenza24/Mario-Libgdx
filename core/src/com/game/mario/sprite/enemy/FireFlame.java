@@ -12,27 +12,26 @@ import com.game.mario.util.animation.AnimationBuilder;
 
 public class FireFlame extends AbstractEnemy {
 
-	private static final float WIDTH = 52/32f;
+	private static final float WIDTH = 1.625f;
 	
 	private static final float HEIGHT = 1;
 	
 	private float yTarget;
 	
-	public FireFlame(Bowser bowser, float yTarget) {
-		
-		super(bowser.getX()-WIDTH, bowser.getY() + bowser.getHeight() - HEIGHT);				
-		setOffset(new Vector2(0, 0.1f));
-		setSize(WIDTH, HEIGHT - 2*offset.y);		
-		renderingSize = new Vector2(WIDTH,HEIGHT);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight()+offset.y);			
-		acceleration.x = -3.5f;
+	public FireFlame(Bowser bowser, float yTarget) {		
+		super(bowser.getX()-WIDTH, bowser.getY() + bowser.getHeight() - HEIGHT);
+		this.setOffset(new Vector2(0, 0.1f));
+		this.setSize(WIDTH, HEIGHT - 2*offset.y);		
+		this.renderingSize = new Vector2(WIDTH,HEIGHT);
+		this.bounds=new Rectangle(getX(), getY(), getWidth(), getHeight()+offset.y);			
+		this.acceleration.x = -3.5f;
 		this.yTarget = yTarget;		
-		acceleration.y = yTarget>getY() ? 0.1f : -0.1f;
+		this.acceleration.y = yTarget>getY() ? 0.1f : -0.1f;
 		
-		alive = true;
-		moveable = true;
-		killableByPlayer = false;
-		killableByFireball = false;				
+		this.alive = true;
+		this.moveable = true;
+		this.killableByPlayer = false;
+		this.killableByFireball = false;				
 	}
 		
 	@Override

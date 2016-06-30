@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.game.mario.enums.BackgroundTypeEnum;
@@ -34,11 +33,9 @@ public abstract class TransferItem extends AbstractTileObjectItem {
 	protected Array<BackgroundTypeEnum> backgroundTypesEnum;
 
 	public TransferItem(MapObject mapObject) {		
-		super(mapObject, new Vector2());					
-		setRenderingSize((float)spriteSheet.getWidth()/32, (float)spriteSheet.getHeight()/32);
+		super(mapObject, new Vector2());							
 		gravitating = false;
 		collidableWithTilemap= false;
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		transferPosition = new Vector2(Float.parseFloat((String)mapObject.getProperties().get("xOutgoing"))/32, Float.parseFloat((String)mapObject.getProperties().get("yOutgoing"))/32);		
 		scrollableCamera = ((String)mapObject.getProperties().get("scrollable")).equals("true");		
 		worldTypeEnum = WorldTypeEnum.valueOf(((String)mapObject.getProperties().get(TilemapPropertiesConstants.WORLD)).toUpperCase());		

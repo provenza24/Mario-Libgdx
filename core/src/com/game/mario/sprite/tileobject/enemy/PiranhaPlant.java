@@ -2,7 +2,6 @@ package com.game.mario.sprite.tileobject.enemy;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.sound.SoundManager;
@@ -35,14 +34,12 @@ public class PiranhaPlant extends AbstractTileObjectEnemy {
 			
 	public PiranhaPlant(MapObject mapObject, Mario mario) {
 		super(mapObject, new Vector2(0.1f,0.1f));	
-		setAcceleration(new Vector2(0,ACCELERATION_Y));
-		pipePosition = new Vector2((int)getX(), (int)getY());
-		bounds=new Rectangle(getX()+offset.x, getY(), getWidth(), getHeight());
-		this.mario = mario;
-				
-		gravitating = false;
-		collidableWithTilemap = false;
-		killableByPlayer = false;
+		this.setAcceleration(new Vector2(0,ACCELERATION_Y));
+		this.pipePosition = new Vector2((int)getX(), (int)getY());
+		this.mario = mario;			
+		this.gravitating = false;
+		this.collidableWithTilemap = false;
+		this.killableByPlayer = false;
 	}
 
 	@Override

@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Animation.PlayMode;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.tilemap.TmxMap;
@@ -18,9 +17,7 @@ public class ToadBag extends AbstractSfxSprite {
 	private Animation openingBagAnimation;
 	
 	public ToadBag(float x, float y) {		
-		super(x ,y);						
-		renderingSize = new Vector2(2,2);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());							
+		super(x, y, new Vector2(2, 2), new Vector2());														
 		currentAnimation = shakingBagAnimation;		
 	}
 
@@ -48,9 +45,10 @@ public class ToadBag extends AbstractSfxSprite {
 	@Override
 	protected void updateAnimation(float delta) {		
 		if (currentAnimation==shakingBagAnimation) {
+			// Shaking bag animation, loop through animation
 			super.updateAnimation(delta);
 		} else {
-			// Override because the animation must be played only one time when the bag explodes
+			// Override because the opening bag animation must be played only one time when the bag explodes
 			stateTime = stateTime + delta;
 			currentFrame = currentAnimation.getKeyFrame(stateTime, false);		
 		}

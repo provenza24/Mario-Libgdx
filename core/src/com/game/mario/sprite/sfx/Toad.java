@@ -1,7 +1,6 @@
 package com.game.mario.sprite.sfx;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.util.ResourcesLoader;
@@ -17,15 +16,14 @@ public class Toad extends AbstractSfxSprite {
 	private int jumpNumber;
 	
 	public Toad(float x, float y) {		
-		super(x ,y);						
-		setSize(1, 1.47f);
-		renderingSize = new Vector2(1, 1.47f);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());		
+		super(x, y, new Vector2(1, 1.47f), new Vector2());
+		
+		GRAVITY_COEF = 0.012f;
 		gravitating = true;
 		collidableWithTilemap = true;
 		moveable = true;		
 		onFloor=true;	
-		GRAVITY_COEF = 0.012f;
+		
 	}
 
 	@Override

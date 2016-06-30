@@ -1,5 +1,6 @@
 package com.game.mario.sprite;
 
+import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sound.SoundManager;
@@ -11,14 +12,18 @@ public abstract class AbstractEnemy extends AbstractSprite {
 	
 	protected boolean killableByFireball;
 	
-	public AbstractEnemy(float x, float y) {
-		super(x, y);		
+	public AbstractEnemy(float x, float y, Vector2 size, Vector2 offset) {
+		super(x, y, size, offset);		
 		state = SpriteMoveEnum.WALKING;
 		killableByPlayer = true;
 		killableByFireball = true;		
 		gravitating = true;
 		moveable = true;
 		collidableWithTilemap = true;
+	}
+	
+	public AbstractEnemy(float x, float y) {
+		this(x, y, new Vector2(1,1), new Vector2());
 	}
 	
 	public abstract EnemyTypeEnum getEnemyType();

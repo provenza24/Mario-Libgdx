@@ -19,7 +19,6 @@ import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
-import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.sfx.BreakingBridgeWall;
 import com.game.mario.sprite.sfx.Toad;
 import com.game.mario.sprite.sfx.ToadBag;
@@ -118,7 +117,7 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 			if (timer>0.1f && tileToRemove.size()>0) {
 				timer = 0;
 				Vector2 tilePos = tileToRemove.get(tileToRemove.size()-1);
-				tileMap.getSfxSprites().add(new BreakingBridgeWall(tilePos.x, tilePos.y-2));
+				tileMap.getSfxSprites().add(new BreakingBridgeWall(tilePos.x, tilePos.y-2.5f));
 				tileMap.removeCell((int)tilePos.x, (int)tilePos.y);
 				tileToRemove.remove(tileToRemove.size()-1);
 				if (tileToRemove.size()==1) {

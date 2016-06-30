@@ -218,19 +218,27 @@ public class GameScreen implements Screen  {
 	}
 		
 	private void handleMarioAlive(float delta) {
-		
-		
+				
 		AbstractSprite.updateCommonStateTime(delta);
 		
+		// Move each visible plateform, stuck Mario to the plateform if he's over it
 		handlePlateforms(delta);
 		
 		// Listen to keyboard actions and update Mario status
 		handleInput();
 						
+		// Update mario : 
+		// 1 - Move
+		// 2 - Collide with tilemap
+		// 3 - Update bounds
+		// 4 - Update animation
+		// 5 - update status		
 		mario.update(tileMap, camera.getCamera(), delta);
 							
+		// Check Mario collision with a block if it's under his head 
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tileMap, stage);
 		
+		// Draw the scene
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 										
@@ -612,7 +620,7 @@ public class GameScreen implements Screen  {
 			camera.getCamera().update();
 		}
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {			
-			mario.setY(mario.getY()-6);			
+			mario.setY(mario.getY()-4);			
 		}		
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
 			mario.setY(mario.getY()+8);			
@@ -780,7 +788,8 @@ public class GameScreen implements Screen  {
 		stage.dispose();
 		tileMap.dispose();		
 		renderer.dispose();		
-		shapeRenderer.dispose();		
+		shapeRenderer.dispose();
+		font.dispose();
 		debugFont.dispose();
 		spriteBatch.dispose();				
 		SoundManager.getSoundManager().stopMusic();		

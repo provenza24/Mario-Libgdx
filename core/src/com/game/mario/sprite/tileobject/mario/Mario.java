@@ -124,7 +124,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	public Mario(MapObject mapObject) {
 		super(mapObject, new Vector2(X_OFFSET, Y_OFFSET));
-		renderingSize = new Vector2(1, 1);
+		//renderingSize = new Vector2(1, 1);
 		stateTime = 0f;
 		jumpTimer = 0;
 		onFloor = true;
@@ -134,7 +134,7 @@ public class Mario extends AbstractTileObjectSprite {
 		direction = DirectionEnum.RIGHT;
 		state = SpriteMoveEnum.NO_MOVE;
 		previousState = SpriteMoveEnum.NO_MOVE;
-		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());		
+		//bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());		
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
 		invincible = false;

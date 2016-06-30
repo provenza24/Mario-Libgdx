@@ -6,6 +6,10 @@ import com.game.mario.sprite.AbstractSfxSprite;
 
 public abstract class AbstractWallPiece extends AbstractSfxSprite {
 
+	private static final float WIDTH = 0.5f;
+	
+	private static final float HEIGHT = 0.5f;	
+
 	protected static final float X_ACCELERATION_COEFF = 8;
 	
 	protected static final float Y_ACCELERATION_COEFF = 0.3f;
@@ -13,32 +17,26 @@ public abstract class AbstractWallPiece extends AbstractSfxSprite {
 	protected WorldTypeEnum worldTypeEnum;
 		
 	public AbstractWallPiece(float x, float y, Vector2 acceleration, WorldTypeEnum worldTypeEnum) {
-		super(x, y);							
-		setRenderingSize(0.5f,0.5f);		
-		this.acceleration = acceleration;
-		
-		this.worldTypeEnum = worldTypeEnum;
-		
-		moveable = true;		
-		gravitating = true;
-		
-		isAnimationLooping = false;
+		super(x, y, new Vector2(WIDTH, HEIGHT), new Vector2());									
+		this.acceleration = acceleration;		
+		this.worldTypeEnum = worldTypeEnum;		
+		this.moveable = true;		
+		this.gravitating = true;		
+		this.isAnimationLooping = false;
 	}
 
 	@Override
 	public void addAppearAction() {				
 	}
-		
-	
 	
 	@Override
 	public void initializeAnimations() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 
 	@Override
-	public void move(float deltaTime) {		
+	public void move(float deltaTime) {	
+		// TODO why this ?
 		super.move(deltaTime);
 		if (acceleration.y>0) {
 			acceleration.y -=0.05f;

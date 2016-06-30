@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.CollisionHandler;
 import com.game.mario.enums.DirectionEnum;
@@ -20,20 +19,14 @@ public abstract class AbstractMetalPlateform extends AbstractTileObjectSprite {
 	
 	public AbstractMetalPlateform(MapObject mapObject) {
 		super(mapObject, new Vector2());
-		//setRenderingSize(3, 0.5f);
 		gravitating = false;
-		collidableWithTilemap = false;		
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
-		
+		collidableWithTilemap = false;				
 		initializeAnimationsUsingSize();
 	}	
 	
 	public void initializeAnimationsUsingSize() {
-		spriteSheet = getWidth()==2 ? ResourcesLoader.METAL_PLATEFORM_4 : ResourcesLoader.METAL_PLATEFORM_6;
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
-		TextureRegion[] animationFrames = new TextureRegion[1];
-		animationFrames[0] = tmp[0][0];
-		currentAnimation = new Animation(0, animationFrames);	
+		spriteSheet = getWidth()==2 ? ResourcesLoader.METAL_PLATEFORM_4 : ResourcesLoader.METAL_PLATEFORM_6;		
+		currentAnimation = new Animation(0, TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1)[0][0]);	
 		currentFrame = currentAnimation.getKeyFrame(0, false);
 	}
 	

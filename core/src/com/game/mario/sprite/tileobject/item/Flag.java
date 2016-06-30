@@ -1,7 +1,6 @@
 package com.game.mario.sprite.tileobject.item;
 
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.enums.WorldTypeEnum;
@@ -20,7 +19,6 @@ public class Flag extends AbstractTileObjectItem {
 		super(mapObject, new Vector2());			
 		collidableWithTilemap = false;
 		gravitating = false;				
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
 		flagTargetPosition = getX() - getWidth() /2;
 		worldTypeEnum = worldType;
 		initializeAnimations(worldType);		
@@ -36,16 +34,16 @@ public class Flag extends AbstractTileObjectItem {
 	}
 	
 	@Override
+	public ItemEnum getType() {		
+		return worldTypeEnum==WorldTypeEnum.CASTLE ? ItemEnum.HAWK : ItemEnum.FLAG;
+	}
+	
+	@Override
 	public void initializeAnimations()  {		
 	
 	}
 
 	@Override
 	public void addAppearAction() {	
-	}
-
-	@Override
-	public ItemEnum getType() {		
-		return worldTypeEnum==WorldTypeEnum.CASTLE ? ItemEnum.HAWK : ItemEnum.FLAG;
 	}
 }

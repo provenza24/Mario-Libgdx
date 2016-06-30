@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.MathUtils;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.BowserTilemapCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
@@ -65,7 +64,6 @@ public class Bowser extends AbstractTileObjectEnemy {
 		
 		killableByPlayer = false;
 		killableByFireball = false;
-		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		currentAnimation = walkAnimation;
 		GRAVITY_COEF = 0.002f;
 		
@@ -76,9 +74,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 		
 		setState(SpriteMoveEnum.WALKING);
 		
-		tilemapCollisionHandler = new BowserTilemapCollisionHandler();
-		
-		
+		tilemapCollisionHandler = new BowserTilemapCollisionHandler();		
 	}
 
 	@Override

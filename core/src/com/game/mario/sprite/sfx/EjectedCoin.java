@@ -9,6 +9,9 @@ import com.game.mario.util.animation.AnimationBuilder;
 
 public class EjectedCoin extends AbstractSfxSprite {
 
+	private static final int SPRITESHEET_FRAMES = 9;	
+	private static final float FRAME_DURATION = 0.45f / SPRITESHEET_FRAMES;
+	
 	public EjectedCoin(float x, float y) {
 		super(x, y);				
 		isAnimationLooping = false;
@@ -16,7 +19,7 @@ public class EjectedCoin extends AbstractSfxSprite {
 
 	@Override
 	public void initializeAnimations() {		
-		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.COIN_BLOC, 0, 9, 0.45f/9);				
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.COIN_BLOC, 0, SPRITESHEET_FRAMES, FRAME_DURATION);				
 	}
 
 	@Override

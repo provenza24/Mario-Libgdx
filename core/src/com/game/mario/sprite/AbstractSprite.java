@@ -90,43 +90,32 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected Vector2 move = new Vector2();
 	
 	protected int frame;
-
-	public AbstractSprite(float x, float y) {
+	
+	public AbstractSprite(float x, float y, Vector2 size, Vector2 offset) {
 		
-		setPosition(x, y);		
-		setSize(1, 1);		
-		renderingSize = new Vector2(1,1);
-		bounds=new Rectangle(getX(), getY(), getWidth(), getHeight());
-		oldPosition = new Vector2(x, y);
-		acceleration = new Vector2(0,0);
-		oldAcceleration = new Vector2(0,0);
+		this.setPosition(x, y);		
+		this.oldPosition = new Vector2(x, y);
+		this.offset = new Vector2(offset.x, offset.y);
+		this.setSize(size.x - 2*offset.x, size.y - offset.y);		
+		this.renderingSize = new Vector2(size.x, size.y);
+		this.bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());		
+		this.acceleration = new Vector2();
+		this.oldAcceleration = new Vector2();
+			
+		this.mapCollisionEvent = new CollisionEvent();
+		this.collidingCells = new ArrayList<TmxCell>();				
 		
-		mapCollisionEvent = new CollisionEvent();
-		offset = new Vector2(0,0);			
-		collidingCells = new ArrayList<TmxCell>();				
+		this.isAnimationLooping = true;		
+		this.xAlive = getX() - 16 ;
 		
-		visible = false;
-		alive = false;
-		killed = false;
-		moveable = false;
-		collidableWithTilemap = false;
-		gravitating = false;
-		bumped = false;
-		isAnimationLooping = true;
+		this.initializeAnimations();
 		
-		stateTime = 0f;				
-		
-		xAlive = getX() - 16 ;
-		
-		initializeAnimations();
-		
-		tilemapCollisionHandler = new BasicTilemapCollisionHandler();
+		this.tilemapCollisionHandler = new BasicTilemapCollisionHandler();
 	}
 	
-	public AbstractSprite(float x, float y,ITilemapCollisionHandler tilemapCollisionHandler) {
-		this(x ,y);
-		this.tilemapCollisionHandler = tilemapCollisionHandler;
-	}	
+	public AbstractSprite(float x, float y) {		
+		this(x, y, new Vector2(1,1), new Vector2());
+	}
 		
 	public Rectangle getBounds() {
         return bounds;
