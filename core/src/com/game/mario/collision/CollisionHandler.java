@@ -16,7 +16,6 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
-import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxCell;

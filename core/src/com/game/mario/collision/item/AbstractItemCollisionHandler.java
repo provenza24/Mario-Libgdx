@@ -15,9 +15,10 @@ import com.game.mario.tilemap.TmxMap;
 
 public abstract class AbstractItemCollisionHandler implements IItemCollisionHandler {
 
+	/** Items handlers map */
 	private static Map<ItemEnum, IItemCollisionHandler> handlers = new HashMap<ItemEnum, IItemCollisionHandler>();
 
-	static {
+	static {	
 		handlers.put(ItemEnum.RED_MUSHROOM, new RedMushroomCollisionHandler());
 		handlers.put(ItemEnum.GREEN_MUSHROOM, new GreenMushroomCollisionHandler());
 		handlers.put(ItemEnum.FLOWER, new FlowerCollisionHandler());
@@ -31,16 +32,17 @@ public abstract class AbstractItemCollisionHandler implements IItemCollisionHand
 	}
 
 	public AbstractItemCollisionHandler() {
-
 	}
 
 	@Override
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
+		// By default, when Mario collide an item, we delete it
 		item.setDeletable(true);
 	}
 	
 	@Override
 	public void bump(Stage stage, TmxMap tileMap, AbstractSprite item) {
+		// By default, when Mario bump an item, we delete it
 		item.setDeletable(true);
 	}
 	

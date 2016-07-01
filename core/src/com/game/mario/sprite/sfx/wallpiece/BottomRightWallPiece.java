@@ -13,9 +13,8 @@ public class BottomRightWallPiece extends AbstractWallPiece {
 		super(x, y, new Vector2(X_ACCELERATION_COEFF,Y_ACCELERATION_COEFF), worldTypeEnum);		
 	}
 	
-	@Override
-	public void initializeAnimations() {		
-		spriteSheet = new Texture(Gdx.files.internal("sprites/wall/brokenWall_0_4.png"));				
+	public void initializeAnimationsWithBackgrounds() {		
+		spriteSheet = new Texture(Gdx.files.internal("sprites/wall/brokenWall_"+(worldTypeEnum==WorldTypeEnum.OVERGROUND ? "0" : "1")+"_4.png"));				
 		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);				
 		TextureRegion[] frame = new TextureRegion[1];
 		frame[0] = tmp[0][0];			

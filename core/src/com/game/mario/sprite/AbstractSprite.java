@@ -470,7 +470,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	}
 	
 	public static void updateCommonStateTime(float delta) {		
-		commonStateTime = commonStateTime + delta;
+		commonStateTime = commonStateTime>10 ? 0 : commonStateTime + delta;
+		
 	}
 
 	public ITilemapCollisionHandler getTilemapCollisionHandler() {

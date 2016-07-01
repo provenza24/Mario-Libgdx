@@ -85,7 +85,7 @@ public class TmxMap {
 		tileLayer = (TiledMapTileLayer) map.getLayers().get(0);
 		objectsLayer = map.getLayers().get(1);
 		MapProperties properties = tileLayer.getProperties();				
-		worldType = WorldTypeEnum.valueOf(((String)properties.get(TilemapPropertiesConstants.WORLD)).toUpperCase());		
+		worldType = WorldTypeEnum.valueOf(((String)properties.get(TilemapPropertiesConstants.WORLD)).toUpperCase());
 		musicTheme = ((String)properties.get("music")).toUpperCase();
 		String sScrollableTo = (String)properties.get("scrollableTo");
 		scrollMaxValue = sScrollableTo!=null && !sScrollableTo.equals("") ? Float.parseFloat(sScrollableTo) : 1000;

@@ -15,8 +15,11 @@ public class GreenMushroomCollisionHandler extends AbstractMushroomCollisionHand
 
 	@Override
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
+		// Delete the sprite
 		super.collide(mario, item, camera, scrollingBackgrounds);
+		// Add a life to Mario
 		GameManager.getGameManager().addLife();
+		// Play correspondong sound
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP);					
 	}
 	

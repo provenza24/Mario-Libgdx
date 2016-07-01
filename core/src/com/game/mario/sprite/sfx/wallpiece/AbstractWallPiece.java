@@ -23,6 +23,7 @@ public abstract class AbstractWallPiece extends AbstractSfxSprite {
 		this.moveable = true;		
 		this.gravitating = true;		
 		this.isAnimationLooping = false;
+		initializeAnimationsWithBackgrounds();		
 	}
 
 	@Override
@@ -34,6 +35,8 @@ public abstract class AbstractWallPiece extends AbstractSfxSprite {
 		// TODO Auto-generated method stub	
 	}
 
+	protected abstract void initializeAnimationsWithBackgrounds();		
+	
 	@Override
 	public void move(float deltaTime) {	
 		// TODO why this ?

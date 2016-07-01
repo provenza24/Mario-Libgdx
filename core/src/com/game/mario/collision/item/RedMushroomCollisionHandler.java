@@ -13,9 +13,11 @@ public class RedMushroomCollisionHandler extends AbstractMushroomCollisionHandle
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
+		// Remove the sprite
 		super.collide(mario, item, camera, scrollingBackgrounds);
 		if (mario.getSizeState()<=1) {
+			// Mario becomes big if he's small, the grow up animation is played
 			mario.setGrowingUp(true);			
 			mario.setGrowUpAnimation();
 			mario.changeSizeState(2);

@@ -18,21 +18,28 @@ public class CoinCollisionHandler extends AbstractItemCollisionHandler {
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
+		// Delete coin sprite
 		super.collide(mario, item, camera, scrollingBackgrounds);
+		// Increase Mario coins
 		GameManager.getGameManager().addCoin();
+		// Play coin sound
 		SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);		
 	}
 
 	@Override
 	public void bump(Stage stage, TmxMap tileMap, AbstractSprite item) {		
-		AbstractSfxSprite ejectedCoin = new EjectedCoin(item.getX(), item.getY());
+		// Delete coin sprite			
+		item.setDeletable(true);		
+		// Increase Mario coins
 		GameManager.getGameManager().addCoin();
-		item.setDeletable(true);
+		// Play coin sound
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);
+		// Since Mario bumped the wall under the coin to get it, we play an small animation (coin explodes in the air)
+		AbstractSfxSprite ejectedCoin = new EjectedCoin(item.getX(), item.getY());
 		tileMap.getSfxSprites().add(ejectedCoin);
 		stage.addActor(ejectedCoin);
-		ejectedCoin.addAppearAction();
-		SoundManager.getSoundManager().playSound(SoundManager.SOUND_COIN);
+		ejectedCoin.addAppearAction();		
 	}
 
 }

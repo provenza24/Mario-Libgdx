@@ -11,6 +11,7 @@ public abstract class AbstractMushroomCollisionHandler extends AbstractItemColli
 
 	@Override
 	public void bump(Stage stage, TmxMap tileMap, AbstractSprite item) {
+		// When mario bump a Mushroom, the mushroom direction is changed, and a vertical force is applied
 		item.getAcceleration().x = -item.getAcceleration().x;
 		item.getAcceleration().y = 0.15f;
 	}

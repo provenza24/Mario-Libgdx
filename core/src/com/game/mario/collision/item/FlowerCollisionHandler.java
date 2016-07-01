@@ -15,14 +15,17 @@ public class FlowerCollisionHandler extends AbstractItemCollisionHandler {
 	}
 
 	@Override
-	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
+	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {
+		// Delete the flower sprite
 		super.collide(mario, item, camera, scrollingBackgrounds);
 		if (mario.getSizeState()<=1) {
+			// If Mario is small, Mario becomes big (play the grow up animation)
 			mario.setGrowingUp(true);			
 			mario.setGrowUpAnimation();
 			mario.changeSizeState(2);
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP);			
 		} else {
+			// Mario is already big, just play a sound and change its state 
 			mario.changeSizeState(3);
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP);			
 		}

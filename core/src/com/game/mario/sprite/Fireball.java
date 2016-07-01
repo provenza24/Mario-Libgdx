@@ -1,10 +1,9 @@
-package com.game.mario.sprite.item;
+package com.game.mario.sprite;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.FireballTilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
-import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;

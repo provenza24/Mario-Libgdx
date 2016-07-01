@@ -41,8 +41,8 @@ import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.Fireball;
 import com.game.mario.sprite.bloc.AbstractBlock;
-import com.game.mario.sprite.item.Fireball;
 import com.game.mario.sprite.sfx.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
@@ -54,71 +54,93 @@ import com.game.mario.util.constant.WinConstants;
 
 public class GameScreen implements Screen  {
 		
+	/** KEYS CONSTANTS */
+	private static final int KEY_DOWN = KeysConstants.KEY_DOWN;
+	
+	private static final int KEY_UP = KeysConstants.KEY_UP;
+	
+	private static final int KEY_LEFT =  KeysConstants.KEY_LEFT;
+	
+	private static final int KEY_RIGHT =  KeysConstants.KEY_RIGHT;
+	
+	private static final int KEY_SPEED_UP = KeysConstants.KEY_SPEED_UP;
+	
+	/** Key speed up released indicator */
+	private boolean speedUpKeyReleased = true;
+	
+	
+	/** The stage with actors */
+	private Stage stage;
+	
+	/** Camera following Mario */
+	private GameCamera camera;
+	
+	/** Tilemap loaded from a TMX file */
+	private TmxMap tilemap;
+
+	/** Tilemap renderer: render tilemap and all sprites owned by the tilemap */
+	private OrthogonalTiledMapRenderer tilemapRenderer;
+
+	/** Sprite batch used to render fixed sprites (Status bar sprites) and text (debug, end scene text) */
+	private SpriteBatch spriteBatch;
+
+	/** Used in debug mode to draw bounding boxes of sprites */
+	private ShapeRenderer shapeRenderer;
+	
+	/** Main batch used to draw elements */
+	private Batch batch;
+
+	/** Mario player */
+	private Mario mario;
+
+	//TODO refactor this in Mario class
 	private static final int JUMP_TIMER_MAX = 40;
 
 	private static final float MARIO_JUMP_ACCELERATION_CONTINUE = 0.0117f;
 
 	private static final float MARIO_JUMP_ACCELERATION_INITIAL = 0.24f;
-
+	
+	private int jumpTimerMax = 20;
+	
+	private float jumpAccelerationContinue = 20;
+	
+	/** Backgrounds displayed un game */
+	private Array<IScrollingBackground> backgrounds;
+			
+	/** End level cinematic scene handler */
+	private AbstractCinematicSceneHandler levelEndingSceneHandler;
+	
+	/** Mario death cinematic scene handler */
+	private AbstractCinematicSceneHandler marioDeathSceneHandler;
+	
+	/** Mario grow up/donw cinematic scene handler */
+	private AbstractCinematicSceneHandler marioGrowingSceneHandler;
+	
+	/** Mario pipe transfer cinematic scene handler */
+	private AbstractCinematicSceneHandler marioTransferSceneHandler;
+	
+	/** End level indicator : Mario reach the flag or the hawk in castle level */
 	private boolean levelFinished = false;
 	
-	private boolean keyUpReleased = true;
+	/** Debug font */
+	private BitmapFont debugFont;
 	
-	private int KEY_DOWN = KeysConstants.KEY_DOWN;
+	/** Game font */
+	private BitmapFont font;
 	
-	private int KEY_UP = KeysConstants.KEY_UP;
-	
-	private int KEY_LEFT =  KeysConstants.KEY_LEFT;
-	
-	private int KEY_RIGHT =  KeysConstants.KEY_RIGHT;
-	
-	private int KEY_SPEED_UP = KeysConstants.KEY_SPEED_UP;
-	
+	/** Debug parameters */
 	private boolean debugShowText = false;
 
 	private boolean debugShowBounds = false;
 
 	private boolean debugShowFps = false;
 
-	private TmxMap tilemap;
-
-	private OrthogonalTiledMapRenderer renderer;
-
-	private Batch batch;
-
-	private Mario mario;
-
-	private GameCamera camera;
-	
-	private BitmapFont debugFont;
-	
-	private BitmapFont font;
-
-	private SpriteBatch spriteBatch;
-
-	private ShapeRenderer shapeRenderer;
-
-	private int jumpTimerMax = 20;
-	
-	private float jumpAccelerationContinue = 20;
-	
-	private Array<IScrollingBackground> backgrounds;
-	
-	private Stage stage;
-			
-	private AbstractCinematicSceneHandler levelEndingSceneHandler;
-	
-	private AbstractCinematicSceneHandler marioDeathSceneHandler;
-	
-	private AbstractCinematicSceneHandler marioGrowingSceneHandler;
-	
-	private AbstractCinematicSceneHandler marioTransferSceneHandler;
 		
 	public GameScreen() {
 		
 		// Initialize fonts
 		debugFont = new BitmapFont();		
-		debugFont.setColor(0, 0, 1, 1);		
+		debugFont.setColor(1, 1, 1, 1);		
 		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));		
 		font.setColor(1,1,1,1);
 		
@@ -130,11 +152,11 @@ public class GameScreen implements Screen  {
 		// Load the tilemap, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tilemap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
 		// Renderer used to draw tilemap
-		renderer = new OrthogonalTiledMapRenderer(tilemap.getMap(), 1 / 32f);				
+		tilemapRenderer = new OrthogonalTiledMapRenderer(tilemap.getMap(), 1 / 32f);				
 
 		// load the map, set the unit scale to 1/32 (1 unit == 32 pixels)
 		tilemap = new TmxMap("tilemaps/"+GameManager.getGameManager().getCurrentLevelName());
-		renderer = new OrthogonalTiledMapRenderer(tilemap.getMap(), 1 / 32f);
+		tilemapRenderer = new OrthogonalTiledMapRenderer(tilemap.getMap(), 1 / 32f);
 
 		// Mario !!!
 		mario = tilemap.getMario();
@@ -172,18 +194,18 @@ public class GameScreen implements Screen  {
 				
 		// Initialize scene handlers to play cinematics scenes during game
 		if (tilemap.getWorldType()==WorldTypeEnum.CASTLE) {
-			levelEndingSceneHandler = new CastleLevelEndingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+			levelEndingSceneHandler = new CastleLevelEndingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, tilemapRenderer, stage, batch);
 		} else {
-			levelEndingSceneHandler = new FlagLevelEndingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
+			levelEndingSceneHandler = new FlagLevelEndingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, tilemapRenderer, stage, batch);
 		}		
-		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
-		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);
-		marioTransferSceneHandler = new TransferSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, renderer, stage, batch);	
+		marioDeathSceneHandler = new MarioDeathSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, tilemapRenderer, stage, batch);
+		marioGrowingSceneHandler = new MarioGrowingSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, tilemapRenderer, stage, batch);
+		marioTransferSceneHandler = new TransferSceneHandler(mario, tilemap, camera, backgrounds, font, spriteBatch, tilemapRenderer, stage, batch);	
 						
 		// Initialize sound theme
 		SoundManager.getSoundManager().setStageMusic(MusicEnum.valueOf(tilemap.getMusicTheme().toUpperCase()));				
 		
-		int xBowserPos = 124;
+		/*int xBowserPos = 124;
 		int yBowserPos = 5;
 		
 		int xFlagPos = 194;
@@ -194,7 +216,7 @@ public class GameScreen implements Screen  {
 		int x = xFlagPos;
 		int y = yFlagPos;
 		
-		/*mario.setX(x);
+		mario.setX(x);
 		mario.setY(y);
 		camera.setCameraOffset(2f);
 		camera.getCamera().position.x = x+6;						
@@ -204,25 +226,32 @@ public class GameScreen implements Screen  {
 	@Override
 	public void render(float delta) {
 				
-		if (levelFinished) {			
+		if (levelFinished) {
+			// Level is finished, play end level cinematic scene
 			levelEndingSceneHandler.handleScene(delta);
-		} else {
+		} else {			
 			if (mario.isAlive()) {
-				if (mario.isGrowing()) {				
+				// Mario is alive
+				if (mario.isGrowing()) {
+					// Mario has been hit or got a mushroom, play grow up/down cinematic scene
 					marioGrowingSceneHandler.handleScene(delta);					
 				} else if (mario.isInTransfer()) {
+					// Mario has taken a pipe, play transfer cinematic scene
 					marioTransferSceneHandler.handleScene(delta);
 				} else {
+					// Still in game !
 					handleMarioAlive(delta);
 				}						
 			} else {
+				// Mario is dead, play death cinematic scene
 				marioDeathSceneHandler.handleScene(delta);				
 			}		
 		}
 	}
-		
+			
 	private void handleMarioAlive(float delta) {
-				
+
+		// Common time counter used to update synchronized sprites animations
 		AbstractSprite.updateCommonStateTime(delta);
 		
 		// Move each visible plateform, stuck Mario to the plateform if he's over it
@@ -231,29 +260,21 @@ public class GameScreen implements Screen  {
 		// Listen to keyboard actions and update Mario status
 		handleInput();
 						
-		// Update mario : 
-		// 1 - Move
-		// 2 - Collide with tilemap
-		// 3 - Update bounds
-		// 4 - Update animation
-		// 5 - update status		
+		// Update mario : 1 - Move, 2 - Collide with tilemap, 3 - Update bounds, 4 - Update animation, 5 - update status		
 		mario.update(tilemap, camera.getCamera(), delta);
 							
-		// Check Mario collision with a block if it's under his head 
+		// Check Mario collision with a block over his head
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tilemap, stage);
 		
 		// Draw the scene
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-										
-		if (camera.isScrollable()) {
-			
-			
-			// @TODO refactor this in camera.move method
+					
+		if (camera.isScrollable()) {			
 			if (camera.getCamera().position.x < tilemap.getScrollMaxValue()) {
-				// Move camera			
+				// Move camera if its scrollable and if Mario is not fighting Bowser	
 				camera.moveCamera(mario);
-				// Move scrolling background
+				// Update scrolling backgrounds
 				if (Math.floor(camera.getCameraOffset()) == 8) {
 					backgrounds.get(0).update();				
 					if (backgrounds.size>1) {
@@ -261,6 +282,7 @@ public class GameScreen implements Screen  {
 					}
 				}
 			} else {				
+				// Mario is fighting Bowser, don't move camera anymore
 				if (mario.getX() < camera.getCamera().position.x - 8) {					
 					mario.setX(mario.getOldPosition().x);
 					mario.getAcceleration().x = 0;
@@ -268,40 +290,36 @@ public class GameScreen implements Screen  {
 			}			
 						
 		}
+		// Draw backgrounds
 		backgrounds.get(0).render();
 		if (backgrounds.size>1) {
 			backgrounds.get(1).render();
 		}
 		
 		// Render tilemap
-		renderer.setView(camera.getCamera());
-		renderer.render();
+		tilemapRenderer.setView(camera.getCamera());
+		tilemapRenderer.render();
 		// Render mystery blocks
 		renderMysteryBlocks(delta);
-		// render plateforms
+		// Render plateforms
 		renderPlateforms(delta);
-		//handleItems
+		// Move items, check collisions, render
 		handleItems(delta);
-		// Render enemies
-		handleEnemies(delta);
-		
-		// Fireballs
-		handleFireballs(delta);
-		
+		// Move enemies, check collisions, render
+		handleEnemies(delta);		
+		// Move fireballs, check collisions, render
+		handleFireballs(delta);		
 		// Render Mario		
-		mario.render(renderer.getBatch());
-		
-		// special effects sprites
-		handleSfxSprites(delta);
-		
-		// Render debug mode (press F1 to display/hide debug)
+		mario.render(tilemapRenderer.getBatch());		
+		// Render special effects sprites (Lava, Ejected coins, end level sprites...)
+		handleSfxSprites(delta);		
+		// Render debug mode
 		renderDebugMode();
-
-		//stage.act(Gdx.graphics.getDeltaTime());
+		// Draw stage for moving actors
 		stage.draw();
 		// Display status bar				
 		renderStatusBar();
-				
+		// Check if level is finished or not
 		if (mario.getX()>=tilemap.getFlagTargetPosition() 
 				&& camera.getCamera().position.x -8 < tilemap.getFlag().getX()) {			
 			levelFinished = true;
@@ -327,10 +345,9 @@ public class GameScreen implements Screen  {
 		for (int i = 0; i < plateforms.size(); i++) {
 			AbstractMetalPlateform plateform = plateforms.get(i);
 			if (plateform.isVisible()) {
-				plateform.render(renderer.getBatch());
+				plateform.render(tilemapRenderer.getBatch());
 			}
-		}		
-		
+		}				
 	}
 
 	private void renderStatusBar() {
@@ -338,126 +355,6 @@ public class GameScreen implements Screen  {
 		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
 		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
 		spriteBatch.end();
-	}
-
-	private void renderDebugMode() {
-
-		if (debugShowText) {
-			
-			int x = WinConstants.WIDTH - 600;
-			int y = WinConstants.HEIGHT - 30;
-			
-			/* MARIO VARIABLES */
-			spriteBatch.begin();
-			debugFont.draw(spriteBatch, "mario.position=" + String.format("%.3f", mario.getX()) + " | " + String.format("%.3f", mario.getY()), x, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + " | " + String.format("%.1f", mario.getAcceleration().y), x, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), x, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), x, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), x, y);
-			y = y -20;			
-			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), x, y);
-			y = y -20;			
-			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), x, y);			
-			y = y -20;			
-			debugFont.draw(spriteBatch, "isOnPlateform: " + mario.isStuck(), x, y);
-			y = y -20;			
-			debugFont.draw(spriteBatch, "sizeState: " + mario.getSizeState(), x, y);
-			
-			
-			/* ENV VARIABLES */
-			x = WinConstants.WIDTH - 350;
-			y = WinConstants.HEIGHT - 30;
-			
-			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, " camera.offset=" + String.format("%.1f", camera.getCameraOffset()), x, y);
-			y = y -20;			
-			debugFont.draw(spriteBatch, "Mysteryblocks: " + tilemap.getBlocks().size(), x, y);
-			y = y -20;
-			int alive = 0;
-			for (AbstractEnemy enemy : tilemap.getEnemies()) {
-				alive += enemy.isAlive() ? 1 : 0;
-			}
-			debugFont.draw(spriteBatch, "Enemies: " + tilemap.getEnemies().size() + " - " + alive + " alive", x, y);
-			y = y -20;
-			alive = 0;
-			for (AbstractEnemy enemy : tilemap.getEnemies()) {
-				if (enemy.getEnemyType()==EnemyTypeEnum.KOOPA) {
-				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() + " -onFloor "+enemy.isOnFloor(), x, y);				
-				y = y -20;
-				}
-				alive++;
-			}			
-			alive = 0;
-			for (AbstractSprite item : tilemap.getItems()) {
-				alive += item.isAlive() ? 1 : 0;
-			}
-			debugFont.draw(spriteBatch, "Items: " + tilemap.getItems().size() + " - " + alive + " alive", x, y);
-			y = y -20;
-			alive = 0;
-			/*for (AbstractSprite item : tileMap.getItems()) {
-				debugFont.draw(spriteBatch, "Item #" + alive + " - " + (item.isAlive() ? " alive - " : "") + (item.isVisible() ? " visible - " : "") , x, y);
-				y = y -20;
-				alive++;
-			}*/	
-			alive = 0;
-			for (AbstractMetalPlateform plateform : tilemap.getPlateforms()) {
-				debugFont.draw(spriteBatch, "Plateform #" + alive + " - " + (plateform.isAlive() ? " alive - " : "") + (plateform.isVisible() ? " visible - " : "") , x, y);
-				y = y -20;
-				alive++;
-			}			
-			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), x, y);
-			y = y -20;			
-			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, x, y);
-			y = y -20;
-			debugFont.draw(spriteBatch, "worldType: " + tilemap.getWorldType(), x, y);
-			
-			spriteBatch.end();
-		}
-
-		if (debugShowFps) {
-			spriteBatch.begin();
-			debugFont.draw(spriteBatch, Integer.toString(Gdx.graphics.getFramesPerSecond()), 492, 475);
-			spriteBatch.end();
-		}
-
-		if (debugShowBounds) {
-			// Green rectangle around Mario
-			batch = renderer.getBatch();
-			batch.begin();
-			Gdx.gl.glEnable(GL20.GL_BLEND);
-			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-			
-			shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
-			shapeRenderer.begin(ShapeType.Filled);
-			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
-			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
-			for (AbstractSprite sprite : tilemap.getEnemies()) {
-				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
-						sprite.getHeight());
-			}
-			for (AbstractSprite sprite : tilemap.getItems()) {
-				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
-						sprite.getHeight());
-			}
-			for (AbstractSprite sprite : mario.getFireballs()) {
-				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
-						sprite.getHeight());
-			}
-			
-			for (AbstractMetalPlateform plateform : tilemap.getPlateforms()) {
-				shapeRenderer.rect(plateform.getX() + plateform.getOffset().x, plateform.getY(), plateform.getWidth(),
-						plateform.getHeight());
-			}
-			
-			shapeRenderer.end();
-			Gdx.gl.glDisable(GL20.GL_BLEND);
-			batch.end();
-		}
 	}
 	
 	private void handleItems(float deltaTime) {
@@ -472,7 +369,7 @@ public class GameScreen implements Screen  {
 			if (item.isDeletable()) {				
 				items.remove(i--);
 			} else if (item.isVisible()) {
-				item.render(renderer.getBatch());
+				item.render(tilemapRenderer.getBatch());
 			}
 		}
 	}
@@ -485,7 +382,7 @@ public class GameScreen implements Screen  {
 			if (sfxSprite.isDeletable()) {				
 				sfxSprites.remove(i--);
 			} else if (sfxSprite.isVisible()) {
-				sfxSprite.render(renderer.getBatch());
+				sfxSprite.render(tilemapRenderer.getBatch());
 			}
 		}
 	}
@@ -499,7 +396,7 @@ public class GameScreen implements Screen  {
 				fireballs.remove(i--);
 				explodeFireball(abstractSprite);		
 			} else if (abstractSprite.isVisible()) {
-				abstractSprite.render(renderer.getBatch());
+				abstractSprite.render(tilemapRenderer.getBatch());
 			}
 		}
 	}
@@ -553,7 +450,7 @@ public class GameScreen implements Screen  {
 			if (enemy.isDeletable()) {				
 				enemies.remove(i--);
 			} else if (enemy.isVisible()) {
-				enemy.render(renderer.getBatch());
+				enemy.render(tilemapRenderer.getBatch());
 			}
 
 		}
@@ -571,7 +468,7 @@ public class GameScreen implements Screen  {
 		// Get blocks from tilemap
 		List<AbstractBlock> blocks = tilemap.getBlocks();
 		if (blocks.size() > 0) {			
-			batch = renderer.getBatch();
+			batch = tilemapRenderer.getBatch();
 			batch.begin();					
 			for (int i = 0; i < blocks.size(); i++) {
 				// For each block
@@ -588,61 +485,20 @@ public class GameScreen implements Screen  {
 	}
 
 	private void handleInput() {
-							
-		
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
-			backgrounds.get(0).toggleEnabled();
-		}
-		
-		if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && backgrounds.size>1) {
-			backgrounds.get(1).toggleEnabled();
-		}
-						
-		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-			debugShowText = !debugShowText;
-		}
-				
-		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
-			debugShowFps = !debugShowFps;
-		}
-
-		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
-			debugShowBounds = !debugShowBounds;
-		}				
-		
-		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.changeSizeState(mario.getSizeState()==0 ? 2 : mario.getSizeState()==2 ? 3 : 0);
-		}
-		
-		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
-			debugFont.setColor(0, 1, 0, 1);
-		}
-						
-		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
-			mario.setX(mario.getX()+8);			
-			camera.getCamera().position.x = camera.getCamera().position.x+8;				
-			camera.getCamera().update();
-		}
-		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {			
-			mario.setY(mario.getY()-4);			
-		}		
-		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
-			mario.setY(mario.getY()+8);			
-		}
-		
+													
 		if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
 			GameManager.getGameManager().changeScreen(ScreenEnum.PAUSE_MENU);			
 		}
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			
 			List<AbstractSprite> fireballs = mario.getFireballs();
-			if (fireballs.size()<2 && mario.getSizeState()>=3 && keyUpReleased == true) {
+			if (fireballs.size()<2 && mario.getSizeState()>=3 && speedUpKeyReleased == true) {
 				// A fireball can be launched only if mario has a flower
 				fireballs.add(new Fireball(mario));
 			}
-			keyUpReleased = false;
+			speedUpKeyReleased = false;
 		} else {
-			keyUpReleased = true;
+			speedUpKeyReleased = true;
 		}
 		
 		if (Gdx.input.isKeyPressed(KEY_RIGHT)) {
@@ -736,7 +592,52 @@ public class GameScreen implements Screen  {
 			if (!isUnderBlock(mario)) {
 				mario.uncrouch();
 			}									
+		}
+		
+		handleDebugKeys();
+	}
+
+	private void handleDebugKeys() {
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
+			debugShowFps = !debugShowFps;
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F2)) {
+			debugShowText = !debugShowText;
+		}						
+
+		if (Gdx.input.isKeyJustPressed(Keys.F3)) {
+			debugShowBounds = !debugShowBounds;
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
+			debugFont.setColor(0, 1, 0, 1);
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
+			mario.changeSizeState(mario.getSizeState()==0 ? 2 : mario.getSizeState()==2 ? 3 : 0);
+		}				
+		
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
+			backgrounds.get(0).toggleEnabled();
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && backgrounds.size>1) {
+			backgrounds.get(1).toggleEnabled();
+		}
+						
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
+			mario.setX(mario.getX()+8);			
+			camera.getCamera().position.x = camera.getCamera().position.x+8;				
+			camera.getCamera().update();
+		}
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_2)) {			
+			mario.setY(mario.getY()-4);			
 		}		
+		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_8)) {			
+			mario.setY(mario.getY()+8);			
+		}
 	}
 	
 	private boolean isUnderBlock(Mario mario) {		
@@ -753,6 +654,126 @@ public class GameScreen implements Screen  {
 		y = (int) rightTopCorner.y;								
 		
 		return tilemap.isCollisioningTileAt(x, y);
+	}
+	
+	private void renderDebugMode() {
+
+		if (debugShowText) {
+			
+			int x = WinConstants.WIDTH - 600;
+			int y = WinConstants.HEIGHT - 30;
+			
+			/* MARIO VARIABLES */
+			spriteBatch.begin();
+			debugFont.draw(spriteBatch, "mario.position=" + String.format("%.3f", mario.getX()) + " | " + String.format("%.3f", mario.getY()), x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + " | " + String.format("%.1f", mario.getAcceleration().y), x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "jumptimer=" + mario.getJumpTimer(), x, y);
+			y = y -20;			
+			debugFont.draw(spriteBatch, "isOnFloor=" + mario.isOnFloor(), x, y);
+			y = y -20;			
+			debugFont.draw(spriteBatch, "move vector: " + String.format("%.2f",mario.getMove().x) + " | " +String.format("%.2f",mario.getMove().y), x, y);			
+			y = y -20;			
+			debugFont.draw(spriteBatch, "isOnPlateform: " + mario.isStuck(), x, y);
+			y = y -20;			
+			debugFont.draw(spriteBatch, "sizeState: " + mario.getSizeState(), x, y);
+			
+			
+			/* ENV VARIABLES */
+			x = WinConstants.WIDTH - 350;
+			y = WinConstants.HEIGHT - 30;
+			
+			debugFont.draw(spriteBatch, "camera.x=" + String.format("%.1f", camera.getCamera().position.x), x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, " camera.offset=" + String.format("%.1f", camera.getCameraOffset()), x, y);
+			y = y -20;			
+			debugFont.draw(spriteBatch, "Mysteryblocks: " + tilemap.getBlocks().size(), x, y);
+			y = y -20;
+			int alive = 0;
+			for (AbstractEnemy enemy : tilemap.getEnemies()) {
+				alive += enemy.isAlive() ? 1 : 0;
+			}
+			debugFont.draw(spriteBatch, "Enemies: " + tilemap.getEnemies().size() + " - " + alive + " alive", x, y);
+			y = y -20;
+			alive = 0;
+			for (AbstractEnemy enemy : tilemap.getEnemies()) {
+				if (enemy.getEnemyType()==EnemyTypeEnum.KOOPA) {
+				debugFont.draw(spriteBatch, "Enemy #" + alive + " - " + (enemy.isAlive() ? " alive - " : "") + enemy.getState() + " -onFloor "+enemy.isOnFloor(), x, y);				
+				y = y -20;
+				}
+				alive++;
+			}			
+			alive = 0;
+			for (AbstractSprite item : tilemap.getItems()) {
+				alive += item.isAlive() ? 1 : 0;
+			}
+			debugFont.draw(spriteBatch, "Items: " + tilemap.getItems().size() + " - " + alive + " alive", x, y);
+			y = y -20;
+			alive = 0;
+			/*for (AbstractSprite item : tileMap.getItems()) {
+				debugFont.draw(spriteBatch, "Item #" + alive + " - " + (item.isAlive() ? " alive - " : "") + (item.isVisible() ? " visible - " : "") , x, y);
+				y = y -20;
+				alive++;
+			}*/	
+			alive = 0;
+			for (AbstractMetalPlateform plateform : tilemap.getPlateforms()) {
+				debugFont.draw(spriteBatch, "Plateform #" + alive + " - " + (plateform.isAlive() ? " alive - " : "") + (plateform.isVisible() ? " visible - " : "") , x, y);
+				y = y -20;
+				alive++;
+			}			
+			debugFont.draw(spriteBatch, "Fireballs: " + mario.getFireballs().size(), x, y);
+			y = y -20;			
+			debugFont.draw(spriteBatch, "backgrounds: " + backgrounds.size, x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "worldType: " + tilemap.getWorldType(), x, y);
+			
+			spriteBatch.end();
+		}
+
+		if (debugShowFps) {
+			spriteBatch.begin();
+			debugFont.draw(spriteBatch, Integer.toString(Gdx.graphics.getFramesPerSecond()), WinConstants.WIDTH - 20, WinConstants.HEIGHT-10);
+			spriteBatch.end();
+		}
+
+		if (debugShowBounds) {
+			// Green rectangle around Mario
+			batch = tilemapRenderer.getBatch();
+			batch.begin();
+			Gdx.gl.glEnable(GL20.GL_BLEND);
+			Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+			
+			shapeRenderer.setProjectionMatrix(camera.getCamera().combined);
+			shapeRenderer.begin(ShapeType.Filled);
+			shapeRenderer.setColor(new Color(0, 1, 0, 0.5f));
+			shapeRenderer.rect(mario.getX() + mario.getOffset().x, mario.getY(), mario.getWidth(), mario.getHeight());
+			for (AbstractSprite sprite : tilemap.getEnemies()) {
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+						sprite.getHeight());
+			}
+			for (AbstractSprite sprite : tilemap.getItems()) {
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+						sprite.getHeight());
+			}
+			for (AbstractSprite sprite : mario.getFireballs()) {
+				shapeRenderer.rect(sprite.getX() + sprite.getOffset().x, sprite.getY(), sprite.getWidth(),
+						sprite.getHeight());
+			}
+			
+			for (AbstractMetalPlateform plateform : tilemap.getPlateforms()) {
+				shapeRenderer.rect(plateform.getX() + plateform.getOffset().x, plateform.getY(), plateform.getWidth(),
+						plateform.getHeight());
+			}
+			
+			shapeRenderer.end();
+			Gdx.gl.glDisable(GL20.GL_BLEND);
+			batch.end();
+		}
 	}
 	
 	@Override
@@ -790,7 +811,7 @@ public class GameScreen implements Screen  {
 	public void dispose() {		
 		stage.dispose();
 		tilemap.dispose();		
-		renderer.dispose();		
+		tilemapRenderer.dispose();		
 		shapeRenderer.dispose();
 		font.dispose();
 		debugFont.dispose();
