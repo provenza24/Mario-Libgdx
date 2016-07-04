@@ -85,7 +85,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		tileMap.getSfxSprites().add(bottomLeftPiece);
 		stage.addActor(bottomLeftPiece);
 		
-		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BREAK_BLOCK);
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_BREAK_BLOCK);				
 	}
 
 	private void moveWall(TmxMap tileMap, TmxCell collidingCell, Stage stage, WallBlock specialWallBlock) {

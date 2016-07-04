@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.BowserTilemapCollisionHandler;
 import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.SpriteMoveEnum;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.enemy.FireFlame;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
@@ -194,6 +195,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 								if (!hasFired) {
 									tileMap.getEnemies().add(new FireFlame(this, yInitial + MathUtils.random(2)));
 									hasFired = true;
+									SoundManager.getSoundManager().playSound(SoundManager.SOUND_FLAME);
 								}
 							}
 							

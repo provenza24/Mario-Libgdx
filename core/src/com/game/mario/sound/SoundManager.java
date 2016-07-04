@@ -6,25 +6,26 @@ import java.util.Map;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.game.mario.enums.MusicEnum;
-import com.game.mario.enums.WorldTypeEnum;
 
 public class SoundManager {
 
-	private static final float VOLUME_SOUND = 0.3f;
+	private static final float VOLUME_SOUND = 1f;
 
-	private static final float VOLUME_MUSIC = 0.1f;
+	private static final float VOLUME_MUSIC = 0.5f;
 
 	public static Map<MusicEnum, Sound> THEMES = new HashMap<MusicEnum, Sound>();
 	
-	public static Sound SOUND_OVERWORLD_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/overworld.mp3"));
-	
 	public static Sound SOUND_TITLE_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/title-theme.mp3"));
 	
-	public static Sound SOUND_UNDERGROUND_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/underground_theme.ogg"));
+	public static Sound SOUND_OVERWORLD_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/overworld.mp3"));
+	
+	public static Sound SOUND_UNDERGROUND_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/underworld.mp3"));			
+	
+	public static Sound SOUND_CASTLE_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/castle.mp3"));
 	
 	public static Sound SOUND_BONUS_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/bonus.mp3"));
 	
-	public static Sound SOUND_INVINCIBLE = Gdx.audio.newSound(Gdx.files.internal("audio/smb_invincible.ogg"));
+	public static Sound SOUND_INVINCIBLE = Gdx.audio.newSound(Gdx.files.internal("audio/invincible.mp3"));
 	
 	public static Sound SOUND_MARIO_DEATH = Gdx.audio.newSound(Gdx.files.internal("audio/smb_mariodie.ogg"));
 	
@@ -48,7 +49,9 @@ public class SoundManager {
 	
 	public static Sound SOUND_FLAGPOLE = Gdx.audio.newSound(Gdx.files.internal("audio/smb_flagpole.ogg"));
 	
-	public static Sound SOUND_STAGE_CLEAR = Gdx.audio.newSound(Gdx.files.internal("audio/smb_stage_clear.ogg"));		
+	public static Sound SOUND_STAGE_CLEAR = Gdx.audio.newSound(Gdx.files.internal("audio/smb_stage_clear.ogg"));
+	
+	public static Sound SOUND_FLAME = Gdx.audio.newSound(Gdx.files.internal("audio/flames.mp3"));
 	
 	private static float soundFxVolume;
 	
@@ -66,7 +69,7 @@ public class SoundManager {
 		THEMES.put(MusicEnum.UNDERGROUND, SOUND_UNDERGROUND_THEME);
 		THEMES.put(MusicEnum.OVERGROUND, SOUND_OVERWORLD_THEME);
 		THEMES.put(MusicEnum.BONUS, SOUND_BONUS_THEME);
-		THEMES.put(MusicEnum.CASTLE, SOUND_OVERWORLD_THEME);
+		THEMES.put(MusicEnum.CASTLE, SOUND_CASTLE_THEME);
 	}
 	
 	private SoundManager() {	

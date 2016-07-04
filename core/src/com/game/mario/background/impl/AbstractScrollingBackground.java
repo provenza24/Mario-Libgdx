@@ -13,16 +13,22 @@ import com.game.mario.util.ResourcesLoader;
 
 public abstract class AbstractScrollingBackground extends Sprite implements IScrollingBackground {
 
+	/** Map containing backgrounds images */
 	protected static final Map<BackgroundTypeEnum, Texture> BACKGROUND_IMAGES = new HashMap<BackgroundTypeEnum, Texture>();
 	
+	/** Horizontal velocity */
 	protected float velocity;
 	
+	/** Batch used to draw this background */
 	protected Batch batch;
 	
+	/** Followed sprite */
 	protected AbstractSprite followedSprite;
 	
+	/** Background width */
 	protected int width;
 	
+	/** Indicator to determine if background is enabled / disabled */
 	protected boolean enabled;
 		
 	static {
@@ -33,15 +39,7 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.BONUS, ResourcesLoader.BONUS);
 		BACKGROUND_IMAGES.put(BackgroundTypeEnum.CASTLE, ResourcesLoader.CASTLE);	
 	}
-	
-	public void changeImage(BackgroundTypeEnum backgroundTypeEnum) {
-	
-		if (backgroundTypeEnum!=null) {
-			 setRegion(BACKGROUND_IMAGES.get(backgroundTypeEnum));	
-		}
-	}
 		
-	
 	public AbstractScrollingBackground(AbstractSprite followedSprite, Batch batch, BackgroundTypeEnum backgroundType) {
 		super(BACKGROUND_IMAGES.get(backgroundType));
 		this.batch = batch;
@@ -50,6 +48,15 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 		this.width = getTexture().getWidth();
 	}
 	
+	@Override
+	public void changeImage(BackgroundTypeEnum backgroundTypeEnum) {
+	
+		if (backgroundTypeEnum!=null) {
+			 setRegion(BACKGROUND_IMAGES.get(backgroundTypeEnum));	
+		}
+	}
+	
+	@Override
 	public void update() {
 						
 		float xMarioMove = (followedSprite.getX() - followedSprite.getOldPosition().x);
@@ -63,6 +70,7 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 		}
 	}
 	
+	@Override
 	public void render() {
 		if (enabled) {
 			batch.begin();
@@ -74,6 +82,7 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 		}		
 	}
 
+	@Override
 	public void toggleEnabled() {
 		enabled = !enabled;
 	}
