@@ -225,14 +225,14 @@ public class Mario extends AbstractTileObjectSprite {
 		animations[4][0] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_RUN_RIGHT, 0, 24, 0.025f);
 		animations[4][1] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_RUN_LEFT, 0, 24, 0.025f);
 		animations[4][2] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_SLIDE_RIGHT, 0, 4, 0.025f);
-		animations[4][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_SLIDE_LEFT, 0, 4, 0.025f);
+		animations[4][3] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_SLIDE_LEFT, 0, 4, 0.025f);
 		animations[4][4] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_JUMP_RIGHT, 0, 4, 0.025f);
 		animations[4][5] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_JUMP_LEFT, 0, 4, 0.025f);		
 		animations[4][7] = animations[0][7];
 		animations[4][8] = animations[0][8];
 		animations[4][9] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_VICTORY, 0, 4, 0.025f);;
-		animations[4][10] = null; // TODO Crouch animation right
-		animations[4][11] = null; // TODO Crouch animation right
+		animations[4][10] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_CROUCH_RIGHT, 0, 4, 0.025f);
+		animations[4][11] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_CROUCH_LEFT, 0, 4, 0.025f);
 		animations[4][12] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_STAND_RIGHT, 0, 4, 0.025f);
 		animations[4][13] = AnimationBuilder.getInstance().build(ResourcesLoader.MARIO_BIG_STAR_STAND_LEFT, 0, 4, 0.025f);
 	}
@@ -382,8 +382,12 @@ public class Mario extends AbstractTileObjectSprite {
 		stateTime = stateTime + delta;
 
 		if (isCrouch) {
-			currentAnimation = direction == DirectionEnum.RIGHT ? marioCrouchRightAnimation : marioCrouchLeftAnimation; 
-			currentFrame = currentAnimation.getKeyFrame(0, false);
+			currentAnimation = direction == DirectionEnum.RIGHT ? marioCrouchRightAnimation : marioCrouchLeftAnimation;
+			if (!isOwningStar()) {
+				currentFrame = currentAnimation.getKeyFrame(0, false);
+			} else {
+				currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+			}			
 		} else if (!onFloor) {
 			currentAnimation = direction == DirectionEnum.RIGHT ? marioJumpRightAnimation : marioJumpLeftAnimation;
 			currentFrame = currentAnimation.getKeyFrame(owningStar ? stateTime : 0, owningStar ? true :false);

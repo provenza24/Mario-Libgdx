@@ -82,14 +82,14 @@ public class ResourcesLoader {
 	
 	public static final Texture MARIO_SMALL_STAR_VICTORY = new Texture(Gdx.files.internal("sprites/mario/star/small/mario_victory.png"));
 	
-	
-	public static final Texture MARIO_BIG_STAR_JUMP_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_jump_left.png"));
-	
+			
 	public static final Texture MARIO_BIG_STAR_RUN_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_run_left.png"));
 	
-	public static final Texture MARIO_BIG_STAR_RUN_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_run_right.png"));
+	public static final Texture MARIO_BIG_STAR_RUN_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_run_right.png"));		
 	
 	public static final Texture MARIO_BIG_STAR_JUMP_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_jump_right.png"));
+	
+	public static final Texture MARIO_BIG_STAR_JUMP_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_jump_left.png"));
 	
 	public static final Texture MARIO_BIG_STAR_SLIDE_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_slide_right.png"));
 	
@@ -101,10 +101,15 @@ public class ResourcesLoader {
 	
 	public static final Texture MARIO_BIG_STAR_VICTORY = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_victory.png"));
 	
+	public static final Texture MARIO_BIG_STAR_CROUCH_RIGHT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_crouch_right.png"));
+	
+	public static final Texture MARIO_BIG_STAR_CROUCH_LEFT = new Texture(Gdx.files.internal("sprites/mario/star/big/mario_crouch_left.png"));	
+	
+	
 	public static final Texture MARIO_GROW_UP_RIGHT = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-right.png"));
 	
 	public static final Texture MARIO_GROW_UP_LEFT = new Texture(Gdx.files.internal("sprites/mario/mario-grow-up-left.png"));
-	
+		
 	
 	// Blocks
 	public static final Texture MYSTERY_BLOC = new Texture(Gdx.files.internal("sprites/items/mystery.png"));

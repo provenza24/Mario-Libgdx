@@ -1,5 +1,7 @@
 package com.game.mario.screen.cinematic.ending;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -34,6 +36,12 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 	}
 	
 	public void handleScene(float delta) {
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
+			endLevelState = 5;
+			timer = 3;
+		}
+		
 		timer += delta;
 
 		if (endLevelState == 0) {

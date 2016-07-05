@@ -43,6 +43,8 @@ import com.game.mario.sprite.AbstractSfxSprite;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.sprite.Fireball;
 import com.game.mario.sprite.bloc.AbstractBlock;
+import com.game.mario.sprite.item.RedMushroom;
+import com.game.mario.sprite.item.Star;
 import com.game.mario.sprite.sfx.FireballExplosion;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
@@ -320,7 +322,7 @@ public class GameScreen implements Screen  {
 		// Display status bar				
 		renderStatusBar();
 		// Check if level is finished or not
-		if (mario.getX()>=tilemap.getFlagTargetPosition() 
+		if (mario.getX()>=tilemap.getFlagTargetPosition()
 				&& camera.getCamera().position.x -8 < tilemap.getFlag().getX()) {			
 			levelFinished = true;
 		}			
@@ -611,13 +613,23 @@ public class GameScreen implements Screen  {
 			debugShowBounds = !debugShowBounds;
 		}
 		
+
+		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
+			mario.changeSizeState(mario.getSizeState()==0 ? 2 : mario.getSizeState()==2 ? 3 : 0);
+		}				
+						
 		if (Gdx.input.isKeyJustPressed(Keys.F5)) {
 			debugFont.setColor(0, 1, 0, 1);
 		}
 		
-		if (Gdx.input.isKeyJustPressed(Keys.F4)) {
-			mario.changeSizeState(mario.getSizeState()==0 ? 2 : mario.getSizeState()==2 ? 3 : 0);
-		}				
+		if (Gdx.input.isKeyJustPressed(Keys.F6)) {
+			tilemap.getItems().add(new Star(mario.getX()+1, 15));
+		}
+		
+		if (Gdx.input.isKeyJustPressed(Keys.F7)) {
+			tilemap.getItems().add(new RedMushroom(mario.getX()+1, 15));
+		}
+		
 		
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_1)) {
 			backgrounds.get(0).toggleEnabled();
@@ -625,7 +637,7 @@ public class GameScreen implements Screen  {
 		
 		if (Gdx.input.isKeyJustPressed(Keys.NUM_2) && backgrounds.size>1) {
 			backgrounds.get(1).toggleEnabled();
-		}
+		}				
 						
 		if (Gdx.input.isKeyJustPressed(Keys.NUMPAD_6)) {
 			mario.setX(mario.getX()+8);			
