@@ -11,6 +11,11 @@ import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.sprite.AbstractSprite;
 import com.game.mario.util.ResourcesLoader;
 
+/**
+ * Abstract class which provides scrolling support
+ * Provided images width must be equals to two times the screen width
+ * A velocity is given to backgrounds to temporize the automatic scrolling
+ */
 public abstract class AbstractScrollingBackground extends Sprite implements IScrollingBackground {
 
 	/** Map containing backgrounds images */
@@ -60,12 +65,14 @@ public abstract class AbstractScrollingBackground extends Sprite implements IScr
 	public void update() {
 						
 		float xMarioMove = (followedSprite.getX() - followedSprite.getOldPosition().x);
-		if (xMarioMove>0) {			
+		if (xMarioMove>0) {
+			// Scroll only if player is going to the right of the screen
 			setX(getX() + xMarioMove * velocity);			
-		}							
-		if (velocity<0 && getX() <= 0){
+		}				
+		// Reset image position when needed
+		if (getX() <= 0){			
 			setX(width);
-		} else if (velocity>0 && getX()>=width) {
+		} else if (getX()>=width) {
 			setX(0);
 		}
 	}

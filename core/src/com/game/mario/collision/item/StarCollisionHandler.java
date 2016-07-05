@@ -17,11 +17,13 @@ public class StarCollisionHandler extends AbstractItemCollisionHandler {
 	@Override
 	public void collide(Mario mario, AbstractSprite item, GameCamera camera, Array<IScrollingBackground> scrollingBackgrounds) {		
 		super.collide(mario, item, camera, scrollingBackgrounds);	
+		// Mario becomes invicible during 10 seconds
 		mario.setInvincible(true);
 		mario.setOwningStar(true);
 		mario.refreshAnimations();
 		mario.setInvincibleDurationTarget(10);
 		
+		// Play invicible music during 10 seconds
 		SoundManager.getSoundManager().stopMusic();
 		SoundManager.getSoundManager().setCurrentMusic(SoundManager.SOUND_INVINCIBLE);
 		SoundManager.getSoundManager().playMusic(false);

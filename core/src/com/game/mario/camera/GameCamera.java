@@ -1,8 +1,11 @@
 package com.game.mario.camera;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.sprite.AbstractSprite;
 
+/**
+ * Class used to define an orthographic camera which will follow a chosen sprite
+ */
 public class GameCamera {
 
 	private OrthographicCamera camera;
@@ -10,14 +13,16 @@ public class GameCamera {
 	private float cameraOffset = 0;
 	
 	private boolean scrollable;
+	
+	private AbstractSprite followedSprite;
 
-	public GameCamera() {
+	public GameCamera(AbstractSprite followedSprite) {
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 16, 15);
 		camera.position.set(camera.viewportWidth / 2f, camera.viewportHeight / 2f, 0);
-		camera.update();
-		
-		scrollable = true;
+		camera.update();		
+		scrollable = true;				
+		this.followedSprite = followedSprite;
 	}
 	
 	public OrthographicCamera getCamera() {
@@ -44,9 +49,9 @@ public class GameCamera {
 		this.scrollable = scrollable;
 	}
 	
-	public void moveCamera(Mario mario) {
+	public void moveCamera() {
 
-		float move = mario.getX() - mario.getOldPosition().x;
+		float move = followedSprite.getX() - followedSprite.getOldPosition().x;
 		if (cameraOffset < 8) {
 			cameraOffset = cameraOffset + move;
 		} else {
@@ -56,9 +61,9 @@ public class GameCamera {
 				cameraOffset = cameraOffset + move;
 			}
 		}
-		if (mario.getX() < camera.position.x - 8) {					
-			mario.setX(mario.getOldPosition().x);
-			mario.getAcceleration().x = 0;
+		if (followedSprite.getX() < camera.position.x - 8) {					
+			followedSprite.setX(followedSprite.getOldPosition().x);
+			followedSprite.getAcceleration().x = 0;
 			cameraOffset = cameraOffset - move;
 		}
 		camera.update();

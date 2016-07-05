@@ -164,7 +164,7 @@ public class GameScreen implements Screen  {
 		mario = tilemap.getMario();
 
 		// create an orthographic camera, shows us 30x20 units of the world
-		camera = new GameCamera();
+		camera = new GameCamera(mario);
 		camera.setCameraOffset(mario.getX());
 		
 		// Initialize backgrounds, which are defined in each TMX map with Tiled
@@ -275,7 +275,7 @@ public class GameScreen implements Screen  {
 		if (camera.isScrollable()) {			
 			if (camera.getCamera().position.x < tilemap.getScrollMaxValue()) {
 				// Move camera if its scrollable and if Mario is not fighting Bowser	
-				camera.moveCamera(mario);
+				camera.moveCamera();
 				// Update scrolling backgrounds
 				if (Math.floor(camera.getCameraOffset()) == 8) {
 					backgrounds.get(0).update();				

@@ -84,7 +84,7 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 					whiteFlag.addAppearAction();					
 				}				
 			} else {
-				camera.moveCamera(mario);
+				camera.moveCamera();
 				// Move scrolling background
 				if (Math.floor(camera.getCameraOffset()) == 8) {
 					scrollingBackgrounds.get(0).update();					
