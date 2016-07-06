@@ -46,6 +46,7 @@ import com.game.mario.sprite.bloc.AbstractBlock;
 import com.game.mario.sprite.item.RedMushroom;
 import com.game.mario.sprite.item.Star;
 import com.game.mario.sprite.sfx.FireballExplosion;
+import com.game.mario.sprite.sfx.Smoke;
 import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
@@ -505,14 +506,17 @@ public class GameScreen implements Screen  {
 		
 		if (Gdx.input.isKeyPressed(KEY_RIGHT)) {
 			if (mario.getDirection() == DirectionEnum.LEFT) {
-				// Sliding on the right
+				// Sliding on the right				
 				mario.setStateIfNotJumping(SpriteMoveEnum.SLIDING_LEFT);
+				if (mario.getState()==SpriteMoveEnum.SLIDING_LEFT && mario.getPreviousState()!=mario.getState()) {
+					addSmokeEffect();		
+				}
 				if (!(mario.isCrouch() && isUnderBlock(mario))) {
 					mario.decelerate(1.5f);
 					if (mario.getAcceleration().x <= 0) {
 						// Not sliding anymore
 						mario.getAcceleration().x = 0;
-						mario.setDirection(DirectionEnum.RIGHT);
+						mario.setDirection(DirectionEnum.RIGHT);						
 					}
 				}
 				
@@ -529,6 +533,9 @@ public class GameScreen implements Screen  {
 			if (mario.getDirection() == DirectionEnum.RIGHT) {
 				// Sliding on the left
 				mario.setStateIfNotJumping(SpriteMoveEnum.SLIDING_RIGHT);
+				if (mario.getState()==SpriteMoveEnum.SLIDING_RIGHT && mario.getPreviousState()!=mario.getState()) {
+					addSmokeEffect();		
+				}
 				if (!(mario.isCrouch() && isUnderBlock(mario))) {
 					mario.decelerate(1.5f);
 					if (mario.getAcceleration().x <= 0) {
@@ -597,6 +604,13 @@ public class GameScreen implements Screen  {
 		}
 		
 		handleDebugKeys();
+	}
+
+	private void addSmokeEffect() {
+		Smoke smoke = new Smoke(mario);
+		tilemap.getSfxSprites().add(smoke);
+		stage.addActor(smoke);
+		smoke.addAppearAction();
 	}
 
 	private void handleDebugKeys() {
@@ -682,6 +696,8 @@ public class GameScreen implements Screen  {
 			debugFont.draw(spriteBatch, "mario.acceleration=" + String.format("%.1f", mario.getAcceleration().x) + " | " + String.format("%.1f", mario.getAcceleration().y), x, y);
 			y = y -20;
 			debugFont.draw(spriteBatch, "state=" + mario.getState().toString(), x, y);
+			y = y -20;
+			debugFont.draw(spriteBatch, "previous state=" + mario.getPreviousState().toString(), x, y);
 			y = y -20;
 			debugFont.draw(spriteBatch, "direction=" + mario.getDirection().toString(), x, y);
 			y = y -20;

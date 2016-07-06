@@ -158,6 +158,8 @@ public class ResourcesLoader {
 	
 	public static final Texture WHITE_FLAG = new Texture(Gdx.files.internal("sprites/misc/white_flag.png"));
 	
+	public static final Texture SMOKE = new Texture(Gdx.files.internal("sprites/misc/smoke.png"));
+	
 	// Menu
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	
