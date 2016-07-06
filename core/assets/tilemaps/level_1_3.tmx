@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="172" height="15" tilewidth="32" tileheight="32" nextobjectid="86">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="172" height="15" tilewidth="32" tileheight="32" nextobjectid="90">
  <tileset firstgid="1" name="Tileset" tilewidth="32" tileheight="32" tilecount="400" columns="20">
   <image source="tileset.png" width="640" height="640"/>
   <tile id="6">
@@ -34,6 +34,9 @@
  </tileset>
  <tileset firstgid="452" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
+ </tileset>
+ <tileset firstgid="453" name="whiteFlag" tilewidth="32" tileheight="34" tilecount="4" columns="4">
+  <image source="../sprites/misc/white_flag.png" width="128" height="34"/>
  </tileset>
  <layer name="world" width="172" height="15">
   <properties>
@@ -110,5 +113,7 @@
     <property name="state" value="flying"/>
    </properties>
   </object>
+  <object id="86" type="whiteFlag" gid="453" x="5120" y="256" width="32" height="34"/>
+  <object id="87" type="whiteFlag" gid="453" x="5344" y="256" width="32" height="34"/>
  </objectgroup>
 </map>

@@ -42,6 +42,7 @@ import com.game.mario.sprite.tileobject.item.plateform.HorizontalMetalPlateform;
 import com.game.mario.sprite.tileobject.item.plateform.VerticalMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.sprite.tileobject.sfx.Lava;
+import com.game.mario.sprite.tileobject.sfx.WhiteFlag;
 import com.game.mario.util.constant.TileIdConstants;
 import com.game.mario.util.constant.TilemapPropertiesConstants;
 
@@ -129,7 +130,10 @@ public class TmxMap {
 	private void initSfxSprites(MapObject mapObject, MapProperties objectProperty) {
 		if (objectProperty.get("type").toString().equals("lava")) {				
 			sfxSprites.add(new Lava(mapObject));
-		}		
+		}
+		if (objectProperty.get("type").toString().equals("whiteFlag")) {				
+			sfxSprites.add(new WhiteFlag(mapObject));
+		}	
 	}
 
 	private void initItems(MapObject mapObject, MapProperties objectProperty) {
