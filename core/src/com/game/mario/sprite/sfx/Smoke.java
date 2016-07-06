@@ -15,7 +15,8 @@ public class Smoke extends AbstractSfxSprite {
 	public Smoke(Mario mario) {
 		super(mario.getDirection()==DirectionEnum.RIGHT ? mario.getX() + mario.getWidth() : mario.getX()-0.5f, mario.getY(),
 				new Vector2(0.5f, 0.5f), new Vector2());
-		isAnimationLooping = false;		
+		isAnimationLooping = false;			
+		move.x = mario.getDirection()==DirectionEnum.RIGHT ? mario.getAcceleration().x /8 : - mario.getAcceleration().x / 8;	
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class Smoke extends AbstractSfxSprite {
 	@Override
 	public void addAppearAction() {		
 		SequenceAction actions = new SequenceAction(
-				ActionFacade.createMoveAction(getX(), getY(), 0.3f),				
+				ActionFacade.createMoveAction(getX() + move.x, getY(), 0.3f),				
 				new DeleteItemAction(this));
 		addAction(actions);
 	}
