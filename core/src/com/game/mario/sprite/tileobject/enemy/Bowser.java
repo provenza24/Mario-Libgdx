@@ -117,6 +117,37 @@ public class Bowser extends AbstractTileObjectEnemy {
 		if (killed) {
 			acceleration.x = 0;
 		} else {
+			if (isAlive()) {
+				
+				if (!isFiring) {
+					int fireRandomValue = MathUtils.random(chanceToFire-1);
+					if (fireRandomValue==0) {
+						firingTime = 0;
+						isFiring = true;
+						setCurrentAnimation(fireAnimation);
+						hasFired = false;
+					}
+				} else {
+					
+					firingTime += deltaTime;
+					
+					if (firingTime>3) {
+						isFiring = false;
+					} else if (firingTime>1f) {
+						setCurrentAnimation(walkAnimation);					
+					} else if (firingTime>0.5f) {
+						setCurrentAnimation(endFireAnimation);
+						if (!hasFired) {
+							tileMap.getEnemies().add(new FireFlame(this, yInitial + MathUtils.random(2)));
+							hasFired = true;
+							SoundManager.getSoundManager().playSound(SoundManager.SOUND_FLAME);
+						}
+					}
+					
+					
+				}									
+			}
+			
 			if (isVisible()) {
 				
 				Mario mario = tileMap.getMario();
@@ -170,38 +201,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 						if (stopTime>targetStopTime) {
 							acceleration.x = direction; 
 						}
-					}
-					
-					if (isAlive()) {
-						
-						if (!isFiring) {
-							int fireRandomValue = MathUtils.random(chanceToFire-1);
-							if (fireRandomValue==0) {
-								firingTime = 0;
-								isFiring = true;
-								setCurrentAnimation(fireAnimation);
-								hasFired = false;
-							}
-						} else {
-							
-							firingTime += deltaTime;
-							
-							if (firingTime>3) {
-								isFiring = false;
-							} else if (firingTime>1f) {
-								setCurrentAnimation(walkAnimation);					
-							} else if (firingTime>0.5f) {
-								setCurrentAnimation(endFireAnimation);
-								if (!hasFired) {
-									tileMap.getEnemies().add(new FireFlame(this, yInitial + MathUtils.random(2)));
-									hasFired = true;
-									SoundManager.getSoundManager().playSound(SoundManager.SOUND_FLAME);
-								}
-							}
-							
-							
-						}									
-					}				
+					}											
 				}
 			}
 		}
