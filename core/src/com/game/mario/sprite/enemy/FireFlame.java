@@ -28,8 +28,7 @@ public class FireFlame extends AbstractEnemy {
 		this.yTarget = yTarget;		
 		this.acceleration.y = yTarget>getY() ? 0.1f : -0.1f;
 		
-		this.alive = true;
-		this.moveable = true;
+		this.alive = true;		
 		this.killableByPlayer = false;
 		this.killableByFireball = false;				
 	}

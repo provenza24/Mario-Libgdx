@@ -1,7 +1,6 @@
 package com.game.mario.sprite.item;
 
 import com.badlogic.gdx.math.Vector2;
-import com.game.mario.action.ActionFacade;
 import com.game.mario.collision.tilemap.StarTilemapCollisionHandler;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.sprite.AbstractItem;
@@ -22,11 +21,6 @@ public class Star extends AbstractItem {
 	@Override
 	public void initializeAnimations() {
 		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.STAR, 0, 4, 0.01f);		
-	}
-
-	@Override
-	public void addAppearAction() {
-		addAction(ActionFacade.createMoveAction(getX(), getY()+0.9f, 0.5f));		
 	}
 
 	@Override

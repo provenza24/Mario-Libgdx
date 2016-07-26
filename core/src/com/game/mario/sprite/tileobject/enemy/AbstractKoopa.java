@@ -38,10 +38,10 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	protected static final float ACCELERATION_MAX = 0.08f;
 	
+	protected static final float STEP_NUMBER = 6;	
+	
 	protected float DECCELERATION_STEP;
-	
-	protected float STEP_NUMBER;		
-	
+		
 	protected float currentStep;
 	
 	public AbstractKoopa(MapObject mapObject) {
@@ -59,7 +59,6 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 			currentAnimation = flyAnimation;
 			state = SpriteMoveEnum.FLYING;
 			direction = DirectionEnum.DOWN;		
-			STEP_NUMBER = 6;
 			DECCELERATION_STEP = STEP_NUMBER/2 + 0.01f;
 			acceleration.y = direction==DirectionEnum.UP ? ACCELERATION_MIN : -ACCELERATION_MIN;		
 		} else {			

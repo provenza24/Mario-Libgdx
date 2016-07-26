@@ -11,6 +11,7 @@ import com.game.mario.util.animation.AnimationBuilder;
 public class FireballExplosion extends AbstractSfxSprite {
 	
 	private static final int SPRITESHEET_FRAMES = 3;	
+	
 	private static final float FRAME_DURATION = 0.05f;
 	
 	public FireballExplosion(AbstractSprite fireball) {		

@@ -25,4 +25,8 @@ public abstract class AbstractTileObjectItem extends AbstractItem {
 		String xAliveString = (String) mapObject.getProperties().get("xAlive");
 		xAlive = xAliveString!=null ? Float.parseFloat(xAliveString) / 32 : getX() - 16 ;			
 	}
+	
+	@Override
+	public void addAppearAction() {		
+	}
 }

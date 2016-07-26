@@ -12,6 +12,10 @@ import com.game.mario.util.animation.AnimationBuilder;
 
 public class Smoke extends AbstractSfxSprite {
 
+	private static final float FRAMES_DURATION = 0.1f;
+	
+	private static final int SPRITESHEET_FRAMES = 3;
+
 	public Smoke(Mario mario) {
 		super(mario.getDirection()==DirectionEnum.RIGHT ? mario.getX() + mario.getWidth() : mario.getX()-0.5f, mario.getY(),
 				new Vector2(0.5f, 0.5f), new Vector2());
@@ -21,7 +25,7 @@ public class Smoke extends AbstractSfxSprite {
 
 	@Override
 	public void initializeAnimations() {		
-		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.SMOKE, 0, 3, 0.1f);				
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.SMOKE, 0, SPRITESHEET_FRAMES, FRAMES_DURATION);				
 	}
 
 	@Override

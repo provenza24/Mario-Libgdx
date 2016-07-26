@@ -26,10 +26,6 @@ public class Coin extends AbstractTileObjectItem {
 	}
 
 	@Override
-	public void addAppearAction() {		
-	}
-
-	@Override
 	public ItemEnum getType() {
 		return ItemEnum.COIN;
 	}

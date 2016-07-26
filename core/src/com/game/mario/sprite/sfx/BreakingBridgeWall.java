@@ -8,8 +8,11 @@ import com.game.mario.util.animation.AnimationBuilder;
 public class BreakingBridgeWall extends AbstractSfxSprite {
 		
 	private static final float WIDHT = 1;	
+	
 	private static final float HEIGHT = 3.5f;			
+	
 	private static final int   SPRITESHEET_FRAMES = 12;	
+	
 	private static final float FRAME_DURATION = 0.1f;
 	
 	public BreakingBridgeWall(float x, float y) {		

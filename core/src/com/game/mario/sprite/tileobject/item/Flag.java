@@ -43,7 +43,4 @@ public class Flag extends AbstractTileObjectItem {
 	
 	}
 
-	@Override
-	public void addAppearAction() {	
-	}
 }

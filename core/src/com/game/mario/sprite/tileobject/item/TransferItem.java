@@ -111,10 +111,6 @@ public abstract class TransferItem extends AbstractTileObjectItem {
 	public void setBackgroundTypesEnum(Array<BackgroundTypeEnum> backgroundTypesEnum) {
 		this.backgroundTypesEnum = backgroundTypesEnum;
 	}
-
-	@Override
-	public void addAppearAction() {		
-	}
 	
 	@Override
 	public ItemEnum getType() {

@@ -1,11 +1,10 @@
 package com.game.mario.sprite.bloc;
 
-import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.enums.BlockTypeEnum;
 import com.game.mario.enums.ItemEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.util.ResourcesLoader;
+import com.game.mario.util.animation.AnimationBuilder;
 
 public class WallBlock extends AbstractBlock {
 
@@ -23,11 +22,8 @@ public class WallBlock extends AbstractBlock {
 	
 	@Override
 	public void initializeAnimationsWithBackground() {
-		spriteSheet = ResourcesLoader.WALL_TEXTURES.get(worldType);
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 1, spriteSheet.getHeight() / 1);
-		TextureRegion[] animationFrames = new TextureRegion[1];
-		animationFrames[0] = tmp[0][0];
-		currentAnimation = new Animation(0, animationFrames);		
+		spriteSheet = ResourcesLoader.WALL_TEXTURES.get(worldType);				
+		currentAnimation = AnimationBuilder.getInstance().build(spriteSheet, 0, 1, 0);		
 	}
 	
 	public void removeCoin() {

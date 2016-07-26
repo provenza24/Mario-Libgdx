@@ -10,6 +10,7 @@ import com.game.mario.util.animation.AnimationBuilder;
 public class EjectedCoin extends AbstractSfxSprite {
 
 	private static final int SPRITESHEET_FRAMES = 9;	
+	
 	private static final float FRAME_DURATION = 0.45f / SPRITESHEET_FRAMES;
 	
 	public EjectedCoin(float x, float y) {
