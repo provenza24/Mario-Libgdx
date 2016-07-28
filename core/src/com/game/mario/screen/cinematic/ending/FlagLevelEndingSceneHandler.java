@@ -16,6 +16,7 @@ import com.game.mario.enums.CastleTypeEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSfxSprite;
+import com.game.mario.sprite.sfx.Firework;
 import com.game.mario.sprite.sfx.WhiteFlag;
 import com.game.mario.sprite.tileobject.mario.Mario;
 import com.game.mario.tilemap.TmxMap;
@@ -38,7 +39,7 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 	public void handleScene(float delta) {
 		
 		if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-			endLevelState = 5;
+			endLevelState = 8;
 			timer = 3;
 		}
 		
@@ -104,13 +105,36 @@ public class FlagLevelEndingSceneHandler extends AbstractCinematicSceneHandler {
 			mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
 			if (mario.getX() > tileMap.getFlagTargetPosition() + 9.5f) {
 				mario.setAcceleration(new Vector2(0, 0));
-				mario.setCurrentAnimation(mario.getMarioRunRightAnimation());
-				endLevelState = 5;
+				mario.setX(tileMap.getFlagTargetPosition() + 9.5f);
+				mario.setCurrentAnimation(mario.getMarioRunRightAnimation());				
+				endLevelState = tileMap.getEndLevelCastleType()==CastleTypeEnum.SMALL ? 5 : 8;
 				timer=0;
 			}						
 		}
 				
-		if (endLevelState == 5 && timer > 3) {
+		if (endLevelState == 5 && timer > 0.5f) {
+			timer = 0;
+			endLevelState = 6;
+			tileMap.getSfxSprites().add(new Firework(mario.getX()-2, mario.getY()+8));
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_FIREWORK);
+		}
+		
+		if (endLevelState == 6 && timer > 0.5f) {
+			timer = 0;
+			endLevelState = 7;
+			tileMap.getSfxSprites().add(new Firework(mario.getX()+4, mario.getY()+9));
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_FIREWORK);
+		}
+		
+		if (endLevelState == 7 && timer > 0.5f) {
+			timer = 0;
+			endLevelState = 8;
+			tileMap.getSfxSprites().add(new Firework(mario.getX()-3, mario.getY()+10));
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_FIREWORK);
+		}
+		
+		
+		if (endLevelState == 8 && timer > 3) {
 			GameManager.getGameManager().setSizeState(mario.getSizeState());
 			GameManager.getGameManager().nextLevel();
 		} else {

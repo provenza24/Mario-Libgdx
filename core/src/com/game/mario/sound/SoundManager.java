@@ -11,19 +11,23 @@ public class SoundManager {
 
 	private static final float VOLUME_SOUND = 1f;
 
-	private static final float VOLUME_MUSIC = 0.5f;
+	private static final float VOLUME_MUSIC = 1f;
 
 	public static Map<MusicEnum, Sound> THEMES = new HashMap<MusicEnum, Sound>();
 	
-	public static Sound SOUND_TITLE_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/title-theme.mp3"));
+	public static Sound SOUND_TITLE_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/title.ogg"));
 	
-	public static Sound SOUND_OVERWORLD_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/overworld.mp3"));
+	public static Sound SOUND_OVERWORLD_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/overworld.ogg"));
 	
-	public static Sound SOUND_UNDERGROUND_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/underworld.mp3"));			
+	public static Sound SOUND_UNDERGROUND_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/underground.ogg"));			
 	
-	public static Sound SOUND_CASTLE_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/castle.mp3"));
+	public static Sound SOUND_CASTLE_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/castle.ogg"));
 	
-	public static Sound SOUND_BONUS_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/bonus.mp3"));
+	public static Sound SOUND_WORLD_CLEAR = Gdx.audio.newSound(Gdx.files.internal("audio/themes/world_clear.ogg"));
+	
+	public static Sound SOUND_BONUS_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/bonus.ogg"));
+	
+	public static Sound SOUND_BOWSER_THEME = Gdx.audio.newSound(Gdx.files.internal("audio/themes/bowser.ogg"));
 	
 	public static Sound SOUND_INVINCIBLE = Gdx.audio.newSound(Gdx.files.internal("audio/invincible.mp3"));
 	
@@ -52,6 +56,8 @@ public class SoundManager {
 	public static Sound SOUND_STAGE_CLEAR = Gdx.audio.newSound(Gdx.files.internal("audio/smb_stage_clear.ogg"));
 	
 	public static Sound SOUND_FLAME = Gdx.audio.newSound(Gdx.files.internal("audio/flames.mp3"));
+	
+	public static Sound SOUND_FIREWORK = Gdx.audio.newSound(Gdx.files.internal("audio/smb_fireworks.ogg"));
 	
 	private static float soundFxVolume;
 	

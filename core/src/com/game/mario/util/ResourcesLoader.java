@@ -160,6 +160,12 @@ public class ResourcesLoader {
 	
 	public static final Texture SMOKE = new Texture(Gdx.files.internal("sprites/misc/smoke.png"));
 	
+	public static final Texture FIREWORK_RED = new Texture(Gdx.files.internal("sprites/misc/firework_red.png"));
+	
+	public static final Texture FIREWORK_PURPLE = new Texture(Gdx.files.internal("sprites/misc/firework_purple.png"));
+	
+	public static final Texture FIREWORK_YELLOW = new Texture(Gdx.files.internal("sprites/misc/firework_yellow.png"));
+	
 	// Menu
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	

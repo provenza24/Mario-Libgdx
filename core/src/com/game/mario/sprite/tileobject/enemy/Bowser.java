@@ -59,6 +59,8 @@ public class Bowser extends AbstractTileObjectEnemy {
 	
 	private int fireballHints = 7;
 	
+	private boolean musicChanged;
+	
 	public Bowser(MapObject mapObject) {
 
 		super(mapObject, new Vector2(0.2f, 0.1f));
@@ -149,6 +151,13 @@ public class Bowser extends AbstractTileObjectEnemy {
 			}
 			
 			if (isVisible()) {
+				
+				if (!musicChanged) {
+					musicChanged = true;
+					SoundManager.getSoundManager().stopMusic();
+					SoundManager.getSoundManager().setCurrentMusic(SoundManager.SOUND_BOWSER_THEME);
+					SoundManager.getSoundManager().playMusic(false);
+				}
 				
 				Mario mario = tileMap.getMario();
 				if (getX()<mario.getX() || mario.getX()>xInitial-1) {

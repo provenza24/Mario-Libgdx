@@ -17,6 +17,7 @@ import com.game.mario.enums.EnemyTypeEnum;
 import com.game.mario.enums.ItemEnum;
 import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.screen.cinematic.AbstractCinematicSceneHandler;
+import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractEnemy;
 import com.game.mario.sprite.AbstractItem;
 import com.game.mario.sprite.sfx.BreakingBridgeWall;
@@ -90,7 +91,7 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 			bowser.getAcceleration().y = 0;
 			mario.setCurrentAnimation(mario.getMarioJumpRightAnimation());
 			mario.move(delta);
-			mario.updateCinematicAnimation(delta);
+			mario.updateCinematicAnimation(delta);			
 		} else if (mario.isOnFloor() && endLevelState==0) {					
 			endLevelState = 1;
 			mario.getAcceleration().x=2;
@@ -113,6 +114,8 @@ public class CastleLevelEndingSceneHandler extends AbstractCinematicSceneHandler
 				endLevelState = 2;
 				updateScrolling = true;				
 			}			
+			SoundManager.getSoundManager().stopMusic();
+			SoundManager.getSoundManager().playSound(SoundManager.SOUND_WORLD_CLEAR);
 		} else if (endLevelState==1) {			
 			if (timer>0.1f && tileToRemove.size()>0) {
 				timer = 0;
