@@ -69,8 +69,7 @@ public class GameScreen implements Screen  {
 	private static final int KEY_SPEED_UP = KeysConstants.KEY_SPEED_UP;
 	
 	/** Key speed up released indicator */
-	private boolean speedUpKeyReleased = true;
-	
+	private boolean speedUpKeyReleased = true;	
 	
 	/** The stage with actors */
 	private Stage stage;
@@ -137,14 +136,22 @@ public class GameScreen implements Screen  {
 	private boolean debugShowBounds = false;
 
 	private boolean debugShowFps = false;
-
+		
+	private int currentWorld;
+	
+	private int currentLevel;
+	
+	private float timer;
 		
 	public GameScreen() {
+		
+		currentWorld = GameManager.getGameManager().getCurrentLevel().getWorldNumber();
+		currentLevel = GameManager.getGameManager().getCurrentLevel().getLevelNumber();
 		
 		// Initialize fonts
 		debugFont = new BitmapFont();		
 		debugFont.setColor(1, 1, 1, 1);		
-		font = new BitmapFont(Gdx.files.internal("fonts/mario_in_game.fnt"));		
+		font = new BitmapFont(Gdx.files.internal("fonts/font.fnt"));		
 		font.setColor(1,1,1,1);
 		
 		// Sprite batch, used to draw background and debug text 
@@ -207,6 +214,8 @@ public class GameScreen implements Screen  {
 						
 		// Initialize sound theme
 		SoundManager.getSoundManager().setStageMusic(MusicEnum.valueOf(tilemap.getMusicTheme().toUpperCase()));				
+		
+		timer = 400;
 		
 		/*int xBowserPos = 124;
 		int yBowserPos = 5;
@@ -326,7 +335,21 @@ public class GameScreen implements Screen  {
 		if (mario.getX()>=tilemap.getFlagTargetPosition()
 				&& camera.getCamera().position.x -8 < tilemap.getFlag().getX()) {			
 			levelFinished = true;
-		}			
+		}
+		
+		// Timer
+		timer = timer - 2.5f * delta;
+		if (timer<0) {
+			timer = 0;
+			killMario();
+		}
+	}
+
+	private void killMario() {
+		mario.setAlive(false);
+		mario.setDeathAnimation();
+		SoundManager.getSoundManager().stopMusic();
+		SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);
 	}
 
 	private void handlePlateforms(float deltaTime) {
@@ -357,6 +380,10 @@ public class GameScreen implements Screen  {
 		spriteBatch.begin();		
 		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
 		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
+		font.draw(spriteBatch, "WORLD", 200, Gdx.graphics.getHeight()-10);
+		font.draw(spriteBatch, currentWorld + " - " + currentLevel, 210, Gdx.graphics.getHeight()-27);
+		font.draw(spriteBatch, "TIME" , Gdx.graphics.getWidth() - 60, Gdx.graphics.getHeight()-10);
+		font.draw(spriteBatch, String.format("%.0f", timer) , Gdx.graphics.getWidth() - 55, Gdx.graphics.getHeight()-27);
 		spriteBatch.end();
 	}
 	
@@ -436,10 +463,7 @@ public class GameScreen implements Screen  {
 									mario.setGrowDownAnimation();
 									SoundManager.getSoundManager().playSound(SoundManager.SOUND_PIPE);									
 								} else {
-									mario.setAlive(false);
-									mario.setDeathAnimation();
-									SoundManager.getSoundManager().stopMusic();
-									SoundManager.getSoundManager().playSound(SoundManager.SOUND_MARIO_DEATH);									
+									killMario();									
 								}
 							}
 						}						
@@ -687,7 +711,7 @@ public class GameScreen implements Screen  {
 		if (debugShowText) {
 			
 			int x = WinConstants.WIDTH - 600;
-			int y = WinConstants.HEIGHT - 30;
+			int y = WinConstants.HEIGHT - 40;
 			
 			/* MARIO VARIABLES */
 			spriteBatch.begin();

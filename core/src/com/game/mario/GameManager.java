@@ -14,6 +14,7 @@ import com.game.mario.screen.menu.impl.MainMenuScreen;
 import com.game.mario.screen.menu.impl.PauseMenuScreen;
 import com.game.mario.screen.menu.impl.SoundMenuScreen;
 import com.game.mario.sound.SoundManager;
+import com.game.mario.util.Level;
 
 public class GameManager extends Game {
 
@@ -27,12 +28,12 @@ public class GameManager extends Game {
 
 	private static int nbCoins;
 
-	private static int currentLevel;
+	private static int currentLevelIndex;
 	
 	/** 0=small, 1=big, 2=flowered */
 	private int sizeState;
 
-	private List<String> levels = new ArrayList<String>();
+	private List<Level> levels = new ArrayList<Level>();
 
 	@Override
 	public void create() {
@@ -41,10 +42,10 @@ public class GameManager extends Game {
 						
 		//levels.add("test_world.tmx");				
 		
-		levels.add("level_1_1.tmx");
-		levels.add("level_1_2.tmx");
-		levels.add("level_1_3.tmx");
-		levels.add("level_1_4.tmx");
+		levels.add(new Level(1,1,"level_1_1.tmx"));
+		levels.add(new Level(1,2,"level_1_2.tmx"));
+		levels.add(new Level(1,3,"level_1_3.tmx"));
+		levels.add(new Level(1,4,"level_1_4.tmx"));		
 		
 		gameScreen = new GameScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
@@ -63,7 +64,7 @@ public class GameManager extends Game {
 		nbLifes = 3;
 		nbCoins = 0;
 		sizeState = 0;
-		currentLevel = 0;
+		currentLevelIndex = 0;
 	}
 
 	public static GameManager getGameManager() {
@@ -101,7 +102,7 @@ public class GameManager extends Game {
 	}
 
 	public void nextLevel() {
-		currentLevel++;
+		currentLevelIndex++;
 		gameScreen.dispose();		
 		gameScreen = new GameScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
@@ -121,7 +122,7 @@ public class GameManager extends Game {
 	}
 	
 	public String getCurrentLevelName() {
-		return levels.get(currentLevel);
+		return levels.get(currentLevelIndex).getTmxName();
 	}
 
 	public int getNbLifes() {
@@ -144,16 +145,15 @@ public class GameManager extends Game {
 		this.sizeState = sizeState;
 	}
 
-	public List<String> getLevels() {
+	public List<Level> getLevels() {
 		return levels;
 	}
 
-	public void setLevels(List<String> levels) {
+	public void setLevels(List<Level> levels) {
 		this.levels = levels;
 	}
 
-	public int getCurrentLevel() {
-		return currentLevel;
-	}
-
+	public Level getCurrentLevel() {
+		return levels.get(currentLevelIndex);
+	}	
 }
