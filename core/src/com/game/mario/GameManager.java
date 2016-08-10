@@ -8,6 +8,7 @@ import java.util.Map;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
 import com.game.mario.enums.ScreenEnum;
+import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.screen.game.GameScreen;
 import com.game.mario.screen.menu.impl.LevelMenuScreen;
 import com.game.mario.screen.menu.impl.MainMenuScreen;
@@ -34,6 +35,8 @@ public class GameManager extends Game {
 	private int sizeState;
 
 	private List<Level> levels = new ArrayList<Level>();
+	
+	private LevelMenuScreen levelMenuScreen;
 
 	@Override
 	public void create() {
@@ -42,16 +45,17 @@ public class GameManager extends Game {
 						
 		//levels.add("test_world.tmx");				
 		
-		levels.add(new Level(1,1,"level_1_1.tmx"));
-		levels.add(new Level(1,2,"level_1_2.tmx"));
-		levels.add(new Level(1,3,"level_1_3.tmx"));
-		levels.add(new Level(1,4,"level_1_4.tmx"));		
+		levels.add(new Level(1,1,"level_1_1.tmx", WorldTypeEnum.HILLS));
+		levels.add(new Level(1,2,"level_1_2.tmx", WorldTypeEnum.UNDERGROUND));
+		levels.add(new Level(1,3,"level_1_3.tmx", WorldTypeEnum.WATERFALL));
+		levels.add(new Level(1,4,"level_1_4.tmx", WorldTypeEnum.CASTLE));		
 		
 		gameScreen = new GameScreen();
+		levelMenuScreen = new LevelMenuScreen();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
 		SCREENS.put(ScreenEnum.MAIN_MENU, new MainMenuScreen());
-		SCREENS.put(ScreenEnum.PAUSE_MENU, new PauseMenuScreen());
-		SCREENS.put(ScreenEnum.LEVEL_MENU, new LevelMenuScreen());
+		SCREENS.put(ScreenEnum.PAUSE_MENU, new PauseMenuScreen());		 
+		SCREENS.put(ScreenEnum.LEVEL_MENU, levelMenuScreen);
 		SCREENS.put(ScreenEnum.SOUND_MENU, new SoundMenuScreen());
 		
 		SoundManager.getSoundManager().setCurrentMusic(SoundManager.SOUND_TITLE_THEME);		
@@ -83,6 +87,7 @@ public class GameManager extends Game {
 		initState();
 		gameScreen.dispose();
 		gameScreen = new GameScreen();
+		levelMenuScreen.changeImage();
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
 		SoundManager.getSoundManager().setCurrentMusic(SoundManager.SOUND_TITLE_THEME);
 		SoundManager.getSoundManager().playMusic(false);		
@@ -96,7 +101,7 @@ public class GameManager extends Game {
 		SCREENS.put(ScreenEnum.GAME, gameScreen);
 		if (nbLifes<0) {
 			startNewGame();
-		} else {
+		} else {			
 			changeScreen(ScreenEnum.LEVEL_MENU);
 		}		
 	}
@@ -105,7 +110,8 @@ public class GameManager extends Game {
 		currentLevelIndex++;
 		gameScreen.dispose();		
 		gameScreen = new GameScreen();
-		SCREENS.put(ScreenEnum.GAME, gameScreen);
+		SCREENS.put(ScreenEnum.GAME, gameScreen);	
+		levelMenuScreen.changeImage();
 		changeScreen(ScreenEnum.LEVEL_MENU);
 	}
 

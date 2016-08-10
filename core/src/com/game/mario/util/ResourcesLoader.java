@@ -169,7 +169,16 @@ public class ResourcesLoader {
 	// Menu
 	public static final BitmapFont MAIN_MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
 	
-	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/pressStart2P.fnt"));
+	public static final BitmapFont MENU_FONT = new BitmapFont(Gdx.files.internal("fonts/menu/font.fnt"));
+	
+	// Level menu
+	public static final Texture HILLS_LEVEL_MENU = new Texture(Gdx.files.internal("menu/hills.png"));
+		
+	public static final Texture UNDERGROUND_LEVEL_MENU = new Texture(Gdx.files.internal("menu/underground.png"));
+	
+	public static final Texture WATERFALL_LEVEL_MENU = new Texture(Gdx.files.internal("menu/waterfall.png"));
+	
+	public static final Texture CASTLE_LEVEL_MENU = new Texture(Gdx.files.internal("menu/castle.png"));
 		
 	static {
 		WALL_TEXTURES.put(WorldTypeEnum.OVERGROUND, WALL_OVERGROUND);		

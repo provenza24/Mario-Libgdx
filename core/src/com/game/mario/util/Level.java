@@ -1,5 +1,7 @@
 package com.game.mario.util;
 
+import com.game.mario.enums.WorldTypeEnum;
+
 public class Level {
 
 	private int worldNumber;
@@ -7,12 +9,15 @@ public class Level {
 	private int levelNumber;
 	
 	private String tmxName;
+	
+	private WorldTypeEnum worldTypeEnum;
 
-	public Level(int worldNumber, int levelNumber, String tmxName) {
+	public Level(int worldNumber, int levelNumber, String tmxName, WorldTypeEnum worldTypeEnum) {
 		super();
 		this.worldNumber = worldNumber;
 		this.levelNumber = levelNumber;
 		this.tmxName = tmxName;
+		this.worldTypeEnum = worldTypeEnum;
 	}
 
 	public int getWorldNumber() {
@@ -37,6 +42,14 @@ public class Level {
 
 	public void setTmxName(String tmxName) {
 		this.tmxName = tmxName;
+	}
+
+	public WorldTypeEnum getWorldTypeEnum() {
+		return worldTypeEnum;
+	}
+
+	public void setWorldTypeEnum(WorldTypeEnum worldTypeEnum) {
+		this.worldTypeEnum = worldTypeEnum;
 	}
 	
 	

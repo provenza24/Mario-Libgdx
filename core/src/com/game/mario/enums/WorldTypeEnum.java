@@ -2,5 +2,10 @@ package com.game.mario.enums;
 
 public enum WorldTypeEnum {
 
-	UNDERGROUND, OVERGROUND, BONUS, CASTLE;
+	// Used in TMX maps
+	UNDERGROUND, OVERGROUND, BONUS, CASTLE, 
+	
+	HILLS,
+	WATERFALL;
+	;
 }

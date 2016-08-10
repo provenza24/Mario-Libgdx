@@ -18,6 +18,14 @@ import com.game.mario.sprite.menu.DefaultSelector;
 
 public abstract class AbstractMenuScreen implements IMenuScreen {
 
+	protected BitmapFont font;
+
+	protected List<MenuItem> menuItems = new ArrayList<MenuItem>();
+	
+	protected Group backgroundGroup;
+	
+	protected Stage stage;
+	
 	private float horizontalMenuStart = Gdx.graphics.getWidth() / 2;
 
 	private Vector2 offset;
@@ -26,19 +34,11 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 
 	private int verticalMenuSpacing = 30;
 
-	private float verticalMenuStart = Gdx.graphics.getHeight() / 2;
-
-	private Stage stage;
+	private float verticalMenuStart = Gdx.graphics.getHeight() / 2;	
 
 	private int currentItem = 0;
 
 	private Actor selector;
-
-	private BitmapFont font;
-
-	protected List<MenuItem> menuItems = new ArrayList<MenuItem>();
-	
-	protected Group backgroundGroup;
 	
 	private Group foregroundGroup;
 
@@ -75,7 +75,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 	protected void resetCursorPosition() {
 		currentItem = 0;
 		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
-				verticalMenuStart - selector.getHeight() + 2);
+				verticalMenuStart - selector.getHeight() + 5);
 	}
 	
 	protected void setFontColor(float r, float g, float b) {
@@ -108,7 +108,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		verticalMenuStart = verticalMenuStart - offset.y + yNewOffset;
 		horizontalMenuStart = horizontalMenuStart - offset.x + xNewOffset;
 		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
-				verticalMenuStart - selector.getHeight() + 2);
+				verticalMenuStart - selector.getHeight() + 5);
 		offset.x = xNewOffset;
 		offset.y = yNewOffset;
 	}
@@ -130,7 +130,7 @@ public abstract class AbstractMenuScreen implements IMenuScreen {
 		selector.setZIndex(10);
 		selector.setSize(selectorHeight * 1.2f, selectorHeight * 1.2f);
 		selector.setPosition(horizontalMenuStart - selector.getWidth() * 2,
-				verticalMenuStart - selector.getHeight() + 2);
+				verticalMenuStart - selector.getHeight() + 5);
 	}
 
 	protected abstract void addBackgroundElements();

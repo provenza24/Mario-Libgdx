@@ -193,9 +193,9 @@ public class GameScreen implements Screen  {
 				
 		// Initialize status bar, remaining lifes, collected coins
 		MarioLifes marioLifes = new MarioLifes();
-		marioLifes.setPosition(10, Gdx.graphics.getHeight()-20 - marioLifes.getHeight()/2);
+		marioLifes.setPosition(10, Gdx.graphics.getHeight()-25);
 		MarioCoins marioCoins= new MarioCoins();
-		marioCoins.setPosition(100, Gdx.graphics.getHeight()-20 - marioCoins.getHeight()/2);
+		marioCoins.setPosition(100, Gdx.graphics.getHeight()-25);
 		stage.addActor(marioLifes);
 		stage.addActor(marioCoins);
 		
@@ -378,10 +378,10 @@ public class GameScreen implements Screen  {
 
 	private void renderStatusBar() {
 		spriteBatch.begin();		
-		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
-		font.draw(spriteBatch, "x " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
+		font.draw(spriteBatch, "X " + GameManager.getGameManager().getNbLifes(), 40, Gdx.graphics.getHeight()-10);
+		font.draw(spriteBatch, "X " + GameManager.getGameManager().getNbCoins(), 115, Gdx.graphics.getHeight()-10);		
 		font.draw(spriteBatch, "WORLD", 200, Gdx.graphics.getHeight()-10);
-		font.draw(spriteBatch, currentWorld + " - " + currentLevel, 210, Gdx.graphics.getHeight()-27);
+		font.draw(spriteBatch, currentWorld + " - " + currentLevel, 200, Gdx.graphics.getHeight()-27);
 		font.draw(spriteBatch, "TIME" , Gdx.graphics.getWidth() - 60, Gdx.graphics.getHeight()-10);
 		font.draw(spriteBatch, String.format("%.0f", timer) , Gdx.graphics.getWidth() - 55, Gdx.graphics.getHeight()-27);
 		spriteBatch.end();
