@@ -20,7 +20,7 @@ import com.game.mario.util.ResourcesLoader;
 
 public class LevelMenuScreen extends AbstractMenuScreen {
 	
-	private final static Map<WorldTypeEnum, Texture> LEVEL_IMAGES = new HashMap<>();
+	private final static Map<WorldTypeEnum, Texture> LEVEL_IMAGES = new HashMap<WorldTypeEnum, Texture>();
 	
 	private Image image;
 	
