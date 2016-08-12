@@ -20,7 +20,7 @@ public class FireballTilemapCollisionHandler extends AbstractTilemapCollisionHan
 		if (sprite.getMapCollisionEvent().getCollisionPoints().size()>0) {
 			
 			if (sprite.getMapCollisionEvent().isBlockedBottomOnly()) {
-				sprite.getAcceleration().y = 0.1f;
+				sprite.getAcceleration().y = 0.15f;
 				sprite.setY((int)sprite.getY()+1);
 			} else {
 				sprite.setDeletable(true);
