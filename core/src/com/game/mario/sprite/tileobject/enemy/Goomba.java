@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.action.ActionFacade;
 import com.game.mario.enums.EnemyTypeEnum;
+import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.enums.WorldTypeEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.tileobject.AbstractTileObjectEnemy;
@@ -25,13 +26,15 @@ public class Goomba extends AbstractTileObjectEnemy {
 		TEXTURES.put(WorldTypeEnum.UNDERGROUND, ResourcesLoader.GOOMBA_UNDERWORLD);
 	}
 	
-	private Animation walkAnimation;
+	private Animation walkRightAnimation;
+	
+	private Animation walkLeftAnimation;
 	
 	private Animation bumpAnimation;
 		
 	public Goomba(MapObject mapObject, WorldTypeEnum backgroundTypeEnum) {
 		
-		super(mapObject, new Vector2(0.2f, 0.1f));															
+		super(mapObject, new Vector2(0.2f, 0.1f));			
 		acceleration.x = -1.9f; 				
 		initializeAnimations(backgroundTypeEnum);				
 	}		
@@ -67,13 +70,27 @@ public class Goomba extends AbstractTileObjectEnemy {
 	public void initializeAnimations(WorldTypeEnum backgroundTypeEnum) {
 
 		spriteSheet = TEXTURES.get(backgroundTypeEnum);				
-		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 4, spriteSheet.getHeight() / 1);		
+		TextureRegion[][] tmp = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 10, spriteSheet.getHeight() / 1);		
 		
-		walkAnimation = AnimationBuilder.getInstance().build(tmp, 0, 2, 0.15f);
-		killedAnimation = AnimationBuilder.getInstance().build(tmp, 2, 1, 0.15f);
-		bumpAnimation = AnimationBuilder.getInstance().build(tmp, 3, 1, 0.15f);
+		walkRightAnimation = AnimationBuilder.getInstance().build(tmp, 0, 4, 0.15f);
+		walkLeftAnimation = AnimationBuilder.getInstance().build(tmp, 4, 4, 0.15f);
+		killedAnimation = AnimationBuilder.getInstance().build(tmp, 8, 1, 0.15f);
+		bumpAnimation = AnimationBuilder.getInstance().build(tmp, 9, 1, 0.15f);
 		
-		currentAnimation = walkAnimation;
+		currentAnimation = walkLeftAnimation;
+	}
+	
+	@Override
+	public void updateAnimation(float delta) {		
+		if (!bumped && state==SpriteMoveEnum.WALKING) {
+			if (acceleration.x>0 && currentAnimation!=walkRightAnimation) {
+				currentAnimation = walkRightAnimation;				
+			} else if (acceleration.x<0 && currentAnimation!=walkLeftAnimation) {
+				currentAnimation = walkLeftAnimation;
+			}
+		}
+		stateTime = stateTime + delta;
+		currentFrame = currentAnimation.getKeyFrame(stateTime, isAnimationLooping);		
 	}
 
 }

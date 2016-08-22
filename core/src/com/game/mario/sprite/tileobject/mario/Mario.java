@@ -36,9 +36,11 @@ import com.game.mario.util.animation.AnimationBuilder;
 public class Mario extends AbstractTileObjectSprite {
 			
 	/** Offset contants */
-	private static final float X_OFFSET = 0.05f;
+	private static final float X_OFFSET = 0.05f;	
 	
 	private static final float Y_OFFSET = 0.1f;
+
+	private float xDrawOffset = 0;
 	
 	private static final float ACCELERATION_MAX = 5f; // 7.5f;
 
@@ -140,15 +142,17 @@ public class Mario extends AbstractTileObjectSprite {
 	public void changeSizeState(int i) {
 		sizeState = i;
 		if (i <= 1) {
+			xDrawOffset = 0;
 			setSize(1 - 2*offset.x, 1 - offset.y);
 			setRenderingSize(1, 1);
 			bounds.setWidth(1 - 2*offset.x);
 			bounds.setHeight(1 - offset.y);
 		} else {
+			xDrawOffset = 0.5f;
 			setSize(1 - 2*offset.x, 2 - offset.y);
-			setRenderingSize(1, 2);
+			setRenderingSize(2, 2);
 			bounds.setWidth(1 - 2*offset.x);
-			bounds.setHeight(2 - offset.y);
+			bounds.setHeight(1 - offset.y);
 		}		
 		updateBounds();		
 		refreshAnimations();
@@ -500,15 +504,17 @@ public class Mario extends AbstractTileObjectSprite {
 
 	@Override
 	public void render(Batch batch) {
+		batch.begin();
 		if (isInvincible() && !owningStar) {
 			batch.setColor(1, 1, 1, 0.5f);
-			super.render(batch);
-			batch.setColor(1, 1, 1, 1);
+			batch.draw(currentFrame, getX() - xDrawOffset, getY(), renderingSize.x, renderingSize.y);
+			this.setColor(1, 1, 1, 1);
 		}  else {
-			super.render(batch);
+			batch.draw(currentFrame, getX() - xDrawOffset, getY(), renderingSize.x, renderingSize.y);
 		}
+		batch.end();
 	}
-
+	
 	public float getDeathNoMoveDuration() {
 		return deathNoMoveDuration;
 	}

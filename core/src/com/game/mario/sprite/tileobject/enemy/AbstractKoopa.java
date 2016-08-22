@@ -113,8 +113,8 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 				} else if (noMoveTime>=5 && noMoveTime<=8) {
 					currentAnimation = wakeUpAnimation;
 				} else {
-					setSize(1 - offset.x * 2, 1);
-					renderingSize.y = 1.5f;
+					//setSize(1 - offset.x * 2, 1);
+					//renderingSize.y = 1.5f;
 					currentAnimation = walkLeftAnimation;
 					acceleration.x = -1.9f;		
 					bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
@@ -162,7 +162,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 			} else if (state == SpriteMoveEnum.WALKING) {
 				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteMoveEnum.FALLING;
 				if (isEnemyHit) {
-					setSize(1 - offset.x * 2, 0.875f);	
+					//setSize(1 - offset.x * 2, 0.875f);	
 					bounds.set(getX(), getY(), getWidth(), getHeight());				
 					mario.getAcceleration().y = 0.15f;				
 					acceleration.x = 0;
@@ -226,14 +226,21 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	protected void initializeTextures() {
 		
-		TextureRegion[][] textureRegions = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 10, spriteSheet.getHeight() / 1);
-		walkLeftAnimation = AnimationBuilder.getInstance().build(textureRegions, 0, 2, 0.15f);
+		TextureRegion[][] textureRegions = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 11, spriteSheet.getHeight() / 1);
+		/*walkLeftAnimation = AnimationBuilder.getInstance().build(textureRegions, 0, 2, 0.15f);
 		walkRightAnimation = AnimationBuilder.getInstance().build(textureRegions, 5, 2, 0.15f);
 		slideAnimation = AnimationBuilder.getInstance().build(textureRegions, 2, 3, 0.04f);
 		killedAnimation = AnimationBuilder.getInstance().build(textureRegions, 3, 1, 1f);
 		bumpAnimation = AnimationBuilder.getInstance().build(textureRegions, 7, 1, 1f);		
 		flyAnimation = AnimationBuilder.getInstance().build(textureRegions, 8, 2, 0.15f);
-		wakeUpAnimation = AnimationBuilder.getInstance().build(textureRegions, new int[] {2,4}, 0.1f);							
+		wakeUpAnimation = AnimationBuilder.getInstance().build(textureRegions, new int[] {2,4}, 0.1f);*/
+		
+		walkLeftAnimation = AnimationBuilder.getInstance().build(textureRegions, 0, 3, 0.15f);
+		walkRightAnimation = AnimationBuilder.getInstance().build(textureRegions, 3, 3, 0.15f);
+		slideAnimation = AnimationBuilder.getInstance().build(textureRegions, 6, 4, 0.04f);
+		killedAnimation = AnimationBuilder.getInstance().build(textureRegions, 6, 1, 1f);
+		bumpAnimation = AnimationBuilder.getInstance().build(textureRegions, 10, 1, 1f);
+		wakeUpAnimation = AnimationBuilder.getInstance().build(textureRegions, new int[] {7,9}, 0.1f);
 	}
 
 }

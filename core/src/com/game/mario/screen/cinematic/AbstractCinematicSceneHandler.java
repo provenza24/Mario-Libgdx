@@ -68,7 +68,7 @@ public abstract class AbstractCinematicSceneHandler {
 	public abstract void handleScene(float delta);		
 	
 	protected void renderCinematicScene(float delta) {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.11f, 0.81f, 0.91f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		AbstractSprite.updateCommonStateTime(delta);

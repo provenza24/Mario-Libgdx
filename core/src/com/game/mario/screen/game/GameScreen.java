@@ -279,7 +279,7 @@ public class GameScreen implements Screen  {
 		CollisionHandler.getCollisionHandler().collideMarioWithUpperBlock(mario, tilemap, stage);
 		
 		// Draw the scene
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0.11f, 0.81f, 0.91f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 					
 		if (camera.isScrollable()) {			

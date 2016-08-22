@@ -13,7 +13,7 @@ public class MysteryBlock extends AbstractBlock {
 
 	@Override
 	public void initializeAnimations() {
-		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MYSTERY_BLOC, 0, 3, 0.15f);		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.MYSTERY_BLOC, 0, 4, 0.15f);		
 	}
 	
 	protected void updateAnimation(float delta) {				
