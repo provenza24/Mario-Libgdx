@@ -49,6 +49,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		super(mapObject, new Vector2(0.2f, 0.1f));				
 		
 		setSize(1 - offset.x * 2, 1 - offset.y);
+		setRenderingSize(1, 2);
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
 		
 		String sState = (String)mapObject.getProperties().get("state");
@@ -226,7 +227,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 	
 	protected void initializeTextures() {
 		
-		TextureRegion[][] textureRegions = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 11, spriteSheet.getHeight() / 1);
+		TextureRegion[][] textureRegions = TextureRegion.split(spriteSheet, spriteSheet.getWidth() / 13, spriteSheet.getHeight() / 1);
 		/*walkLeftAnimation = AnimationBuilder.getInstance().build(textureRegions, 0, 2, 0.15f);
 		walkRightAnimation = AnimationBuilder.getInstance().build(textureRegions, 5, 2, 0.15f);
 		slideAnimation = AnimationBuilder.getInstance().build(textureRegions, 2, 3, 0.04f);
@@ -241,6 +242,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		killedAnimation = AnimationBuilder.getInstance().build(textureRegions, 6, 1, 1f);
 		bumpAnimation = AnimationBuilder.getInstance().build(textureRegions, 10, 1, 1f);
 		wakeUpAnimation = AnimationBuilder.getInstance().build(textureRegions, new int[] {7,9}, 0.1f);
+		flyAnimation = AnimationBuilder.getInstance().build(textureRegions, 11, 2, 0.15f);
 	}
 
 }

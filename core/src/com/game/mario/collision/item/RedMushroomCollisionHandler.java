@@ -18,9 +18,9 @@ public class RedMushroomCollisionHandler extends AbstractMushroomCollisionHandle
 		super.collide(mario, item, camera, scrollingBackgrounds);
 		if (mario.getSizeState()<=1) {
 			// Mario becomes big if he's small, the grow up animation is played
-			mario.setGrowingUp(true);			
-			mario.setGrowUpAnimation();
+			mario.setGrowingUp(true);						
 			mario.changeSizeState(2);
+			mario.setGrowUpAnimation();
 			SoundManager.getSoundManager().playSound(SoundManager.SOUND_POWERUP);			
 		}
 	}

@@ -13,7 +13,7 @@ public class Flower extends AbstractItem {
 
 	@Override
 	public void initializeAnimations() {
-		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.FLOWER, 0, 4, 0.01f);		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.FLOWER, 0, 3, 0.03f);		
 	}	
 
 	@Override

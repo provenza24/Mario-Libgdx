@@ -20,7 +20,7 @@ public class Star extends AbstractItem {
 
 	@Override
 	public void initializeAnimations() {
-		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.STAR, 0, 4, 0.01f);		
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.STAR, 0, 3, 0.03f);		
 	}
 
 	@Override

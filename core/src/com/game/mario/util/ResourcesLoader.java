@@ -122,7 +122,7 @@ public class ResourcesLoader {
 	public static final Texture WALL_OVERGROUND = new Texture(Gdx.files.internal("sprites/wall/wall_overground.png"));
 			 
 	// Backgrounds	// overworld-800.gif underworld-800.png	
-	public static final Texture OVERGROUND_CLOUDS = new Texture(Gdx.files.internal("backgrounds/overworld-"+WinConstants.WIDTH+".gif"));
+	public static final Texture OVERGROUND_CLOUDS = new Texture(Gdx.files.internal("backgrounds/overworld-"+WinConstants.WIDTH+".png"));
 			
 	public static final Texture UNDERGROUND = new Texture(Gdx.files.internal("backgrounds/underworld-"+WinConstants.WIDTH+".png"));
 	

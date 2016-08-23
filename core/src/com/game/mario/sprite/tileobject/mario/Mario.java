@@ -152,7 +152,7 @@ public class Mario extends AbstractTileObjectSprite {
 			setSize(1 - 2*offset.x, 2 - offset.y);
 			setRenderingSize(2, 2);
 			bounds.setWidth(1 - 2*offset.x);
-			bounds.setHeight(1 - offset.y);
+			bounds.setHeight(2 - offset.y);
 		}		
 		updateBounds();		
 		refreshAnimations();
@@ -508,7 +508,7 @@ public class Mario extends AbstractTileObjectSprite {
 		if (isInvincible() && !owningStar) {
 			batch.setColor(1, 1, 1, 0.5f);
 			batch.draw(currentFrame, getX() - xDrawOffset, getY(), renderingSize.x, renderingSize.y);
-			this.setColor(1, 1, 1, 1);
+			batch.setColor(1, 1, 1, 1);
 		}  else {
 			batch.draw(currentFrame, getX() - xDrawOffset, getY(), renderingSize.x, renderingSize.y);
 		}
