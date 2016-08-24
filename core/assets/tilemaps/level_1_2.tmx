@@ -20,19 +20,19 @@
  <tileset firstgid="428" name="Transfer" tilewidth="8" tileheight="8" tilecount="4" columns="4">
   <image source="transfer.png" width="32" height="8"/>
  </tileset>
- <tileset firstgid="432" name="Coin" tilewidth="28" tileheight="32" tilecount="4" columns="4">
-  <image source="../sprites/items/coin.png" width="112" height="32"/>
+ <tileset firstgid="432" name="Coin" tilewidth="32" tileheight="32" tilecount="4" columns="4">
+  <image source="../sprites/items/coin.png" width="128" height="32"/>
  </tileset>
  <tileset firstgid="436" name="Piranah" tilewidth="32" tileheight="48" tilecount="2" columns="2">
   <image source="../sprites/enemies/piranha_plant.png" width="64" height="48"/>
  </tileset>
- <tileset firstgid="438" name="Koopa" tilewidth="32" tileheight="64" tilecount="6" columns="6">
-  <image source="../sprites/enemies/koopa.png" width="192" height="64"/>
+ <tileset firstgid="438" name="Koopa" tilewidth="32" tileheight="64" tilecount="10" columns="10">
+  <image source="../sprites/enemies/koopa.png" width="320" height="64"/>
  </tileset>
- <tileset firstgid="444" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="10" columns="10">
+ <tileset firstgid="448" name="Koopa_red" tilewidth="32" tileheight="48" tilecount="10" columns="10">
   <image source="../sprites/enemies/koopa_red.png" width="320" height="48"/>
  </tileset>
- <tileset firstgid="454" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
+ <tileset firstgid="458" name="Metal_plateform" tilewidth="96" tileheight="16" tilecount="1" columns="1">
   <image source="../sprites/items/metal-plateform-6.png" width="96" height="16"/>
  </tileset>
  <layer name="world" width="239" height="15">
@@ -42,7 +42,7 @@
    <property name="world" value="underground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztl8lOwzAQhgcOgReAC2fEIpXCEUFhFEAt3FnfgP0J2F+ciSCSNWS8JHbahPmlT0ntseM4+RR1MAcwUJQe0KUgOw9hg9iE6e+3osSiS0F2HoK6q/SNtvIc4VrIzkMo3TXn4HMrcTidgTU0JWVs1zXf02mu0czXjLvb9SD47Y/U75rXVaeJE3VX3UUBqd81r6tOEyfq7v9xF8Hvnqrqqsb5zqdJkzbdzX5xRd1NEwR1t09py90MpuduyJiCLriLxtGkyJllDAp9rrqqcb7z8XqOpl7acDcDddc3Y886ZEepjY+R+lx15e8Ja/Ndrzkvp8/BCiZSsWfWiHViFdK6y71t6u4W9Q2JbWLHUochizTGFIS6u0gsMFzJ2TE0CH+fS1WbNEYaJ81hG+eav80sEcstXSuH+s+vSfaIfWIX0rlb5W1Td3PqOyKOiRNPd9GDsXGe8rvLnZUcTvlOIHT/eyc5Wj67kCCE70cO6d3FiIRE8raJu+fUfkFcElfENXEj1IautxxTkMJdl7OSuyneDYTuuys5KrXbvscIYfuRQ7/cNffG5m0Td2+p/Y64Jx6IR+Iporvl/4gViOeur7NtutuHhLpr+x4j+D9r7m0f3C33xuWtj7tSzQt5+kq8Ee/EB/EZ0d3yf8QQfu5lRBwotThkeztre2mub1Txu+598tjmajI2lEKT+Y4Q436/AXXoMyY=
+   eJztl1ty0zAUhk94CGyAzrTwyhT60DZcHhhIOTiZJukOoMAOoBdWwKWw7f6ZRhNV9ZFkR3Ji9/wz36TWzZLsb1QPekQDRekAbQrTct5M1XgB9mh9+6woqWlTmJbzZlJ3lftNU/mZ4F5My3kz1XOXPWMraZhtwBxWJWd897Xf03XO0c7/DXe37WG6vTYWkOpD44baadJE3VV3WUCqD40baqdJE3X3/rjLFLemsnZl/WLH0+RJk+72F4Si7uYJk7rbpTTlbp/W524sTO1xl61fm3lOPH1YqAu1K+sXO57b3kVTL0242yd1NzaTyHbs/Eplbh+pLtTOXE+dstj52uO6dDlcwlRqHJld8Bw8o7zuut6u6u5L1L0Cr8EbTzum5tx9BB46hFI4v1XDdPe5lJVJfaR+0hi+fqHxm8xjsNXQvQqq//xWyTvwHrylfO6WeWu7uw1fdsAT8NTy0OfuMeomYApmke666yhjYv2d89x1nZUczvlOMLX/vJMcNc+uSpiq70dB+d3lhFSJ5K3t7gheHYBDMI5w9xPKP4NT8AV8Bd+EtvP5btL/zCFnJXdzvBtM7XdXclQq953HTNX2o6BuuWvvjc9b4+78zN3v3fg7Xjhszl7J3e8o/wHOwDm4AJcJ3TXfESndjXW2SXe7kKru+s5jpvhn7XrbBXfN3oS8Ne5+hCuF5e5ocU0kfxP/Qv1v8Af8BVfgX0J3zXeEWcsQHCm1+OA8j03bS3t+w5Lruut04xtrlb5VmWvyoCWkWO81kbNRYg==
   </data>
  </layer>
  <objectgroup name="objectsLayer">
@@ -60,17 +60,17 @@
     <property name="yOutgoing" value="96"/>
    </properties>
   </object>
-  <object id="52" type="goomba" gid="415" x="512" y="448" width="32" height="32">
+  <object id="52" type="goomba" gid="419" x="512" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="0"/>
    </properties>
   </object>
-  <object id="53" type="goomba" gid="415" x="544" y="416" width="32" height="32">
+  <object id="53" type="goomba" gid="419" x="544" y="416" width="32" height="32">
    <properties>
     <property name="xAlive" value="0"/>
    </properties>
   </object>
-  <object id="54" type="goomba" gid="415" x="928" y="448" width="32" height="32">
+  <object id="54" type="goomba" gid="419" x="928" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="376"/>
    </properties>
@@ -78,63 +78,63 @@
   <object id="55" type="piranha" gid="436" x="3312" y="412" width="32" height="50"/>
   <object id="56" type="piranha" gid="436" x="3504" y="380" width="32" height="50"/>
   <object id="57" type="piranha" gid="436" x="3696" y="444" width="32" height="50"/>
-  <object id="58" type="coin" gid="434" x="1282" y="320" width="28" height="32"/>
-  <object id="59" type="coin" gid="434" x="1442" y="320" width="28" height="32"/>
-  <object id="60" type="coin" gid="434" x="1314" y="224" width="28" height="32"/>
-  <object id="61" type="coin" gid="434" x="1346" y="224" width="28" height="32"/>
-  <object id="62" type="coin" gid="434" x="1378" y="224" width="28" height="32"/>
-  <object id="63" type="coin" gid="434" x="1410" y="224" width="28" height="32"/>
-  <object id="65" type="goomba" gid="415" x="1984" y="448" width="32" height="32">
+  <object id="58" type="coin" gid="435" x="1280" y="320" width="32" height="32"/>
+  <object id="59" type="coin" gid="435" x="1440" y="320" width="32" height="32"/>
+  <object id="60" type="coin" gid="435" x="1312" y="224" width="32" height="32"/>
+  <object id="61" type="coin" gid="435" x="1344" y="224" width="32" height="32"/>
+  <object id="62" type="coin" gid="435" x="1376" y="224" width="32" height="32"/>
+  <object id="63" type="coin" gid="435" x="1408" y="224" width="32" height="32"/>
+  <object id="65" type="goomba" gid="419" x="1984" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="1336"/>
    </properties>
   </object>
-  <object id="66" type="goomba" gid="415" x="2048" y="448" width="32" height="32">
+  <object id="66" type="goomba" gid="419" x="2048" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="1336"/>
    </properties>
   </object>
-  <object id="67" type="goomba" gid="415" x="2336" y="192" width="32" height="32">
+  <object id="67" type="goomba" gid="419" x="2336" y="192" width="32" height="32">
    <properties>
     <property name="xAlive" value="1784"/>
    </properties>
   </object>
-  <object id="68" type="goomba" gid="415" x="2432" y="320" width="32" height="32">
+  <object id="68" type="goomba" gid="419" x="2432" y="320" width="32" height="32">
    <properties>
     <property name="xAlive" value="1880"/>
    </properties>
   </object>
-  <object id="69" type="goomba" gid="415" x="2480" y="320" width="32" height="32">
+  <object id="69" type="goomba" gid="419" x="2480" y="320" width="32" height="32">
    <properties>
     <property name="xAlive" value="1880"/>
    </properties>
   </object>
-  <object id="71" type="goomba" gid="415" x="3264" y="448" width="32" height="32">
+  <object id="71" type="goomba" gid="419" x="3264" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="2616"/>
    </properties>
   </object>
-  <object id="72" type="goomba" gid="415" x="3216" y="448" width="32" height="32">
+  <object id="72" type="goomba" gid="419" x="3216" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="2616"/>
    </properties>
   </object>
-  <object id="73" type="goomba" gid="415" x="3168" y="448" width="32" height="32">
+  <object id="73" type="goomba" gid="419" x="3168" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="2616"/>
    </properties>
   </object>
-  <object id="74" type="goomba" gid="415" x="3616" y="448" width="32" height="32">
+  <object id="74" type="goomba" gid="419" x="3616" y="448" width="32" height="32">
    <properties>
     <property name="xAlive" value="3064"/>
    </properties>
   </object>
-  <object id="75" type="goomba" gid="415" x="4320" y="352" width="32" height="32">
+  <object id="75" type="goomba" gid="419" x="4320" y="352" width="32" height="32">
    <properties>
     <property name="xAlive" value="3768"/>
    </properties>
   </object>
-  <object id="76" type="goomba" gid="415" x="4368" y="320" width="32" height="32">
+  <object id="76" type="goomba" gid="419" x="4368" y="320" width="32" height="32">
    <properties>
     <property name="xAlive" value="3768"/>
    </properties>
@@ -142,17 +142,17 @@
   <object id="77" type="koopa" gid="438" x="1408" y="448" width="32" height="64"/>
   <object id="78" type="koopa" gid="438" x="1456" y="448" width="32" height="64"/>
   <object id="79" type="koopa" gid="438" x="1888" y="448" width="32" height="64"/>
-  <object id="80" type="coin" gid="434" x="2178" y="320" width="28" height="32"/>
-  <object id="81" type="coin" gid="434" x="1858" y="320" width="28" height="32"/>
-  <object id="82" type="coin" gid="434" x="1890" y="320" width="28" height="32"/>
-  <object id="83" type="coin" gid="434" x="1922" y="320" width="28" height="32"/>
-  <object id="84" type="coin" gid="434" x="1954" y="320" width="28" height="32"/>
-  <object id="85" type="coin" gid="434" x="2690" y="256" width="28" height="32"/>
-  <object id="86" type="coin" gid="434" x="2722" y="256" width="28" height="32"/>
-  <object id="87" type="coin" gid="434" x="2754" y="256" width="28" height="32"/>
-  <object id="88" type="coin" gid="434" x="2786" y="256" width="28" height="32"/>
-  <object id="89" type="coin" gid="434" x="2818" y="256" width="28" height="32"/>
-  <object id="90" type="coin" gid="434" x="2850" y="256" width="28" height="32"/>
+  <object id="80" type="coin" gid="435" x="2176" y="320" width="32" height="32"/>
+  <object id="81" type="coin" gid="435" x="1856" y="320" width="32" height="32"/>
+  <object id="82" type="coin" gid="435" x="1888" y="320" width="32" height="32"/>
+  <object id="83" type="coin" gid="435" x="1920" y="320" width="32" height="32"/>
+  <object id="84" type="coin" gid="435" x="1952" y="320" width="32" height="32"/>
+  <object id="85" type="coin" gid="435" x="2688" y="256" width="32" height="32"/>
+  <object id="86" type="coin" gid="435" x="2720" y="256" width="32" height="32"/>
+  <object id="87" type="coin" gid="435" x="2752" y="256" width="32" height="32"/>
+  <object id="88" type="coin" gid="435" x="2784" y="256" width="32" height="32"/>
+  <object id="89" type="coin" gid="435" x="2816" y="256" width="32" height="32"/>
+  <object id="90" type="coin" gid="435" x="2848" y="256" width="32" height="32"/>
   <object id="91" type="transferDown" gid="428" x="3324" y="352" width="8" height="8">
    <properties>
     <property name="backgrounds" value="bonus"/>
@@ -173,44 +173,44 @@
     <property name="yOutgoing" value="96"/>
    </properties>
   </object>
-  <object id="93" type="redKoopa" gid="444" x="4672" y="448" width="32" height="48"/>
-  <object id="111" type="coin" gid="434" x="7488" y="320" width="28" height="32"/>
-  <object id="112" type="coin" gid="434" x="7456" y="320" width="28" height="32"/>
-  <object id="113" type="coin" gid="434" x="7424" y="320" width="28" height="32"/>
-  <object id="114" type="coin" gid="434" x="7392" y="320" width="28" height="32"/>
-  <object id="115" type="coin" gid="434" x="7360" y="320" width="28" height="32"/>
-  <object id="116" type="coin" gid="434" x="7328" y="320" width="28" height="32"/>
-  <object id="117" type="coin" gid="434" x="7296" y="320" width="28" height="32"/>
-  <object id="118" type="coin" gid="434" x="7264" y="320" width="28" height="32"/>
-  <object id="119" type="coin" gid="434" x="7232" y="320" width="28" height="32"/>
-  <object id="120" type="coin" gid="434" x="7200" y="448" width="28" height="32"/>
-  <object id="121" type="coin" gid="434" x="7232" y="448" width="28" height="32"/>
-  <object id="122" type="coin" gid="434" x="7264" y="448" width="28" height="32"/>
-  <object id="123" type="coin" gid="434" x="7296" y="448" width="28" height="32"/>
-  <object id="124" type="coin" gid="434" x="7328" y="448" width="28" height="32"/>
-  <object id="125" type="coin" gid="434" x="7360" y="448" width="28" height="32"/>
-  <object id="126" type="coin" gid="434" x="7392" y="448" width="28" height="32"/>
-  <object id="127" type="coin" gid="434" x="7424" y="448" width="28" height="32"/>
-  <object id="128" type="coin" gid="434" x="7456" y="448" width="28" height="32"/>
-  <object id="129" type="metalPlateform" gid="454" x="4960" y="432" width="96" height="16">
+  <object id="93" type="redKoopa" gid="448" x="4672" y="448" width="32" height="48"/>
+  <object id="111" type="coin" gid="435" x="7488" y="320" width="32" height="32"/>
+  <object id="112" type="coin" gid="435" x="7456" y="320" width="32" height="32"/>
+  <object id="113" type="coin" gid="435" x="7424" y="320" width="32" height="32"/>
+  <object id="114" type="coin" gid="435" x="7392" y="320" width="32" height="32"/>
+  <object id="115" type="coin" gid="435" x="7360" y="320" width="32" height="32"/>
+  <object id="116" type="coin" gid="435" x="7328" y="320" width="32" height="32"/>
+  <object id="117" type="coin" gid="435" x="7296" y="320" width="32" height="32"/>
+  <object id="118" type="coin" gid="435" x="7264" y="320" width="32" height="32"/>
+  <object id="119" type="coin" gid="435" x="7232" y="320" width="32" height="32"/>
+  <object id="120" type="coin" gid="435" x="7200" y="448" width="32" height="32"/>
+  <object id="121" type="coin" gid="435" x="7232" y="448" width="32" height="32"/>
+  <object id="122" type="coin" gid="435" x="7264" y="448" width="32" height="32"/>
+  <object id="123" type="coin" gid="435" x="7296" y="448" width="32" height="32"/>
+  <object id="124" type="coin" gid="435" x="7328" y="448" width="32" height="32"/>
+  <object id="125" type="coin" gid="435" x="7360" y="448" width="32" height="32"/>
+  <object id="126" type="coin" gid="435" x="7392" y="448" width="32" height="32"/>
+  <object id="127" type="coin" gid="435" x="7424" y="448" width="32" height="32"/>
+  <object id="128" type="coin" gid="435" x="7456" y="448" width="32" height="32"/>
+  <object id="129" type="metalPlateform" gid="458" x="4960" y="432" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="130" type="metalPlateform" gid="454" x="4960" y="152" width="96" height="16">
+  <object id="130" type="metalPlateform" gid="458" x="4960" y="152" width="96" height="16">
    <properties>
     <property name="direction" value="up"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="132" type="metalPlateform" gid="454" x="4480" y="408" width="96" height="16">
+  <object id="132" type="metalPlateform" gid="458" x="4480" y="408" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
     <property name="mode" value="infinite"/>
    </properties>
   </object>
-  <object id="134" type="metalPlateform" gid="454" x="4480" y="216" width="96" height="16">
+  <object id="134" type="metalPlateform" gid="458" x="4480" y="216" width="96" height="16">
    <properties>
     <property name="direction" value="down"/>
     <property name="mode" value="infinite"/>
