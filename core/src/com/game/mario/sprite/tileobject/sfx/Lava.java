@@ -14,7 +14,7 @@ public class Lava extends AbstractTileObjectSfx {
 	
 	@Override
 	public void initializeAnimations() {		
-		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.CASTLE_LAVA, 0, 8, 0.1f);					
+		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.CASTLE_LAVA, 0, 4, 0.1f);					
 	}
 
 	protected void updateAnimation(float delta) {				
