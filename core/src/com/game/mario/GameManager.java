@@ -47,7 +47,7 @@ public class GameManager extends Game {
 		
 		levels.add(new Level(1,1,"level_1_1.tmx", WorldTypeEnum.HILLS));
 		//levels.add(new Level(1,2,"level_1_2.tmx", WorldTypeEnum.UNDERGROUND));
-		//levels.add(new Level(1,3,"level_1_3.tmx", WorldTypeEnum.WATERFALL));
+		levels.add(new Level(1,3,"level_1_3.tmx", WorldTypeEnum.WATERFALL));
 		levels.add(new Level(1,4,"level_1_4.tmx", WorldTypeEnum.CASTLE));		
 		
 		gameScreen = new GameScreen();

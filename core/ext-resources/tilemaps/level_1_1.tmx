@@ -46,7 +46,7 @@
  </tileset>
  <layer name="world" width="232" height="15">
   <properties>
-   <property name="backgrounds" value="clouds"/>
+   <property name="backgrounds" value="hills"/>
    <property name="music" value="overground"/>
    <property name="world" value="overground"/>
   </properties>
@@ -160,7 +160,7 @@
   <object id="44" type="coin" gid="432" x="7168" y="192" width="32" height="32"/>
   <object id="46" type="transferRight" gid="428" x="7295" y="402" width="8" height="8">
    <properties>
-    <property name="backgrounds" value="clouds"/>
+    <property name="backgrounds" value="hills"/>
     <property name="music" value="overground"/>
     <property name="scrollable" value="true"/>
     <property name="world" value="overground"/>

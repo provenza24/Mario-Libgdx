@@ -40,7 +40,7 @@
  </tileset>
  <layer name="world" width="172" height="15">
   <properties>
-   <property name="backgrounds" value="clouds"/>
+   <property name="backgrounds" value="waterfall"/>
    <property name="castle" value="big"/>
    <property name="music" value="overground"/>
    <property name="world" value="overground"/>
