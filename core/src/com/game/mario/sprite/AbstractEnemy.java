@@ -12,11 +12,14 @@ public abstract class AbstractEnemy extends AbstractSprite {
 	
 	protected boolean killableByFireball;
 	
+	protected boolean explodeFireball;
+	
 	public AbstractEnemy(float x, float y, Vector2 size, Vector2 offset) {
 		super(x, y, size, offset);		
 		state = SpriteMoveEnum.WALKING;
 		killableByPlayer = true;
 		killableByFireball = true;		
+		explodeFireball = true;
 		gravitating = true;
 		moveable = true;
 		collidableWithTilemap = true;
@@ -29,10 +32,8 @@ public abstract class AbstractEnemy extends AbstractSprite {
 	public abstract EnemyTypeEnum getEnemyType();
 	
 	public void killByFireball(AbstractSprite fireball) {
-		if (killableByFireball) {
-			this.bump();
-			acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;
-		}
+		this.bump();
+		acceleration.x = fireball.getAcceleration().x > 0 ? 3 : -3;		
 	}		
 	
 	public void killByStar() {
@@ -65,6 +66,22 @@ public abstract class AbstractEnemy extends AbstractSprite {
 
 	public void setKillable(boolean killable) {
 		this.killableByPlayer = killable;
+	}
+
+	public boolean isExplodeFireball() {
+		return explodeFireball;
+	}
+
+	public void setExplodeFireball(boolean explodeFireball) {
+		this.explodeFireball = explodeFireball;
+	}
+
+	public boolean isKillableByFireball() {
+		return killableByFireball;
+	}
+
+	public void setKillableByFireball(boolean killableByFireball) {
+		this.killableByFireball = killableByFireball;
 	}
 		
 
