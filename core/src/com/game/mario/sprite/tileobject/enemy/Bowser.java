@@ -67,6 +67,7 @@ public class Bowser extends AbstractTileObjectEnemy {
 		
 		killableByPlayer = false;
 		killableByFireball = false;
+		deletableOutScreenRight = false;
 		currentAnimation = walkAnimation;
 		GRAVITY_COEF = 0.002f;
 		

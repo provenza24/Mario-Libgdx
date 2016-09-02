@@ -1,11 +1,9 @@
 package com.game.mario.sprite;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.game.mario.collision.tilemap.FireballTilemapCollisionHandler;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.sprite.tileobject.mario.Mario;
-import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.ResourcesLoader;
 import com.game.mario.util.animation.AnimationBuilder;
 
@@ -23,14 +21,9 @@ public class Fireball extends AbstractSprite {
 		collidableWithTilemap = true;
 		gravitating = true;
 		tilemapCollisionHandler = new FireballTilemapCollisionHandler();
+		deletableOutScreenRight = true;
 	}
 	
-	@Override
-	public void update(TmxMap tileMap, OrthographicCamera camera, float deltaTime) {
-		super.update(tileMap, camera, deltaTime);		
-		deletable = deletable || camera.position.x+9<getX();
-	}	
-
 	@Override
 	public void initializeAnimations() {
 		currentAnimation = AnimationBuilder.getInstance().build(ResourcesLoader.FIREBALL, 0, 4, 0.05f);						

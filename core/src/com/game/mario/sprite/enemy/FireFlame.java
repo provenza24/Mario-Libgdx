@@ -32,6 +32,7 @@ public class FireFlame extends AbstractEnemy {
 		this.killableByPlayer = false;
 		this.killableByFireball = false;	
 		this.collidableWithTilemap = false;
+		this.collidableWithEnnemies = false;
 	}
 		
 	@Override
