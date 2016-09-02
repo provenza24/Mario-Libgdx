@@ -53,7 +53,7 @@
  <layer name="world" width="158" height="15">
   <properties>
    <property name="backgrounds" value="castle"/>
-   <property name="music" value="overground"/>
+   <property name="music" value="castle"/>
    <property name="scrollableTo" value="133"/>
    <property name="world" value="castle"/>
   </properties>
