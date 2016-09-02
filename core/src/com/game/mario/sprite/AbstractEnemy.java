@@ -8,6 +8,8 @@ import com.game.mario.sprite.tileobject.mario.Mario;
 
 public abstract class AbstractEnemy extends AbstractSprite {
 			
+	protected boolean collidableWithEnnemies;
+	
 	protected boolean killableByPlayer;
 	
 	protected boolean killableByFireball;
@@ -23,6 +25,7 @@ public abstract class AbstractEnemy extends AbstractSprite {
 		gravitating = true;
 		moveable = true;
 		collidableWithTilemap = true;
+		collidableWithEnnemies = true;
 	}
 	
 	public AbstractEnemy(float x, float y) {
@@ -82,6 +85,14 @@ public abstract class AbstractEnemy extends AbstractSprite {
 
 	public void setKillableByFireball(boolean killableByFireball) {
 		this.killableByFireball = killableByFireball;
+	}
+
+	public boolean isCollidableWithEnnemies() {
+		return collidableWithEnnemies;
+	}
+
+	public void setCollidableWithEnnemies(boolean collidableWithEnnemies) {
+		this.collidableWithEnnemies = collidableWithEnnemies;
 	}
 		
 

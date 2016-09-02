@@ -53,17 +53,9 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	protected Texture spriteSheet;
 	
-	protected boolean gravitating;
-	
 	protected Vector2 oldPosition;
 	
 	protected Vector2 oldAcceleration;
-	
-	protected boolean visible;
-	
-	protected boolean alive;
-	
-	protected boolean deletable;
 	
 	protected float xAlive;
 	
@@ -73,7 +65,23 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected Polygon polygonBounds;
 	
-	protected List<TmxCell> collidingCells;
+	protected List<TmxCell> collidingCells;		
+	
+	protected Vector2 renderingSize;
+	
+	protected String image;
+	
+	protected Vector2 move = new Vector2();
+	
+	protected int frame;
+	
+	protected boolean visible;
+	
+	protected boolean alive;
+	
+	protected boolean deletable;
+	
+	protected boolean gravitating;
 	
 	protected boolean moveable;
 	
@@ -83,13 +91,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected boolean bumped;
 	
-	protected Vector2 renderingSize;
-	
-	protected String image;
-	
-	protected Vector2 move = new Vector2();
-	
-	protected int frame;
+	protected boolean deletableOutScreenRight;
 	
 	public AbstractSprite(float x, float y, Vector2 size, Vector2 offset) {
 		
@@ -111,6 +113,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		this.initializeAnimations();
 		
 		this.tilemapCollisionHandler = new BasicTilemapCollisionHandler();
+		
+		this.deletableOutScreenRight = true;
 	}
 	
 	public AbstractSprite(float x, float y) {		
@@ -144,7 +148,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			}
 			// Update sprite bounds (for future collisions)
 			updateBounds();
-			if (getX()<camera.position.x-9 || getY() < -1) {
+			if (getX()<camera.position.x-9 || getY() < -1 || (deletableOutScreenRight && camera.position.x+8<getX() && acceleration.x>0)) {
 				// Sprite is left out of screen, or has felt out of down screen
 				deletable = true;				
 			} else {
@@ -480,6 +484,14 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 
 	public void setTilemapCollisionHandler(ITilemapCollisionHandler tilemapCollisionHandler) {
 		this.tilemapCollisionHandler = tilemapCollisionHandler;
+	}
+
+	public boolean isDeletableOutScreenRight() {
+		return deletableOutScreenRight;
+	}
+
+	public void setDeletableOutScreenRight(boolean deletableOutScreenRight) {
+		this.deletableOutScreenRight = deletableOutScreenRight;
 	}
 	
 }

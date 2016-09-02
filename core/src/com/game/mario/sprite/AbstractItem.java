@@ -11,6 +11,7 @@ public abstract class AbstractItem extends AbstractSprite implements IAppearable
 		moveable = true;
 		collidableWithTilemap = true;
 		gravitating = true;
+		deletableOutScreenRight = false;
 	}
 	
 	public AbstractItem(float x, float y) {

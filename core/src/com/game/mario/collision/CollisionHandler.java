@@ -27,7 +27,8 @@ public class CollisionHandler {
 
 	public void collideEnemies(AbstractEnemy enemy1, AbstractEnemy enemy2) {
 		
-		if (enemy1.getBounds().overlaps(enemy2.getBounds()) && !enemy1.isBumped() && !enemy2.isBumped()) {
+		if (enemy1.isCollidableWithEnnemies() && enemy2.isCollidableWithEnnemies() 
+				&& enemy1.getBounds().overlaps(enemy2.getBounds()) && !enemy1.isBumped() && !enemy2.isBumped()) {
 		
 			boolean isKoopaSliding = false;
 			if (enemy1.getEnemyType()==EnemyTypeEnum.KOOPA && enemy1.getState()==SpriteMoveEnum.SLIDING) {
