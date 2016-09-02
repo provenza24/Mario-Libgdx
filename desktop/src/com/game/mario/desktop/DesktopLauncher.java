@@ -1,5 +1,6 @@
 package com.game.mario.desktop;
 
+import com.badlogic.gdx.Files.FileType;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.game.mario.GameManager;
@@ -19,6 +20,10 @@ public class DesktopLauncher {
 		
 		config.width = WIDTH;
 		config.height = HEIGHT;
+		
+		config.resizable = false;
+		config.title = "Super Marco Bros";
+		config.addIcon("icons/mario.png", FileType.Classpath);
 		
 		WinConstants.WIDTH = WIDTH;
 		WinConstants.HEIGHT = HEIGHT;

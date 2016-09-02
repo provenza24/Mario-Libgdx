@@ -192,7 +192,7 @@ public class GameScreen implements Screen  {
 		}
 				
 		// Initialize status bar, remaining lifes, collected coins
-		MarioLifes marioLifes = new MarioLifes();
+		MarioLifes marioLifes = new MarioLifes();		
 		marioLifes.setPosition(10, Gdx.graphics.getHeight()-25);
 		MarioCoins marioCoins= new MarioCoins();
 		marioCoins.setPosition(100, Gdx.graphics.getHeight()-25);
