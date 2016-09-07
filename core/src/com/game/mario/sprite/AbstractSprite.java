@@ -25,8 +25,6 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		
 	protected static float commonStateTime; 
 	
-	protected boolean isAnimationLooping;
-	
 	protected int sizeState;
 	
 	protected SpriteMoveEnum state;
@@ -42,9 +40,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	protected float stateTime;
 
 	protected CollisionEvent mapCollisionEvent;
-
-	protected boolean onFloor;
-
+	
 	protected Animation currentAnimation;
 
 	protected TextureRegion currentFrame;
@@ -93,6 +89,10 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	
 	protected boolean deletableOutScreenRight;
 	
+	protected boolean isAnimationLooping;
+	
+	protected boolean onFloor;
+	
 	public AbstractSprite(float x, float y, Vector2 size, Vector2 offset) {
 		
 		this.setPosition(x, y);		
@@ -122,7 +122,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 	}
 		
 	public Rectangle getBounds() {
-        return bounds;
+        return this.bounds;
     }
 	
 	public abstract void initializeAnimations();
@@ -148,13 +148,8 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			}
 			// Update sprite bounds (for future collisions)
 			updateBounds();
-			if (getX()<camera.position.x-9 || getY() < -1 || (deletableOutScreenRight && camera.position.x+8<getX() && acceleration.x>0)) {
-				// Sprite is left out of screen, or has felt out of down screen
-				deletable = true;				
-			} else {
-				// Check if sprite is visible
-				visible = getX() < camera.position.x+8;				
-			}						
+			// Update visible / deletable booleans
+			updateDeletableAndVisibleStatus(camera);					
 		} else {			
 			if (camera.position.x < tileMap.getFlag().getX()) {				
 				alive = camera.position.x-8>xAlive;
@@ -164,6 +159,20 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 			}
 							
 		}				
+	}
+	
+	protected void updateDeletableAndVisibleStatus(OrthographicCamera camera) {
+		if (isDeletable(camera)) {
+			// Sprite is left out of screen, or has felt out of down screen
+			deletable = true;				
+		} else {
+			// Check if sprite is visible
+			visible = getX() < camera.position.x+8;				
+		}		
+	}
+	
+	protected boolean isDeletable(OrthographicCamera camera) {
+		return getX()<camera.position.x-9 || getY() < -1 || (deletableOutScreenRight && camera.position.x+8<getX() && acceleration.x>0);
 	}
 
 	public void collideWithTilemap(TmxMap tilemap) {
