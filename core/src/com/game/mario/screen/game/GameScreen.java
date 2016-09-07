@@ -418,15 +418,17 @@ public class GameScreen implements Screen  {
 	}
 	
 	private void handleFireballs(float deltaTime) {
-		List<AbstractSprite> fireballs = mario.getFireballs();
+		List<Fireball> fireballs = mario.getFireballs();
 		for (int i = 0; i < fireballs.size(); i++) {
-			AbstractSprite abstractSprite = fireballs.get(i); 
-			abstractSprite.update(tilemap, camera.getCamera(), deltaTime);			
-			if (abstractSprite.isDeletable()) {				
-				fireballs.remove(i--);
-				explodeFireball(abstractSprite);		
-			} else if (abstractSprite.isVisible()) {
-				abstractSprite.render(tilemapRenderer.getBatch());
+			Fireball fireball = fireballs.get(i); 
+			fireball.update(tilemap, camera.getCamera(), deltaTime);			
+			if (fireball.isDeletable()) {				
+				fireballs.remove(i--);		
+				if (fireball.isExplodeWhenDeleted()) {
+					explodeFireball(fireball);
+				}					
+			} else if (fireball.isVisible()) {
+				fireball.render(tilemapRenderer.getBatch());
 			}
 		}
 	}
@@ -444,7 +446,7 @@ public class GameScreen implements Screen  {
 					CollisionHandler.getCollisionHandler().collideEnemies(enemy, enemies.get(j));
 				}	
 				for (int k = 0; k < mario.getFireballs().size(); k++) {
-					AbstractSprite fireball = mario.getFireballs().get(k);					
+					Fireball fireball = mario.getFireballs().get(k);					
 					boolean collideFireball = fireball.getBounds().overlaps(enemy.getBounds());
 					if (collideFireball && !enemy.isKilled()) {
 						if (enemy.isKillableByFireball()) {
@@ -487,7 +489,7 @@ public class GameScreen implements Screen  {
 		}
 	}
 
-	private void explodeFireball(AbstractSprite fireball) {		
+	private void explodeFireball(Fireball fireball) {		
 		AbstractSfxSprite sprite = new FireballExplosion(fireball);		
 		tilemap.getSfxSprites().add(sprite);
 		stage.addActor(sprite);				   				
@@ -522,7 +524,7 @@ public class GameScreen implements Screen  {
 		}
 		
 		if (Gdx.input.isKeyPressed(KEY_SPEED_UP)) {			
-			List<AbstractSprite> fireballs = mario.getFireballs();
+			List<Fireball> fireballs = mario.getFireballs();
 			if (fireballs.size()<2 && mario.getSizeState()>=3 && speedUpKeyReleased == true) {
 				// A fireball can be launched only if mario has a flower
 				fireballs.add(new Fireball(mario));

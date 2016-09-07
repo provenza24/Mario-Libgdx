@@ -21,6 +21,7 @@ import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.SpriteMoveEnum;
 import com.game.mario.sound.SoundManager;
 import com.game.mario.sprite.AbstractSprite;
+import com.game.mario.sprite.Fireball;
 import com.game.mario.sprite.tileobject.AbstractTileObjectSprite;
 import com.game.mario.sprite.tileobject.item.TransferItem;
 import com.game.mario.tilemap.TmxMap;
@@ -117,7 +118,7 @@ public class Mario extends AbstractTileObjectSprite {
 
 	private TransferItem transferItem;
 
-	private List<AbstractSprite> fireballs;	
+	private List<Fireball> fireballs;	
 	
 	private boolean isStuck;
 	
@@ -135,7 +136,7 @@ public class Mario extends AbstractTileObjectSprite {
 		sizeState = GameManager.getGameManager().getSizeState();
 		changeSizeState(sizeState);
 		alive = true;
-		fireballs = new ArrayList<AbstractSprite>();	
+		fireballs = new ArrayList<Fireball>();	
 		tilemapCollisionHandler = new MarioTilemapCollisionHandler();
 	}
 
@@ -551,11 +552,11 @@ public class Mario extends AbstractTileObjectSprite {
 		return isGrowingDown() || isGrowingUp();
 	}
 
-	public List<AbstractSprite> getFireballs() {
+	public List<Fireball> getFireballs() {
 		return fireballs;
 	}
 
-	public void setFireballs(List<AbstractSprite> fireballs) {
+	public void setFireballs(List<Fireball> fireballs) {
 		this.fireballs = fireballs;
 	}
 
