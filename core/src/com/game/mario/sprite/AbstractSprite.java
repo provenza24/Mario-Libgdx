@@ -114,7 +114,7 @@ public abstract class AbstractSprite extends Actor implements IMoveable, IDrawab
 		
 		this.tilemapCollisionHandler = new BasicTilemapCollisionHandler();
 		
-		this.deletableOutScreenRight = true;
+		this.deletableOutScreenRight = false;
 	}
 	
 	public AbstractSprite(float x, float y) {		

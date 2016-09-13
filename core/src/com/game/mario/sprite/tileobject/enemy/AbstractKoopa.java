@@ -50,7 +50,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		
 		setSize(1 - offset.x * 2, 1 - offset.y);
 		setRenderingSize(1, 2);
-		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());
+		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());				
 		
 		String sState = (String)mapObject.getProperties().get("state");
 		if ("flying".equals(sState)) {
@@ -107,7 +107,8 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		super.update(tileMap, camera, deltaTime);
 		
 		if (isAlive()) {
-			if (!bumped && state==SpriteMoveEnum.NO_MOVE) {									
+			if (!bumped && state==SpriteMoveEnum.NO_MOVE) {	
+				deletableOutScreenRight = true;
 				noMoveTime = noMoveTime + deltaTime;
 				if (noMoveTime<5) {
 					// nothing to do
@@ -120,6 +121,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 					acceleration.x = -1.9f;		
 					bounds = new Rectangle(getX(), getY(), getWidth(), getHeight());
 					state = SpriteMoveEnum.WALKING;
+					deletableOutScreenRight = true;
 				} 
 			}			
 		}			
@@ -180,6 +182,7 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 				state = SpriteMoveEnum.SLIDING;
 				currentAnimation = slideAnimation;			
 				SoundManager.getSoundManager().playSound(SoundManager.SOUND_KICK);
+				deletableOutScreenRight = true;
 			} else if (state == SpriteMoveEnum.SLIDING) {
 				isEnemyHit = mario.getY() > getY() && mario.getState() == SpriteMoveEnum.FALLING;
 				if (isEnemyHit) {
