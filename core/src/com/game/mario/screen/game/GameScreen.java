@@ -13,7 +13,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -703,21 +702,19 @@ public class GameScreen implements Screen  {
 		
 		int x = (int) (leftTopCorner.x + mario.getWidth()/2);
 		int y = (int) leftTopCorner.y;		
-		Cell cell = tilemap.getTileAt(x, y);
-		if (cell!=null) {			
+		
+		if (tilemap.isCollisioningTileAt(x, y)) {			
 			return new Vector2(x,y);
 		}		
 		
 		x = (int) leftTopCorner.x;
 		y = (int) leftTopCorner.y;		
-		cell = tilemap.getTileAt(x, y);
-		if (cell!=null) {
+		if (tilemap.isCollisioningTileAt(x, y)) {
 			return new Vector2(x,y);
 		}		
 		x = (int) rightTopCorner.x;
-		y = (int) rightTopCorner.y;										
-		cell = tilemap.getTileAt(x, y);
-		if (cell!=null) {
+		y = (int) rightTopCorner.y;												
+		if (tilemap.isCollisioningTileAt(x, y)) {
 			return new Vector2(x,y);
 		}	
 		return null;
