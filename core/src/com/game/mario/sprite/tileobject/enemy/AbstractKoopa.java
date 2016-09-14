@@ -49,7 +49,6 @@ public abstract class AbstractKoopa extends AbstractTileObjectEnemy {
 		super(mapObject, new Vector2(0.2f, 0.1f));				
 		
 		setSize(1 - offset.x * 2, 1 - offset.y);
-		setRenderingSize(1, 2);
 		bounds = new Rectangle(getX() + offset.x, getY(), getWidth(), getHeight());	
 		
 		String sState = (String)mapObject.getProperties().get("state");

@@ -48,31 +48,11 @@
    <property name="world" value="overground"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJztmk1qwzAQhSfFV0hvUPIDXbWbkrbMLknvkQTS0twg6dEzXogIkzDjn1Gk8j74kBC28EJPb2OiMnkRX8XK4EbcirvGHmGtOT6P4C0BsNAmnyF3m8YecW7jZ+6dgZwFwAL6E/kE+eLZn9fWtbHNO/WzXKgAWPDsz65jm4wy5XneWREAC0P0pweWjMb9mRusCICFIfrTA/QnAOhPL1gRAAvoTx9YEQAL6E8fWBEAC7n151h8pP79uYzmq2i+juZfA33zNVgRlEmV6J1An/4MWRqSmTgn9CfIk1T5nIhT8Ym692fI0i324qGj3wZ/6HLePe6KPrAiKJNU+VyI7+IbdevPOntafn7Fk6N/dDnv2l2RGlYEaal/qXz458b9eSTf7Fnz+SF+FihIyxm2o9ru
+   eJztyrENACAMA8GAsv/MMEHS0ATdSV/ZEQAAAAAAAAAAAADAC9lsWXyqDQCmW7f9eTDVAZ0uAIo=
   </data>
  </layer>
  <objectgroup name="objectsLayer" offsetx="-0.333333" offsety="0">
   <object id="1" type="mario" gid="401" x="30" y="448" width="32" height="32"/>
   <object id="66" type="flag" gid="419" x="6752" y="157" width="32" height="32"/>
-  <object id="93" type="transferRight" gid="425" x="1403" y="423" width="8" height="8">
-   <properties>
-    <property name="backgrounds" value="castle"/>
-    <property name="music" value="overground"/>
-    <property name="scrollable" value="true"/>
-    <property name="world" value="castle"/>
-    <property name="xOutgoing" value="1984"/>
-    <property name="yOutgoing" value="384"/>
-   </properties>
-  </object>
-  <object id="97" type="transferDown" gid="422" x="2652" y="320" width="8" height="8">
-   <properties>
-    <property name="backgrounds" value="underground"/>
-    <property name="music" value="underground"/>
-    <property name="scrollable" value="true"/>
-    <property name="world" value="underground"/>
-    <property name="xOutgoing" value="3088"/>
-    <property name="yOutgoing" value="128"/>
-   </properties>
-  </object>
  </objectgroup>
 </map>
