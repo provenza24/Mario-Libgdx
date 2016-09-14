@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -23,6 +24,7 @@ import com.game.mario.background.IScrollingBackground;
 import com.game.mario.background.impl.LeftScrollingBackground;
 import com.game.mario.camera.GameCamera;
 import com.game.mario.collision.CollisionHandler;
+import com.game.mario.collision.upperblock.WallCollisionHandler;
 import com.game.mario.enums.BackgroundTypeEnum;
 import com.game.mario.enums.DirectionEnum;
 import com.game.mario.enums.EnemyTypeEnum;
@@ -51,6 +53,7 @@ import com.game.mario.sprite.statusbar.MarioCoins;
 import com.game.mario.sprite.statusbar.MarioLifes;
 import com.game.mario.sprite.tileobject.item.plateform.AbstractMetalPlateform;
 import com.game.mario.sprite.tileobject.mario.Mario;
+import com.game.mario.tilemap.TmxCell;
 import com.game.mario.tilemap.TmxMap;
 import com.game.mario.util.constant.KeysConstants;
 import com.game.mario.util.constant.WinConstants;
@@ -540,23 +543,19 @@ public class GameScreen implements Screen  {
 				mario.setStateIfNotJumping(SpriteMoveEnum.SLIDING_LEFT);
 				if (mario.getState()==SpriteMoveEnum.SLIDING_LEFT && mario.getPreviousState()!=mario.getState()) {
 					addSmokeEffect();		
-				}
-				if (!(mario.isCrouch() && isUnderBlock(mario))) {
-					mario.decelerate(1.5f);
-					if (mario.getAcceleration().x <= 0) {
-						// Not sliding anymore
-						mario.getAcceleration().x = 0;
-						mario.setDirection(DirectionEnum.RIGHT);						
-					}
-				}
-				
+				}				
+				mario.decelerate(1.5f);
+				if (mario.getAcceleration().x <= 0) {
+					// Not sliding anymore
+					mario.getAcceleration().x = 0;
+					mario.setDirection(DirectionEnum.RIGHT);						
+				}							
 			} else if (!mario.isCrouch()){
 				// Running right, not crouched
 				mario.accelerate(Gdx.input.isKeyPressed(KEY_SPEED_UP));
 				mario.setDirection(DirectionEnum.RIGHT);
 				mario.setStateIfNotJumping(SpriteMoveEnum.RUNNING_RIGHT);
-			} else if (!isUnderBlock(mario)) {
-				// Mario is crouched, not under a block				
+			} else {								
 				mario.decelerate(1);				
 			}
 		} else if (Gdx.input.isKeyPressed(KEY_LEFT)) {
@@ -566,29 +565,23 @@ public class GameScreen implements Screen  {
 				if (mario.getState()==SpriteMoveEnum.SLIDING_RIGHT && mario.getPreviousState()!=mario.getState()) {
 					addSmokeEffect();		
 				}
-				if (!(mario.isCrouch() && isUnderBlock(mario))) {
-					mario.decelerate(1.5f);
-					if (mario.getAcceleration().x <= 0) {
-						// Not sliding anymore
-						mario.getAcceleration().x = 0;
-						mario.setDirection(DirectionEnum.LEFT);
-					}
-				}				
+				mario.decelerate(1.5f);
+				if (mario.getAcceleration().x <= 0) {
+					// Not sliding anymore
+					mario.getAcceleration().x = 0;
+					mario.setDirection(DirectionEnum.LEFT);
+				}							
 			} else if (!mario.isCrouch()) {
 				// Running left, not crouched
 				mario.accelerate(Gdx.input.isKeyPressed(KEY_SPEED_UP));
 				mario.setDirection(DirectionEnum.LEFT);
 				mario.setStateIfNotJumping(SpriteMoveEnum.RUNNING_LEFT);
-			} else if (!isUnderBlock(mario)) {
+			} else {
 				// Mario is crouched				
 				mario.decelerate(1);
 			}
 		} else {
-			// No LEFT/RIGHT key entered, decelerate mario
-			if (!mario.isCrouch()
-					|| (mario.isCrouch() && !isUnderBlock(mario))) {
-				mario.decelerate(1);
-			}
+			mario.decelerate(1);			
 		}
 
 		if (Gdx.input.isKeyPressed(KEY_UP) && mario.canInitiateJump()
@@ -628,9 +621,16 @@ public class GameScreen implements Screen  {
 				&& mario.getState()!=SpriteMoveEnum.FALLING) {
 			mario.crouch();
 		} else if (!Gdx.input.isKeyPressed(KEY_DOWN) && mario.isCrouch()) {	
-			if (!isUnderBlock(mario)) {
-				mario.uncrouch();
-			}									
+			Vector2 block = getCellUnder(mario);
+			if (block !=null) {
+				int x = (int) block.x;
+				int y = (int) block.y;				
+				new WallCollisionHandler().breakWall(tilemap, new TmxCell(tilemap.getTileAt(x, y), x, y), stage);								
+				if (getCellUnder(mario)!=null) {
+					mario.setX(x);
+				}								
+			} 
+			mario.uncrouch();
 		}
 		
 		handleDebugKeys();
@@ -696,20 +696,31 @@ public class GameScreen implements Screen  {
 		}
 	}
 	
-	private boolean isUnderBlock(Mario mario) {		
+	private Vector2 getCellUnder(Mario mario) {		
 		
 		Vector2 leftTopCorner = new Vector2(mario.getX() + mario.getOffset().x, mario.getY() + 1);
 		Vector2 rightTopCorner = new Vector2(mario.getX() + mario.getWidth() + mario.getOffset().x, mario.getY() + 1);
 		
-		int x = (int) leftTopCorner.x;
+		int x = (int) (leftTopCorner.x + mario.getWidth()/2);
 		int y = (int) leftTopCorner.y;		
-		if (tilemap.isCollisioningTileAt(x, y)) {
-			return true;
+		Cell cell = tilemap.getTileAt(x, y);
+		if (cell!=null) {			
+			return new Vector2(x,y);
+		}		
+		
+		x = (int) leftTopCorner.x;
+		y = (int) leftTopCorner.y;		
+		cell = tilemap.getTileAt(x, y);
+		if (cell!=null) {
+			return new Vector2(x,y);
 		}		
 		x = (int) rightTopCorner.x;
-		y = (int) rightTopCorner.y;								
-		
-		return tilemap.isCollisioningTileAt(x, y);
+		y = (int) rightTopCorner.y;										
+		cell = tilemap.getTileAt(x, y);
+		if (cell!=null) {
+			return new Vector2(x,y);
+		}	
+		return null;
 	}
 	
 	private void renderDebugMode() {

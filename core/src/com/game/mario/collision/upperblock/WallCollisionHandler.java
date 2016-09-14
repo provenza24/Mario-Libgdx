@@ -65,7 +65,7 @@ public class WallCollisionHandler extends AbstractUpperBlockCollisionHandler {
 		return wallBlock;
 	}
 
-	private void breakWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
+	public void breakWall(TmxMap tileMap, TmxCell collidingCell, Stage stage) {
 		
 		tileMap.removeCell(collidingCell.getX(), collidingCell.getY());
 		
